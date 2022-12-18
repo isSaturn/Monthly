@@ -1,0 +1,124 @@
+﻿@RenderSection("scripts", required: false)
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- index.html  21 Nov 2019 03:44:50 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Admin Monthly Statement</title>
+    <link rel="stylesheet" href="~/assets/css/atlantis.min.css" />
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="~/assets/css/app.min.css" />
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="~/assets/css/style.css" />
+    <link rel="stylesheet" href="~/assets/css/components.css" />
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="~/assets/css/custom.css" />
+    <link rel='shortcut icon' type='image/x-icon' href='~/assets/img/vlu/logo.png' />
+
+</head>
+
+<body>
+    <div class="loader"></div>
+    <div id="app">
+        <div class="main-wrapper main-wrapper-1">
+            <div class="navbar-bg"></div>
+            @{
+                Html.RenderPartial("_NavBarPartialView");
+            }
+            <div class="main-sidebar sidebar-style-2">
+                <aside id="sidebar-wrapper">
+                    <div class="sidebar-brand">
+                        <a href="@Url.Action("Index", "Home", new { Area = "" })">
+                            <img alt="image" src="~/assets/img/vlu/logo.png" class="header-logo" /> <span class="logo-name">Văn Lang</span>
+                        </a>
+                    </div>
+                    @if (User.IsInRole("Quản trị viên"))
+                    {
+                        <ul class="sidebar-menu">
+                            <li class=@(ViewBag.Title == "Quản lý tài quản" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "Accounts", new { Area = "Admin" })" class="nav-link"><i data-feather="user-check"></i><span>Quản lý tài khoản</span></a>
+                            </li>
+                            <li class="dropdown">
+                            <li class=@(ViewBag.Title == "Quản lý kỳ báo cáo" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "ReportPeriods", new { Area = "Admin" })" class="nav-link"><i data-feather="briefcase"></i><span>Quản lý kỳ báo cáo</span></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link" href="#">Bộ môn</a></li>
+                                    <li><a class="nav-link" href="#">Cá nhân</a></li>
+                                </ul>
+                            </li>
+                            <li class=@(ViewBag.Title == "Quản lý danh mục" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "Categories", new { Area = "Admin" })" class="nav-link"><i data-feather="grid"></i><span>Quản lý danh mục</span></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-linkn"><i data-feather="bar-chart"></i><span>Thống kê</span></a>
+                            </li>
+                        </ul>
+                    }
+                </aside>
+            </div>
+            <!-- Main Content -->
+            <div class="main-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/js/page/calendar.js"></script>
+    <script src="~/assets/js/page/chart-amchart.js"></script>
+    <script src="~/assets/js/page/chart-apexcharts.js"></script>
+    <script src="~/assets/js/page/chart-chartjs.js"></script>
+    <script src="~/assets/js/page/chart-echarts.js"></script>
+    <script src="~/assets/js/page/chart-morris.js"></script>
+    <script src="~/assets/js/page/chat.js"></script>
+    <script src="~/assets/js/page/ckeditor.js"></script>
+    <script src="~/assets/js/page/contact.js"></script>
+    <script src="~/assets/js/page/create-post.js"></script>
+    <script src="~/assets/js/page/datatables.js"></script>
+    <script src="~/assets/js/page/editable-table.js"></script>
+    <script src="~/assets/js/page/form-wizard.js"></script>
+    <script src="~/assets/js/page/forms-advanced-forms.js"></script>
+    <script src="~/assets/js/page/gallery1.js"></script>
+    <script src="~/assets/js/page/gmaps-advanced-route.js"></script>
+    <script src="~/assets/js/page/gmaps-draggable-marker.js"></script>
+    <script src="~/assets/js/page/gmaps-geocoding.js"></script>
+    <script src="~/assets/js/page/gmaps-geolocation.js"></script>
+    <script src="~/assets/js/page/gmaps-marker.js"></script>
+    <script src="~/assets/js/page/gmaps-multiple-marker.js"></script>
+    <script src="~/assets/js/page/gmaps-route.js"></script>
+    <script src="~/assets/js/page/gmaps-simple.js"></script>
+    <script src="~/assets/js/page/index.js"></script>
+    <script src="~/assets/js/page/ion-icons.js"></script>
+    <script src="~/assets/js/page/light-gallery.js"></script>
+    <script src="~/assets/js/page/multiple-upload.js"></script>
+    <script src="~/assets/js/page/owl-carousel.js"></script>
+    <script src="~/assets/js/page/portfolio.js"></script>
+    <script src="~/assets/js/page/posts.js"></script>
+    <script src="~/assets/js/page/sparkline.js"></script>
+    <script src="~/assets/js/page/sweetalert.js"></script>
+    <script src="~/assets/js/page/toastr.js"></script>
+    <script src="~/assets/js/page/vector-map.js"></script>
+    <script src="~/assets/js/page/widget-chart.js"></script>
+    <script src="~/assets/js/page/widget-data.js"></script>
+    <script src="~/assets/js/page/advance-table.js"></script>
+    <script src="~/assets/js/page/auth-register.js"></script>
+    <!-- General JS Scripts -->
+    <script src="~/assets/js/app.min.js"></script>
+    <!-- JS Libraies -->
+    <script src="~/assets/bundles/apexcharts/apexcharts.min.js"></script>
+    <!-- Page Specific JS File -->
+    <script src="~/assets/js/page/index.js"></script>
+    <!-- Template JS File -->
+    <script src="~/assets/js/scripts.js"></script>
+    <!-- Custom JS File -->
+    <script src="~/assets/js/custom.js"></script>
+
+</body>
+
+<!-- index.html  21 Nov 2019 03:47:04 GMT -->
+</html>

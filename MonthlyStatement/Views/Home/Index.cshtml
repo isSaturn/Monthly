@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body data-col="2-columns" class=" 2-columns ">
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+    <div class="main__wrap-thumb">
+        <div class="main__content-wrapper">
+            <div class="main__thumb">
+                <div id="banner" class="main__thumb-img  text-center">
+                    <div class="inner">
+                        <img src="~/assets/img/vlu/logo-bg.png">
+                        <p class="main__content-title">  </p><br />
+                        <p class="main__content-header">MONLYTH STATEMENT</p>
+                        <p class="main__content-time" id="current-time"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var curDate = new Date();
+
+    // Ngày hiện tại
+    var curDay = curDate.getDate();
+
+    // Tháng hiện tại
+    var curMonth = curDate.getMonth() + 1;
+
+    // Năm hiện tại
+    var curYear = curDate.getFullYear();
+
+    var curTime = curDate.getHours() + ":" + curDate.getMinutes() + ":" + curDate.getSeconds();
+
+    function getCurrentMonthName(curDate) {
+        monthNamelist = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        return monthNamelist[curDate.getMonth()];
+    };
+    function getCurrentDayName(curDate) {
+        monthNamelist = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        return monthNamelist[curDate.getDay()];
+    };
+    var setMonth = getCurrentMonthName(curDate);
+    var current_day = getCurrentDayName(curDate);
+
+    // Gán vào thẻ HTML
+    document.getElementById('current-time').innerHTML = curTime + " " + current_day + " ,  " + curDay + "  " + setMonth + " " + curYear;
+</script>
+
+

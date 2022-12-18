@@ -1,0 +1,57 @@
+﻿@model MonthlyStatement.Models.Category
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">Thông tin danh mục @Model.category_content</h2>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("Details", "Categories", FormMethod.Post, new { }))
+{
+    <div class="page-inner mt--5">
+        <div class="row">
+            <div class="col-xl-12">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header"><b>Thông tin chi tiết</b></div>
+                    <div class="card-body" style="margin-top: 0.2rem">
+                        <form>
+                            <!-- Form Group (Token)-->
+                            <div class="mb-3">
+                                <label class="small mb-1">ID danh mục cha</label>
+                                <input style="color:black" type="text" class="form-control" value="@Model.category_id" disabled>
+                            </div>
+                            <!-- Form Group (Email)-->
+                            <div class="mb-3">
+                                <label class="small mb-1">ID danh mục con</label>
+                                <input style="color:black" type="text" class="form-control" value="@Model.category_of_id" disabled>
+                            </div>
+                            <!-- Form Group (Role)-->
+                            <div class="mb-3">
+                                <label class="small mb-1">Tên danh mục</label>
+                                <input style="color:black" type="text" class="form-control" value="@Model.category_content" disabled>
+
+                            </div>
+                            <div style="text-align: center; margin-top: 1.8rem" class="mb-3">
+                                <a style="width: 180px; color: white; " class="btn btn-warning" role="button" href="@Url.Action("Edit", "Categories", new { id = Model.category_id })">
+                                    Chỉnh sửa thông tin
+                                </a>
+                                &emsp;
+                                <a style="width: 180px; color: white; " class="btn btn-danger" role="button" href="@Url.Action("Index", "Categories")">
+                                    Quay lại
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

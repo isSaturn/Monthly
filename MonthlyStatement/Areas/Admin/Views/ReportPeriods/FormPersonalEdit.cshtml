@@ -1,0 +1,49 @@
+﻿@model MonthlyStatement.Models.FormPersonalReport
+
+@{
+    ViewBag.Title = "FormPersonalEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">Báo cáo của cá nhân: @Model.ReportPeriod.report_period_name</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Tên người tạo mẫu báo cáo</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nhập tên người tạo">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Tên mẫu báo cáo</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nhập mẫu báo cáo">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Chọn danh mục</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-primary mr-1" type="submit">Submit</button>
+                        <button class="btn btn-secondary" type="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

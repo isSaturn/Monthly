@@ -1,0 +1,114 @@
+﻿@model  MonthlyStatement.Models.FormDepartmentReport
+@using MonthlyStatement.Models
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var lstCategory = Session["FormDepartmentEdit-lstCategory"] as IEnumerable<Category>;
+}
+
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">Báo cáo của bộ môn: @Model.ReportPeriod.report_period_name</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Tên người tạo mẫu báo cáo</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nhập tên người tạo">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Tên mẫu báo cáo</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nhập mẫu báo cáo">
+                    </div>
+                    @foreach (var item in lstCategory.Where(c => c.category_of_id == null).ToList())
+                    {
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label for="check">
+                                    <input name="@item.category_id" type="checkbox" id="categorylv1-@item.category_id" value="@item.category_id" />
+                                    <span class="fake-input"></span>
+                                    <span class="fake-label">@item.category_content</span>
+                                </label>
+                            </div>
+                        </div>
+                        foreach (var items in lstCategory.Where(c => c.category_of_id == item.category_id).ToList())
+                        {
+                            <div class="media mt-3">
+                                <div class="pr-5" href="#">
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label for="check">
+                                            <input name="@items.category_of_id" type="checkbox" id="categorylv2-@items.category_id" value="@item.category_id" />
+                                            <span class="fake-input"></span>
+                                            <span class="fake-label">@items.category_content</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    @*<div class="form-group">
+                        <div class="checkbox">
+                            <label for="check">
+                                <input type="checkbox" onClick="toggle(this)" /> Toggle All<br />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="media mt-3">
+                        <div class="pr-5" href="#">
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label for="check">
+                                    <input type="checkbox" name="foo" value="bar1"> Bar 1<br />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label for="check">
+                                <input type="checkbox" onClick="toggle(this)" /> Toggle All<br />
+                            </label>
+                        </div>
+                    </div>*@
+                    <div class="text-right">
+                        <button class="btn btn-primary mr-1" type="submit">Lưu</button>
+                        <button class="btn btn-secondary" type="reset">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script language="JavaScript">
+    function toggle(source) {
+        checkboxes = document.getElementsByName('foo');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('[id^="categorylv2-"]').on('input', function () {
+            var id = $(this).attr('name');
+            $('#categorylv1-' + id).prop('checked', true);
+            $('[id^="categorylv2-"]').each('')
+
+        });
+    });
+</script>
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fb85654fd4344e7eae80f2dcdf3b2939" Name="Diagram1" ZoomLevel="96">
+        <EntityTypeShape EntityType="CP25Team04Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.Account" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.AspNetRole" Width="1.5" PointX="7.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.AspNetUser" Width="1.5" PointX="10" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.Category" Width="1.5" PointX="3" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.Comment" Width="1.5" PointX="10.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.DepartmentReport" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.DepartmentReportDetail" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.FormDepartmentReport" Width="1.5" PointX="3" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.FormDepartmentReportDetail" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.FormPersonalReport" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.FormPersonalReportDetail" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.Notification" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.PersonalReport" Width="1.5" PointX="8.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.PersonalReportDetail" Width="1.5" PointX="10.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.Profile" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.ReportPeriod" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.Role" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="CP25Team04Model.FK_Account_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_DepartmentReport_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_Notification_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_PersonalReport_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_Profile_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_Table_1_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_Category_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_FormDepartmentReportDetail_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_Table1_Table11" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_Table_1_Table_1" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_DepartmentReport_ReportPeriod" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_DepartmentReportDetail_DepartmentReport" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_DepartmentReportDetail_FormDepartmentReportDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_FormDepartmentReport_ReportPeriod" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_FormDepartmentReportDetail_FormDepartmentReport" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_FormPersonalReport_ReportPeriod" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_Table1_FormPersonalReport" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_PersonalReportDetail_FormPersonalReportDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_PersonalReport_ReportPeriod" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_PersonalReportDetail_PersonalReport" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
