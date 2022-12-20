@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fb85654fd4344e7eae80f2dcdf3b2939" Name="Diagram1" ZoomLevel="96">
+      <Diagram DiagramId="fb85654fd4344e7eae80f2dcdf3b2939" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="CP25Team04Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.Account" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.AspNetRole" Width="1.5" PointX="7.75" PointY="13.5" IsExpanded="true" />
@@ -22,7 +22,7 @@
         <EntityTypeShape EntityType="CP25Team04Model.Notification" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.PersonalReport" Width="1.5" PointX="8.25" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.PersonalReportDetail" Width="1.5" PointX="10.5" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP25Team04Model.Profile" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.Profile" Width="1.5" PointX="5.5" PointY="16" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.ReportPeriod" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.Role" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
@@ -49,6 +49,8 @@
         <AssociationConnector Association="CP25Team04Model.FK_PersonalReport_ReportPeriod" ManuallyRouted="false" />
         <AssociationConnector Association="CP25Team04Model.FK_PersonalReportDetail_PersonalReport" ManuallyRouted="false" />
         <AssociationConnector Association="CP25Team04Model.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CP25Team04Model.Faculty" Width="1.5" PointX="12.875" PointY="3.5" />
+        <AssociationConnector Association="CP25Team04Model.FK_Profile_Faculty" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

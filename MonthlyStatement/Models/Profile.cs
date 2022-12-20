@@ -20,7 +20,9 @@ namespace MonthlyStatement.Models
         public string department { get; set; }
         public string majors { get; set; }
         public string avatar { get; set; }
+        public Nullable<int> faculty_id { get; set; }
     
         public virtual Account Account { get; set; }
+        public virtual Faculty Faculty { get; set; }
     }
 }

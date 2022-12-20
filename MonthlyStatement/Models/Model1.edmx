@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -113,6 +113,13 @@
           <Property Name="form_department_report_detail_id" Type="int" Nullable="false" />
           <Property Name="department_report_content" Type="ntext" />
         </EntityType>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="faculty_id" />
+          </Key>
+          <Property Name="faculty_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="faculty_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="FormDepartmentReport">
           <Key>
             <PropertyRef Name="form_department_report_id" />
@@ -186,6 +193,7 @@
           <Property Name="department" Type="nvarchar" MaxLength="100" />
           <Property Name="majors" Type="nvarchar" MaxLength="100" />
           <Property Name="avatar" Type="varchar(max)" />
+          <Property Name="faculty_id" Type="int" />
         </EntityType>
         <EntityType Name="ReportPeriod">
           <Key>
@@ -463,6 +471,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Profile_Faculty">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="faculty_id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="faculty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Table_1_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
@@ -523,6 +543,7 @@
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentReport" EntityType="Self.DepartmentReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentReportDetail" EntityType="Self.DepartmentReportDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormDepartmentReport" EntityType="Self.FormDepartmentReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormDepartmentReportDetail" EntityType="Self.FormDepartmentReportDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormPersonalReport" EntityType="Self.FormPersonalReport" Schema="dbo" store:Type="Tables" />
@@ -614,6 +635,10 @@
             <End Role="Account" EntitySet="Account" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
+          <AssociationSet Name="FK_Profile_Faculty" Association="Self.FK_Profile_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
           <AssociationSet Name="FK_Table_1_Account" Association="Self.FK_Table_1_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Comment" EntitySet="Comment" />
@@ -631,8 +656,7 @@
             <End Role="FormPersonalReportDetail" EntitySet="FormPersonalReportDetail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CP25Team04Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -850,6 +874,8 @@
           <Property Name="majors" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Profile_Account" FromRole="Profile" ToRole="Account" />
+          <Property Name="faculty_id" Type="Int32" />
+          <NavigationProperty Name="Faculty" Relationship="CP25Team04Model.FK_Profile_Faculty" FromRole="Profile" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="ReportPeriod">
           <Key>
@@ -1270,7 +1296,32 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Faculties" EntityType="CP25Team04Model.Faculty" />
+          <AssociationSet Name="FK_Profile_Faculty" Association="CP25Team04Model.FK_Profile_Faculty">
+            <End Role="Faculty" EntitySet="Faculties" />
+            <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="faculty_id" />
+          </Key>
+          <Property Name="faculty_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="faculty_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Profiles" Relationship="CP25Team04Model.FK_Profile_Faculty" FromRole="Faculty" ToRole="Profile" />
+        </EntityType>
+        <Association Name="FK_Profile_Faculty">
+          <End Type="CP25Team04Model.Faculty" Role="Faculty" Multiplicity="0..1" />
+          <End Type="CP25Team04Model.Profile" Role="Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="faculty_id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="faculty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1457,6 +1508,7 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="CP25Team04Model.Profile">
               <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
                 <ScalarProperty Name="profile_id" ColumnName="profile_id" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
@@ -1505,6 +1557,14 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Faculties">
+            <EntityTypeMapping TypeName="CP25Team04Model.Faculty">
+              <MappingFragment StoreEntitySet="Faculty">
+                <ScalarProperty Name="faculty_name" ColumnName="faculty_name" />
+                <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

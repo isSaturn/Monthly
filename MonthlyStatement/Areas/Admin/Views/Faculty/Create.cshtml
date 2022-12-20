@@ -1,0 +1,45 @@
+﻿@model MonthlyStatement.Models.Faculty
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Create", "Faculty", FormMethod.Post, new { }))
+{
+
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-xl-12">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header"><b>Thông tin chi tiết</b></div>
+                <div class="card-body" style="margin-top: 0.2rem">
+                    <div class="row gx-3 mb-3">
+                        <!-- Form Group (Tên khoa)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1">Tên khoa</label>
+                            @Html.EditorFor(model => model.faculty_name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.faculty_name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top:1.8rem" class="mb-3">
+                        <button style="width:180px; color:white" type="submit" class="btn bg-primary-gradient" onclick="if (!confirm('Tạo khoa mới?')) { return false }">
+                            Tạo mới
+                        </button>
+                        &emsp;
+                        <a style="width:180px; color:white;" role="button" class="btn btn-danger" href="@Url.Action("Index", "Faculty")">
+                            Hủy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
