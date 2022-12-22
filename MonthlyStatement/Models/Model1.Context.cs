@@ -26,7 +26,6 @@ namespace MonthlyStatement.Models
         }
     
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
@@ -35,6 +34,7 @@ namespace MonthlyStatement.Models
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<DepartmentReport> DepartmentReports { get; set; }
         public virtual DbSet<DepartmentReportDetail> DepartmentReportDetails { get; set; }
+        public virtual DbSet<Faculty> Faculties { get; set; }
         public virtual DbSet<FormDepartmentReport> FormDepartmentReports { get; set; }
         public virtual DbSet<FormDepartmentReportDetail> FormDepartmentReportDetails { get; set; }
         public virtual DbSet<FormPersonalReport> FormPersonalReports { get; set; }
@@ -44,7 +44,7 @@ namespace MonthlyStatement.Models
         public virtual DbSet<PersonalReportDetail> PersonalReportDetails { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<ReportPeriod> ReportPeriods { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<ReportYear> ReportYears { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

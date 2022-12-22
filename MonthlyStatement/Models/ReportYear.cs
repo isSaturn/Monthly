@@ -12,14 +12,14 @@ namespace MonthlyStatement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Notification
+    public partial class ReportYear
     {
-        public int notification_id { get; set; }
-        public string notification_content { get; set; }
-        public Nullable<System.DateTime> notification_date { get; set; }
-        public string status { get; set; }
-        public string account_id { get; set; }
+        public int report_year_id { get; set; }
+        public int report_period_id { get; set; }
+        public string report_year_name { get; set; }
+        public Nullable<System.DateTime> start_date { get; set; }
+        public Nullable<System.DateTime> end_date { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual ReportPeriod ReportPeriod { get; set; }
     }
 }

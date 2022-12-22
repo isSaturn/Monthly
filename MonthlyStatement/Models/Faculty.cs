@@ -12,19 +12,18 @@ namespace MonthlyStatement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Faculty
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Faculty()
         {
-            this.Accounts = new HashSet<Account>();
+            this.Profiles = new HashSet<Profile>();
         }
     
-        public int role_id { get; set; }
-        public string role_name { get; set; }
-        public string description { get; set; }
+        public int faculty_id { get; set; }
+        public string faculty_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Profile> Profiles { get; set; }
     }
 }
