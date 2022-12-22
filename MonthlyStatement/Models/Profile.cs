@@ -20,11 +20,9 @@ namespace MonthlyStatement.Models
         public string majors { get; set; }
         public string avatar { get; set; }
         public Nullable<int> faculty_id { get; set; }
-
         public string account_id { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-
         public virtual Faculty Faculty { get; set; }
     }
 }

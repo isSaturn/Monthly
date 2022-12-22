@@ -66,10 +66,10 @@
                                                         @item.user_name
                                                     </td>
                                                     <td>
-                                                        @item.Account.email
+                                                        @item.AspNetUser.Email
                                                     </td>
                                                     <td>
-                                                        @item.Account.Role.role_name
+                                                        @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
                                                     </td>
                                                     <td>
                                                         <div class="form-button-action">
