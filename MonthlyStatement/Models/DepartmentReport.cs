@@ -21,12 +21,14 @@ namespace MonthlyStatement.Models
         }
     
         public int department_report_id { get; set; }
-        public int account_id { get; set; }
         public int report_period_id { get; set; }
         public string file_path { get; set; }
         public string status { get; set; }
+        public string account_id { get; set; }
+        public Nullable<int> comment_id { get; set; }
     
-        public virtual Account Account { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Comment Comment { get; set; }
         public virtual ReportPeriod ReportPeriod { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DepartmentReportDetail> DepartmentReportDetails { get; set; }

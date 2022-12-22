@@ -14,11 +14,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
     {
         CP25Team04Entities db = new CP25Team04Entities();
         // GET: Admin/MyProfile
-        public ActionResult Index()
-        {
-            var profile = db.Accounts.Find(Session["ID_User"]);
-            return View(profile);
-        }
+        //public ActionResult Index()
+        //{
+        //    var profile = db.Accounts.Find(Session["ID_User"]);
+        //    return View(profile);
+        //}
         public ActionResult Edit_Profile(string name, string department, string majors, HttpPostedFileBase avt)
         {
             string ID_User = Session["ID_User"].ToString();

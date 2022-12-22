@@ -14,13 +14,20 @@ namespace MonthlyStatement.Models
     
     public partial class Comment
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Comment()
+        {
+            this.DepartmentReports = new HashSet<DepartmentReport>();
+        }
+    
         public int comment_id { get; set; }
-        public int account_id { get; set; }
-        public int personal_report_id { get; set; }
         public string comment_content { get; set; }
         public Nullable<System.DateTime> comment_date { get; set; }
+        public string account_id { get; set; }
     
-        public virtual Account Account { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DepartmentReport> DepartmentReports { get; set; }
         public virtual PersonalReport PersonalReport { get; set; }
     }
 }

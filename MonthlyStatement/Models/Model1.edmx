@@ -15,16 +15,6 @@
           <Property Name="Model" Type="varbinary(max)" Nullable="false" />
           <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="account_id" />
-          </Key>
-          <Property Name="account_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="role_id" Type="int" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="password" Type="varchar" MaxLength="100" />
-          <Property Name="token" Type="nvarchar" MaxLength="300" />
-        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -89,20 +79,20 @@
             <PropertyRef Name="comment_id" />
           </Key>
           <Property Name="comment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="account_id" Type="int" Nullable="false" />
-          <Property Name="personal_report_id" Type="int" Nullable="false" />
           <Property Name="comment_content" Type="ntext" />
           <Property Name="comment_date" Type="datetime" />
+          <Property Name="account_id" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="DepartmentReport">
           <Key>
             <PropertyRef Name="department_report_id" />
           </Key>
           <Property Name="department_report_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="report_period_id" Type="int" Nullable="false" />
           <Property Name="file_path" Type="varchar(max)" />
           <Property Name="status" Type="nvarchar" MaxLength="50" />
+          <Property Name="account_id" Type="nvarchar" MaxLength="128" />
+          <Property Name="comment_id" Type="int" />
         </EntityType>
         <EntityType Name="DepartmentReportDetail">
           <Key>
@@ -159,20 +149,21 @@
             <PropertyRef Name="notification_id" />
           </Key>
           <Property Name="notification_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="notification_content" Type="ntext" />
           <Property Name="notification_date" Type="datetime" />
           <Property Name="status" Type="nvarchar" MaxLength="50" />
+          <Property Name="account_id" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="PersonalReport">
           <Key>
             <PropertyRef Name="personal_report_id" />
           </Key>
           <Property Name="personal_report_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="report_period_id" Type="int" Nullable="false" />
           <Property Name="file_path" Type="varchar(max)" />
           <Property Name="status" Type="nvarchar" MaxLength="100" />
+          <Property Name="account_id" Type="nvarchar" MaxLength="128" />
+          <Property Name="comment_id" Type="int" />
         </EntityType>
         <EntityType Name="PersonalReportDetail">
           <Key>
@@ -188,12 +179,12 @@
             <PropertyRef Name="profile_id" />
           </Key>
           <Property Name="profile_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="user_name" Type="nvarchar" MaxLength="50" />
           <Property Name="department" Type="nvarchar" MaxLength="100" />
           <Property Name="majors" Type="nvarchar" MaxLength="100" />
           <Property Name="avatar" Type="varchar(max)" />
           <Property Name="faculty_id" Type="int" />
+          <Property Name="account_id" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="ReportPeriod">
           <Key>
@@ -203,15 +194,18 @@
           <Property Name="start_date" Type="date" />
           <Property Name="end_date" Type="date" />
           <Property Name="report_period_name" Type="nvarchar" MaxLength="200" />
-          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="200" />
+          <Property Name="deadline_date" Type="date" />
         </EntityType>
-        <EntityType Name="Role">
+        <EntityType Name="ReportYear">
           <Key>
-            <PropertyRef Name="role_id" />
+            <PropertyRef Name="report_year_id" />
           </Key>
-          <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="role_name" Type="nvarchar" MaxLength="50" />
-          <Property Name="description" Type="nvarchar" MaxLength="200" />
+          <Property Name="report_year_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="report_period_id" Type="int" Nullable="false" />
+          <Property Name="report_year_name" Type="nvarchar" MaxLength="200" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -223,18 +217,6 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK_Account_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="Account" Type="Self.Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="role_id" />
-            </Principal>
-            <Dependent Role="Account">
-              <PropertyRef Name="role_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Category_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="Category1" Type="Self.Category" Multiplicity="*" />
@@ -244,6 +226,18 @@
             </Principal>
             <Dependent Role="Category1">
               <PropertyRef Name="category_of_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="account_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -303,15 +297,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DepartmentReport_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+        <Association Name="FK_DepartmentReport_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="DepartmentReport" Type="Self.DepartmentReport" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="DepartmentReport">
               <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentReport_Comment">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="0..1" />
+          <End Role="DepartmentReport" Type="Self.DepartmentReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="comment_id" />
+            </Principal>
+            <Dependent Role="DepartmentReport">
+              <PropertyRef Name="comment_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -399,27 +405,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Notification_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+        <Association Name="FK_Notification_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Notification">
               <PropertyRef Name="account_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PersonalReport_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+        <Association Name="FK_PersonalReport_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="PersonalReport" Type="Self.PersonalReport" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PersonalReport">
               <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalReport_Comment">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="PersonalReport" Type="Self.PersonalReport" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="comment_id" />
+            </Principal>
+            <Dependent Role="PersonalReport">
+              <PropertyRef Name="personal_report_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -459,12 +477,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Profile_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+        <Association Name="FK_Profile_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Profile">
               <PropertyRef Name="account_id" />
@@ -483,27 +501,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Table_1_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+        <Association Name="FK_ReportYear_ReportPeriod">
+          <End Role="ReportPeriod" Type="Self.ReportPeriod" Multiplicity="1" />
+          <End Role="ReportYear" Type="Self.ReportYear" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
+            <Principal Role="ReportPeriod">
+              <PropertyRef Name="report_period_id" />
             </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_1_Table_1">
-          <End Role="PersonalReport" Type="Self.PersonalReport" Multiplicity="1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PersonalReport">
-              <PropertyRef Name="personal_report_id" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="personal_report_id" />
+            <Dependent Role="ReportYear">
+              <PropertyRef Name="report_period_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -533,7 +539,6 @@
         </Association>
         <EntityContainer Name="CP25Team04ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -553,15 +558,15 @@
           <EntitySet Name="PersonalReportDetail" EntityType="Self.PersonalReportDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportPeriod" EntityType="Self.ReportPeriod" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportYear" EntityType="Self.ReportYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Account_Role" Association="Self.FK_Account_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="Account" EntitySet="Account" />
-          </AssociationSet>
           <AssociationSet Name="FK_Category_Category" Association="Self.FK_Category_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Category1" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_AspNetUsers" Association="Self.FK_Comment_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -579,8 +584,12 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_DepartmentReport_Account" Association="Self.FK_DepartmentReport_Account">
-            <End Role="Account" EntitySet="Account" />
+          <AssociationSet Name="FK_DepartmentReport_AspNetUsers" Association="Self.FK_DepartmentReport_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="DepartmentReport" EntitySet="DepartmentReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentReport_Comment" Association="Self.FK_DepartmentReport_Comment">
+            <End Role="Comment" EntitySet="Comment" />
             <End Role="DepartmentReport" EntitySet="DepartmentReport" />
           </AssociationSet>
           <AssociationSet Name="FK_DepartmentReport_ReportPeriod" Association="Self.FK_DepartmentReport_ReportPeriod">
@@ -611,12 +620,16 @@
             <End Role="ReportPeriod" EntitySet="ReportPeriod" />
             <End Role="FormPersonalReport" EntitySet="FormPersonalReport" />
           </AssociationSet>
-          <AssociationSet Name="FK_Notification_Account" Association="Self.FK_Notification_Account">
-            <End Role="Account" EntitySet="Account" />
+          <AssociationSet Name="FK_Notification_AspNetUsers" Association="Self.FK_Notification_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Notification" EntitySet="Notification" />
           </AssociationSet>
-          <AssociationSet Name="FK_PersonalReport_Account" Association="Self.FK_PersonalReport_Account">
-            <End Role="Account" EntitySet="Account" />
+          <AssociationSet Name="FK_PersonalReport_AspNetUsers" Association="Self.FK_PersonalReport_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PersonalReport" EntitySet="PersonalReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalReport_Comment" Association="Self.FK_PersonalReport_Comment">
+            <End Role="Comment" EntitySet="Comment" />
             <End Role="PersonalReport" EntitySet="PersonalReport" />
           </AssociationSet>
           <AssociationSet Name="FK_PersonalReport_ReportPeriod" Association="Self.FK_PersonalReport_ReportPeriod">
@@ -631,21 +644,17 @@
             <End Role="PersonalReport" EntitySet="PersonalReport" />
             <End Role="PersonalReportDetail" EntitySet="PersonalReportDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_Profile_Account" Association="Self.FK_Profile_Account">
-            <End Role="Account" EntitySet="Account" />
+          <AssociationSet Name="FK_Profile_AspNetUsers" Association="Self.FK_Profile_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
           <AssociationSet Name="FK_Profile_Faculty" Association="Self.FK_Profile_Faculty">
             <End Role="Faculty" EntitySet="Faculty" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
-          <AssociationSet Name="FK_Table_1_Account" Association="Self.FK_Table_1_Account">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="Comment" EntitySet="Comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_1_Table_1" Association="Self.FK_Table_1_Table_1">
-            <End Role="PersonalReport" EntitySet="PersonalReport" />
-            <End Role="Comment" EntitySet="Comment" />
+          <AssociationSet Name="FK_ReportYear_ReportPeriod" Association="Self.FK_ReportYear_ReportPeriod">
+            <End Role="ReportPeriod" EntitySet="ReportPeriod" />
+            <End Role="ReportYear" EntitySet="ReportYear" />
           </AssociationSet>
           <AssociationSet Name="FK_Table1_FormPersonalReport" Association="Self.FK_Table1_FormPersonalReport">
             <End Role="FormPersonalReport" EntitySet="FormPersonalReport" />
@@ -669,22 +678,6 @@
           <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="account_id" />
-          </Key>
-          <Property Name="account_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="role_id" Type="Int32" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="token" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_Account_Role" FromRole="Account" ToRole="Role" />
-          <NavigationProperty Name="DepartmentReports" Relationship="Self.FK_DepartmentReport_Account" FromRole="Account" ToRole="DepartmentReport" />
-          <NavigationProperty Name="Notifications" Relationship="Self.FK_Notification_Account" FromRole="Account" ToRole="Notification" />
-          <NavigationProperty Name="PersonalReports" Relationship="Self.FK_PersonalReport_Account" FromRole="Account" ToRole="PersonalReport" />
-          <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Account" FromRole="Account" ToRole="Profile" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Table_1_Account" FromRole="Account" ToRole="Comment" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -733,6 +726,11 @@
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_AspNetUsers" FromRole="AspNetUsers" ToRole="Comment" />
+          <NavigationProperty Name="DepartmentReports" Relationship="Self.FK_DepartmentReport_AspNetUsers" FromRole="AspNetUsers" ToRole="DepartmentReport" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK_Notification_AspNetUsers" FromRole="AspNetUsers" ToRole="Notification" />
+          <NavigationProperty Name="PersonalReports" Relationship="Self.FK_PersonalReport_AspNetUsers" FromRole="AspNetUsers" ToRole="PersonalReport" />
+          <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_AspNetUsers" FromRole="AspNetUsers" ToRole="Profile" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="Category">
@@ -752,23 +750,25 @@
             <PropertyRef Name="comment_id" />
           </Key>
           <Property Name="comment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="account_id" Type="Int32" Nullable="false" />
-          <Property Name="personal_report_id" Type="Int32" Nullable="false" />
           <Property Name="comment_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="comment_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_Table_1_Account" FromRole="Comment" ToRole="Account" />
-          <NavigationProperty Name="PersonalReport" Relationship="Self.FK_Table_1_Table_1" FromRole="Comment" ToRole="PersonalReport" />
+          <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Comment_AspNetUsers" FromRole="Comment" ToRole="AspNetUsers" />
+          <NavigationProperty Name="DepartmentReports" Relationship="Self.FK_DepartmentReport_Comment" FromRole="Comment" ToRole="DepartmentReport" />
+          <NavigationProperty Name="PersonalReport" Relationship="Self.FK_PersonalReport_Comment" FromRole="Comment" ToRole="PersonalReport" />
         </EntityType>
         <EntityType Name="DepartmentReport">
           <Key>
             <PropertyRef Name="department_report_id" />
           </Key>
           <Property Name="department_report_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="report_period_id" Type="Int32" Nullable="false" />
           <Property Name="file_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_DepartmentReport_Account" FromRole="DepartmentReport" ToRole="Account" />
+          <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="comment_id" Type="Int32" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_DepartmentReport_AspNetUsers" FromRole="DepartmentReport" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK_DepartmentReport_Comment" FromRole="DepartmentReport" ToRole="Comment" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_DepartmentReport_ReportPeriod" FromRole="DepartmentReport" ToRole="ReportPeriod" />
           <NavigationProperty Name="DepartmentReportDetails" Relationship="Self.FK_DepartmentReportDetail_DepartmentReport" FromRole="DepartmentReport" ToRole="DepartmentReportDetail" />
         </EntityType>
@@ -782,6 +782,14 @@
           <Property Name="department_report_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DepartmentReport" Relationship="Self.FK_DepartmentReportDetail_DepartmentReport" FromRole="DepartmentReportDetail" ToRole="DepartmentReport" />
           <NavigationProperty Name="FormDepartmentReportDetail" Relationship="Self.FK_DepartmentReportDetail_FormDepartmentReportDetail" FromRole="DepartmentReportDetail" ToRole="FormDepartmentReportDetail" />
+        </EntityType>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="faculty_id" />
+          </Key>
+          <Property Name="faculty_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="faculty_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Faculty" FromRole="Faculty" ToRole="Profile" />
         </EntityType>
         <EntityType Name="FormDepartmentReport">
           <Key>
@@ -832,23 +840,24 @@
             <PropertyRef Name="notification_id" />
           </Key>
           <Property Name="notification_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="notification_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="notification_date" Type="DateTime" Precision="3" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_Notification_Account" FromRole="Notification" ToRole="Account" />
+          <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Notification_AspNetUsers" FromRole="Notification" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="PersonalReport">
           <Key>
             <PropertyRef Name="personal_report_id" />
           </Key>
           <Property Name="personal_report_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="report_period_id" Type="Int32" Nullable="false" />
           <Property Name="file_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_PersonalReport_Account" FromRole="PersonalReport" ToRole="Account" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Table_1_Table_1" FromRole="PersonalReport" ToRole="Comment" />
+          <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="comment_id" Type="Int32" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_PersonalReport_AspNetUsers" FromRole="PersonalReport" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK_PersonalReport_Comment" FromRole="PersonalReport" ToRole="Comment" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_PersonalReport_ReportPeriod" FromRole="PersonalReport" ToRole="ReportPeriod" />
           <NavigationProperty Name="PersonalReportDetails" Relationship="Self.FK_PersonalReportDetail_PersonalReport" FromRole="PersonalReport" ToRole="PersonalReportDetail" />
         </EntityType>
@@ -868,14 +877,14 @@
             <PropertyRef Name="profile_id" />
           </Key>
           <Property Name="profile_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="department" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="majors" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_Profile_Account" FromRole="Profile" ToRole="Account" />
           <Property Name="faculty_id" Type="Int32" />
-          <NavigationProperty Name="Faculty" Relationship="CP25Team04Model.FK_Profile_Faculty" FromRole="Profile" ToRole="Faculty" />
+          <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_AspNetUsers" FromRole="Profile" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Faculty" Relationship="Self.FK_Profile_Faculty" FromRole="Profile" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="ReportPeriod">
           <Key>
@@ -885,20 +894,24 @@
           <Property Name="start_date" Type="DateTime" Precision="0" />
           <Property Name="end_date" Type="DateTime" Precision="0" />
           <Property Name="report_period_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="deadline_date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="DepartmentReports" Relationship="Self.FK_DepartmentReport_ReportPeriod" FromRole="ReportPeriod" ToRole="DepartmentReport" />
           <NavigationProperty Name="FormDepartmentReports" Relationship="Self.FK_FormDepartmentReport_ReportPeriod" FromRole="ReportPeriod" ToRole="FormDepartmentReport" />
           <NavigationProperty Name="FormPersonalReports" Relationship="Self.FK_FormPersonalReport_ReportPeriod" FromRole="ReportPeriod" ToRole="FormPersonalReport" />
           <NavigationProperty Name="PersonalReports" Relationship="Self.FK_PersonalReport_ReportPeriod" FromRole="ReportPeriod" ToRole="PersonalReport" />
+          <NavigationProperty Name="ReportYears" Relationship="Self.FK_ReportYear_ReportPeriod" FromRole="ReportPeriod" ToRole="ReportYear" />
         </EntityType>
-        <EntityType Name="Role">
+        <EntityType Name="ReportYear">
           <Key>
-            <PropertyRef Name="role_id" />
+            <PropertyRef Name="report_year_id" />
           </Key>
-          <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="role_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Role" FromRole="Role" ToRole="Account" />
+          <Property Name="report_year_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="report_period_id" Type="Int32" Nullable="false" />
+          <Property Name="report_year_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="start_date" Type="DateTime" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_ReportYear_ReportPeriod" FromRole="ReportYear" ToRole="ReportPeriod" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -910,78 +923,6 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK_Account_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="Account" Type="Self.Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="role_id" />
-            </Principal>
-            <Dependent Role="Account">
-              <PropertyRef Name="role_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DepartmentReport_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="DepartmentReport" Type="Self.DepartmentReport" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
-            </Principal>
-            <Dependent Role="DepartmentReport">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Notification_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
-            </Principal>
-            <Dependent Role="Notification">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PersonalReport_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="PersonalReport" Type="Self.PersonalReport" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
-            </Principal>
-            <Dependent Role="PersonalReport">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Profile_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_1_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="account_id" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="account_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1007,6 +948,66 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentReport_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="DepartmentReport" Type="Self.DepartmentReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DepartmentReport">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalReport_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="PersonalReport" Type="Self.PersonalReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonalReport">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profile_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="account_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1046,14 +1047,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Table_1_Table_1">
-          <End Role="PersonalReport" Type="Self.PersonalReport" Multiplicity="1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+        <Association Name="FK_DepartmentReport_Comment">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="0..1" />
+          <End Role="DepartmentReport" Type="Self.DepartmentReport" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PersonalReport">
-              <PropertyRef Name="personal_report_id" />
+            <Principal Role="Comment">
+              <PropertyRef Name="comment_id" />
             </Principal>
-            <Dependent Role="Comment">
+            <Dependent Role="DepartmentReport">
+              <PropertyRef Name="comment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalReport_Comment">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="PersonalReport" Type="Self.PersonalReport" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="comment_id" />
+            </Principal>
+            <Dependent Role="PersonalReport">
               <PropertyRef Name="personal_report_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1091,6 +1104,18 @@
             </Principal>
             <Dependent Role="DepartmentReportDetail">
               <PropertyRef Name="form_department_report_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profile_Faculty">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="faculty_id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="faculty_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1178,13 +1203,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReportYear_ReportPeriod">
+          <End Role="ReportPeriod" Type="Self.ReportPeriod" Multiplicity="1" />
+          <End Role="ReportYear" Type="Self.ReportYear" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportPeriod">
+              <PropertyRef Name="report_period_id" />
+            </Principal>
+            <Dependent Role="ReportYear">
+              <PropertyRef Name="report_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
         <EntityContainer Name="CP25Team04Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -1193,6 +1229,7 @@
           <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="DepartmentReports" EntityType="Self.DepartmentReport" />
           <EntitySet Name="DepartmentReportDetails" EntityType="Self.DepartmentReportDetail" />
+          <EntitySet Name="Faculties" EntityType="Self.Faculty" />
           <EntitySet Name="FormDepartmentReports" EntityType="Self.FormDepartmentReport" />
           <EntitySet Name="FormDepartmentReportDetails" EntityType="Self.FormDepartmentReportDetail" />
           <EntitySet Name="FormPersonalReports" EntityType="Self.FormPersonalReport" />
@@ -1202,32 +1239,8 @@
           <EntitySet Name="PersonalReportDetails" EntityType="Self.PersonalReportDetail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="ReportPeriods" EntityType="Self.ReportPeriod" />
-          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="ReportYears" EntityType="Self.ReportYear" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <AssociationSet Name="FK_Account_Role" Association="Self.FK_Account_Role">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="Account" EntitySet="Accounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DepartmentReport_Account" Association="Self.FK_DepartmentReport_Account">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="DepartmentReport" EntitySet="DepartmentReports" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Notification_Account" Association="Self.FK_Notification_Account">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Notification" EntitySet="Notifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PersonalReport_Account" Association="Self.FK_PersonalReport_Account">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="PersonalReport" EntitySet="PersonalReports" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Profile_Account" Association="Self.FK_Profile_Account">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Profile" EntitySet="Profiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_1_Account" Association="Self.FK_Table_1_Account">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Comment" EntitySet="Comments" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -1235,6 +1248,26 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_AspNetUsers" Association="Self.FK_Comment_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentReport_AspNetUsers" Association="Self.FK_DepartmentReport_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="DepartmentReport" EntitySet="DepartmentReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_AspNetUsers" Association="Self.FK_Notification_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalReport_AspNetUsers" Association="Self.FK_PersonalReport_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PersonalReport" EntitySet="PersonalReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profile_AspNetUsers" Association="Self.FK_Profile_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK_Category_Category" Association="Self.FK_Category_Category">
             <End Role="Category" EntitySet="Categories" />
@@ -1248,9 +1281,13 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="FormPersonalReportDetail" EntitySet="FormPersonalReportDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Table_1_Table_1" Association="Self.FK_Table_1_Table_1">
-            <End Role="PersonalReport" EntitySet="PersonalReports" />
+          <AssociationSet Name="FK_DepartmentReport_Comment" Association="Self.FK_DepartmentReport_Comment">
             <End Role="Comment" EntitySet="Comments" />
+            <End Role="DepartmentReport" EntitySet="DepartmentReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalReport_Comment" Association="Self.FK_PersonalReport_Comment">
+            <End Role="Comment" EntitySet="Comments" />
+            <End Role="PersonalReport" EntitySet="PersonalReports" />
           </AssociationSet>
           <AssociationSet Name="FK_DepartmentReport_ReportPeriod" Association="Self.FK_DepartmentReport_ReportPeriod">
             <End Role="ReportPeriod" EntitySet="ReportPeriods" />
@@ -1263,6 +1300,10 @@
           <AssociationSet Name="FK_DepartmentReportDetail_FormDepartmentReportDetail" Association="Self.FK_DepartmentReportDetail_FormDepartmentReportDetail">
             <End Role="FormDepartmentReportDetail" EntitySet="FormDepartmentReportDetails" />
             <End Role="DepartmentReportDetail" EntitySet="DepartmentReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profile_Faculty" Association="Self.FK_Profile_Faculty">
+            <End Role="Faculty" EntitySet="Faculties" />
+            <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK_FormDepartmentReport_ReportPeriod" Association="Self.FK_FormDepartmentReport_ReportPeriod">
             <End Role="ReportPeriod" EntitySet="ReportPeriods" />
@@ -1291,6 +1332,10 @@
           <AssociationSet Name="FK_PersonalReportDetail_PersonalReport" Association="Self.FK_PersonalReportDetail_PersonalReport">
             <End Role="PersonalReport" EntitySet="PersonalReports" />
             <End Role="PersonalReportDetail" EntitySet="PersonalReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReportYear_ReportPeriod" Association="Self.FK_ReportYear_ReportPeriod">
+            <End Role="ReportPeriod" EntitySet="ReportPeriods" />
+            <End Role="ReportYear" EntitySet="ReportYears" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -1335,17 +1380,6 @@
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="CP25Team04Model.Account">
-              <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
-                <ScalarProperty Name="role_id" ColumnName="role_id" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="token" ColumnName="token" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1407,10 +1441,9 @@
             <EntityTypeMapping TypeName="CP25Team04Model.Comment">
               <MappingFragment StoreEntitySet="Comment">
                 <ScalarProperty Name="comment_id" ColumnName="comment_id" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
-                <ScalarProperty Name="personal_report_id" ColumnName="personal_report_id" />
                 <ScalarProperty Name="comment_content" ColumnName="comment_content" />
                 <ScalarProperty Name="comment_date" ColumnName="comment_date" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1418,10 +1451,11 @@
             <EntityTypeMapping TypeName="CP25Team04Model.DepartmentReport">
               <MappingFragment StoreEntitySet="DepartmentReport">
                 <ScalarProperty Name="department_report_id" ColumnName="department_report_id" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
                 <ScalarProperty Name="file_path" ColumnName="file_path" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="comment_id" ColumnName="comment_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1432,6 +1466,14 @@
                 <ScalarProperty Name="department_report_id" ColumnName="department_report_id" />
                 <ScalarProperty Name="form_department_report_detail_id" ColumnName="form_department_report_detail_id" />
                 <ScalarProperty Name="department_report_content" ColumnName="department_report_content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Faculties">
+            <EntityTypeMapping TypeName="CP25Team04Model.Faculty">
+              <MappingFragment StoreEntitySet="Faculty">
+                <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
+                <ScalarProperty Name="faculty_name" ColumnName="faculty_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1477,10 +1519,10 @@
             <EntityTypeMapping TypeName="CP25Team04Model.Notification">
               <MappingFragment StoreEntitySet="Notification">
                 <ScalarProperty Name="notification_id" ColumnName="notification_id" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="notification_content" ColumnName="notification_content" />
                 <ScalarProperty Name="notification_date" ColumnName="notification_date" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1488,10 +1530,11 @@
             <EntityTypeMapping TypeName="CP25Team04Model.PersonalReport">
               <MappingFragment StoreEntitySet="PersonalReport">
                 <ScalarProperty Name="personal_report_id" ColumnName="personal_report_id" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
                 <ScalarProperty Name="file_path" ColumnName="file_path" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="comment_id" ColumnName="comment_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1510,11 +1553,12 @@
               <MappingFragment StoreEntitySet="Profile">
                 <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
                 <ScalarProperty Name="profile_id" ColumnName="profile_id" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
                 <ScalarProperty Name="department" ColumnName="department" />
                 <ScalarProperty Name="majors" ColumnName="majors" />
                 <ScalarProperty Name="avatar" ColumnName="avatar" />
+                <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1525,16 +1569,19 @@
                 <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="report_period_name" ColumnName="report_period_name" />
-                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="deadline_date" ColumnName="deadline_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="CP25Team04Model.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="role_id" ColumnName="role_id" />
-                <ScalarProperty Name="role_name" ColumnName="role_name" />
-                <ScalarProperty Name="description" ColumnName="description" />
+          <EntitySetMapping Name="ReportYears">
+            <EntityTypeMapping TypeName="CP25Team04Model.ReportYear">
+              <MappingFragment StoreEntitySet="ReportYear">
+                <ScalarProperty Name="report_year_id" ColumnName="report_year_id" />
+                <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
+                <ScalarProperty Name="report_year_name" ColumnName="report_year_name" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

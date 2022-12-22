@@ -15,11 +15,11 @@ namespace MonthlyStatement.Models
     public partial class Notification
     {
         public int notification_id { get; set; }
-        public int account_id { get; set; }
         public string notification_content { get; set; }
         public Nullable<System.DateTime> notification_date { get; set; }
         public string status { get; set; }
+        public string account_id { get; set; }
     
-        public virtual Account Account { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

@@ -12,19 +12,14 @@ namespace MonthlyStatement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Profile
+    public partial class ReportYear
     {
-        public int profile_id { get; set; }
-        public string user_name { get; set; }
-        public string department { get; set; }
-        public string majors { get; set; }
-        public string avatar { get; set; }
-        public Nullable<int> faculty_id { get; set; }
-
-        public string account_id { get; set; }
+        public int report_year_id { get; set; }
+        public int report_period_id { get; set; }
+        public string report_year_name { get; set; }
+        public Nullable<System.DateTime> start_date { get; set; }
+        public Nullable<System.DateTime> end_date { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
-
-        public virtual Faculty Faculty { get; set; }
+        public virtual ReportPeriod ReportPeriod { get; set; }
     }
 }
