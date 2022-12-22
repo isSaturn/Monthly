@@ -51,6 +51,8 @@
         <AssociationConnector Association="CP25Team04Model.FK_PersonalReportDetail_PersonalReport" ManuallyRouted="false" />
         <AssociationConnector Association="CP25Team04Model.FK_ReportYear_ReportPeriod" ManuallyRouted="false" />
         <AssociationConnector Association="CP25Team04Model.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CP25Team04Model.Faculty" Width="1.5" PointX="12.875" PointY="3.5" />
+        <AssociationConnector Association="CP25Team04Model.FK_Profile_Faculty" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

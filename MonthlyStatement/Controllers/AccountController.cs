@@ -12,6 +12,8 @@ using MonthlyStatement.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
+using System.DirectoryServices.AccountManagement;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MonthlyStatement.Controllers
 {
@@ -71,15 +73,22 @@ namespace MonthlyStatement.Controllers
         // GET: /Account/SignInCallBack
         public async Task<ActionResult> SignInCallBack()
         {
+            
+
             // Get user information
             var user = new ApplicationUser
             {
                 Email = User.Identity.Name,
                 UserName = User.Identity.Name,
-            };
+        };
+
+            var s = this.User.Identity.GetUserId();
 
             // Check if user exists
             var currentUser = await UserManager.FindByEmailAsync(user.Email);
+
+            var users = await UserManager.FindByIdAsync(this.User.Identity.GetUserId());
+
             if (currentUser != null)
             {
                 if (currentUser.Roles.Count != 0)
@@ -103,6 +112,7 @@ namespace MonthlyStatement.Controllers
                 var aspNetRole = db.AspNetRoles.Find("5");
                 var aspNetUser = db.AspNetUsers.Find(user.Id);
                 aspNetRole.AspNetUsers.Add(aspNetUser);
+                var pro = new Profile();
                 db.SaveChanges();
             }
 
