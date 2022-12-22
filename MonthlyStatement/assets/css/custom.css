@@ -2,3 +2,54 @@
 /*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY3VzdG9tLmNzcyIsInNvdXJjZXMiOlsiY3VzdG9tLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9 */
 
 /*# sourceMappingURL=custom.css.map */
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.page-inner {
+    padding: 1.5rem 0
+}
+
+@media (min-width:576px) {
+    .page-inner {
+        padding-right: 1rem;
+        padding-left: 1rem
+    }
+}
+
+@media (min-width:992px) {
+    .page-inner {
+        padding-right: 2rem;
+        padding-left: 2rem;
+    }
+}
+
+.fw-bold {
+    font-weight: 600 !important
+}
+
+.mt--5, .my--5 {
+    margin-top: -3rem !important;
+}
+
+/* div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:first-child, div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:last-child {
+    padding-left: 0;
+    padding-right: 0;
+} */
+
+.dataTables_filter {
+    text-align: right
+}
+
+.dataTables_filter label {
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.dataTables_filter input {
+    margin-left: .5em;
+    display: inline-block;
+    width: auto
+}

@@ -284,6 +284,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Views\YearReport\Index.html" />
     <Content Include="assets\bundles\amcharts4\animated.js" />
     <Content Include="assets\bundles\amcharts4\charts.js" />
     <Content Include="assets\bundles\amcharts4\core.js" />
