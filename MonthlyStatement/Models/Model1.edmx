@@ -196,16 +196,14 @@
           <Property Name="report_period_name" Type="nvarchar" MaxLength="200" />
           <Property Name="status" Type="nvarchar" MaxLength="200" />
           <Property Name="deadline_date" Type="date" />
+          <Property Name="report_year_id" Type="int" />
         </EntityType>
         <EntityType Name="ReportYear">
           <Key>
             <PropertyRef Name="report_year_id" />
           </Key>
           <Property Name="report_year_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="report_period_id" Type="int" Nullable="false" />
-          <Property Name="report_year_name" Type="nvarchar" MaxLength="200" />
-          <Property Name="start_date" Type="date" />
-          <Property Name="end_date" Type="date" />
+          <Property Name="year" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -501,15 +499,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ReportYear_ReportPeriod">
-          <End Role="ReportPeriod" Type="Self.ReportPeriod" Multiplicity="1" />
-          <End Role="ReportYear" Type="Self.ReportYear" Multiplicity="*" />
+        <Association Name="FK_ReportPeriod_ReportYear">
+          <End Role="ReportYear" Type="Self.ReportYear" Multiplicity="0..1" />
+          <End Role="ReportPeriod" Type="Self.ReportPeriod" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ReportPeriod">
-              <PropertyRef Name="report_period_id" />
+            <Principal Role="ReportYear">
+              <PropertyRef Name="report_year_id" />
             </Principal>
-            <Dependent Role="ReportYear">
-              <PropertyRef Name="report_period_id" />
+            <Dependent Role="ReportPeriod">
+              <PropertyRef Name="report_year_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -652,9 +650,9 @@
             <End Role="Faculty" EntitySet="Faculty" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
-          <AssociationSet Name="FK_ReportYear_ReportPeriod" Association="Self.FK_ReportYear_ReportPeriod">
-            <End Role="ReportPeriod" EntitySet="ReportPeriod" />
+          <AssociationSet Name="FK_ReportPeriod_ReportYear" Association="Self.FK_ReportPeriod_ReportYear">
             <End Role="ReportYear" EntitySet="ReportYear" />
+            <End Role="ReportPeriod" EntitySet="ReportPeriod" />
           </AssociationSet>
           <AssociationSet Name="FK_Table1_FormPersonalReport" Association="Self.FK_Table1_FormPersonalReport">
             <End Role="FormPersonalReport" EntitySet="FormPersonalReport" />
@@ -897,22 +895,20 @@
           <Property Name="report_period_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="deadline_date" Type="DateTime" Precision="0" />
+          <Property Name="report_year_id" Type="Int32" />
           <NavigationProperty Name="DepartmentReports" Relationship="Self.FK_DepartmentReport_ReportPeriod" FromRole="ReportPeriod" ToRole="DepartmentReport" />
           <NavigationProperty Name="FormDepartmentReports" Relationship="Self.FK_FormDepartmentReport_ReportPeriod" FromRole="ReportPeriod" ToRole="FormDepartmentReport" />
           <NavigationProperty Name="FormPersonalReports" Relationship="Self.FK_FormPersonalReport_ReportPeriod" FromRole="ReportPeriod" ToRole="FormPersonalReport" />
           <NavigationProperty Name="PersonalReports" Relationship="Self.FK_PersonalReport_ReportPeriod" FromRole="ReportPeriod" ToRole="PersonalReport" />
-          <NavigationProperty Name="ReportYears" Relationship="Self.FK_ReportYear_ReportPeriod" FromRole="ReportPeriod" ToRole="ReportYear" />
+          <NavigationProperty Name="ReportYear" Relationship="Self.FK_ReportPeriod_ReportYear" FromRole="ReportPeriod" ToRole="ReportYear" />
         </EntityType>
         <EntityType Name="ReportYear">
           <Key>
             <PropertyRef Name="report_year_id" />
           </Key>
           <Property Name="report_year_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="report_period_id" Type="Int32" Nullable="false" />
-          <Property Name="report_year_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="start_date" Type="DateTime" Precision="0" />
-          <Property Name="end_date" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_ReportYear_ReportPeriod" FromRole="ReportYear" ToRole="ReportPeriod" />
+          <Property Name="year" Type="Int32" />
+          <NavigationProperty Name="ReportPeriods" Relationship="Self.FK_ReportPeriod_ReportYear" FromRole="ReportYear" ToRole="ReportPeriod" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1204,15 +1200,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ReportYear_ReportPeriod">
-          <End Role="ReportPeriod" Type="Self.ReportPeriod" Multiplicity="1" />
-          <End Role="ReportYear" Type="Self.ReportYear" Multiplicity="*" />
+        <Association Name="FK_ReportPeriod_ReportYear">
+          <End Role="ReportYear" Type="Self.ReportYear" Multiplicity="0..1" />
+          <End Role="ReportPeriod" Type="Self.ReportPeriod" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ReportPeriod">
-              <PropertyRef Name="report_period_id" />
+            <Principal Role="ReportYear">
+              <PropertyRef Name="report_year_id" />
             </Principal>
-            <Dependent Role="ReportYear">
-              <PropertyRef Name="report_period_id" />
+            <Dependent Role="ReportPeriod">
+              <PropertyRef Name="report_year_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1334,9 +1330,9 @@
             <End Role="PersonalReport" EntitySet="PersonalReports" />
             <End Role="PersonalReportDetail" EntitySet="PersonalReportDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_ReportYear_ReportPeriod" Association="Self.FK_ReportYear_ReportPeriod">
-            <End Role="ReportPeriod" EntitySet="ReportPeriods" />
+          <AssociationSet Name="FK_ReportPeriod_ReportYear" Association="Self.FK_ReportPeriod_ReportYear">
             <End Role="ReportYear" EntitySet="ReportYears" />
+            <End Role="ReportPeriod" EntitySet="ReportPeriods" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -1546,6 +1542,7 @@
                 <ScalarProperty Name="report_period_name" ColumnName="report_period_name" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="deadline_date" ColumnName="deadline_date" />
+                <ScalarProperty Name="report_year_id" ColumnName="report_year_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1553,10 +1550,7 @@
             <EntityTypeMapping TypeName="CP25Team04Model.ReportYear">
               <MappingFragment StoreEntitySet="ReportYear">
                 <ScalarProperty Name="report_year_id" ColumnName="report_year_id" />
-                <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
-                <ScalarProperty Name="report_year_name" ColumnName="report_year_name" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="year" ColumnName="year" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
