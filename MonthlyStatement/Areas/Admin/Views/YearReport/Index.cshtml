@@ -27,6 +27,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                @if (Convert.ToBoolean(Session["ReportYear-Check"]) == true)
+                                {
+                                    <div class="card">
+                                        <button class="btn btn-primary" id="add_report_year">Thêm</button>
+                                    </div>
+                                }
+                            </div>
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <a class="card card-success" href="#">
@@ -35,36 +43,6 @@
                                         </div>
                                         <div class="card-body">
                                             <p>Các kỳ báo cáo năm 2022</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <a class="card card-primary" href="#">
-                                        <div class="card-header">
-                                            <h4>Năm 2023</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <p>Các kỳ báo cáo năm 2023</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <a class="card card-primary" href="#">
-                                        <div class="card-header">
-                                            <h4>Năm 2024</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <p>Các kỳ báo cáo năm 2024</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <a class="card card-primary" href="#">
-                                        <div class="card-header">
-                                            <h4>Năm 2025</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <p>Các kỳ báo cáo năm 2025</p>
                                         </div>
                                     </a>
                                 </div>
@@ -95,5 +73,49 @@
                 }
             });
         });
+        $("#add_report_year").click(function () {
+            swal({
+                title: 'Thêm báo cáo?',
+                text: 'Bạn có muốn thêm báo cáo của năm nay không?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willAdd) => {
+                    if (willAdd) {
+                        $.ajax({
+                            type: "POST",
+                            traditional: true,
+                            async: false,
+                            cache: false,
+                            url: $('#requestUrl').val() + 'YearReport/Create',
+                            context: document.body,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    $("#add_report_year").replaceWith("");
+                                    swal('Thêm thành công', {
+                                        icon: 'success',
+                                    });
+                                } else {
+                                    swal(result, {
+                                        icon: 'error',
+                                    });
+                                }
+                            },
+                            error: function (xhr) {
+                                swal(xhr.responseText, {
+                                    icon: 'error',
+                                });
+                                //debugger;
+                                console.log(xhr.responseText);
+                                alert("Error has occurred..");
+                            }
+                        });
+
+                    }
+                });
+        });
+
     });
+
 </script>

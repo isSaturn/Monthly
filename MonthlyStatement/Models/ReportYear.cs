@@ -14,12 +14,16 @@ namespace MonthlyStatement.Models
     
     public partial class ReportYear
     {
-        public int report_year_id { get; set; }
-        public int report_period_id { get; set; }
-        public string report_year_name { get; set; }
-        public Nullable<System.DateTime> start_date { get; set; }
-        public Nullable<System.DateTime> end_date { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ReportYear()
+        {
+            this.ReportPeriods = new HashSet<ReportPeriod>();
+        }
     
-        public virtual ReportPeriod ReportPeriod { get; set; }
+        public int report_year_id { get; set; }
+        public Nullable<int> year { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReportPeriod> ReportPeriods { get; set; }
     }
 }
