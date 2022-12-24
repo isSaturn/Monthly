@@ -37,31 +37,31 @@
                     </div>
                     @if (User.IsInRole("Quản trị viên"))
                     {
-                <ul class="sidebar-menu">
-                    <li class=@(ViewBag.Title == "Quản lý tài quản" ? "active" : "nav-item")>
-                        <a href="@Url.Action("Index", "Accounts", new { Area = "Admin" })" class="nav-link"><i data-feather="user-check"></i><span>Quản lý tài khoản</span></a>
-                    </li>
-                    <li class=@(ViewBag.Title == "Quản lý khoa" ? "active" : "nav-item")>
-                        <a href="@Url.Action("Index", "Faculty", new { Area = "Admin" })" class="nav-link"><i data-feather="user"></i><span>Quản lý khoa</span></a>
-                    </li>
-                    <li class="dropdown">
-                    <li class=@(ViewBag.Title == "Quản lý kỳ báo cáo" ? "active" : "nav-item")>
-                        <a href="@Url.Action("Index", "ReportPeriods", new { Area = "Admin" })" class="nav-link"><i data-feather="briefcase"></i><span>Quản lý kỳ báo cáo</span></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="#">Bộ môn</a></li>
-                            <li><a class="nav-link" href="#">Cá nhân</a></li>
+                        <ul class="sidebar-menu">
+                            <li class=@(ViewBag.Title == "Quản lý tài quản" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "Accounts", new { Area = "Admin" })" class="nav-link"><i data-feather="user-check"></i><span>Quản lý tài khoản</span></a>
+                            </li>
+                            <li class=@(ViewBag.Title == "Quản lý khoa" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "Faculty", new { Area = "Admin" })" class="nav-link"><i data-feather="user"></i><span>Quản lý khoa</span></a>
+                            </li>
+                            <li class="dropdown">
+                            <li class=@(ViewBag.Title == "Quản lý kỳ báo cáo" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "YearReport", new { Area = "Admin" })" class="nav-link"><i data-feather="briefcase"></i><span>Quản lý kỳ báo cáo</span></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link" href="#">Bộ môn</a></li>
+                                    <li><a class="nav-link" href="#">Cá nhân</a></li>
+                                </ul>
+                            </li>
+                            <li class=@(ViewBag.Title == "Quản lý danh mục" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "Categories", new { Area = "Admin" })" class="nav-link"><i data-feather="grid"></i><span>Quản lý danh mục</span></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-linkn"><i data-feather="bar-chart"></i><span>Thống kê</span></a>
+                            </li>
                         </ul>
-                    </li>
-                    <li class=@(ViewBag.Title == "Quản lý danh mục" ? "active" : "nav-item")>
-                        <a href="@Url.Action("Index", "Categories", new { Area = "Admin" })" class="nav-link"><i data-feather="grid"></i><span>Quản lý danh mục</span></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="nav-linkn"><i data-feather="bar-chart"></i><span>Thống kê</span></a>
-                    </li>
-                </ul>
                     }
                 </aside>
             </div>
@@ -71,6 +71,7 @@
             </div>
         </div>
     </div>
+    <input hidden="hidden" id="requestUrl" value="@Url.Content("~")"/>
     <script src="~/assets/js/page/calendar.js"></script>
     <script src="~/assets/js/page/chart-amchart.js"></script>
     <script src="~/assets/js/page/chart-apexcharts.js"></script>
@@ -118,8 +119,7 @@
     <!-- Template JS File -->
     <script src="~/assets/js/scripts.js"></script>
     <!-- Custom JS File -->
-    <script src="~/assets/js/custom.js"></script>
-
+    <script src="~/assets/bundles/sweetalert/sweetalert.min.js"></script>
 </body>
 
 <!-- index.html  21 Nov 2019 03:47:04 GMT -->

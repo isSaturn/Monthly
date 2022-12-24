@@ -4,57 +4,65 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<section class="section">
-    <div class="section-body">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Quản lý báo cáo năm</h4>
-                        <div class="card-header-form">
-                            <form>
-                                <div class="input-group">
-                                    <input class="form-control" type="text" id="Search" placeholder="Tìm kiếm" aria-label="Search" data-width="200" style="width: 200px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+<div class="main-content" style="min-height: 676px;">
+    <div class="bg-primary">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Báo cáo năm</h2>
+                </div>
+            </div>
+                            </form>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="add-row_wrapper" class="container-fluid dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="dataTables_filter">
+                                        <label>
+                                            Tìm kiếm
+                                            <input class="form-control btn-round" type="text" id="Search" aria-label="Search" data-width="200">
+                                        </label>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="col-sm-12 buttons">
-                            <a style="color:white" type="button" class="btn btn-primary btn-round" href="#">
-                                <i class="fa fa-plus"></i>
-                                Tạo năm mới
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        @foreach (var item in Model)
-                        {
-                            <div class="col-12 col-md-6 col-lg-3">
-                                <a class="card card-success">
-                                    <div class="card-header">
-                                        <h4>Năm @item.report_year_name</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <p>Các kỳ báo cáo năm @item.report_year_name</p>
-                                    </div>
-                                </a>
                             </div>
-                        }
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                @if (Convert.ToBoolean(Session["ReportYear-Check"]) == true)
+                                {
+                                    <div class="card">
+                                        <button class="btn btn-primary" id="add_report_year">Thêm</button>
+                                    </div>
+                                }
+                            </div>
+                            <div class="row">
+                                <div hidden="hidden" id="appendata"></div>
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-12 col-md-6 col-lg-3">
+                                        <a class="card card-success" href="@Url.Action("Index","ReportPeriods", new {id = item.report_year_id})">
+                                            <div class="card-header">
+                                                <h4>Năm @item.year</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <p>Các kỳ báo cáo năm @item.year</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
@@ -74,5 +82,50 @@
                 }
             });
         });
+        $("#add_report_year").click(function () {
+            swal({
+                title: 'Thêm báo cáo?',
+                text: 'Bạn có muốn thêm báo cáo của năm nay không?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willAdd) => {
+                    if (willAdd) {
+                        $.ajax({
+                            type: "POST",
+                            traditional: true,
+                            async: false,
+                            cache: false,
+                            url: $('#requestUrl').val() + 'YearReport/Create',
+                            context: document.body,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    $("#appendate").replaceWith("");
+                                    $("#add_report_year").replaceWith("");
+                                    swal('Thêm thành công', {
+                                        icon: 'success',
+                                    });
+                                } else {
+                                    swal(result, {
+                                        icon: 'error',
+                                    });
+                                }
+                            },
+                            error: function (xhr) {
+                                swal(xhr.responseText, {
+                                    icon: 'error',
+                                });
+                                //debugger;
+                                console.log(xhr.responseText);
+                                alert("Error has occurred..");
+                            }
+                        });
+
+                    }
+                });
+        });
+
     });
+
 </script>
