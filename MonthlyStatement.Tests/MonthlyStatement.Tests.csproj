@@ -129,6 +129,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MonthlyStatement\MonthlyStatement.csproj">
+      <Project>{A9031A9B-3C87-41B7-A563-22B5604C2B17}</Project>
+      <Name>MonthlyStatement</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
