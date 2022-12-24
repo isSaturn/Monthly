@@ -67,7 +67,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // GET: Admin/Categories/Create
         public ActionResult Create1()
         {
-            ViewBag.category_of_id = new SelectList(db.Categories, "category_id", "category_content");
+            ViewBag.category_of_id = new SelectList(db.Categories.Where(c=>c.category_of_id==null).ToList(), "category_id", "category_content");
             return View(new Category());
         }
 

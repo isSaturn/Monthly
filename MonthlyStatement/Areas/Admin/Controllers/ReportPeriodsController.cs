@@ -16,9 +16,9 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         private CP25Team04Entities db = new CP25Team04Entities();
 
         // GET: Admin/ReportPeriods
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            return View(db.ReportPeriods.ToList());
+            return View(db.ReportPeriods.Where(i => i.report_year_id == id).ToList());
         }
 
         // GET: Admin/ReportPeriods/Details/5
@@ -103,7 +103,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult FormReports(int? id)
         {
-            var form = db.ReportPeriods.FirstOrDefault(f => f.report_period_id == id);
+            var form = db.ReportPeriods.Find(id);
             if (form != null)
             {
                 return View(form);

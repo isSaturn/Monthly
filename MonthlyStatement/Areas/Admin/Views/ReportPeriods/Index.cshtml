@@ -24,12 +24,6 @@
                         <div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
-                                    <a style="color:white" type="button" class="btn bg-primary-gradient btn-round" href="@Url.Action("Create", "ReportPeriods")">
-                                        <i class="fa fa-plus"></i>
-                                        Tạo kỳ báo cáo
-                                    </a>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
                                     <div class="dataTables_filter">
                                         <label>
                                             Tìm kiếm
@@ -64,14 +58,17 @@
                                                         <a href="@Url.Action("FormReports", "ReportPeriods", new {id = item.report_period_id })">@item.report_period_name</a>
                                                     </td>
                                                     <td>
-                                                        @if (item.start_date <= DateTime.Now && item.end_date >= DateTime.Now)
+                                                        @if (item.start_date <= DateTime.Now && item.deadline_date >= DateTime.Now)
                                                         {
                                                             <div class="badge badge-success">Đang báo cáo</div>
                                                         }
+                                                        else if (item.deadline_date <= DateTime.Now && item.end_date >= DateTime.Now)
+                                                        {
+                                                            <div class="badge badge-warning">Trễ hạn báo cáo</div>
+                                                        }
                                                         else
                                                         {
-                                                            <div class="badge badge-danger">Không được phép báo cáo</div>
-
+                                                            <div class="badge badge-danger">Không được báo cáo</div>
                                                         }
                                                     </td>
                                                     <td>

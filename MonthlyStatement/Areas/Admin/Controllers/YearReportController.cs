@@ -39,6 +39,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                     db.ReportYears.Add(report_year);
                     db.SaveChanges();
 
+
                     for (int i = 1; i <= 12; i++)
                     {
                         var report_period = new ReportPeriod();
@@ -66,8 +67,20 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                             }
                         }
                         db.ReportPeriods.Add(report_period);
+
+                        db.SaveChanges();
+
+                        FormDepartmentReport formDepartmentReport = new FormDepartmentReport();
+                        formDepartmentReport.report_period_id = report_period.report_period_id;
+                        db.FormDepartmentReports.Add(formDepartmentReport);
+
+                        FormPersonalReport formPersonalReport = new FormPersonalReport();
+                        formPersonalReport.report_period_id = report_period.report_period_id;
+                        db.FormPersonalReports.Add(formPersonalReport);
+
+                        db.SaveChanges();
+
                     }
-                    db.SaveChanges();
                     return Json("Success", JsonRequestBehavior.AllowGet);
                 }
                 else
