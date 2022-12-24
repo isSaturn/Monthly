@@ -41,7 +41,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "report_period_id,start_date,end_date,report_period_name,deadline_date,report_year_id")] ReportPeriod reportPeriod)
+        public ActionResult Edit([Bind(Include = "report_period_id,start_date,end_date,report_period_name,deadline_date")] ReportPeriod reportPeriod)
         {
             if (ModelState.IsValid)
             {

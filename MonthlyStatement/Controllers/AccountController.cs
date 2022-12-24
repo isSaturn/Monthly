@@ -73,6 +73,7 @@ namespace MonthlyStatement.Controllers
         // GET: /Account/SignInCallBack
         public async Task<ActionResult> SignInCallBack()
         {
+            Session["ID_User"] = User.Identity.Name;
             // Get user information
             var user = new ApplicationUser
             {
@@ -110,8 +111,8 @@ namespace MonthlyStatement.Controllers
                 var aspNetRole = db.AspNetRoles.Find("5");
                 var aspNetUser = db.AspNetUsers.Find(user.Id);
                 aspNetRole.AspNetUsers.Add(aspNetUser);
-                //Add Profile
-                var profile = new Profile();
+                //Add profile
+                Profile profile = new Profile();
                 profile.account_id = aspNetUser.Id;
                 db.Profiles.Add(profile);
                 db.SaveChanges();

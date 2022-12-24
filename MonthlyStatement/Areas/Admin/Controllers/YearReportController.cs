@@ -8,6 +8,7 @@ using System.Web.Mvc;
 namespace MonthlyStatement.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Quản trị viên")]
+
     public class YearReportController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();
