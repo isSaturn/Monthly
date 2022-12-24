@@ -5,9 +5,11 @@
 }
 @using (Html.BeginForm("FormReports", "ReportPeriods", FormMethod.Post, new { }))
 {
-    <div>
-        <h4>@Model.report_period_name</h4>
+<div class="card">
+    <div class="card-header bg-primary" style="height:100px">
+        <h4 class="text-white" style="font-size:1.75rem">@Model.report_period_name</h4>
     </div>
+</div>
     <section class="section">
         <div class="section-body">
             <div class="row">

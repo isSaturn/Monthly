@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <div class="col-sm-12 buttons">
-                            <a style="color:white" type="button" class="btn btn-primary btn-round" href="@Url.Action("Create", "Categories")">
+                            <a style="color:white" type="button" class="btn btn-warning btn-round" href="@Url.Action("Create", "Categories")">
                                 <i class="fa fa-plus"></i>
                                 Tạo danh mục cha
                             </a>
@@ -97,7 +97,7 @@
                                                         <a class="btn btn-icon btn-info" data-original-title="Thông tin danh mục" href="@Url.Action("Details", "Categories", new { id = items.category_id })">
                                                             <i class="fas fa-info-circle"></i>
                                                         </a>
-                                                        <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "Categories", new { id = item.category_id })">
+                                                        <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "Categories", new { id = items.category_id })">
                                                             <i class="far fa-edit"></i>
                                                         </a>
                                                     </div>
@@ -133,5 +133,50 @@
                 }
             });
         });
+
+        @*$("#them_danh_muc_cha").click(function () {
+            swal({
+                title: 'Thêm danh mục cha?',
+                text: 'Bạn có muốn thêm danh mục cha không?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willAdd) => {
+                    if (willAdd) {
+                        $.ajax({
+                            type: "POST",
+                            traditional: true,
+                            async: false,
+                            cache: false,
+                            url: $('#requestUrl').val() + 'Categories/Create',
+                            context: document.body,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    $("#appendate").replaceWith("");
+                                    $("#them_danh_muc_cha").replaceWith("");
+                                    swal('Thêm thành công', {
+                                        icon: 'success',
+                                    });
+                                } else {
+                                    swal(result, {
+                                        icon: 'error',
+                                    });
+                                }
+                            },
+                            error: function (dmch) {
+                                swal(xhr.responseText, {
+                                    icon: 'error',
+                                });
+                                //debugger;
+                                console.log(xhr.responseText);
+                                alert("Error has occurred..");
+                            }
+                        });
+
+                    }
+                });
+        });*@
+
     });
 </script>
