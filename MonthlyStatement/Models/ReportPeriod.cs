@@ -27,7 +27,6 @@ namespace MonthlyStatement.Models
         public Nullable<System.DateTime> start_date { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
         public string report_period_name { get; set; }
-        public string status { get; set; }
         public Nullable<System.DateTime> deadline_date { get; set; }
         public Nullable<int> report_year_id { get; set; }
     

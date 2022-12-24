@@ -193,7 +193,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\FacultyController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportPeriodsController.cs" />
     <Compile Include="Areas\Admin\Controllers\YearReportController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -977,6 +977,7 @@
     <Content Include="assets\img\image-gallery\thumb\thumb-8.png" />
     <Content Include="assets\img\image-gallery\thumb\thumb-9.png" />
     <Content Include="assets\img\loading.gif" />
+    <Content Include="assets\img\sidenav2.jpg" />
     <Content Include="assets\img\vlu\logo-bg.png" />
     <Content Include="assets\img\vlu\logo.png" />
     <Content Include="assets\img\vlu\logoVL.jpg" />
@@ -1132,7 +1133,7 @@
     <Content Include="Areas\Admin\Views\ReportPeriods\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormReports.cshtml" />
-    <Content Include="Areas\Admin\Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Details.cshtml" />
@@ -1147,6 +1148,7 @@
     <Content Include="Areas\Admin\Views\Faculty\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Faculty\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Faculty\AttendenceList.cshtml" />
+    <Content Include="Areas\Admin\Views\YearReport\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -1154,7 +1156,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\YearReport\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
