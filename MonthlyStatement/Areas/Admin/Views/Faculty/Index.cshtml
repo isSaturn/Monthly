@@ -66,9 +66,12 @@
                                                     <td>
                                                         <div class="form-button-action">
                                                             @*<a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-icon btn-info" data-original-title="Thông tin" href="@Url.Action("Details", "Faculty", new { id = item.faculty_id })" target="_blank">
-                                                                <i class="fa fa-info"></i>
-                                                            </a>
-                                                            &nbsp;*@
+                                                                    <i class="fa fa-info"></i>
+                                                                </a>
+                                                                &nbsp;*@
+                                                            <button class="btn btn-primary" id="edit_faculty">
+                                                                <i class="fa fa-edit"></i>
+                                                            </button>
                                                             <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "Faculty", new { id = item.faculty_id })" target="_blank">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
@@ -105,5 +108,26 @@
                 }
             });
         });
+    });
+    $("#edit_faculty").click(function () {
+        swal({
+            title: 'Chỉnh sửa tên khoa',
+            buttons: true,
+            dangerMode: true,
+            content: {
+                element: 'input',
+                attributes: {
+                    placeholder: 'Nhập tên khoa',
+                    type: 'text',
+                },
+            },
+        })
+            .then((willSave) => {
+                if (willSave) {
+                    swal('Lưu thành công!', {
+                        icon: 'success',
+                    });
+                }
+            });
     });
 </script>

@@ -125,6 +125,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             var form = db.FormPersonalReports.FirstOrDefault(f => f.form_personal_report_id == id);
             if (form != null)
             {
+                Session["FormPersonalEdit-lstCategory"] = db.Categories.ToList();
                 return View(form);
 
             }
