@@ -32,10 +32,6 @@
     margin-top: -3rem !important;
 }
 
-/* div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:first-child, div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:last-child {
-    padding-left: 0;
-    padding-right: 0;
-} */
 
 .dataTables_filter {
     text-align: right

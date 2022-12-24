@@ -1,0 +1,78 @@
+﻿@model IEnumerable<MonthlyStatement.Models.ReportYear>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Quản lý báo cáo năm</h4>
+                        <div class="card-header-form">
+                            <form>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="Search" placeholder="Tìm kiếm" aria-label="Search" data-width="200" style="width: 200px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="col-sm-12 buttons">
+                            <a style="color:white" type="button" class="btn btn-primary btn-round" href="#">
+                                <i class="fa fa-plus"></i>
+                                Tạo năm mới
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <a class="card card-success">
+                                    <div class="card-header">
+                                        <h4>Năm @item.report_year_name</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Các kỳ báo cáo năm @item.report_year_name</p>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function Contains(text_one, text_two) {
+            if (text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#Search").keyup(function () {
+            var searchText = $("#Search").val().toLowerCase();
+            $(".Search").each(function () {
+                if (!Contains($(this).text().toLowerCase(), searchText)) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>
