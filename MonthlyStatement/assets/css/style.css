@@ -5983,7 +5983,7 @@ pre {
     top: 0;
     height: 100%;
     width: 250px;
-    background-image: url("https://mdbootstrap.com/img/Photos/Others/sidenav4.jpg");
+    background-image: url('../img/sidenav1.jpg');
     background-color: #fff;
     z-index: 880;
     left: 0

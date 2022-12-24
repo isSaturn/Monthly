@@ -21,54 +21,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View(db.ReportPeriods.Where(i => i.report_year_id == id).ToList());
         }
 
-        // GET: Admin/ReportPeriods/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ReportPeriod reportPeriod = db.ReportPeriods.Find(id);
-            if (reportPeriod == null)
-            {
-                return HttpNotFound();
-            }
-            return View(reportPeriod);
-        }
-
-        [HttpGet]
-        // GET: Admin/ReportPeriods/Create
-        public ActionResult Create()
-        {
-            return View(new ReportPeriod());
-        }
-
-        // POST: ReportPeriods/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-
-        [HttpPost]
-        public ActionResult Create([Bind(Include = "report_period_id,start_date,end_date,report_period_name,active")] ReportPeriod reportPeriod)
-        {
-            if (ModelState.IsValid)
-            {
-                db.ReportPeriods.Add(reportPeriod);
-                db.SaveChanges();
-                FormDepartmentReport formDepartmentReport = new FormDepartmentReport();
-                formDepartmentReport.report_period_id = reportPeriod.report_period_id;
-                db.FormDepartmentReports.Add(formDepartmentReport);
-
-                FormPersonalReport formPersonalReport = new FormPersonalReport();
-                formPersonalReport.report_period_id = reportPeriod.report_period_id;
-                db.FormPersonalReports.Add(formPersonalReport);
-
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(reportPeriod);
-        }
-
         [HttpGet]
         // GET: Admin/ReportPeriods/Edit/5
         public ActionResult Edit(int? id)
@@ -89,7 +41,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "report_period_id,start_date,end_date,report_period_name,active")] ReportPeriod reportPeriod)
+        public ActionResult Edit([Bind(Include = "report_period_id,start_date,end_date,report_period_name,deadline_date,report_year_id")] ReportPeriod reportPeriod)
         {
             if (ModelState.IsValid)
             {

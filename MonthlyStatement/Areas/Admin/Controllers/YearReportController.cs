@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MonthlyStatement.Models;
 
 namespace MonthlyStatement.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Quản trị viên")]
     public class YearReportController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();
@@ -52,21 +52,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                             Convert.ToDateTime(current_year + "-" + i.ToString("D2") + "-" +
                             DateTime.DaysInMonth(current_year, i).ToString("D2"));
                         report_period.report_period_name = "Kỳ báo cáo tháng " + i + "-" + current_year;
-                        if (DateTime.Now.Month != i)
-                        {
-                            report_period.status = "Không được báo cáo";
-                        }
-                        else
-                        {
-                            if (DateTime.Now.Day > 22)
-                            {
-                                report_period.status = "Báo cáo trễ";
-                            }
-                            else
-                            {
-                                report_period.status = "Đang được báo cáo";
-                            }
-                        }
                         db.ReportPeriods.Add(report_period);
 
                         db.SaveChanges();

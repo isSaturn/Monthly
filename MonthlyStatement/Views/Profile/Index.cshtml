@@ -1,4 +1,4 @@
-﻿@model MonthlyStatement.Models.Account
+﻿@model MonthlyStatement.Models.Profile
 
 
 @{
@@ -88,51 +88,51 @@
             </div>
             <div class="modal-body">
                 @*@using (Html.BeginForm("Edit_Profile", "Profile", FormMethod.Post))
-                {
-                    <label class="fileContainer text-center">
+                    {
+                        <label class="fileContainer text-center">
 
-                        <br />
-                        <img id="blah" src="@Url.Content(avt)" width="200" alt="Image preview...">
-                        <label for="exampleFormControlFile1" style="color: #808080"></label>
-                        <input accept="image/*" name="avt" type="file" class="form-control-file" id="exampleFormControlFile1">
-                        <label class="control-label" for="input">New Avtatar</label>
+                            <br />
+                            <img id="blah" src="@Url.Content(avt)" width="200" alt="Image preview...">
+                            <label for="exampleFormControlFile1" style="color: #808080"></label>
+                            <input accept="image/*" name="avt" type="file" class="form-control-file" id="exampleFormControlFile1">
+                            <label class="control-label" for="input">New Avtatar</label>
 
-                        <script>
-                            exampleFormControlFile1.onchange = evt => {
-                                const [file] = exampleFormControlFile1.files
-                                if (file) {
-                                    blah.src = URL.createObjectURL(file)
+                            <script>
+                                exampleFormControlFile1.onchange = evt => {
+                                    const [file] = exampleFormControlFile1.files
+                                    if (file) {
+                                        blah.src = URL.createObjectURL(file)
+                                    }
                                 }
-                            }
-                        </script>
-                    </label>
-                    <br />
+                            </script>
+                        </label>
+                        <br />
 
-                    <label>Email : </label>
-                    <div class="form-group position-relative has-icon-left">
-                        <input type="text" placeholder="Email" class="form-control" value="@Model.email" readonly />
-
-                        <label>Name : </label>
+                        <label>Email : </label>
                         <div class="form-group position-relative has-icon-left">
-                            <input type="text" placeholder="Name" class="form-control" name="name" value="">
+                            <input type="text" placeholder="Email" class="form-control" value="@Model.email" readonly />
 
-                        </div>
-                        <label>Department : </label>
-                        <div class="form-group position-relative has-icon-left">
-                            <input type="text" placeholder="Department" class="form-control" name="department" value="">
+                            <label>Name : </label>
+                            <div class="form-group position-relative has-icon-left">
+                                <input type="text" placeholder="Name" class="form-control" name="name" value="">
 
-                        </div>
-                        <label>Majors : </label>
-                        <div class="form-group position-relative has-icon-left">
-                            <input type="text" placeholder="Majors" class="form-control" name="majors" value="">
+                            </div>
+                            <label>Department : </label>
+                            <div class="form-group position-relative has-icon-left">
+                                <input type="text" placeholder="Department" class="form-control" name="department" value="">
 
+                            </div>
+                            <label>Majors : </label>
+                            <div class="form-group position-relative has-icon-left">
+                                <input type="text" placeholder="Majors" class="form-control" name="majors" value="">
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-outline-primary">Save</button>
-                    </div>
-                }*@
+                        <div class="modal-footer">
+                            <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-primary">Save</button>
+                        </div>
+                    }*@
             </div>
         </div>
     </div>

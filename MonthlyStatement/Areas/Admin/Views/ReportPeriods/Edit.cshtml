@@ -27,44 +27,44 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.report_period_id)
 
-                <div class="card-body" style="margin-top: 0.2rem">
-                    <!-- Form Group (Tên báo cáo)-->
-                    <div class="mb-3">
-                        <label class="small mb-1">Tên kỳ báo cáo</label>
-                        @Html.EditorFor(model => model.report_period_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên kỳ báo cáo", @required = "required", @oninvalid = "this.setCustomValidity('Vui lòng nhập tên kỳ báo cáo')", @oninput = "this.setCustomValidity('')" } })
-                        @Html.ValidationMessageFor(model => model.report_period_name, "", new { @class = "text-danger" })
-                    </div>
-                    <!-- Form Group (Ngày bắt đầu)-->
-                    <div class="mb-3">
-                        <label class="small mb-1">Ngày bắt đầu</label>
-                        @Html.TextBoxFor(m => m.start_date, new { @class = "form-control", type = "date" })
-                        @Html.ValidationMessageFor(model => model.start_date, "", new { @class = "text-danger" })
-                    </div>
-                    <!-- Form Group (Ngày báo cáo)-->
-                    <div class="mb-3">
-                        <label class="small mb-1">Ngày báo cáo</label>
-                        @Html.TextBoxFor(m => m.deadline_date, new { @class = "form-control", type = "date" })
-                        @Html.ValidationMessageFor(model => model.end_date, "", new { @class = "text-danger" })
-                    </div>
-                    <!-- Form Group (Ngày kết thúc)-->
-                    <div class="mb-3">
-                        <label class="small mb-1">Ngày kết thúc</label>
-                        @Html.TextBoxFor(m => m.end_date, new { @class = "form-control", type = "date" })
-                        @Html.ValidationMessageFor(model => model.end_date, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="row">
+                    <div class="card-body" style="margin-top: 0.2rem">
+                        <!-- Form Group (Tên báo cáo)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Tên kỳ báo cáo</label>
+                            @Html.EditorFor(model => model.report_period_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên kỳ báo cáo", @required = "required", @oninvalid = "this.setCustomValidity('Vui lòng nhập tên kỳ báo cáo')", @oninput = "this.setCustomValidity('')" } })
+                            @Html.ValidationMessageFor(model => model.report_period_name, "", new { @class = "text-danger" })
+                        </div>
+                        <!-- Form Group (Ngày bắt đầu)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Ngày bắt đầu</label>
+                            @Html.TextBoxFor(m => m.start_date, "{0:dd/MM/yyyy}", new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.start_date, "", new { @class = "text-danger" })
+                        </div>
+                        <!-- Form Group (Ngày báo cáo)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Hạn báo cáo</label>
+                            @Html.TextBoxFor(m => m.deadline_date, "{0:dd/MM/yyyy}", new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.deadline_date, "", new { @class = "text-danger" })
+                        </div>
+                        <!-- Form Group (Ngày kết thúc)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Ngày kết thúc</label>
+                            @Html.TextBoxFor(m => m.end_date, "{0:dd/MM/yyyy}", new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.end_date, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="row">
 
+                        </div>
+                        <div style="text-align: center; margin-top:1.8rem" class="mb-3">
+                            <button style="width:180px; color:white" type="submit" class="btn bg-primary-gradient" onclick="if (!confirm('Lưu chỉnh sửa?')) { return false }">
+                                Lưu
+                            </button>
+                            &emsp;
+                            <a style="width:180px; color:white;" role="button" class="btn btn-danger" href="@Url.Action("Index", "ReportPeriods", new { id = Model.report_period_id})">
+                                Hủy
+                            </a>
+                        </div>
                     </div>
-                    <div style="text-align: center; margin-top:1.8rem" class="mb-3">
-                        <button style="width:180px; color:white" type="submit" class="btn bg-primary-gradient" onclick="if (!confirm('Lưu chỉnh sửa?')) { return false }">
-                            Lưu
-                        </button>
-                        &emsp;
-                        <a style="width:180px; color:white;" role="button" class="btn btn-danger" href="@Url.Action("Index", "ReportPeriods", new { id = Model.report_period_id})">
-                            Hủy
-                        </a>
-                    </div>
-                </div>
                 </div>
             </div>
         </div>

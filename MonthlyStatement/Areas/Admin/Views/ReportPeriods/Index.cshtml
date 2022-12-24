@@ -27,14 +27,6 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="form-group">
-                        <div class="col-sm-12 buttons">
-                            <a style="color:white" type="button" class="btn btn-primary btn-round" href="@Url.Action("Create", "ReportPeriods")">
-                                <i class="fa fa-plus"></i>
-                                Tạo kỳ báo cáo
-                            </a>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info">
@@ -42,6 +34,9 @@
                                     <tr role="row">
                                         <th class="text-center">STT</th>
                                         <th>Kỳ báo cáo</th>
+                                        <th>Ngày bắt đầu</th>
+                                        <th>Hạn báo cáo</th>
+                                        <th>Ngày kết thúc</th>
                                         <th>Trạng thái</th>
                                         <th class="text-center"></th>
                                     </tr>
@@ -52,38 +47,44 @@
                                     {
                                         i = i + 1;
 
-                                    <tr class="Search">
-                                        <td class="text-center">
-                                            @i
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action("FormReports", "ReportPeriods", new {id = item.report_period_id })">@item.report_period_name</a>
-                                        </td>
-                                        <td>
-                                            @if (item.start_date <= DateTime.Now && item.deadline_date >= DateTime.Now)
-                                            {
-                                                <div class="badge badge-success">Đang báo cáo</div>
-                                            }
-                                            else if (item.deadline_date <= DateTime.Now && item.end_date >= DateTime.Now)
-                                            {
-                                                <div class="badge badge-warning">Trễ hạn báo cáo</div>
-                                            }
-                                            else
-                                            {
-                                                <div class="badge badge-danger">Không được báo cáo</div>
-                                            }
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="buttons">
-                                                <a class="btn btn-icon btn-info" data-original-title="Thông tin" href="@Url.Action("Details", "ReportPeriods", new { id = item.report_period_id })">
-                                                    <i class="fas fa-info-circle"></i>
-                                                </a>
-                                                <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "ReportPeriods", new { id = item.report_period_id })">
-                                                    <i class="far fa-edit"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        <tr class="Search">
+                                            <td class="text-center">
+                                                @i
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("FormReports", "ReportPeriods", new {id = item.report_period_id })">@item.report_period_name</a>
+                                            </td>
+                                            <td>
+                                                @item.start_date.Value.ToString("dd/MM/yyyy")
+                                            </td>
+                                            <td>
+                                                @item.deadline_date.Value.ToString("dd/MM/yyyy")
+                                            </td>
+                                            <td>
+                                                @item.end_date.Value.ToString("dd/MM/yyyy")
+                                            </td>
+                                            <td>
+                                                @if (item.start_date <= DateTime.Now && item.deadline_date >= DateTime.Now)
+                                                {
+                                                    <div class="badge badge-success">Đang báo cáo</div>
+                                                }
+                                                else if (item.deadline_date <= DateTime.Now && item.end_date >= DateTime.Now)
+                                                {
+                                                    <div class="badge badge-warning">Trễ hạn báo cáo</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="badge badge-danger">Không được báo cáo</div>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="buttons">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "ReportPeriods", new { id = item.report_period_id })">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
