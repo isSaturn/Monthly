@@ -68,6 +68,89 @@
     </div>
 </section>
 
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">Form báo cáo của bộ môn: @Model.ReportPeriod.report_period_name</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Tên người tạo mẫu báo cáo</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nhập tên người tạo">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Tên mẫu báo cáo</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nhập mẫu báo cáo">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table-2">
+                            <thead>
+                                <tr>
+                                    <th class="text-center pt-3">
+                                    </th>
+                                    <th>Tên danh mục</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in lstCategory.Where(c => c.category_of_id == null).ToList())
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center pt-2">
+                                            <div class="pretty p-switch p-fill">
+                                                <input name="@item.category_id" type="checkbox" id="categorylv1-@item.category_id" value="@item.category_id" />
+                                                <div class="state">
+                                                    <label></label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>@item.category_content</td>
+                                        <td><a href="#" class="btn btn-primary">Edit</a></td>
+                                    </tr>
+                                </tbody>
+                                foreach (var items in lstCategory.Where(c => c.category_of_id == item.category_id).ToList())
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center pt-2">
+                                                <div class="pretty p-switch p-fill">
+                                                    <input name="@items.category_of_id" type="checkbox" id="@(items.category_of_id)categorylv2-@(items.category_id)" value="@item.category_id" />
+                                                    <div class="state">
+                                                        <label></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="media mt-3">
+                                                    <div class="pr-5" href="#">
+                                                    </div>@items.category_content
+                                                </div>
+                                            </td>
+                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            }
+                        </table>
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-primary mr-1" type="submit">Lưu báo cáo</button>
+                        <button class="btn btn-danger " type="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
     $(document).ready(function () {
