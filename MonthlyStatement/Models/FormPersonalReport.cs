@@ -23,7 +23,6 @@ namespace MonthlyStatement.Models
         public int form_personal_report_id { get; set; }
         public int report_period_id { get; set; }
         public string user_name { get; set; }
-        public string form_name { get; set; }
     
         public virtual ReportPeriod ReportPeriod { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

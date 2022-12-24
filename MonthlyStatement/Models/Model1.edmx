@@ -116,7 +116,6 @@
           </Key>
           <Property Name="form_department_report_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="report_period_id" Type="int" Nullable="false" />
-          <Property Name="form_name" Type="nvarchar" MaxLength="200" />
           <Property Name="user_name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="FormDepartmentReportDetail">
@@ -134,7 +133,6 @@
           <Property Name="form_personal_report_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="report_period_id" Type="int" Nullable="false" />
           <Property Name="user_name" Type="nvarchar" MaxLength="100" />
-          <Property Name="form_name" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="FormPersonalReportDetail">
           <Key>
@@ -194,7 +192,6 @@
           <Property Name="start_date" Type="date" />
           <Property Name="end_date" Type="date" />
           <Property Name="report_period_name" Type="nvarchar" MaxLength="200" />
-          <Property Name="status" Type="nvarchar" MaxLength="200" />
           <Property Name="deadline_date" Type="date" />
           <Property Name="report_year_id" Type="int" />
         </EntityType>
@@ -796,7 +793,6 @@
           </Key>
           <Property Name="form_department_report_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="report_period_id" Type="Int32" Nullable="false" />
-          <Property Name="form_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="user_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_FormDepartmentReport_ReportPeriod" FromRole="FormDepartmentReport" ToRole="ReportPeriod" />
           <NavigationProperty Name="FormDepartmentReportDetails" Relationship="Self.FK_FormDepartmentReportDetail_FormDepartmentReport" FromRole="FormDepartmentReport" ToRole="FormDepartmentReportDetail" />
@@ -819,7 +815,6 @@
           <Property Name="form_personal_report_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="report_period_id" Type="Int32" Nullable="false" />
           <Property Name="user_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="form_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_FormPersonalReport_ReportPeriod" FromRole="FormPersonalReport" ToRole="ReportPeriod" />
           <NavigationProperty Name="FormPersonalReportDetails" Relationship="Self.FK_Table1_FormPersonalReport" FromRole="FormPersonalReport" ToRole="FormPersonalReportDetail" />
         </EntityType>
@@ -893,7 +888,6 @@
           <Property Name="start_date" Type="DateTime" Precision="0" />
           <Property Name="end_date" Type="DateTime" Precision="0" />
           <Property Name="report_period_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="deadline_date" Type="DateTime" Precision="0" />
           <Property Name="report_year_id" Type="Int32" />
           <NavigationProperty Name="DepartmentReports" Relationship="Self.FK_DepartmentReport_ReportPeriod" FromRole="ReportPeriod" ToRole="DepartmentReport" />
@@ -1454,7 +1448,6 @@
               <MappingFragment StoreEntitySet="FormDepartmentReport">
                 <ScalarProperty Name="form_department_report_id" ColumnName="form_department_report_id" />
                 <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
-                <ScalarProperty Name="form_name" ColumnName="form_name" />
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1474,7 +1467,6 @@
                 <ScalarProperty Name="form_personal_report_id" ColumnName="form_personal_report_id" />
                 <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
-                <ScalarProperty Name="form_name" ColumnName="form_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1540,7 +1532,6 @@
                 <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="report_period_name" ColumnName="report_period_name" />
-                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="deadline_date" ColumnName="deadline_date" />
                 <ScalarProperty Name="report_year_id" ColumnName="report_year_id" />
               </MappingFragment>

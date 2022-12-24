@@ -22,7 +22,6 @@ namespace MonthlyStatement.Models
     
         public int form_department_report_id { get; set; }
         public int report_period_id { get; set; }
-        public string form_name { get; set; }
         public string user_name { get; set; }
     
         public virtual ReportPeriod ReportPeriod { get; set; }

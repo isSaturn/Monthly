@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c5af04dd7b2a4d179f856283394d4a9c" Name="Diagram1" ZoomLevel="109">
+      <Diagram DiagramId="5fd7eba3507e4b8e96692399874584c7" Name="Diagram1">
         <EntityTypeShape EntityType="CP25Team04Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.AspNetRole" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.AspNetUser" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP25Team04Model.Category" Width="1.5" PointX="8.25" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.Category" Width="1.5" PointX="8.25" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.Comment" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.DepartmentReport" Width="1.5" PointX="7.5" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.DepartmentReportDetail" Width="1.5" PointX="12.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.Faculty" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP25Team04Model.FormDepartmentReport" Width="1.5" PointX="8.25" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.FormDepartmentReport" Width="1.5" PointX="8.25" PointY="16.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.FormDepartmentReportDetail" Width="1.5" PointX="10.5" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.FormPersonalReport" Width="1.5" PointX="8.25" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.FormPersonalReportDetail" Width="1.5" PointX="10.5" PointY="1.875" IsExpanded="true" />
@@ -23,7 +23,7 @@
         <EntityTypeShape EntityType="CP25Team04Model.PersonalReport" Width="1.5" PointX="10.5" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.PersonalReportDetail" Width="1.5" PointX="12.75" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.Profile" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP25Team04Model.ReportPeriod" Width="1.5" PointX="5.25" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.ReportPeriod" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.ReportYear" Width="1.5" PointX="3" PointY="18.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="CP25Team04Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />

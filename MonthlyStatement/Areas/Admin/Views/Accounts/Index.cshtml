@@ -39,6 +39,12 @@
                                                 Tài khoản
                                             </th>
                                             <th>
+                                                Tên
+                                            </th>
+                                            <th>
+                                                Khoa
+                                            </th>
+                                            <th>
                                                 Vai trò
                                             </th>
                                             <th class="text-center">
@@ -60,13 +66,16 @@
                                                     @item.Email
                                                 </td>
                                                 <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
                                                     @item.AspNetRoles.FirstOrDefault().Name
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="buttons">
-                                                        <a class="btn btn-icon btn-info" data-original-title="Thông tin người dùng" href="@Url.Action("Details", "Accounts", new { id = item.Id })">
-                                                            <i class="fas fa-info-circle"></i>
-                                                        </a>
                                                         <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.Id })">
                                                             <i class="far fa-edit"></i>
                                                         </a>
