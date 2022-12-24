@@ -57,7 +57,6 @@
 
                                     {
                                         i = i + 1;
-
                                         <tr class="Search">
                                             <td class="text-center">
                                                 @i
@@ -105,5 +104,26 @@
                 }
             });
         });
+    });
+    $("#edit_faculty").click(function () {
+        swal({
+            title: 'Chỉnh sửa tên khoa',
+            buttons: true,
+            dangerMode: true,
+            content: {
+                element: 'input',
+                attributes: {
+                    placeholder: 'Nhập tên khoa',
+                    type: 'text',
+                },
+            },
+        })
+            .then((willSave) => {
+                if (willSave) {
+                    swal('Lưu thành công!', {
+                        icon: 'success',
+                    });
+                }
+            });
     });
 </script>
