@@ -6,85 +6,83 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="panel-header bg-primary-gradient">
-    <div class="page-inner py-5">
-        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-            <div>
-                <h2 class="text-white pb-2 fw-bold">Tài khoản người dùng</h2>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="page-inner mt--5">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="dataTables_filter">
-                                        <label>
-                                            Tìm kiếm
-                                            <input class="form-control btn-round" type="text" id="Search" aria-label="Search" data-width="200">
-                                        </label>
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Tài khoản người dùng</h4>
+                        <div class="card-header-form">
+                            <form>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="Search" placeholder="Tìm kiếm" aria-label="Search" data-width="200" style="width: 200px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="add-row" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="add-row_info">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Tài khoản</th>
-                                                <th>Vai trò</th>
-                                                <th style="width: 3%"></th>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="text-center">
+                                                STT
+                                            </th>
+                                            <th>
+                                                Tài khoản
+                                            </th>
+                                            <th>
+                                                Vai trò
+                                            </th>
+                                            <th class="text-center">
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+
+                                        {
+                                            i = i + 1;
+
+                                            <tr tr role="row" class="Search odd">
+                                                <td class="text-center">
+                                                    @i
+                                                </td>
+                                                <td>
+                                                    @item.Email
+                                                </td>
+                                                <td>
+                                                    @item.AspNetRoles.FirstOrDefault().Name
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="buttons">
+                                                        <a class="btn btn-icon btn-info" data-original-title="Thông tin người dùng" href="@Url.Action("Details", "Accounts", new { id = item.Id })">
+                                                            <i class="fas fa-info-circle"></i>
+                                                        </a>
+                                                        <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.Id })">
+                                                            <i class="far fa-edit"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            @foreach (var item in Model)
-
-                                            {
-                                                i = i + 1;
-
-                                                <tr class="Search">
-                                                    <td>
-                                                        @i
-                                                    </td>
-                                                    <td>
-                                                        @item.Email
-                                                    </td>
-                                                    <td>
-                                                        @item.AspNetRoles.FirstOrDefault().Name
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-button-action">
-                                                            <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-icon btn-info" data-original-title="Thông tin người dùng" href="@Url.Action("Details", "Accounts", new { id = item.Id })" target="_blank">
-                                                                <i class="fa fa-info"></i>
-                                                            </a>
-                                                            &nbsp;
-                                                            <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.Id })" target="_blank">
-                                                                <i class="fa fa-edit"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+</section>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
