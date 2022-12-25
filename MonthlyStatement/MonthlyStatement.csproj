@@ -1129,7 +1129,6 @@
     <Content Include="Areas\Admin\Views\Accounts\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Accounts\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\ReportPeriods\Details.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormReports.cshtml" />

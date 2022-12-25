@@ -16,61 +16,13 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         private CP25Team04Entities db = new CP25Team04Entities();
 
         // GET: Admin/ReportPeriods
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
-            return View(db.ReportPeriods.Where(i => i.report_year_id == id).ToList());
+            var reportPeriods = db.ReportPeriods.Include(r => r.ReportYear);
+            return View(reportPeriods.ToList());
         }
-
-        // GET: Admin/ReportPeriods/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ReportPeriod reportPeriod = db.ReportPeriods.Find(id);
-            if (reportPeriod == null)
-            {
-                return HttpNotFound();
-            }
-            return View(reportPeriod);
-        }
-
+        // GET: Admin/ReportPeriods/Edit
         [HttpGet]
-        // GET: Admin/ReportPeriods/Create
-        public ActionResult Create()
-        {
-            return View(new ReportPeriod());
-        }
-
-        // POST: ReportPeriods/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-
-        [HttpPost]
-        public ActionResult Create([Bind(Include = "report_period_id,start_date,end_date,report_period_name,active")] ReportPeriod reportPeriod)
-        {
-            if (ModelState.IsValid)
-            {
-                db.ReportPeriods.Add(reportPeriod);
-                db.SaveChanges();
-                FormDepartmentReport formDepartmentReport = new FormDepartmentReport();
-                formDepartmentReport.report_period_id = reportPeriod.report_period_id;
-                db.FormDepartmentReports.Add(formDepartmentReport);
-
-                FormPersonalReport formPersonalReport = new FormPersonalReport();
-                formPersonalReport.report_period_id = reportPeriod.report_period_id;
-                db.FormPersonalReports.Add(formPersonalReport);
-
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(reportPeriod);
-        }
-
-        [HttpGet]
-        // GET: Admin/ReportPeriods/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,12 +34,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.report_year_id = new SelectList(db.ReportYears, "report_year_id", "report_year_id", reportPeriod.report_year_id);
             return View(reportPeriod);
         }
 
         // POST: Admin/ReportPeriods/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public ActionResult Edit([Bind(Include = "report_period_id,start_date,end_date,report_period_name,deadline_date,report_year_id")] ReportPeriod reportPeriod)
         {
@@ -95,8 +46,9 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             {
                 db.Entry(reportPeriod).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "ReportPeriods");
             }
+            ViewBag.report_year_id = new SelectList(db.ReportYears, "report_year_id", "report_year_id", reportPeriod.report_year_id);
             return View(reportPeriod);
         }
 

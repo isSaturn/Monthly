@@ -61,6 +61,7 @@ namespace MonthlyStatement.Controllers
         [ValidateAntiForgeryToken]
         public void SignIn()
         {
+
             // Send an OpenID Connect sign-in request.
             if (!Request.IsAuthenticated)
             {
@@ -73,15 +74,12 @@ namespace MonthlyStatement.Controllers
         // GET: /Account/SignInCallBack
         public async Task<ActionResult> SignInCallBack()
         {
-            
-
             // Get user information
             var user = new ApplicationUser
             {
                 Email = User.Identity.Name,
                 UserName = User.Identity.Name,
         };
-
             var s = this.User.Identity.GetUserId();
 
             // Check if user exists
