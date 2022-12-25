@@ -80,12 +80,8 @@ namespace MonthlyStatement.Controllers
                 Email = User.Identity.Name,
                 UserName = User.Identity.Name,
         };
-            var s = this.User.Identity.GetUserId();
-
             // Check if user exists
             var currentUser = await UserManager.FindByEmailAsync(user.Email);
-
-            var users = await UserManager.FindByIdAsync(this.User.Identity.GetUserId());
 
             if (currentUser != null)
             {
