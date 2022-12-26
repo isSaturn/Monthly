@@ -85,28 +85,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View(faculty);
         }
 
-        // GET: Admin/Faculty/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Faculty/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         [HttpGet]
         public ActionResult AttendenceList(int? id)
         {
