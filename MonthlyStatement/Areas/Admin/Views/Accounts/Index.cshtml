@@ -39,7 +39,7 @@
                                                 Tài khoản
                                             </th>
                                             <th>
-                                                Tên
+                                                Họ và tên
                                             </th>
                                             <th>
                                                 Khoa
@@ -66,10 +66,10 @@
                                                     @item.Email
                                                 </td>
                                                 <td>
-
+                                                    @item.Profiles.FirstOrDefault().user_name
                                                 </td>
                                                 <td>
-
+                                                    @item.Profiles.FirstOrDefault().faculty_id
                                                 </td>
                                                 <td>
                                                     @item.AspNetRoles.FirstOrDefault().Name
