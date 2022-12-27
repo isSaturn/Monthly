@@ -1,4 +1,5 @@
-﻿using MonthlyStatement.Models;
+﻿using MonthlyStatement.Middleware;
+using MonthlyStatement.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,26 +17,24 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // GET: Admin/MyProfile
         public ActionResult Index()
         {
-            var profile = db.AspNetUsers.Find(Session["ID_User"]);
-            return View(profile);
+            {
+                string ID_User = Session["ID_User"].ToString();
+                var profile = db.Profiles.FirstOrDefault(f => f.account_id == ID_User);
+                Session["Avt"] = profile.avatar;
+                if (profile != null) {
+                    return View(profile);
+                }
+                return View(HttpNotFound());
+            }
         }
-        public ActionResult Edit_Profile(string name, string department, string majors, HttpPostedFileBase avt)
+        public ActionResult Edit_Profile(string name, HttpPostedFileBase avt)
         {
             string ID_User = Session["ID_User"].ToString();
-            Profile profile = db.Profiles.Find(ID_User);
+            var profile = db.Profiles.FirstOrDefault(f => f.account_id == ID_User);
             if (!string.IsNullOrWhiteSpace(name))
             {
                 profile.user_name = name;
             }
-            if (!string.IsNullOrWhiteSpace(department))
-            {
-                profile.department = department;
-            }
-            if (!string.IsNullOrWhiteSpace(majors))
-            {
-                profile.majors = majors;
-            }
-
 
             string oldfilePath = profile.avatar;
             if (avt != null && avt.ContentLength > 0)
@@ -44,7 +43,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                 var fileName = System.IO.Path.GetFileName(avt.FileName);
                 string filePath = "~/assets/user/avatar/" + time + fileName;
                 avt.SaveAs(Server.MapPath(filePath));
-                profile.avatar = "~/Template/app-assets/img/Avatar/" + time + avt.FileName;
+                profile.avatar = "~/assets/user/avatar/" + time + avt.FileName;
                 string fullPath = Request.MapPath(oldfilePath);
 
                 if (System.IO.File.Exists(fullPath))
@@ -69,7 +68,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
 
             Session["Avt"] = profile.avatar;
             Session["notification"] = "Successfully Edited Profile";
-            return RedirectToAction("MyProfile");
+            return RedirectToAction("Index","Profile");
 
         }
     }

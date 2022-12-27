@@ -79,14 +79,18 @@ namespace MonthlyStatement.Controllers
             {
                 Email = User.Identity.Name,
                 UserName = User.Identity.Name,
-        };
+            };
             // Check if user exists
             var currentUser = await UserManager.FindByEmailAsync(user.Email);
-
             if (currentUser != null)
             {
                 if (currentUser.Roles.Count != 0)
                 {
+                    Session["ID_User"] = currentUser.Id;
+                    string ID_User = Session["ID_User"].ToString();
+                    var profile = db.Profiles.FirstOrDefault(f => f.account_id == ID_User);
+                    Session["Avt"] = profile.avatar;
+
                     // Add role claim to user
                     ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
 
@@ -96,6 +100,7 @@ namespace MonthlyStatement.Controllers
 
                     context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                     context.Authentication.SignIn(identity);
+
                 }
             }
             else
