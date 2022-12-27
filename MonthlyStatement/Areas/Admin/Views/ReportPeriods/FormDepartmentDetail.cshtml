@@ -1,0 +1,82 @@
+﻿@model MonthlyStatement.Models.FormDepartmentReportDetail
+@using MonthlyStatement.Models
+
+@{
+    ViewBag.Title = "FormDepartmentDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var lstCategory = Session["FormDepartmentEdit-lstCategory"] as IEnumerable<Category>;
+    int i = 0;
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn</h4>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Tên người tạo mẫu báo cáo</label>
+                                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Tên người tạo" disabled>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" style="border-collapse:unset" id="table-2">
+                                        @foreach (var item in lstCategory.Where(c => c.category_of_id == null).ToList())
+                                        {
+                                            i = i + 1;
+                                            int j = 0;
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">
+                                                        @i
+                                                    </td>
+                                                    <td style="font-weight:bold">
+                                                        @item.category_content
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            foreach (var items in lstCategory.Where(c => c.category_of_id == item.category_id).ToList())
+                                            {
+                                                j++;
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            @(i).@(j)
+                                                        </td>
+                                                        <td>
+                                                            @items.category_content
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            }
+                                        }
+                                    </table>
+                                </div>
+                            </form>
+                            <form action="#" class="dropzone dz-clickable" id="mydropzone">
+                                <div class="dz-default dz-message">
+                                    <span>Vui lòng chọn mình chứng</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
