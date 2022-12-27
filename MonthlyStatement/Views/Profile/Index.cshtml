@@ -1,6 +1,5 @@
 ﻿@model MonthlyStatement.Models.Profile
 
-
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,6 +13,73 @@
         avt = "~/assets/img/user.png";
     }
 }
+<style>
+    .avatar-wrapper {
+        position: relative;
+        height: 200px;
+        width: 200px;
+        margin: 50px auto;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 1px 1px 15px -5px black;
+        transition: all .3s ease;
+        &:hover
+
+    {
+        transform: scale(1.05);
+        cursor: pointer;
+    }
+
+    &:hover .profile-pic {
+        opacity: .5;
+    }
+
+    .profile-pic {
+        height: 100%;
+        width: 100%;
+        transition: all .3s ease;
+        &:after
+
+    {
+        font-family: FontAwesome;
+        content: "\f007";
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        font-size: 190px;
+        background: #ecf0f1;
+        color: #34495e;
+        text-align: center;
+    }
+
+    }
+
+    .upload-button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        .fa-arrow-circle-up
+
+
+    {
+        position: absolute;
+        font-size: 234px;
+        top: -17px;
+        left: 0;
+        text-align: center;
+        opacity: 0;
+        transition: all .3s ease;
+        color: #34495e;
+    }
+
+    &:hover .fa-arrow-circle-up {
+        opacity: .9;
+    }
+</style>
 <section style="background-color: #eee;">
     <div class="container py-5">
         <div class="row">
@@ -26,7 +92,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mb-2">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#iconModal">Chỉnh sửa</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editProfile">Chỉnh sửa</button>
                 </div>
             </div>
             <div class="col-lg-8">
@@ -34,19 +100,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Tên:</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0"></p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
                                 <p class="mb-0">Tài khoản:</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0"></p>
+                                <p class="text-muted mb-0">@Model.AspNetUser.Email</p>
                             </div>
                         </div>
                         <hr>
@@ -55,18 +112,19 @@
                                 <p class="mb-0">Khoa:</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0"></p>
+                                <p class="text-muted mb-0">@Model.Faculty.faculty_name</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Ngành học:</p>
+                                <p class="mb-0">Tên:</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0"></p>
+                                <p class="text-muted mb-0">@Model.user_name</p>
                             </div>
                         </div>
+                        <hr>
                     </div>
                 </div>
             </div>
@@ -74,63 +132,86 @@
     </div>
 </section>
 @* button edit profile *@
-@*<div class="modal fade text-left show" id="iconModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="myModalLabel34">Chỉnh sửa</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @using (Html.BeginForm("Edit_Profile", "Profile", FormMethod.Post))
-                        {
-                            <label class="fileContainer text-center">
-
-                                <br />
-                                <img id="blah" src="@Url.Content(avt)" width="200" alt="Image preview...">
-                                <label for="exampleFormControlFile1" style="color: #808080"></label>
-                                <input accept="image/*" name="avt" type="file" class="form-control-file" id="exampleFormControlFile1">
-                                <label class="control-label" for="input">New Avtatar</label>
-
-                                <script>
-                                    exampleFormControlFile1.onchange = evt => {
-                                        const [file] = exampleFormControlFile1.files
-                                        if (file) {
-                                            blah.src = URL.createObjectURL(file)
-                                        }
-                                    }
-                                </script>
-                            </label>
-                            <br />
-
-                            <label>Email : </label>
-                            <div class="form-group position-relative has-icon-left">
-                                <input type="text" placeholder="Email" class="form-control" value="@Model.Email" readonly />
-
-                                <label>Name : </label>
-                                <div class="form-group position-relative has-icon-left">
-                                    <input type="text" placeholder="Name" class="form-control" name="name" value="">
-
-                                </div>
-                                <label>Department : </label>
-                                <div class="form-group position-relative has-icon-left">
-                                    <input type="text" placeholder="Department" class="form-control" name="department" value="">
-
-                                </div>
-                                <label>Majors : </label>
-                                <div class="form-group position-relative has-icon-left">
-                                    <input type="text" placeholder="Majors" class="form-control" name="majors" value="">
-
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-outline-primary">Save</button>
-                            </div>
-                        }
-                </div>
+<div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="formModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formModal">Chỉnh sửa thông tin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            @using (Html.BeginForm("Edit_Profile", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    <form class="">
+                        <div class="avatar-wrapper">
+                            <div class="upload-button">
+                                <img id="blah" class="profile-pic" src="@Url.Content(avt)" width="200" aria-hidden="true" />
+                            </div>
+                            <input class="file-upload" type="file" name="avt" accept="image/*" id="exampleFormControlFile1" />
+                            <script>
+                                exampleFormControlFile1.onchange = evt => {
+                                    const [file] = exampleFormControlFile1.files
+                                    if (file) {
+                                        blah.src = URL.createObjectURL(file)
+                                    }
+                                }
+                            </script>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Email" name="email" value="@Model.AspNetUser.Email" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Khoa</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Khoa" name="faculty" value="@Model.Faculty.faculty_name" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Họ và tên</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Họ và tên" name="name" value="@Model.user_name">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Lưu thông tin</button>
+                            <button type="button" class="btn btn-secondary m-t-15" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>
+                </div>
+            }
         </div>
-    </div>*@
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.profile-pic').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+
+        $(".upload-button").on('click', function () {
+            $(".file-upload").click();
+        });
+    });
+
+
+</script>
