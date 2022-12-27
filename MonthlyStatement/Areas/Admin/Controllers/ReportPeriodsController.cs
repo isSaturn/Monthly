@@ -84,6 +84,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return RedirectToAction("Index", "ReportPeriods");
         }
 
+        public ActionResult FormDepartmentDetail()
+        {
+            return View();
+        }
+
 
         protected override void Dispose(bool disposing)
         {
