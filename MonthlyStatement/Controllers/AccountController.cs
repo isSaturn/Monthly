@@ -65,7 +65,7 @@ namespace MonthlyStatement.Controllers
             // Send an OpenID Connect sign-in request.
             if (!Request.IsAuthenticated)
             {
-                HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = Url.Action("SignInCallBack") },
+                HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = Url.Action("SignInCallBack","Account") },
                     OpenIdConnectAuthenticationDefaults.AuthenticationType);
             }
         }
@@ -86,11 +86,10 @@ namespace MonthlyStatement.Controllers
             {
                 if (currentUser.Roles.Count != 0)
                 {
-                    Session["ID_User"] = currentUser.Id;
-                    string ID_User = Session["ID_User"].ToString();
-                    var profile = db.Profiles.FirstOrDefault(f => f.account_id == ID_User);
-                    Session["Avt"] = profile.avatar;
-
+                    //Session["ID_User"] = currentUser.Id;
+                    //string ID_User = Session["ID_User"].ToString();
+                    //var profile = db.Profiles.FirstOrDefault(f => f.account_id == ID_User);
+                    //Session["Avt"] = profile.avatar;
                     // Add role claim to user
                     ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
 
@@ -100,12 +99,10 @@ namespace MonthlyStatement.Controllers
 
                     context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                     context.Authentication.SignIn(identity);
-
                 }
             }
             else
             {
-
                 // Create new user
                 await UserManager.CreateAsync(user);
                 var aspNetRole = db.AspNetRoles.Find("5");
