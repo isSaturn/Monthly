@@ -86,10 +86,16 @@ namespace MonthlyStatement.Controllers
             {
                 if (currentUser.Roles.Count != 0)
                 {
-                    Session["ID_User"] = currentUser.Id;
-                    string ID_User = Session["ID_User"].ToString();
-                    var profile = db.Profiles.FirstOrDefault(f => f.account_id == ID_User);
-                    Session["Avt"] = profile.avatar;
+
+                    var email = User.Identity.Name;
+                    var id = db.AspNetUsers.FirstOrDefault(f => f.Email == email).Id;
+
+                    Session["Avt"] = db.Profiles.FirstOrDefault(a => a.account_id == id).avatar;
+                    Session["ID_User"] = id;
+                    Session["Email"] = email;
+                    //Session["ID_User"] = currentUser.Id;
+                    //var profile = db.Profiles.FirstOrDefault(f => f.account_id == currentUser.Id);
+                    //Session["Avt"] = profile.avatar;
 
                     // Add role claim to user
                     ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
@@ -100,12 +106,10 @@ namespace MonthlyStatement.Controllers
 
                     context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                     context.Authentication.SignIn(identity);
-
                 }
             }
             else
             {
-
                 // Create new user
                 await UserManager.CreateAsync(user);
                 var aspNetRole = db.AspNetRoles.Find("5");
@@ -127,6 +131,7 @@ namespace MonthlyStatement.Controllers
         public ActionResult SignOut()
         {
             /// Send an OpenID Connect sign-out request.
+            /// 
             HttpContext.GetOwinContext()
                         .Authentication
                         .SignOut(CookieAuthenticationDefaults.AuthenticationType);

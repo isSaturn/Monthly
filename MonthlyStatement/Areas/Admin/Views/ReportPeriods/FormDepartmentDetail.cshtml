@@ -14,17 +14,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn:</h4>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <form>
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput1">Tên người tạo mẫu báo cáo</label>
-                                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Tên người tạo" disabled>
-                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped" style="border-collapse:unset" id="table-2">
                                         @foreach (var item in lstCategory.Where(c => c.category_of_id == null).ToList())

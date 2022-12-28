@@ -72,9 +72,36 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return RedirectToAction("Index", "ReportPeriods");
         }
+        [HttpPost]
+        public ActionResult FormDepartmentEdit(int idReport, string data)
+        {
+            var form = db.FormDepartmentReports.Find(idReport);
+            if (form != null)
+            {
+                if (string.IsNullOrEmpty(data))
+                    return Json("Vui lòng chọn danh mục", JsonRequestBehavior.AllowGet);
+                db.FormDepartmentReportDetails.RemoveRange(form.FormDepartmentReportDetails);
+                form.user_name = Session["Email"].ToString();
+                db.Entry(form).State = EntityState.Modified;
+                db.SaveChanges();
+                if (data.IndexOf("-") != -1)
+                {
+                    foreach (var item in data.Split('-'))
+                    {
+                        FormDepartmentReportDetail formDepartmentReportDetail = new FormDepartmentReportDetail();
+                        formDepartmentReportDetail.form_department_report_id = idReport;
+                        formDepartmentReportDetail.category_id = Convert.ToInt32(item);
+                        db.FormDepartmentReportDetails.Add(formDepartmentReportDetail);
+                    }
+                    db.SaveChanges();
+                }
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Không tồn tại", JsonRequestBehavior.AllowGet);
+        }
         public ActionResult FormPersonalEdit(int id)
         {
-            var form = db.FormPersonalReports.FirstOrDefault(f => f.form_personal_report_id == id);
+            var form = db.FormPersonalReports.Find(id);
             if (form != null)
             {
                 Session["FormPersonalEdit-lstCategory"] = db.Categories.ToList();
@@ -82,6 +109,34 @@ namespace MonthlyStatement.Areas.Admin.Controllers
 
             }
             return RedirectToAction("Index", "ReportPeriods");
+        }
+
+        [HttpPost]
+        public ActionResult FormPersonalEdit(int idReport, string data)
+        {
+            var form = db.FormPersonalReports.Find(idReport);
+            if (form != null)
+            {
+                if (string.IsNullOrEmpty(data))
+                    return Json("Vui lòng chọn danh mục", JsonRequestBehavior.AllowGet);
+                db.FormPersonalReportDetails.RemoveRange(form.FormPersonalReportDetails);
+                form.user_name = Session["Email"].ToString();
+                db.Entry(form).State = EntityState.Modified;
+                db.SaveChanges();
+                if (data.IndexOf("-") != -1)
+                {
+                    foreach (var item in data.Split('-'))
+                    {
+                        FormPersonalReportDetail formPersonalReportDetail = new FormPersonalReportDetail();
+                        formPersonalReportDetail.form_personal_report_id = idReport;
+                        formPersonalReportDetail.category_id = Convert.ToInt32(item);
+                        db.FormPersonalReportDetails.Add(formPersonalReportDetail);
+                    }
+                    db.SaveChanges();
+                }
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Không tồn tại", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult FormDepartmentDetail()

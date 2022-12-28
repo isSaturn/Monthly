@@ -26,71 +26,78 @@
                         </div>
                     </div>
                 </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="text-center">
-                                                STT
-                                            </th>
-                                            <th>
-                                                Tài khoản
-                                            </th>
-                                            <th>
-                                                Họ và tên
-                                            </th>
-                                            <th>
-                                                Khoa
-                                            </th>
-                                            <th>
-                                                Vai trò
-                                            </th>
-                                            <th class="text-center">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="text-center">
+                                            STT
+                                        </th>
+                                        <th>
+                                            Tài khoản
+                                        </th>
+                                        <th>
+                                            Họ và tên
+                                        </th>
+                                        <th>
+                                            Khoa
+                                        </th>
+                                        <th>
+                                            Vai trò
+                                        </th>
+                                        <th class="text-center">
 
-                                            </th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+
+                                    {
+                                        i = i + 1;
+
+                                        <tr tr role="row" class="Search odd">
+                                            <td class="text-center">
+                                                @i
+                                            </td>
+                                            <td>
+                                                @item.Email
+                                            </td>
+                                            <td>
+                                                @item.Profiles.FirstOrDefault().user_name
+                                            </td>
+                                            <td>
+                                                @if (item.Profiles.First().faculty_id == null)
+                                                {
+                                                    <span>Chưa có khoa</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.Profiles.FirstOrDefault().Faculty.faculty_name
+                                                }
+                                            </td>
+                                            <td>
+                                                @item.AspNetRoles.FirstOrDefault().Name
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="buttons">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.Id })">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-
-                                        {
-                                            i = i + 1;
-
-                                            <tr tr role="row" class="Search odd">
-                                                <td class="text-center">
-                                                    @i
-                                                </td>
-                                                <td>
-                                                    @item.Email
-                                                </td>
-                                                <td>
-                                                    @item.Profiles.FirstOrDefault().user_name
-                                                </td>
-                                                <td>
-                                                    @item.Profiles.FirstOrDefault().faculty_id
-                                                </td>
-                                                <td>
-                                                    @item.AspNetRoles.FirstOrDefault().Name
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="buttons">
-                                                        <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.Id })">
-                                                            <i class="far fa-edit"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>

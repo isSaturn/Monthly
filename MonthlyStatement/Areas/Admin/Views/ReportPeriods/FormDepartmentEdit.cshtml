@@ -20,8 +20,9 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="exampleFormControlInput1">Tên người tạo mẫu báo cáo</label>
-                                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Tên người tạo">
+                                    <label for="exampleFormControlInput1">Người tạo mẫu báo cáo</label>
+                                    <input value="@Session["Email"]" type="email" class="form-control" id="emailUser" readonly>
+                                    <input value="@Model.form_department_report_id" id="idReportPeriod" hidden="hidden">
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-2">
@@ -48,7 +49,9 @@
                                                     <td style="font-weight:bold">
                                                         @item.category_content
                                                     </td>
-                                                    <td><a href="#" class="btn btn-primary">Edit</a></td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-primary" id="editCategory1">Edit</a>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                             foreach (var items in lstCategory.Where(c => c.category_of_id == item.category_id).ToList())
@@ -57,7 +60,7 @@
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="pretty p-switch p-fill">
-                                                                <input name="@items.category_of_id" type="checkbox" id="@(items.category_of_id)categorylv2-@(items.category_id)" value="@item.category_id" />
+                                                                <input name="@items.category_of_id" type="checkbox" id="@(items.category_of_id)categorylv2-@(items.category_id)" value="@items.category_id" />
                                                                 <div class="state">
                                                                     <label></label>
                                                                 </div>
@@ -69,7 +72,9 @@
                                                                 </div>@items.category_content
                                                             </div>
                                                         </td>
-                                                        <td><a href="#" class="btn btn-primary">Edit</a></td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-primary" id="editCategory2">Edit</a>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             }
@@ -77,7 +82,7 @@
                                     </table>
                                 </div>
                                 <div class="text-right">
-                                    <button class="btn btn-primary mr-1" type="submit">Lưu báo cáo</button>
+                                    <a href="#" role="button" class="btn btn-primary" id="saveForm">Lưu báo cáo</a>
                                     <button class="btn btn-danger " type="reset">Reset</button>
                                 </div>
                             </form>
@@ -92,6 +97,47 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
     $(document).ready(function () {
+        //button edit category1
+        $("#editCategory1").click(function () {
+            swal({
+                title: 'Chỉnh sửa danh mục',
+                buttons: true,
+                dangerMode: true,
+                content: {
+                    element: 'input',
+                    attributes: {
+                        placeholder: 'Type your name',
+                        type: 'text',
+                    },
+                },
+            }).then((data) => {
+                if (data === "") {
+                    swal.showInputError("Bạn cần phải nhập danh mục!");
+                    return false
+                }
+            });
+        });
+        //button edit category2
+        $("#editCategory2").click(function () {
+            swal({
+                title: 'Chỉnh sửa danh mục',
+                buttons: true,
+                dangerMode: true,
+                content: {
+                    element: 'input',
+                    attributes: {
+                        placeholder: 'Type your name',
+                        type: 'text',
+                    },
+                },
+            }).then((data) => {
+                if (data === "") {
+                    swal.showInputError("Bạn cần phải nhập danh mục!");
+                    return false
+                }
+            });
+        });
+        //radio button
         $('[id*="categorylv2-"]').on('input', function () {
             var id = $(this).attr('name');
             if ($(this).prop('checked')) {
@@ -109,6 +155,68 @@
                     $('#categorylv1-' + id).prop('checked', false);
                 }
             }
+        });
+        $('[id*="categorylv1-"]').on('input', function () {
+            var id = $(this).attr('name');
+            if ($(this).prop('checked') == false) {
+                $('[name="' + id + '"]').each(function () {
+                    $(this).prop('checked', false);
+                });
+            }
+        });
+
+        //button save form
+        $('#saveForm').on('click', function () {
+            var idReport = $('#idReportPeriod').val();
+            var data = "";
+            $(':checkbox').each(function () {
+                if ($(this).prop('checked')) {
+                    data += $(this).val() + "-";
+                }
+            });
+            swal({
+                title: 'Lưu biểu mẫu?',
+                text: 'Bạn có muốn lưu biểu mẫu?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willAdd) => {
+                    if (willAdd) {
+                        $.ajax({
+                            type: "POST",
+                            traditional: true,
+                            async: false,
+                            cache: false,
+                            url: $('#requestUrl').val() + 'ReportPeriods/FormPersonalEdit',
+                            data: {
+                                idReport: idReport,
+                                data: data.substring(0, data.length - 1)
+                            },
+                            context: document.body,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    swal('Thêm thành công', {
+                                        icon: 'success',
+                                    });
+                                } else {
+                                    swal(result, {
+                                        icon: 'error',
+                                    });
+                                }
+                            },
+                            error: function (xhr) {
+                                swal(xhr.responseText, {
+                                    icon: 'error',
+                                });
+                                //debugger;
+                                console.log(xhr.responseText);
+                                alert("Error has occurred..");
+                            }
+                        });
+
+                    }
+                });
         });
     });
 </script>
