@@ -23,7 +23,7 @@
                                     <i class="fas fa-user-alt"></i>
                                 </div>
                                 <h2>Bộ môn</h2>
-                                <a href="#" class="btn btn-light mt-4">Xem chi tiết</a>
+                                <a href="@Url.Action("FormDepartmentDetail", "ReportPeriods", new { id = Model.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == Model.report_period_id).form_department_report_id})" class="btn btn-light mt-4">Xem chi tiết</a>
                                 <a href="@Url.Action("FormDepartmentEdit", "ReportPeriods", new { id = Model.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == Model.report_period_id).form_department_report_id})" class="btn btn-primary mt-4">Chỉnh sửa</a>
                             </div>
                         </div>
