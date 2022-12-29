@@ -34,8 +34,7 @@
                                             <!-- Form Group (Tên báo cáo)-->
                                             <div class="mb-3">
                                                 <label class="small mb-1">Tên kỳ báo cáo</label>
-                                                @Html.EditorFor(model => model.report_period_name, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.report_period_name, "", new { @class = "text-danger" })
+                                                <input type="text" class="form-control" placeholder="Email" name="email" value="@Model.report_period_name" readonly="">                                                @Html.ValidationMessageFor(model => model.report_period_name, "", new { @class = "text-danger" })
                                             </div>
                                             <!-- Form Group (Ngày bắt đầu)-->
                                             <div class="mb-3">

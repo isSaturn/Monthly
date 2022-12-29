@@ -139,9 +139,10 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return Json("Không tồn tại", JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult FormDepartmentDetail()
+        public ActionResult FormDepartmentDetail(int id)
         {
-            return View();
+            var formDetail = db.FormDepartmentReportDetails.Where(f =>f.form_department_report_id == id).ToList();
+            return View(formDetail);
         }
 
 
