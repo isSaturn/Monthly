@@ -33,11 +33,10 @@
                                             <div class="mb-3">
                                                 <!-- Form Group (Tên danh mục)-->
                                                 <label class="small mb-1">Tên danh mục</label>
-                                                @Html.EditorFor(model => model.category_content, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.category_content, "", new { @class = "text-danger" })
+                                                @Html.EditorFor(model => model.category_content, new { htmlAttributes = new { @class = "form-control", type = "text", @required = "" } })
                                             </div>
                                             <div style="text-align: center; margin-top:1.8rem" class="mb-3">
-                                                <button style="width:180px; color:white" type="submit" class="btn btn-primary" onclick="if (!confirm('Tạo kỳ báo cáo mới?')) { return false }">
+                                                <button style="width:180px; color:white" type="submit" class="btn btn-primary">
                                                     Tạo mới
                                                 </button>
                                                 &emsp;

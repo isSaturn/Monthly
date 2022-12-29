@@ -67,7 +67,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // GET: Admin/Categories/Create
         public ActionResult Create1()
         {
-            ViewBag.category_of_id = new SelectList(db.Categories.Where(c=>c.category_of_id==null).ToList(), "category_id", "category_content");
+            ViewBag.category_of_id = new SelectList(db.Categories.Where(c => c.category_of_id == null).ToList(), "category_id", "category_content");
             return View(new Category());
         }
 
@@ -118,6 +118,22 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             ViewBag.category_of_id = new SelectList(db.Categories, "category_id", "category_content", category.category_of_id);
             return View(category);
+        }
+        [HttpPost]
+        public ActionResult EditCategory(int id, string name)
+        {
+            var category = db.Categories.Find(id);
+            if (category == null)
+            {
+                return Content("Không tìm thấy danh mục");
+            }
+            else
+            {
+                category.category_content = name;
+                db.Entry(category).State = EntityState.Modified;
+                db.SaveChanges();
+                return Content("Success");
+            }
         }
 
         [HttpGet]

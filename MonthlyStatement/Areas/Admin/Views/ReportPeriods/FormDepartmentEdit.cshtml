@@ -47,10 +47,12 @@
                                                         </div>
                                                     </td>
                                                     <td style="font-weight:bold">
-                                                        @item.category_content
+                                                        <label id="category_name-@item.category_id">
+                                                            @item.category_content
+                                                        </label>
                                                     </td>
                                                     <td>
-                                                        <a href="#" class="btn btn-primary" id="editCategory1">Edit</a>
+                                                        <a href="#" class="btn btn-primary" id="editCategory-@item.category_id" name="@item.category_id">Edit</a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -69,11 +71,14 @@
                                                         <td>
                                                             <div class="media mt-3">
                                                                 <div class="pr-5" href="#">
-                                                                </div>@items.category_content
+                                                                </div>
+                                                                <label id="category_name-@items.category_id">
+                                                                    @items.category_content
+                                                                </label>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <a href="#" class="btn btn-primary" id="editCategory2">Edit</a>
+                                                            <a href="#" class="btn btn-primary" id="editCategory-@(items.category_id)" name="@items.category_id">Edit</a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -94,48 +99,63 @@
     </div>
 </section>
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
 <script>
     $(document).ready(function () {
-        //button edit category1
-        $("#editCategory1").click(function () {
-            swal({
+        //button edit category
+        $('[id^="editCategory-"]').click(function () {
+            let id = $(this).attr("name");
+            Swal.fire({
                 title: 'Chỉnh sửa danh mục',
-                buttons: true,
-                dangerMode: true,
-                content: {
-                    element: 'input',
-                    attributes: {
-                        placeholder: 'Type your name',
-                        type: 'text',
-                    },
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
                 },
-            }).then((data) => {
-                if (data === "") {
-                    swal.showInputError("Bạn cần phải nhập danh mục!");
-                    return false
-                }
-            });
-        });
-        //button edit category2
-        $("#editCategory2").click(function () {
-            swal({
-                title: 'Chỉnh sửa danh mục',
-                buttons: true,
-                dangerMode: true,
-                content: {
-                    element: 'input',
-                    attributes: {
-                        placeholder: 'Type your name',
-                        type: 'text',
-                    },
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+                showLoaderOnConfirm: true,
+                preConfirm: (text) => {
+                    if (text.trim().length < 1) {
+                        Swal.showValidationMessage(
+                            `Không được bỏ trống`)
+                        return false;
+                    } else {
+                        $.ajax({
+                            type: "POST",
+                            traditional: true,
+                            async: false,
+                            cache: false,
+                            url: $('#requestUrl').val() + 'Categories/EditCategory',
+                            data: {
+                                id: id,
+                                name: text.trim()
+                            },
+                            context: document.body,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    $('#category_name-' + id).text(text.trim());
+                                    Swal.fire('Chỉnh sửa thành công','Bạn đã chỉnh sửa danh mục thành công','success'
+                                    )
+                                }
+                                else {
+                                    Swal.fire('Không thành công', result, 'error')
+                                }
+                            },
+                            error: function (xhr) {
+                                swal(xhr.responseText, {
+                                    icon: 'error',
+                                });
+                                //debugger;
+                                console.log(xhr.responseText);
+                                alert("Error has occurred..");
+                            }
+                        });
+                    }               
                 },
-            }).then((data) => {
-                if (data === "") {
-                    swal.showInputError("Bạn cần phải nhập danh mục!");
-                    return false
-                }
-            });
+                allowOutsideClick: () => !Swal.isLoading()
+            })
         });
         //radio button
         $('[id*="categorylv2-"]').on('input', function () {

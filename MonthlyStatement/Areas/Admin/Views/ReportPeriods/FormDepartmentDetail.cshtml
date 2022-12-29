@@ -1,10 +1,9 @@
-﻿@model MonthlyStatement.Models.FormDepartmentReportDetail
+﻿@model IEnumerable<MonthlyStatement.Models.FormDepartmentReportDetail>
 @using MonthlyStatement.Models
 
 @{
     ViewBag.Title = "FormDepartmentDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var lstCategory = Session["FormDepartmentEdit-lstCategory"] as IEnumerable<Category>;
     int i = 0;
 }
 
@@ -23,7 +22,8 @@
                             <form>
                                 <div class="table-responsive">
                                     <table class="table table-striped" style="border-collapse:unset" id="table-2">
-                                        @foreach (var item in lstCategory.Where(c => c.category_of_id == null).ToList())
+
+                                        @foreach (var item in Model.Where(c => c.Category.category_of_id == null).ToList())
                                         {
                                             i = i + 1;
                                             int j = 0;
@@ -33,32 +33,35 @@
                                                         @i
                                                     </td>
                                                     <td style="font-weight:bold">
-                                                        @item.category_content
+                                                        @item.Category.category_content
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                            foreach (var items in lstCategory.Where(c => c.category_of_id == item.category_id).ToList())
+                                            if (Model.Where(c => c.Category.category_of_id == item.Category.category_id).Count() > 1)
                                             {
-                                                j++;
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-center">
-                                                            @(i).@(j)
-                                                        </td>
-                                                        <td>
-                                                            @items.category_content
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-center">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
+                                                foreach (var items in Model.Where(c => c.Category.category_of_id == item.category_id).ToList())
+                                                {
+                                                    j++;
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                @(i).@(j)
+                                                            </td>
+                                                            <td>
+                                                                @items.Category.category_content
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
                                             }
                                         }
                                     </table>
@@ -66,7 +69,7 @@
                             </form>
                             <form action="#" class="dropzone dz-clickable" id="mydropzone">
                                 <div class="dz-default dz-message">
-                                    <span>Vui lòng chọn mình chứng</span>
+                                    <span>Vui lòng chọn minh chứng</span>
                                 </div>
                             </form>
                         </div>
