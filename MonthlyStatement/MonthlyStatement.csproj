@@ -1156,6 +1156,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Views\ReportPeriods\FormDepartmentDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportPeriods\FormPersonalDetail.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
