@@ -62,6 +62,8 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return RedirectToAction("Index", "ReportPeriods");
         }
+        //department view edit
+
         public ActionResult FormDepartmentEdit(int id)
         {
             var form = db.FormDepartmentReports.Find(id);
@@ -72,6 +74,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return RedirectToAction("Index", "ReportPeriods");
         }
+        //department edit
         [HttpPost]
         public ActionResult FormDepartmentEdit(int idReport, string data)
         {
@@ -99,6 +102,8 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return Json("Không tồn tại", JsonRequestBehavior.AllowGet);
         }
+        //personal view edit
+
         public ActionResult FormPersonalEdit(int id)
         {
             var form = db.FormPersonalReports.Find(id);
@@ -110,6 +115,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return RedirectToAction("Index", "ReportPeriods");
         }
+        //personal edit
 
         [HttpPost]
         public ActionResult FormPersonalEdit(int idReport, string data)
@@ -138,11 +144,17 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return Json("Không tồn tại", JsonRequestBehavior.AllowGet);
         }
-
+        //department detail
         public ActionResult FormDepartmentDetail(int id)
         {
-            var formDetail = db.FormDepartmentReportDetails.Where(f =>f.form_department_report_id == id).ToList();
-            return View(formDetail);
+            var formDepartmentDetail = db.FormDepartmentReportDetails.Where(f =>f.form_department_report_id == id).ToList();
+            return View(formDepartmentDetail);
+        }
+        //personal detail
+        public ActionResult FormPersonalDetail(int id)
+        {
+            var formPersonalDetail = db.FormPersonalReportDetails.Where(f => f.form_personal_report_id == id).ToList();
+            return View(formPersonalDetail);
         }
 
 
