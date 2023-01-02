@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo cá nhân</h4>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @*THÔNG TIN NHÂN SỰ*@
+                            <div class="section-title mt-1" style="font-weight:bold">
+                                THÔNG TIN NHÂN SỰ
+                            </div>
+                            <div class="section-title mt-2">
+                                <div class="form-group row" style="margin-bottom:1px">
+                                    <div class="col-lg-2" style="max-width:10.7%">
+                                        <label style="font-size:14px; font-weight:600; line-height:42px">Họ và tên:</label>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <input style="width:300px" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin">
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-bottom:1px">
+                                    <div class="col-lg-2" style="max-width:10.7%">
+                                        <label style="font-size:14px; font-weight:600; line-height:42px">Email:</label>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <input style="width:300px" type="email" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin">
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-bottom:1px">
+                                    <div class="col-lg-2" style="max-width:10.7%">
+                                        <label style="font-size:14px; font-weight:600; line-height:42px">Khoa:</label>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <input style="width:300px" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin">
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-bottom:1px">
+                                    <div class="col-lg-2" style="max-width:10.7%">
+                                        <label style="font-size:14px; font-weight:600; line-height:42px">Chức vụ:</label>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <input style="width:300px" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin">
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-bottom:1px">
+                                    <div class="col-lg-2" style="max-width:10.7%">
+                                        <label style="font-size:14px; font-weight:600; line-height:42px">Ngày báo cáo:</label>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <input style="width:300px" type="date" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin">
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*CÔNG VIỆC THỰC HIỆN THEO KPI*@
+                            <div class="section-title mt-3" style="font-weight:bold">
+                                <label>1. </label>
+                                CÔNG VIỆC THỰC HIỆN THEO KPI
+                            </div>
+                            <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+                                <div class="col-lg-12">
+                                    <label style="font-size:14px; font-weight:600; line-height:42px">1.1</label>
+                                    Công tác giảng dạy
+                                </div>
+                                <div class="form-group custom-switch row" style="margin-bottom:1px">
+                                    <div class="col-lg-12">
+                                        <input style="width:300px" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin">
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*UPLOAD MINH CHỨNG*@
+                            <div class="section-title mt-3" style="font-weight:bold">
+                                <label>2. </label>
+                                MINH CHỨNG
+                            </div>
+                            <form action="#" class="dropzone dz-clickable" id="upload">
+                                <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
+                            </form>
+                            @*BUTTON LƯU FORM*@
+                            <div class="text-right mt-3">
+                                <a href="#" role="button" class="btn btn-primary">Lưu báo cáo</a>
+                                <button class="btn btn-danger " type="reset">Hủy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
