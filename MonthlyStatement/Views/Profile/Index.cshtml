@@ -112,7 +112,14 @@
                                 <p class="mb-0">Khoa:</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.Faculty.faculty_name</p>
+                                @if (@Model.faculty_id == null)
+                                {
+                                    <p class="text-muted mb-0">Chưa có khoa</p>
+                                }
+                                else
+                                {
+                                    <p class="text-muted mb-0">@Model.Faculty.faculty_name</p>
+                                }
                             </div>
                         </div>
                         <hr>
@@ -169,7 +176,14 @@
                         <div class="form-group">
                             <label>Khoa</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Khoa" name="faculty" value="@Model.Faculty.faculty_name" readonly>
+                                @if (@Model.faculty_id == null)
+                                {
+                                    <input type="text" class="form-control" placeholder="Khoa" name="faculty" value="Chưa có khoa" readonly>
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control" placeholder="Khoa" name="faculty" value="@Model.Faculty.faculty_name" readonly>
+                                }
                             </div>
                         </div>
                         <div class="form-group">
@@ -213,3 +227,4 @@
         });
     });
 </script>
+

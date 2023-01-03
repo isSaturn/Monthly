@@ -26,73 +26,90 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card-body">
+
                     <div class="form-group">
                         <div class="col-sm-12 buttons">
                             <a style="color:white" type="button" class="btn btn-primary btn-round" href="#">
                                 <i class="fa fa-plus"></i>
                                 Thêm thành viên
                             </a>
-                            <a style="color:white" type="button" class="btn btn-warning btn-round" href="#">
+                            <a style="color:white" class="btn btn-warning btn-round" href="#" type="button" data-toggle="modal"
+                               data-target="#exampleModalCenter">
                                 <i class="fa fa-plus"></i>
                                 Import
                             </a>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info">
-                                <thead>
-                                    <tr role="row">
-                                        <th class="text-center">
-                                            STT
-                                        </th>
-                                        <th>Họ và tên</th>
-                                        <th>Email</th>
-                                        <th>Chức danh</th>
-                                        <th class="text-center">
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        #
+                                    </th>
+                                    <th>Task Name</th>
+                                    <th>Progress</th>
+                                    <th>Members</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        1
+                                    </td>
+                                    <td>Create a mobile app</td>
+                                    <td class="align-middle">
+                                        <div class="progress progress-xs">
+                                            <div class="progress-bar bg-success width-per-40">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img alt="image" src="assets/img/users/user-5.png" width="35">
+                                    </td>
+                                    <td>2018-01-20</td>
+                                    <td>
+                                        <div class="badge badge-success badge-shadow">Completed</div>
+                                    </td>
+                                    <td><a href="#" class="btn btn-primary">Detail</a></td>
+                                </tr>
 
-                                    {
-                                        i = i + 1;
-
-                                        <tr class="Search">
-                                            <td class="text-center">
-                                                @i
-                                            </td>
-                                            <td>
-                                                @item.user_name
-                                            </td>
-                                            <td>
-                                                @item.AspNetUser.Email
-                                            </td>
-                                            <td>
-                                                @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="#">
-                                                        <i class="far fa-edit"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Thêm danh sách người dùng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="fileimport">
+                    <label class="custom-file-label" for="customFile">Chọn file danh sách (xls/xlsx)</label>
+                </div>
+                <p id="importfilevalidation" hidden="hidden" class="text-danger"></p>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-primary" id="importUser">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -110,6 +127,76 @@
                     $(this).show();
                 }
             });
+        });
+        $('#importUser').on('click', function () {
+            $('#importfilevalidation').hide();
+            let fileimport = $('#fileimport').val();
+            let fileType = fileimport.substr(fileimport.lastIndexOf('.') + 1).toLowerCase();
+
+            if (fileimport.trim().length < 1) {
+                $('#importfilevalidation').text("Bạn chưa chọn file, Hãy chọn file danh sách cần nhập.").show().prop("hidden", false);
+            } else if (fileType != "xlsx" && fileType != "xls") {
+                $('#importfilevalidation').text("File không đúng định dạng, Vui lòng chọn file có định dạng .xls/.xlsx.").show().prop("hidden", false);
+            }
+            else {
+                var formData = new FormData();
+                formData.append('lstUser', $("#fileimport")[0].files[0]);
+
+                $('#AjaxLoader').show();
+                $.ajax({
+                    url: $('#requestPath').val() + 'Faculty/ImportUser',
+                    type: 'POST',
+                    dataType: 'html',
+                    contentType: false,
+                    processData: false,
+                    data: formData
+                }).done(function (ketqua) {
+                    $('#fileimport').val(null);
+                    if (ketqua == "INCORRECT") {
+                        $('#AjaxLoader').hide();
+                        var SweetAlert2Demo = function () {
+                            var initDemos = function () {
+                                swal("Thông báo!", "Dữ liệu file được nhập chưa đúng,\nvui lòng kiểm tra và thực hiện lại.", {
+                                    icon: "error",
+                                    buttons: {
+                                        confirm: {
+                                            className: 'btn btn-danger'
+                                        }
+                                    },
+                                });
+                            };
+                            return {
+                                init: function () {
+                                    initDemos();
+                                },
+                            };
+                        }();
+
+                        jQuery(document).ready(function () {
+                            SweetAlert2Demo.init();
+                        });
+                    }
+                    else if (ketqua == "DANHSACH") {
+                        $('#AjaxLoader').hide();
+                        window.location.href = $('#requestPath').val() + "admins/quanlynhansu/danhsachnhanvien";
+                    }
+                    else {
+                        $('#lstTempDataEmployee').replaceWith(ketqua);
+                        $('#AjaxLoader').hide();
+                        $('#openListEmployeeTemp').click();
+
+                        $.when(
+                            $.getScript($('#requestPath').val() + "Content/Admin/assets/js/plugin/sweetalert/sweetalert.min.js"),
+                            $.getScript($('#requestPath').val() + "Content/Admin/assets/js/theme.min.js"),
+
+                            $.Deferred(function (deferred) {
+                                $(deferred.resolve);
+                            })
+                        ).done(function () {
+                        });
+                    }
+                });
+            }
         });
     });
 </script>
