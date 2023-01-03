@@ -1160,6 +1160,8 @@
     <Content Include="Areas\Admin\Views\ReportPeriods\FormPersonalDetail.cshtml" />
     <Content Include="Areas\Admin\Views\PersonalReportForm\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PersonalReportForm\Formreport.cshtml" />
+    <Content Include="Areas\Admin\Views\PersonalReportForm\Personal.cshtml" />
+    <Content Include="Areas\Admin\Views\PersonalReportForm\PersonalDetail.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
