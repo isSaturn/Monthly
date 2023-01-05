@@ -113,7 +113,7 @@
                                                     <td>
                                                         <input type="text" class="form-control" id="exampleFormControlInput1" value="Lập trình hướng đối tượng" disabled>
                                                     </td>
-                                                    <td >
+                                                    <td>
                                                         <input type="text" class="form-control" id="exampleFormControlInput1" value="6" disabled>
                                                     </td>
                                                     <td>
@@ -144,14 +144,14 @@
                                                     <td scope="row">Nhóm 1</td>
                                                     <td>
                                                         Nghiên cứu công bố quốc tế (CBQT)
-                                                       @* <input type="text" class="form-control" id="exampleFormControlInput1" value="Nghiên cứu công bố quốc tế (CBQT)" disabled>*@
+                                                        @* <input type="text" class="form-control" id="exampleFormControlInput1" value="Nghiên cứu công bố quốc tế (CBQT)" disabled>*@
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td scope="row">1</td>
                                                     <td>
                                                     </td>
-                                                    <td >
+                                                    <td>
                                                         abc
                                                     </td>
                                                     <td>
@@ -164,7 +164,7 @@
                                                     <td scope="row">2</td>
                                                     <td>
                                                     </td>
-                                                    <td >
+                                                    <td>
                                                         abc
                                                     </td>
                                                     <td>
@@ -187,7 +187,7 @@
                                                     <td scope="row">1</td>
                                                     <td>
                                                         Cố vấn học tập
-                                                       @* <input type="text" class="form-control" id="exampleFormControlInput1" value="Nghiên cứu công bố quốc tế (CBQT)" disabled>*@
+                                                        @* <input type="text" class="form-control" id="exampleFormControlInput1" value="Nghiên cứu công bố quốc tế (CBQT)" disabled>*@
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -259,14 +259,56 @@
                                     </div>
                                 </div>
                                 @*BUTTON LƯU FORM*@
-                                <div style="text-align: center; margin-top: 1.8rem" class="mb-3">
+                                @*<div style="text-align: center; margin-top: 1.8rem" class="mb-3">
                                     <a style="width: 180px; color: white; " class="btn btn-danger" role="button" href="@Url.Action("Personal","PersonalReportForm")">
                                         Quay lại
                                     </a>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     }
+                </div>
+                <hr />    
+                <div class="col-12">
+                    <div class="card" style="background-color: #e9ecef">
+                        <div class="card-body">
+                            <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
+                            <form>
+                                <input type="hidden" name="" value="" />
+                                <div class="form-group">
+                                    <textarea class="form-control" style="height:200px !important"></textarea>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button class="btn btn-primary" type="submit">Gửi</button>
+                                </div>
+                            </form>
+                            <hr />
+                            <div class="chat">
+                                <div class="chat-header clearfix">
+                                    <img src="~/assets/img/users/user-1.png" alt="avatar">
+                                    <div class="chat-about">
+                                        <div class="chat-time form-inline">
+                                            <div class="chat-with" style="font-style:oblique">ADMIN</div>
+                                            &emsp;
+                                            -- 10:59 --
+                                        </div>
+                                        <div class="chat-text">Cần bổ sung báo cáo</div>
+                                    </div>
+                                </div>
+                                <div class="chat-header clearfix">
+                                    <img src="~/assets/img/users/user-2.png" alt="avatar">
+                                    <div class="chat-about">
+                                        <div class="chat-time form-inline">
+                                            <div class="chat-with" style="font-style:oblique">STAFF</div>
+                                            &emsp;
+                                            -- 11:20 --
+                                        </div>
+                                        <div class="chat-text">Mình sẽ bổ sung</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
