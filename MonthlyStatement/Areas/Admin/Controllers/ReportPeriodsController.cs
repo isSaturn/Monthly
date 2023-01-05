@@ -16,10 +16,10 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         private CP25Team04Entities db = new CP25Team04Entities();
 
         // GET: Admin/ReportPeriods
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var reportPeriods = db.ReportPeriods.Include(r => r.ReportYear);
-            return View(reportPeriods.ToList());
+            var reportPeriods = db.ReportPeriods.Where(r => r.report_year_id == id).ToList();
+            return View(reportPeriods);
         }
         // GET: Admin/ReportPeriods/Edit
         [HttpGet]

@@ -1,6 +1,7 @@
 ﻿@model MonthlyStatement.Models.ReportPeriod
 
 @{
+    ViewBag.Title = "FormReports";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using (Html.BeginForm("FormReports", "ReportPeriods", FormMethod.Post, new { }))
