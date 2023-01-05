@@ -45,39 +45,42 @@
                         <table class="table table-striped" id="table-1">
                             <thead>
                                 <tr>
-                                    <th class="text-center">
-                                        #
-                                    </th>
-                                    <th>Task Name</th>
-                                    <th>Progress</th>
-                                    <th>Members</th>
-                                    <th>Due Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>STT</th>
+                                    <th>Email</th>
+                                    <th>Tên</th>
+                                    <th>Khoa</th>
+                                    <th>Vai trò</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        1
-                                    </td>
-                                    <td>Create a mobile app</td>
-                                    <td class="align-middle">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-success width-per-40">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img alt="image" src="assets/img/users/user-5.png" width="35">
-                                    </td>
-                                    <td>2018-01-20</td>
-                                    <td>
-                                        <div class="badge badge-success badge-shadow">Completed</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-primary">Detail</a></td>
-                                </tr>
+                                @foreach (var item in Model)
 
+                                {
+                                    i = i + 1;
+                                    <tr>
+                                        <td>
+                                            @i
+                                        </td>
+                                        <td>
+                                            @item.AspNetUser.Email
+                                        </td>
+                                        <td>
+                                            @item.user_name
+                                        </td>
+                                        <td>
+                                            @if (item.faculty_id == null)
+                                            {
+                                                <span>Chưa có khoa</span>
+                                            }
+                                            else
+                                            {
+                                                @item.Faculty.faculty_name
+                                            }
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -96,10 +99,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
             <div class="modal-body">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="fileimport">
-                    <label class="custom-file-label" for="customFile">Chọn file danh sách (xls/xlsx)</label>
+                <div class="form-group">
+                    <label>File</label>
+                    <input type="file" id="fileimport" class="form-control">
                 </div>
                 <p id="importfilevalidation" hidden="hidden" class="text-danger"></p>
             </div>
@@ -129,72 +133,33 @@
             });
         });
         $('#importUser').on('click', function () {
+
             $('#importfilevalidation').hide();
             let fileimport = $('#fileimport').val();
             let fileType = fileimport.substr(fileimport.lastIndexOf('.') + 1).toLowerCase();
+            var check = true;
 
             if (fileimport.trim().length < 1) {
+                check = false;
                 $('#importfilevalidation').text("Bạn chưa chọn file, Hãy chọn file danh sách cần nhập.").show().prop("hidden", false);
             } else if (fileType != "xlsx" && fileType != "xls") {
+                check = false;
                 $('#importfilevalidation').text("File không đúng định dạng, Vui lòng chọn file có định dạng .xls/.xlsx.").show().prop("hidden", false);
             }
-            else {
+            if (check == true) {
                 var formData = new FormData();
                 formData.append('lstUser', $("#fileimport")[0].files[0]);
 
-                $('#AjaxLoader').show();
                 $.ajax({
-                    url: $('#requestPath').val() + 'Faculty/ImportUser',
+                    url: $('#requestUrl').val() + 'Admin/Faculty/ImportUser',
                     type: 'POST',
                     dataType: 'html',
                     contentType: false,
                     processData: false,
                     data: formData
                 }).done(function (ketqua) {
+                    alert('ok');
                     $('#fileimport').val(null);
-                    if (ketqua == "INCORRECT") {
-                        $('#AjaxLoader').hide();
-                        var SweetAlert2Demo = function () {
-                            var initDemos = function () {
-                                swal("Thông báo!", "Dữ liệu file được nhập chưa đúng,\nvui lòng kiểm tra và thực hiện lại.", {
-                                    icon: "error",
-                                    buttons: {
-                                        confirm: {
-                                            className: 'btn btn-danger'
-                                        }
-                                    },
-                                });
-                            };
-                            return {
-                                init: function () {
-                                    initDemos();
-                                },
-                            };
-                        }();
-
-                        jQuery(document).ready(function () {
-                            SweetAlert2Demo.init();
-                        });
-                    }
-                    else if (ketqua == "DANHSACH") {
-                        $('#AjaxLoader').hide();
-                        window.location.href = $('#requestPath').val() + "admins/quanlynhansu/danhsachnhanvien";
-                    }
-                    else {
-                        $('#lstTempDataEmployee').replaceWith(ketqua);
-                        $('#AjaxLoader').hide();
-                        $('#openListEmployeeTemp').click();
-
-                        $.when(
-                            $.getScript($('#requestPath').val() + "Content/Admin/assets/js/plugin/sweetalert/sweetalert.min.js"),
-                            $.getScript($('#requestPath').val() + "Content/Admin/assets/js/theme.min.js"),
-
-                            $.Deferred(function (deferred) {
-                                $(deferred.resolve);
-                            })
-                        ).done(function () {
-                        });
-                    }
                 });
             }
         });

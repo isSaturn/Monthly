@@ -201,16 +201,38 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                         }
                         // 3 Validation Chức danh
                         string roles = data[4].ToString().Trim();
-                        var role = db.Faculties.FirstOrDefault(f => f.faculty_name.ToLower().Equals(roles.ToLower()));
+                        var role = db.AspNetRoles.FirstOrDefault(r => r.Name.ToLower().Equals(roles.ToLower()));
                         if (role == null)
                         {
                             error += i + ". Không tìm thấy vai trò.#";
                             i++;
                         }
+                        //check email đã có hay chưa
+                        if (string.IsNullOrEmpty(error))
+                        {
+                            string emails = data[2].ToString().Trim();
+                            var aspNetUser = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim()));
+                            if (aspNetUser != null)
+                            {
+                                //thay đổi role
+                                var currentRole = aspNetUser.AspNetRoles;
+                                db.AspNetRoles.RemoveRange(currentRole);
+
+                                role.AspNetUsers.Add(aspNetUser);
+
+                                //thay đổi khoa
+                                aspNetUser.Profiles.First().faculty_id = khoa.faculty_id;
+
+                                //thay đổi tên
+                                aspNetUser.Profiles.First().user_name = data[1].ToString().Trim();
+
+                                db.Entry(aspNetUser).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                        }
                     }
                 }
                 return Content("INCORRECT");
-
             }
             return Content("DanhSach");
         }
