@@ -48,7 +48,7 @@
                                 <a href="@Url.Action("Index", "Faculty", new { Area = "Admin" })" class="nav-link"><i data-feather="user"></i><span>Quản lý khoa</span></a>
                             </li>
                             <li class="dropdown">
-                            <li class=@(ViewBag.Title == "Quản lý kỳ báo cáo" ? "active" : "nav-item")>
+                            <li class=@(ViewBag.Title == "Quản lý báo cáo" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "YearReport", new { Area = "Admin" })" class="nav-link"><i data-feather="briefcase"></i><span>Quản lý kỳ báo cáo</span></a>
                             </li>
                             <li class="dropdown">
@@ -63,6 +63,21 @@
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="nav-linkn"><i data-feather="bar-chart"></i><span>Thống kê</span></a>
+                            </li>
+                        </ul>
+                    }
+                    else if (User.IsInRole("Nhân viên - Giảng viên"))
+                    {
+                        <ul class="sidebar-menu">
+                            <li class=@(ViewBag.Title == "Quản lý báo báo" ? "active" : "nav-item")>
+                                <a href="#" class="nav-link"><i data-feather="user-check"></i><span>Quản lý báo cáo</span></a>
+                            </li>
+                            <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "FormReport", new { Area = "Personal" })" class="nav-link"><i data-feather="user"></i><span>Quản lý biểu mẫu</span></a>
+                            </li>
+                            <li class="dropdown">
+                            <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
+                                <a href="#" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
                             </li>
                         </ul>
                     }
@@ -122,6 +137,7 @@
     <script src="~/assets/js/page/index.js"></script>
     <!-- Template JS File -->
     <script src="~/assets/js/scripts.js"></script>
+    <script src="~/assets/js/custom.js"></script>
     <!-- Custom JS File -->
     <script src="~/assets/bundles/sweetalert/sweetalert.min.js"></script>
     <script src="~/assets/bundles/datatables/datatables.min.js"></script>
