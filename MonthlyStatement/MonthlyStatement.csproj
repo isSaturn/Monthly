@@ -193,6 +193,8 @@
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\FacultyController.cs" />
     <Compile Include="Areas\Admin\Controllers\PersonalReportFormController.cs" />
+    <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
+    <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -1161,6 +1163,11 @@
     <Content Include="Areas\Admin\Views\PersonalReportForm\Formreport.cshtml" />
     <Content Include="Areas\Admin\Views\PersonalReportForm\Personal.cshtml" />
     <Content Include="Areas\Admin\Views\PersonalReportForm\PersonalDetail.cshtml" />
+    <Content Include="Areas\Personal\Views\FormReport\Formreport.cshtml" />
+    <Content Include="Areas\Personal\Views\FormReport\Index.cshtml" />
+    <Content Include="Areas\Personal\Views\FormReport\Personal.cshtml" />
+    <Content Include="Areas\Personal\Views\FormReport\PersonalDetail.cshtml" />
+    <Content Include="Areas\Personal\Views\web.config" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1192,6 +1199,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Personal\Data\" />
+    <Folder Include="Areas\Personal\Views\Shared\" />
     <Folder Include="assets\FileImport\" />
     <Folder Include="assets\user\avatar\" />
     <Folder Include="Data\" />
