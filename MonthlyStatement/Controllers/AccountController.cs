@@ -87,13 +87,12 @@ namespace MonthlyStatement.Controllers
                 if (currentUser.Roles.Count != 0)
                 {
 
-                    var email = User.Identity.Name;
-                    var id = db.AspNetUsers.FirstOrDefault(f => f.Email == email).Id;
+                    //var email = User.Identity.Name;
+                    //var id = db.AspNetUsers.FirstOrDefault(f => f.Email == email).Id;
 
-                    //Session["Avt"] = db.Profiles.FirstOrDefault(a => a.account_id == id).avatar;
-                    //Session["ID_User"] = id;
-                    //Session["Email"] = email;
-
+                    Session["Avt"] = db.Profiles.FirstOrDefault(a => a.account_id == id).avatar;
+                    Session["ID_User"] = id;
+                    Session["Email"] = email;
                     //Session["ID_User"] = currentUser.Id;
                     //var profile = db.Profiles.FirstOrDefault(f => f.account_id == currentUser.Id);
                     //Session["Avt"] = profile.avatar;
