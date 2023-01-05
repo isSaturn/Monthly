@@ -69,7 +69,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             Session["Avt"] = profile.avatar;
             Session["notification"] = "Successfully Edited Profile";
             return RedirectToAction("Index","Profile");
-
         }
     }
 }

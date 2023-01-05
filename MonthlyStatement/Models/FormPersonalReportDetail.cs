@@ -23,6 +23,9 @@ namespace MonthlyStatement.Models
         public int form_personal_report_detail_id { get; set; }
         public int category_id { get; set; }
         public int form_personal_report_id { get; set; }
+        public Nullable<int> row { get; set; }
+        public Nullable<int> col { get; set; }
+        public string status { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual FormPersonalReport FormPersonalReport { get; set; }

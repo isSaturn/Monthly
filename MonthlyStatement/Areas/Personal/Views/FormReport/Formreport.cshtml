@@ -15,6 +15,26 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo cá nhân</h4>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
                             @*THÔNG TIN NHÂN SỰ*@
                             <div class="section-title mt-1" style="font-weight:bold">
                                 THÔNG TIN NHÂN SỰ
@@ -100,6 +120,47 @@
         </div>
     </div>
 </section>
+<div class="container">
+    <div class="py-3"></div>
+    <input hidden id="nhanthanbandau" name="nhanthanbandau" value="0" />
+    <input hidden id="dem" name="dem" value="0" />
+    <div id="appenddayne" class="col-12"></div>
+    <a href="#" role="button" id="themnoidung" class="btn btn-icon btn-success"><i class="fas fa-plus-circle"></i></a>
+    <a href="#" role="button" id="xoanoidung" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
+</div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    //Thêm nhân thân
+    $('#themnoidung').on('click', function (e) {
+        let sott = Number($('#dem').val()) + 1;
+        $('#appenddayne').replaceWith(
+            '<div id="grhotennhanthan' + sott + '" class="mb-2 col-12 col-md-4">'
+            + '<label style="font-weight:bold;" class="form-label">' + sott + ' <span class="text-danger">*</span></label>'
+            + '<input id="hotennhanthan' + sott + '" name="hotennhanthan' + sott + '" type="text" class="form-control"/>'
+            + '<p style="font-size: 13px; color:red;" id="hotennhanthan' + sott + 'validation"></p>'
+            + '</div>'
+            + ' <div id="appenddayne" class="col-12"></div>');
+
+        var elem = document.getElementById('dem');
+        elem.value = sott;
+    });
+
+    //xóa nhân thân
+    $('#xoanoidung').on('click', function (e) {
+        let sott = Number($('#dem').val());
+        if (sott === 0) {
+        }
+        else {
+            $('#grhotennhanthan' + sott).remove();
+            $('#grmoiquanhenhanthan' + sott).remove();
+            $('#grngaysinhnhanthan' + sott).remove();
+
+            var elem = document.getElementById('dem');
+            elem.value = sott - 1;
+        }
+    });
+</script>
+
 
 
 
