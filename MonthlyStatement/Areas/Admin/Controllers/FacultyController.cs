@@ -10,6 +10,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using MonthlyStatement.Models;
 
 namespace MonthlyStatement.Areas.Admin.Controllers
@@ -18,29 +20,34 @@ namespace MonthlyStatement.Areas.Admin.Controllers
 
     public class FacultyController : Controller
     {
-
+        private ApplicationAccountManager _userManager;
         CP25Team04Entities db = new CP25Team04Entities();
+
+        public FacultyController()
+        {
+        }
+        public FacultyController(ApplicationAccountManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public ApplicationAccountManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationAccountManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         // GET: Admin/Faculty
         public ActionResult Index()
         {
             return View(db.Faculties.ToList());
         }
-
-        // GET: Admin/Faculty/Details/5
-        /*public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Faculty faculty = db.Faculties.Find(id);
-            if (faculty == null)
-            {
-                return HttpNotFound();
-            }
-            return View(faculty);
-        }*/
 
         // GET: Admin/Faculty/Create
         public ActionResult Create()
@@ -215,7 +222,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                             if (aspNetUser != null)
                             {
                                 //thay đổi role
+                                var oldUser = UserManager.FindById(aspNetUser.Id);
+                                var oldRole = UserManager.GetRoles(oldUser.Id).FirstOrDefault();
 
+                                // Update user role
+                                UserManager.RemoveFromRole(aspNetUser.Id, oldRole);
                                 role.AspNetUsers.Add(aspNetUser);
                                 db.SaveChanges();
 
