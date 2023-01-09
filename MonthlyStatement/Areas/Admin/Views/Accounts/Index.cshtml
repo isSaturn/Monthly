@@ -86,7 +86,14 @@
                                                 }
                                             </td>
                                             <td>
-
+                                                @if (item.AspNetRoles.Count() <1)
+                                                {
+                                                    <span>Chưa có vai trò</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.AspNetRoles.First().Name
+                                                }
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">

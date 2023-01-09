@@ -84,7 +84,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                 if (string.IsNullOrEmpty(data))
                     return Json("Vui lòng chọn danh mục", JsonRequestBehavior.AllowGet);
                 db.FormDepartmentReportDetails.RemoveRange(form.FormDepartmentReportDetails);
-                form.user_name = Session["Email"].ToString();
                 db.Entry(form).State = EntityState.Modified;
                 db.SaveChanges();
                 if (data.IndexOf("-") != -1)
