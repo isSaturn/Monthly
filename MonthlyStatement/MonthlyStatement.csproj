@@ -194,6 +194,7 @@
     <Compile Include="Areas\Admin\Controllers\FacultyController.cs" />
     <Compile Include="Areas\Admin\Controllers\PersonalReportFormController.cs" />
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
+    <Compile Include="Areas\Personal\Controllers\ReportController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -981,6 +982,7 @@
     <Content Include="assets\img\image-gallery\thumb\thumb-9.png" />
     <Content Include="assets\img\loading.gif" />
     <Content Include="assets\img\sidenav2.jpg" />
+    <Content Include="assets\img\video_Trim.mp4" />
     <Content Include="assets\img\vlu\logo-bg.png" />
     <Content Include="assets\img\vlu\logo.png" />
     <Content Include="assets\img\vlu\logoVL.jpg" />
@@ -1165,8 +1167,8 @@
     <Content Include="Areas\Admin\Views\PersonalReportForm\PersonalDetail.cshtml" />
     <Content Include="Areas\Personal\Views\FormReport\Formreport.cshtml" />
     <Content Include="Areas\Personal\Views\FormReport\Index.cshtml" />
-    <Content Include="Areas\Personal\Views\FormReport\Personal.cshtml" />
-    <Content Include="Areas\Personal\Views\FormReport\PersonalDetail.cshtml" />
+    <Content Include="Areas\Personal\Views\Report\Personal.cshtml" />
+    <Content Include="Areas\Personal\Views\Report\PersonalDetail.cshtml" />
     <Content Include="Areas\Personal\Views\web.config" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using System.DirectoryServices.AccountManagement;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Helpers;
 
 namespace MonthlyStatement.Controllers
 {
@@ -87,17 +88,6 @@ namespace MonthlyStatement.Controllers
                 if (currentUser.Roles.Count != 0)
                 {
 
-                    var email = User.Identity.Name;
-                    var id = db.AspNetUsers.FirstOrDefault(f => f.Email == email).Id;
-
-                    //Session["Avt"] = db.Profiles.FirstOrDefault(a => a.account_id == id).avatar;
-                    //Session["ID_User"] = id;
-                    //Session["Email"] = email;
-
-                    //Session["ID_User"] = currentUser.Id;
-                    //var profile = db.Profiles.FirstOrDefault(f => f.account_id == currentUser.Id);
-                    //Session["Avt"] = profile.avatar;
-
                     // Add role claim to user
                     ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
 
@@ -105,7 +95,6 @@ namespace MonthlyStatement.Controllers
                     identity.AddClaim(new Claim(ClaimTypes.Role, currentRole[0]));
                     IOwinContext context = HttpContext.GetOwinContext();
 
-                    context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                     context.Authentication.SignIn(identity);
                 }
             }
@@ -133,9 +122,10 @@ namespace MonthlyStatement.Controllers
         {
             /// Send an OpenID Connect sign-out request.
             /// 
-            HttpContext.GetOwinContext()
-                        .Authentication
-                        .SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            Session.Abandon();
+            Request.GetOwinContext().Authentication.SignOut();
+            Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
+            Request.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Redirect("Login");
         }
 

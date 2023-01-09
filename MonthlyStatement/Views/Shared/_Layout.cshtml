@@ -70,7 +70,7 @@
                     {
                         <ul class="sidebar-menu">
                             <li class=@(ViewBag.Title == "Quản lý báo báo" ? "active" : "nav-item")>
-                                <a href="#" class="nav-link"><i data-feather="user-check"></i><span>Quản lý báo cáo</span></a>
+                                <a href="@Url.Action("Personal", "Report", new { Area = "Personal" })" class="nav-link"><i data-feather="user"></i><span>Quản lý báo cáo</span></a>
                             </li>
                             <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "FormReport", new { Area = "Personal" })" class="nav-link"><i data-feather="user"></i><span>Quản lý biểu mẫu</span></a>

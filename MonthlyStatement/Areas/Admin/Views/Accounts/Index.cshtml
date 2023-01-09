@@ -66,7 +66,14 @@
                                                 @item.Email
                                             </td>
                                             <td>
-                                                @item.Profiles.FirstOrDefault().user_name
+                                                @if (item.Profiles.First().user_name == null)
+                                                {
+                                                    <span>Chưa có tên</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.Profiles.FirstOrDefault().user_name
+                                                }
                                             </td>
                                             <td>
                                                 @if (item.Profiles.First().faculty_id == null)
@@ -79,7 +86,7 @@
                                                 }
                                             </td>
                                             <td>
-                                                @item.AspNetRoles.FirstOrDefault().Name
+
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">

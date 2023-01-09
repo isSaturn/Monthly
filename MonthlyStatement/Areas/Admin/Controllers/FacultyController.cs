@@ -215,18 +215,20 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                             if (aspNetUser != null)
                             {
                                 //thay đổi role
-                                var currentRole = aspNetUser.AspNetRoles;
-                                db.AspNetRoles.RemoveRange(currentRole);
 
                                 role.AspNetUsers.Add(aspNetUser);
+                                db.SaveChanges();
+
+                                var profile = aspNetUser.Profiles.FirstOrDefault();
 
                                 //thay đổi khoa
-                                aspNetUser.Profiles.First().faculty_id = khoa.faculty_id;
+                                profile.faculty_id = khoa.faculty_id;
 
                                 //thay đổi tên
-                                aspNetUser.Profiles.First().user_name = data[1].ToString().Trim();
+                                string names = data[1].ToString().Trim();
+                                profile.user_name = names;
 
-                                db.Entry(aspNetUser).State = EntityState.Modified;
+                                db.Entry(profile).State = EntityState.Modified;
                                 db.SaveChanges();
                             }
                         }

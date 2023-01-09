@@ -1,4 +1,5 @@
-﻿using MonthlyStatement.Middleware;
+﻿using Microsoft.AspNet.Identity;
+using MonthlyStatement.Middleware;
 using MonthlyStatement.Models;
 using System;
 using System.Collections.Generic;
@@ -17,20 +18,21 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // GET: Admin/MyProfile
         public ActionResult Index()
         {
+
+            string ID_User = User.Identity.Name;
+            var profiles = db.AspNetUsers.FirstOrDefault(u => u.Email.Equals(ID_User)).Profiles.First();
+            if (profiles != null)
             {
-                string ID_User = Session["ID_User"].ToString();
-                var profile = db.Profiles.FirstOrDefault(f => f.account_id == ID_User);
-                Session["Avt"] = profile.avatar;
-                if (profile != null) {
-                    return View(profile);
-                }
-                return View(HttpNotFound());
+                return View(profiles);
             }
+            return View(HttpNotFound());
+
         }
         public ActionResult Edit_Profile(string name, HttpPostedFileBase avt)
         {
-            string ID_User = Session["ID_User"].ToString();
-            var profile = db.Profiles.FirstOrDefault(f => f.account_id == ID_User);
+            string ID_User = User.Identity.Name;
+            var user = db.AspNetUsers.FirstOrDefault(u => u.Email.Equals(ID_User));
+            var profile = db.Profiles.FirstOrDefault(p => p.account_id == user.Id);
             if (!string.IsNullOrWhiteSpace(name))
             {
                 profile.user_name = name;
@@ -68,7 +70,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
 
             Session["Avt"] = profile.avatar;
             Session["notification"] = "Successfully Edited Profile";
-            return RedirectToAction("Index","Profile");
+            return RedirectToAction("Index", "Profile");
         }
     }
 }

@@ -16,7 +16,11 @@ namespace MonthlyStatement.Areas.Personal.Controllers
         // GET: Personal/FormReport
         public ActionResult Index()
         {
-            return View();
+            {
+                var current_year = DateTime.Now.Year;
+                var check = db.ReportYears.Where(y => y.year == current_year);
+                return View(check);
+            }
         }
         public ActionResult FormReport()
         {

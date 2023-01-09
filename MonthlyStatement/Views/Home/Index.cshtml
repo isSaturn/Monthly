@@ -1,26 +1,15 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<body data-col="2-columns" class=" 2-columns ">
+﻿<body data-col="2-columns" class=" 2-columns ">
     <!-- ////////////////////////////////////////////////////////////////////////////-->
-    <div class="main__wrap-thumb">
-        <div class="main__content-wrapper">
-            <div class="main__thumb">
-                <div id="banner" class="main__thumb-img  text-center">
-                    <div class="inner">
-                        <img src="~/assets/img/vlu/logo-bg.png">
-                        <p class="main__content-title">  </p><br />
-                        <p class="main__content-header">MONLYTH STATEMENT</p>
-                        <p class="main__content-time" id="current-time"></p>
-                    </div>
-                </div>
-            </div>
+    <div class="hero">
+        <video autoplay loop muted play-inline class="back-video" style="position: fixed; min-height: 100%; min-width: 90%; right: 0; bottom: 0; z-index: -1">
+            <source src="~/assets/img/video_Trim.mp4" type="video/mp4">
+        </video>
+        <div class="content" style="text-align: center">
+            <h1 style="font-size: 160px; color: #fff; font-weight: 600">Monthly Statement</h1>
+            <a class="main__content-time" id="current-time" style="text-decoration: none; display: inline-block; color: rgb(255, 255, 255); font-size: 24px; top: 20px; padding: 14px 50px"></a>
         </div>
     </div>
 </body>
-
 <script>
     var curDate = new Date();
 
@@ -49,5 +38,3 @@
     // Gán vào thẻ HTML
     document.getElementById('current-time').innerHTML = curTime + " " + current_day + " ,  " + curDay + "  " + setMonth + " " + curYear;
 </script>
-
-
