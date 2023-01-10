@@ -1,49 +1,62 @@
 ﻿@model MonthlyStatement.Models.Profile
 
-<section style="background-color: #eee;">
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Tài khoản:</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.AspNetUser.Email</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Khoa:</p>
-                            </div>
-                            <div class="col-sm-9">
-                                @if (@Model.faculty_id == null)
+<section class="vh-200" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-12 mb-4 mb-lg-0">
+                <div class="card mb-3" style="border-radius: .5rem;">
+                    <div class="row g-0">
+                        <div class="col-md-4 gradient-custom text-center text-white"
+                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            <img src="~/assets/img/user.png"
+                                 alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                            <h5>@Model.user_name</h5>
+                            <div>
+                                @if (@Model.AspNetUser.AspNetRoles.Count() < 1)
                                 {
-                                    <p class="text-muted mb-0">Chưa có khoa</p>
+                                    <div class="text-muted mb-0">Chưa có khoa</div>
                                 }
                                 else
                                 {
-                                    <p class="text-muted mb-0">@Model.Faculty.faculty_name</p>
+                                    <div class="text-muted mb-0">
+                                        @Model.AspNetUser.AspNetRoles.First().Name
+                                    </div>
                                 }
                             </div>
+                            <i type="button" data-toggle="modal" data-target="#editProfile" class="far fa-edit mb-5"></i>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Tên:</p>
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <h6>THÔNG TIN TÀI KHOẢN</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>Email</h6>
+                                        <p class="text-muted">@Model.AspNetUser.Email</p>
+                                    </div>
+
+                                </div>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>Khoa</h6>
+                                        <div class="text-muted">
+                                            @if (@Model.faculty_id == null)
+                                            {
+                                                <p class="text-muted mb-0">Chưa có khoa</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-muted mb-0">@Model.Faculty.faculty_name</p>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <h6>Bộ môn</h6>
+                                        <p class="text-muted"></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.user_name</p>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="d-flex justify-content-center mb-2">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editProfile">Chỉnh sửa</button>
                         </div>
                     </div>
                 </div>
