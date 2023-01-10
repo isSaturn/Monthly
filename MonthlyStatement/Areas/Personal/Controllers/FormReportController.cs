@@ -13,18 +13,14 @@ namespace MonthlyStatement.Areas.Personal.Controllers
     {
         private CP25Team04Entities db = new CP25Team04Entities();
 
-        // GET: Personal/FormReport
+        // GET: Personal/Report
         public ActionResult Index()
         {
             {
-                var current_year = DateTime.Now.Year;
-                var check = db.ReportYears.Where(y => y.year == current_year);
-                return View(check);
+                var current_time = DateTime.Now;
+                var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= current_time && d.end_date >= current_time);
+                return View(check.FormPersonalReports);
             }
-        }
-        public ActionResult FormReport()
-        {
-            return View();
         }
     }
 }

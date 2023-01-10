@@ -18,7 +18,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var current_year = DateTime.Now.Year;
-            var check = db.ReportYears.FirstOrDefault(y => y.year == current_year);
+            var check = db.ReportYears.Where(y => y.year == current_year);
             if (check == null)
                 //cho phep thêm mới năm báo cáo
                 Session["ReportYear-Check"] = true;
@@ -33,7 +33,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             try
             {
                 var current_year = DateTime.Now.Year;
-                var check = db.ReportYears.FirstOrDefault(y => y.year == current_year);
+                var check = db.ReportYears.Where(y => y.year == current_year);
                 if (check == null)
                 {
 

@@ -1,4 +1,6 @@
-﻿
+﻿@model IEnumerable<MonthlyStatement.Models.FormPersonalReport>
+@using MonthlyStatement.Models
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,8 +18,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+
                             @*THÔNG TIN NHÂN SỰ*@
-                            <div class="section-title mt-1" style="font-weight:bold">
+                            <!--<div class="section-title mt-1" style="font-weight:bold">
                                 <label>A. </label>
                                 THÔNG TIN NHÂN SỰ
                             </div>
@@ -62,10 +65,9 @@
                                         <input style="width:300px" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nhập nội dung">
                                     </div>
                                 </div>
-                            </div>
-
+                            </div>-->
                             @*CÔNG VIỆC THỰC HIỆN THEO KPI*@
-                            <div class="section-title mt-3" style="font-weight:bold">
+                            <!--<div class="section-title mt-3" style="font-weight:bold">
                                 <label>B. </label>
                                 CÔNG VIỆC THỰC HIỆN THEO KPI
                             </div>
@@ -262,16 +264,16 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div>-->
                             @*UPLOAD MINH CHỨNG*@
-                            <div class="section-title mt-3" style="font-weight:bold">
+                            <!--<div class="section-title mt-3" style="font-weight:bold">
                                 <label>D. </label>
                                 MINH CHỨNG
                             </div>
                             <form action="#" class="dropzone dz-clickable" id="mydropzone">
                                 <div class="dz-default dz-message"><span>Nộp mình chứng (Nếu có)</span></div>
                                 <input type="file" multiple="multiple" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
-                            </form>
+                            </form>-->
                             @*BUTTON LƯU FORM*@
                             <div class="text-right mt-3">
                                 <a href="#" role="button" class="btn btn-primary">Lưu báo cáo</a>
