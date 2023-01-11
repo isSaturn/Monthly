@@ -23,6 +23,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         }
         // GET: Admin/ReportPeriods/Edit
         [HttpGet]
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -38,7 +39,8 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View(reportPeriod);
         }
 
-        // POST: Admin/ReportPeriods/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public ActionResult Edit([Bind(Include = "report_period_id,start_date,end_date,report_period_name,deadline_date,report_year_id")] ReportPeriod reportPeriod)
         {
@@ -46,7 +48,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             {
                 db.Entry(reportPeriod).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "ReportPeriods");
+                return RedirectToAction("Index");
             }
             ViewBag.report_year_id = new SelectList(db.ReportYears, "report_year_id", "report_year_id", reportPeriod.report_year_id);
             return View(reportPeriod);

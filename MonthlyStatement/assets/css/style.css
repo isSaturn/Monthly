@@ -2532,7 +2532,7 @@ a {
 }
 
 .text-white, .text-white-all *, .text-white-all *:before, .text-white-all *:after {
-    color: #000 !important
+    color: #fff !important
 }
 
 .text-dark, .text-dark-all *, .text-dark-all *:before, .text-dark-all *:after {

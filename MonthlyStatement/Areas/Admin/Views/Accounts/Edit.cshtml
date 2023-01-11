@@ -2,65 +2,51 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";}
-
 <section class="section">
     <div class="section-body">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
-                    <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Thông tin tài khoản của @Model.Email</h4>
-                    </div>
-                </div>
-                <div class="col-12">
-                    @using (Html.BeginForm("Edit", "Accounts", FormMethod.Post, new { }))
-                    {
-                        @Html.HiddenFor(model => model.Id)
-                        <div class="page-inner mt--5">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <!-- Account details card-->
-                                    <div class="card mb-4">
-                                        <div class="card-header"><b>Thông tin chi tiết</b></div>
-                                        <div class="card-body" style="margin-top: 0.2rem">
-                                            <!-- Form Group (Email)-->
-                                            <div class="row gx-3 mb-3">
-                                                <div class="col-md-6">
-                                                    <label class="small mb-1">Vai trò</label>
-                                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-
-                                                </div>
-                                            </div>
-                                            <!-- Form Group (Role)-->
-                                            <div class="row gx-3 mb-3">
-                                                <div class="col-md-6">
-                                                    <label class="small mb-1">Vai trò</label>
-                                                    @Html.DropDownList("role_id", null, htmlAttributes: new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                            <div style="text-align: center; margin-top:1.8rem" class="mb-3">
-                                                <button style="width:180px; color:white" type="submit" class="btn btn-primary">
-                                                    Lưu
-                                                </button>
-                                                &emsp;
-                                                <a style="width:180px; color:white;" role="button" class="btn btn-danger" href="@Url.Action("Index", "Accounts", new { id = Model.Id})">
-                                                    Hủy
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="card">
+                        <div class="card-header bg-primary" style="height:100px">
+                            <h4 class="text-white" style="font-size:1.75rem">Thông tin tài khoản của @Model.Email</h4>
                         </div>
-                    }
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            @using (Html.BeginForm("Edit", "Accounts", FormMethod.Post, new { }))
+                            {
+                                @Html.HiddenFor(model => model.Id)
+                                <div class="card-header"><b>Thông tin chi tiết</b></div>
+                                <!-- Form Group (Email)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Vai trò</label>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+                                </div>
+                                <!-- Form Group (Role)-->
+
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Vai trò</label>
+                                    @Html.DropDownList("role_id", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div style="text-align: center; margin-top:1.8rem" class="mb-3">
+                                    <button style="width:180px; color:white" type="submit" class="btn btn-primary">
+                                        Lưu
+                                    </button>
+                                    &emsp;
+                                    <a style="width:180px; color:white;" role="button" class="btn btn-danger" href="@Url.Action("Index", "Accounts", new { id = Model.Id})">
+                                        Hủy
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

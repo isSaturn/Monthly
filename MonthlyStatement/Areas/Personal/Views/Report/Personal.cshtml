@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<MonthlyStatement.Models.PersonalReport>*@
-
+﻿@model IEnumerable<MonthlyStatement.Models.PersonalReport>
 @{
     int i = 0;
     ViewBag.Title = "Personal";
@@ -42,60 +41,37 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="Search">
-                                        <td class="text-center">
-                                            1
-                                        </td>
-                                        <td>
-                                            khuong.197pm09466@vanlanguni.vn
-                                        </td>
-                                        <td>
-                                            Kỳ báo cáo tháng 12-2022
-                                        </td>
-                                        <td>
-                                            12/20/2022
-                                        </td>
-                                        <td>
-                                            Nhân viên- Giảng viên
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-success">Đã báo cáo</div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="buttons">
-                                                <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("PersonalDetail","Report")">
-                                                    Xem
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="Search">
-                                        <td class="text-center">
-                                            2
-                                        </td>
-                                        <td>
-                                            khuong.197pm09466@vanlanguni.vn
-                                        </td>
-                                        <td>
-                                            Kỳ báo cáo tháng 1-2023
-                                        </td>
-                                        <td>
-                                            ...
-                                        </td>
-                                        <td>
-                                            Nhân viên- Giảng viên
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-danger">Chưa báo cáo</div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="buttons">
-                                                <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("PersonalDetail","Report")">
-                                                    Xem
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @foreach (var item in Model)
+                                    {
+                                        i++;
+                                        <tr class="Search">
+                                            <td class="text-center">
+                                                @i
+                                            </td>
+                                            <td>
+                                                @item.AspNetUser.Email
+                                            </td>
+                                            <td>
+                                                @item.ReportPeriod.report_period_name
+                                            </td>
+                                            <td>
+                                                Thêm cột ngày báo cáo
+                                            </td>
+                                            <td>
+                                                @item.AspNetUser.AspNetRoles.First().Name
+                                            </td>
+                                            <td>
+                                                <div class="badge badge-success">@item.status</div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="buttons">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("PersonalDetail","Report", new {id = item.personal_report_id})">
+                                                        Xem
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -125,58 +101,3 @@
         });
     });
 </script>
-
-
-@*<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.file_path)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.comment_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AspNetUser.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comment.comment_content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReportPeriod.report_period_name)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.file_path)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.comment_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AspNetUser.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comment.comment_content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReportPeriod.report_period_name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.personal_report_id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.personal_report_id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.personal_report_id })
-            </td>
-        </tr>
-    }
-
-</table>*@

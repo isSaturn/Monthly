@@ -17,6 +17,7 @@ namespace MonthlyStatement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PersonalReport()
         {
+            this.Comments = new HashSet<Comment>();
             this.PersonalReportDetails = new HashSet<PersonalReportDetail>();
         }
     
@@ -25,10 +26,10 @@ namespace MonthlyStatement.Models
         public string file_path { get; set; }
         public string status { get; set; }
         public string account_id { get; set; }
-        public Nullable<int> comment_id { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Comment Comment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ReportPeriod ReportPeriod { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PersonalReportDetail> PersonalReportDetails { get; set; }

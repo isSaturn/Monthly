@@ -10,7 +10,7 @@
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                             <img src="~/assets/img/user.png"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-                            <h5>@Model.user_name</h5>
+                            <h5 style="color: black">@Model.user_name</h5>
                             <div>
                                 @if (@Model.AspNetUser.AspNetRoles.Count() < 1)
                                 {
@@ -23,7 +23,8 @@
                                     </div>
                                 }
                             </div>
-                            <i type="button" data-toggle="modal" data-target="#editProfile" class="far fa-edit mb-5"></i>
+                            <button data-toggle="modal" data-target="#editProfile" class="btn btn-primary">Chỉnh sửa</button>
+
                         </div>
                         <div class="col-md-8">
                             <div class="card-body p-4">
@@ -53,7 +54,16 @@
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6>Bộ môn</h6>
-                                        <p class="text-muted"></p>
+                                        <div class="text-muted">
+                                            @if (@Model.department_id == null)
+                                            {
+                                                <p class="text-muted mb-0">Chưa có bộ môn</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-muted mb-0">@Model.Department.department_name</p>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +127,6 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
     $(document).ready(function () {
-
         var readURL = function (input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
