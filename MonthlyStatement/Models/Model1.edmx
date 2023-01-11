@@ -85,13 +85,6 @@
           <Property Name="personal_report_id" Type="int" />
           <Property Name="department_report_id" Type="int" />
         </EntityType>
-        <EntityType Name="Department">
-          <Key>
-            <PropertyRef Name="department_id" />
-          </Key>
-          <Property Name="department_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="department_name" Type="nvarchar" MaxLength="100" />
-        </EntityType>
         <EntityType Name="DepartmentReport">
           <Key>
             <PropertyRef Name="department_report_id" />
@@ -192,7 +185,7 @@
           <Property Name="user_name" Type="nvarchar" MaxLength="50" />
           <Property Name="faculty_id" Type="int" />
           <Property Name="account_id" Type="nvarchar" MaxLength="128" />
-          <Property Name="department_id" Type="int" />
+          <Property Name="department" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="ReportPeriod">
           <Key>
@@ -506,18 +499,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Profile_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="department_id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="department_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Profile_Faculty">
           <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
@@ -575,7 +556,6 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentReport" EntityType="Self.DepartmentReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentReportDetail" EntityType="Self.DepartmentReportDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
@@ -680,10 +660,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Profile_AspNetUsers" Association="Self.FK_Profile_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Profile" EntitySet="Profile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Profile_Department" Association="Self.FK_Profile_Department">
-            <End Role="Department" EntitySet="Department" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
           <AssociationSet Name="FK_Profile_Faculty" Association="Self.FK_Profile_Faculty">
@@ -798,14 +774,6 @@
           <NavigationProperty Name="DepartmentReport" Relationship="Self.FK_Comment_DepartmentReport" FromRole="Comment" ToRole="DepartmentReport" />
           <NavigationProperty Name="PersonalReport" Relationship="Self.FK_Comment_PersonalReport" FromRole="Comment" ToRole="PersonalReport" />
           <NavigationProperty Name="DepartmentReports" Relationship="Self.FK_DepartmentReport_Comment" FromRole="Comment" ToRole="DepartmentReport" />
-        </EntityType>
-        <EntityType Name="Department">
-          <Key>
-            <PropertyRef Name="department_id" />
-          </Key>
-          <Property Name="department_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="department_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Department" FromRole="Department" ToRole="Profile" />
         </EntityType>
         <EntityType Name="DepartmentReport">
           <Key>
@@ -932,9 +900,8 @@
           <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="faculty_id" Type="Int32" />
           <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="department_id" Type="Int32" />
+          <Property Name="department" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_AspNetUsers" FromRole="Profile" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Department" Relationship="Self.FK_Profile_Department" FromRole="Profile" ToRole="Department" />
           <NavigationProperty Name="Faculty" Relationship="Self.FK_Profile_Faculty" FromRole="Profile" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="ReportPeriod">
@@ -1131,18 +1098,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Profile_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="department_id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="department_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DepartmentReport_ReportPeriod">
           <End Role="ReportPeriod" Type="Self.ReportPeriod" Multiplicity="1" />
           <End Role="DepartmentReport" Type="Self.DepartmentReport" Multiplicity="*" />
@@ -1299,7 +1254,6 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
-          <EntitySet Name="Departments" EntityType="Self.Department" />
           <EntitySet Name="DepartmentReports" EntityType="Self.DepartmentReport" />
           <EntitySet Name="DepartmentReportDetails" EntityType="Self.DepartmentReportDetail" />
           <EntitySet Name="Faculties" EntityType="Self.Faculty" />
@@ -1365,10 +1319,6 @@
           <AssociationSet Name="FK_DepartmentReport_Comment" Association="Self.FK_DepartmentReport_Comment">
             <End Role="Comment" EntitySet="Comments" />
             <End Role="DepartmentReport" EntitySet="DepartmentReports" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Profile_Department" Association="Self.FK_Profile_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK_DepartmentReport_ReportPeriod" Association="Self.FK_DepartmentReport_ReportPeriod">
             <End Role="ReportPeriod" EntitySet="ReportPeriods" />
@@ -1505,14 +1455,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="CP25Team04Model.Department">
-              <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="department_id" ColumnName="department_id" />
-                <ScalarProperty Name="department_name" ColumnName="department_name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DepartmentReports">
             <EntityTypeMapping TypeName="CP25Team04Model.DepartmentReport">
               <MappingFragment StoreEntitySet="DepartmentReport">
@@ -1622,7 +1564,7 @@
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
                 <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
-                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="department" ColumnName="department" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

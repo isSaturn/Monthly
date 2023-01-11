@@ -1,12 +1,13 @@
 ﻿@model IEnumerable<MonthlyStatement.Models.Profile>
+
 @{
     int i = 0;
 }
 @{
     ViewBag.Title = "AttendenceList";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
+}
 
 <section class="section">
     <div class="section-body">
@@ -39,8 +40,14 @@
                                         <th>
                                             Khoa
                                         </th>
+                                        <th>
+                                            Bộ môn
+                                        </th>
+                                        <th>
+                                            Vai trò
+                                        </th>
                                         <th class="text-center">
-                                        Vai trò
+                                            Thao tác
                                         </th>
                                     </tr>
                                 </thead>
@@ -55,24 +62,55 @@
                                                 @i
                                             </td>
                                             <td>
-
+                                                @item.AspNetUser.Email
                                             </td>
                                             <td>
-
+                                                @if (item.user_name == null)
+                                                {
+                                                    <span>Chưa có tên</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.user_name
+                                                }
                                             </td>
                                             <td>
-                                                @if (item.faculty_id == null)
+                                                @if (item.Faculty.faculty_name == null)
                                                 {
                                                     <span>Chưa có khoa</span>
-
                                                 }
                                                 else
                                                 {
                                                     @item.Faculty.faculty_name
                                                 }
                                             </td>
+                                            <td>
+                                                @if (item.department == null)
+                                                {
+                                                    <span>Chưa thêm bộ môn</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.department
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.AspNetUser.AspNetRoles.Count() < 1)
+                                                {
+                                                    <span>Chưa thêm vai trò</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
+                                                }
+                                            </td>
                                             <td class="text-center">
-                                            </td >
+                                                <div class="buttons">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.account_id })">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>

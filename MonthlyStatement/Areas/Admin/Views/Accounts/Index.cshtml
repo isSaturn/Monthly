@@ -76,13 +76,13 @@
                                                 }
                                             </td>
                                             <td>
-                                                @if (item.Profiles.First().department_id == null)
+                                                @if (item.Profiles.First().department == null)
                                                 {
                                                     <span>Chưa có bộ môn</span>
                                                 }
                                                 else
                                                 {
-                                                    @item.Profiles.FirstOrDefault().Department.department_name
+                                                    @item.Profiles.FirstOrDefault().department
                                                 }
                                             </td>
                                             <td>

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNet.Identity;
-using MonthlyStatement.Middleware;
 using MonthlyStatement.Models;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View(HttpNotFound());
 
         }
-        public ActionResult Edit_Profile(string name, HttpPostedFileBase avt)
+        public ActionResult Edit_Profile(string bomon, string name )
         {
             string ID_User = User.Identity.Name;
             var user = db.AspNetUsers.FirstOrDefault(u => u.Email.Equals(ID_User));
@@ -37,7 +36,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             {
                 profile.user_name = name;
             }
-          
+            if (!string.IsNullOrWhiteSpace(bomon))
+            {
+                profile.department = bomon;
+            }
+
             db.Entry(profile).State = EntityState.Modified;
             db.SaveChanges();
 

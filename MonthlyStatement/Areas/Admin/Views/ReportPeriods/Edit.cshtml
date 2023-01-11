@@ -20,30 +20,28 @@
                             @using (Html.BeginForm("Edit", "ReportPeriods", FormMethod.Post, new { }))
                             {
 
-                                <div class="card-header"><b>Thông tin chi tiết</b></div>
                                 @Html.HiddenFor(model => model.report_period_id)
                                 @Html.HiddenFor(model => model.report_year_id)
-
 
                                 <!-- Form Group (Tên kỳ)-->
                                 <div class="mb-3">
                                     <label class="small mb-1">Tên kỳ báo cáo</label>
-                                    @Html.TextBoxFor(model => model.report_period_name, new { @class = "form-control", @required = "" })
+                                    @Html.TextBoxFor(model => model.report_period_name, new { @class = "form-control", @required = "", @readonly = true })
                                 </div>
 
                                 <!-- Form Group (Ngày bắt đầu)-->
                                 <div class="mb-3">
-                                    <label class="small mb-1">Ngày bắt đầu</label>
+                                    <label class="small mb-1">Ngày bắt đầu (MM/dd/yyy hh:mm:ss)</label>
                                     @Html.TextBoxFor(model => model.start_date, new { @class = "form-control", @required = "" })
                                 </div>
                                 <!-- Form Group (Ngày báo cáo)-->
                                 <div class="mb-3">
-                                    <label class="small mb-1">Ngày báo cáo</label>
+                                    <label class="small mb-1">Ngày báo cáo (MM/dd/yyy hh:mm:ss)</label>
                                     @Html.TextBoxFor(model => model.deadline_date, new { @class = "form-control", @required = "" })
                                 </div>
                                 <!-- Form Group (Ngày kết thúc)-->
                                 <div class="mb-3">
-                                    <label class="small mb-1">Ngày kết thúc</label>
+                                    <label class="small mb-1">Ngày kết thúc (MM/dd/yyy hh:mm:ss)</label>
                                     @Html.TextBoxFor(model => model.end_date, new { @class = "form-control", @required = "" })
                                 </div>
 
@@ -52,8 +50,8 @@
                                         Lưu
                                     </button>
                                     &emsp;
-                                    <a style="width:180px; color:white;" role="button" class="btn btn-danger" href="@Url.Action("Index", "ReportPeriods", new { id = Model.report_year_id})">
-                                        Hủy
+                                    <a style="width:180px; color:white;" role="button" class="btn btn-secondary" href="@Url.Action("Index", "ReportPeriods", new { id = Model.report_year_id})">
+                                        Trở về
                                     </a>
                                 </div>
                             }
@@ -64,7 +62,3 @@
         </div>
     </div>
 </section>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

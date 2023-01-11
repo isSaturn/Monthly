@@ -55,13 +55,13 @@
                                     <div class="col-6 mb-3">
                                         <h6>Bộ môn</h6>
                                         <div class="text-muted">
-                                            @if (@Model.department_id == null)
+                                            @if (@Model.department == null)
                                             {
                                                 <p class="text-muted mb-0">Chưa có bộ môn</p>
                                             }
                                             else
                                             {
-                                                <p class="text-muted mb-0">@Model.Department.department_name</p>
+                                                <p class="text-muted mb-0">@Model.department</p>
                                             }
                                         </div>
                                     </div>
@@ -109,9 +109,15 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label>Bộ môn</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập bộ môn" name="bomon" value="@Model.department">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Họ và tên</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Họ và tên" name="name" value="@Model.user_name">
+                                <input type="text" class="form-control" placeholder="Nhập họ và tên" name="name" value="@Model.user_name">
                             </div>
                         </div>
                         <div class="modal-footer">
