@@ -6,7 +6,6 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <section class="section">
     <div class="section-body">
         <div class="row">
@@ -14,21 +13,9 @@
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
                         <h4 class="text-white" style="font-size:1.75rem">Quản lý danh mục</h4>
-                        <div class="card-header-form">
-                            <form>
-                                <div class="input-group">
-                                    <input class="form-control" type="text" id="Search" placeholder="Tìm kiếm" aria-label="Search" data-width="200" style="width: 200px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card-body">
-                    <div class="form-group">
+                    </div>
+                    <div class="card-body">
                         <div class="col-sm-12 buttons">
                             <a style="color:white" type="button" class="btn btn-warning btn-round" href="@Url.Action("Create", "Categories")">
                                 <i class="fa fa-plus"></i>
@@ -39,18 +26,21 @@
                                 Tạo danh mục con
                             </a>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr role="row">
                                         <th class="text-center">
                                             STT
                                         </th>
-                                        <th>Danh mục</th>
+                                        <th>
+                                            Tên danh mục
+                                        </th>
+                                        <th>
+                                            #
+                                        </th>
                                         <th class="text-center">
-
+                                            Chỉnh sửa
                                         </th>
                                     </tr>
                                 </thead>
@@ -67,6 +57,9 @@
                                             </td>
                                             <td style="font-weight:bold">
                                                 @item.category_content
+                                            </td>
+                                            <td>
+                                                #
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">
@@ -88,6 +81,9 @@
                                                     &emsp;
                                                     &emsp;
                                                     @items.category_content
+                                                </td>
+                                                <td>
+                                                    #
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="buttons">

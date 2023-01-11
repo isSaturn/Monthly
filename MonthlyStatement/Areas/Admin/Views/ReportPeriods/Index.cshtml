@@ -16,23 +16,12 @@
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
                         <h4 class="text-white" style="font-size:1.75rem">Quản lý kỳ báo cáo</h4>
-                        <div class="card-header-form">
-                            <form>
-                                <div class="input-group">
-                                    <input class="form-control" type="text" id="Search" placeholder="Tìm kiếm" aria-label="Search" data-width="200" style="width: 200px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info">
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr role="row">
                                         <th class="text-center">STT</th>
@@ -98,23 +87,3 @@
         </div>
     </div>
 </section>
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        function Contains(text_one, text_two) {
-            if (text_one.indexOf(text_two) != -1)
-                return true;
-        }
-        $("#Search").keyup(function () {
-            var searchText = $("#Search").val().toLowerCase();
-            $(".Search").each(function () {
-                if (!Contains($(this).text().toLowerCase(), searchText)) {
-                    $(this).hide();
-                }
-                else {
-                    $(this).show();
-                }
-            });
-        });
-    });
-</script>
