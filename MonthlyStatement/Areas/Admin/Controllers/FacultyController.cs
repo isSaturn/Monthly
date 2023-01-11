@@ -97,10 +97,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult AttendenceList(int? id)
+        public ActionResult AttendenceList(int id)
         {
-            var lstAtten = db.Profiles.Where(p => p.faculty_id == id).ToList();
-            return View(lstAtten);
+            var reportPeriods = db.Profiles.Where(r => r.faculty_id == id).ToList();
+            return View(reportPeriods);
+
         }
         [HttpPost]
         public ActionResult ImportUser(HttpPostedFileBase lstUser)
@@ -162,7 +163,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                 dr.Delete();
                 dtExcel.AcceptChanges();
 
-                if (dtExcel.Rows.Count != 5)
+                if (dtExcel.Rows.Count != 6)
                 {
                     foreach (DataRow data in dtExcel.Rows)
                     {
@@ -206,8 +207,9 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                             error += i + ". Không tìm thấy khoa.#";
                             i++;
                         }
+
                         // 3 Validation Chức danh
-                        string roles = data[4].ToString().Trim();
+                        string roles = data[5].ToString().Trim();
                         var role = db.AspNetRoles.FirstOrDefault(r => r.Name.ToLower().Equals(roles.ToLower()));
                         if (role == null)
                         {
@@ -234,6 +236,10 @@ namespace MonthlyStatement.Areas.Admin.Controllers
 
                                 //thay đổi khoa
                                 profile.faculty_id = khoa.faculty_id;
+
+                                //thay đổi bomon 
+                                string bomons = data[4].ToString().Trim();
+                                profile.department = bomons;
 
                                 //thay đổi tên
                                 string names = data[1].ToString().Trim();

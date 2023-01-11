@@ -193,6 +193,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\FacultyController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ListReportPersonalController.cs" />
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
     <Compile Include="Areas\Personal\Controllers\ReportController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
@@ -204,7 +205,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Middleware\LoginVerification.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -225,9 +225,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Department.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DepartmentReport.cs">
@@ -1140,7 +1137,6 @@
     <Content Include="Areas\Admin\Views\ReportPeriods\FormReports.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Categories\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Create1.cshtml" />
@@ -1166,7 +1162,8 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
+    <Content Include="Areas\Admin\Views\ListReportPersonal\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportPersonal\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1203,6 +1200,7 @@
     <Folder Include="assets\FileMinhChung\" />
     <Folder Include="assets\user\avatar\" />
     <Folder Include="Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

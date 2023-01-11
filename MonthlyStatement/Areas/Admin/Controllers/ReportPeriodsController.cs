@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using MonthlyStatement.Models;
 
 namespace MonthlyStatement.Areas.Admin.Controllers
@@ -42,15 +43,14 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "report_period_id,start_date,end_date,report_period_name,deadline_date,report_year_id")] ReportPeriod reportPeriod)
+        public ActionResult Edit(ReportPeriod reportPeriod)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(reportPeriod).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                TempData["ThongBao"] = "Sửa kỳ báo cáo thành công";
             }
-            ViewBag.report_year_id = new SelectList(db.ReportYears, "report_year_id", "report_year_id", reportPeriod.report_year_id);
             return View(reportPeriod);
         }
 

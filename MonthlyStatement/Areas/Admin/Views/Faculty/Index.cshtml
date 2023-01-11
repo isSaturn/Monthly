@@ -59,12 +59,11 @@
                                             <td class="text-center">
                                                 @i
                                             </td>
-
                                             <td>
-                                                <a href="@Url.Action("AttendenceList","Faculty")">@item.faculty_name</a>
+                                                <a href="@Url.Action("AttendenceList","Faculty", new { id = item.faculty_id })">@item.faculty_name</a>
                                             </td>
                                             <td>
-
+                                                @item.Profiles.Count()
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">
@@ -73,7 +72,6 @@
                                                     </a>
                                                 </div>
                                             </td>
-
                                         </tr>
                                     }
                                 </tbody>
