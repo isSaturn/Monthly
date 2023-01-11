@@ -193,6 +193,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\FacultyController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ListReportDepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportPersonalController.cs" />
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
     <Compile Include="Areas\Personal\Controllers\ReportController.cs" />
@@ -1164,6 +1165,8 @@
     </Content>
     <Content Include="Areas\Admin\Views\ListReportPersonal\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportPersonal\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportDepartment\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportDepartment\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

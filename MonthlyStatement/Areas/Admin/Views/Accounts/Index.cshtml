@@ -90,9 +90,29 @@
                                                 {
                                                     <div class="badge badge badge-shadow">Không có vai trò</div>
                                                 }
-                                                else
+                                                else if (item.AspNetRoles.First().Name.Equals("Quản trị viên"))
                                                 {
-                                                    @item.AspNetRoles.First().Name
+                                                    <div class="badge badge badge-dark">Quản trị viên</div>
+                                                }
+                                                else if (item.AspNetRoles.First().Name.Equals("Ban phòng khoa"))
+                                                {
+                                                    <div class="badge badge badge-danger">Ban phòng khoa</div>
+                                                }
+                                                else if (item.AspNetRoles.First().Name.Equals("Thư ký"))
+                                                {
+                                                    <div class="badge badge badge-warning">Thư ký</div>
+                                                }
+                                                else if (item.AspNetRoles.First().Name.Equals("Nhân viên - Giảng viên"))
+                                                {
+                                                    <div class="badge badge badge-info">Nhân viên - Giảng viên</div>
+                                                }
+                                                else if (item.AspNetRoles.First().Name.Equals("Bộ môn"))
+                                                {
+                                                    <div class="badge badge badge-success">Bộ môn</div>
+                                                }
+                                                else if (item.AspNetRoles.First().Name.Equals("Chưa cấp lại quyền"))
+                                                {
+                                                    <div class="badge badge badge-primary">Chưa cấp lại quyền</div>
                                                 }
                                             </td>
                                             <td class="text-center">

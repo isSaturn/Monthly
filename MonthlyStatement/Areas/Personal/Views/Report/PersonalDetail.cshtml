@@ -1,4 +1,4 @@
-﻿@model MonthlyStatement.Models.PersonalReport
+﻿@model  MonthlyStatement.Models.FormPersonalReport
 @using MonthlyStatement.Models
 @{
     ViewBag.Title = "PersonalDetail";
@@ -9,6 +9,12 @@
 
     CP25Team04Entities models = new CP25Team04Entities();
     int idperiod = Model.report_period_id;
+    var form = models.PersonalReports.Where(p => p.report_period_id == idperiod);
+    string emails = User.Identity.Name;
+    string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+    var formPer = models.PersonalReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
+    int per = formPer.First().personal_report_id;
+
 }
 
 <section class="section">
@@ -20,11 +26,11 @@
                         <h4 class="text-white" style="font-size:1.75rem">Báo cáo cá nhân</h4>
                     </div>
                 </div>
-
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            @foreach (var items in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.ToList())
+
+                            @foreach (var items in Model.FormPersonalReportDetails)
                             {
                                 if (items.Category.category_of_id == null)
                                 {
@@ -38,83 +44,36 @@
                                 }
                                 else
                                 {
-                                    lstId += items.category_id + "-";
                                     i++;
                                     <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
                                         <div class="col-lg-12">
-                                            <input hidden id="dem-@items.category_id" value="@models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id).Count()" />
-                                            <input hidden id="frmPerDetail-@items.category_id" value="@items.form_personal_report_detail_id" />
                                             <table class="table table-bordered dataTable">
                                                 <tbody>
                                                     <tr class="" style="max-width: 50px">
-                                                        <th>@(i). @items.Category.category_content</th>
+                                                        <th colspan="2">@(i). @items.Category.category_content</th>
                                                     </tr>
-                                                    @if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id).Count() > 0)
+                                                    @if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).Count() > 0)
                                                     {
                                                         int inputIndex = 0;
-                                                        foreach (var itemss in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id).ToList())
+                                                        foreach (var itemss in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).ToList())
                                                         {
                                                             inputIndex++;
                                                             <tr id="formInput-@items.category_id-@inputIndex">
-                                                                <td>
-                                                                    <input readonly type="text" value="@itemss.personal_report_content" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@items.category_id-@inputIndex">
+                                                                <td colspan="2">
+                                                                    <input type="text" value="@itemss.personal_report_content" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@items.category_id-@inputIndex" readonly>
                                                                     <p hidden id="validation-noidung-@items.category_id-@inputIndex" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
                                                                 </td>
                                                             </tr>
                                                         }
                                                     }
-                                                    <tr hidden id="append-@items.category_id"></tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 }
                             }
-                            <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
-                            </div>
-                            <hr />
-                            <div class="col-12">
-                                <div class="card" style="background-color: #e9ecef">
-                                    <div class="card-body">
-                                        <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
-                                        <form>
-                                            <input type="hidden" name="" value="" />
-                                            <div class="form-group">
-                                                <textarea class="form-control" style="height:200px !important"></textarea>
-                                            </div>
-                                            <div class="text-right mt-3">
-                                                <button class="btn btn-primary" type="submit">Gửi</button>
-                                            </div>
-                                        </form>
-                                        <hr />
-                                        <div class="chat">
-                                            <div class="chat-header clearfix">
-                                                <img src="~/assets/img/users/user-1.png" alt="avatar">
-                                                <div class="chat-about">
-                                                    <div class="chat-time form-inline">
-                                                        <div class="chat-with" style="font-style:oblique">ADMIN</div>
-                                                        &emsp;
-                                                        -- 10:59 --
-                                                    </div>
-                                                    <div class="chat-text">Cần bổ sung báo cáo</div>
-                                                </div>
-                                            </div>
-                                            <div class="chat-header clearfix">
-                                                <img src="~/assets/img/users/user-2.png" alt="avatar">
-                                                <div class="chat-about">
-                                                    <div class="chat-time form-inline">
-                                                        <div class="chat-with" style="font-style:oblique">STAFF</div>
-                                                        &emsp;
-                                                        -- 11:20 --
-                                                    </div>
-                                                    <div class="chat-text">Mình sẽ bổ sung</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -99,9 +99,14 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult AttendenceList(int id)
         {
-            var reportPeriods = db.Profiles.Where(r => r.faculty_id == id).ToList();
+            var reportPeriods = db.Faculties.Find(id);
             return View(reportPeriods);
 
+        }
+        [HttpPost]
+        public ActionResult AddUser(int id)
+        {
+            return View();
         }
         [HttpPost]
         public ActionResult ImportUser(HttpPostedFileBase lstUser)

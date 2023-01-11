@@ -95,6 +95,7 @@ namespace MonthlyStatement.Controllers
                     identity.AddClaim(new Claim(ClaimTypes.Role, currentRole[0]));
                     IOwinContext context = HttpContext.GetOwinContext();
 
+                    context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                     context.Authentication.SignIn(identity);
                 }
             }
@@ -122,10 +123,9 @@ namespace MonthlyStatement.Controllers
         {
             /// Send an OpenID Connect sign-out request.
             /// 
-            Session.Abandon();
-            Request.GetOwinContext().Authentication.SignOut();
-            Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
-            Request.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            HttpContext.GetOwinContext()
+                        .Authentication
+                        .SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Redirect("Login");
         }
 
