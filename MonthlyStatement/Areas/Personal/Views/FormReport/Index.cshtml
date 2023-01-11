@@ -10,6 +10,9 @@
     int idKy = ViewBag.PeriodsId;
 
     var form = models.PersonalReports.Where(p => p.report_period_id == idKy);
+    string emails = User.Identity.Name;
+    string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+    var formPer = models.PersonalReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID));
 }
 
 
@@ -23,8 +26,9 @@
                         <h4 class="text-white" style="font-size:1.75rem">Báo cáo cá nhân</h4>
                     </div>
                 </div>
-                @if (form.Count() > 0)
+                @if (formPer.Count() > 0)
                 {
+                    int per = formPer.First().personal_report_id;
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
@@ -47,17 +51,17 @@
                                         i++;
                                         <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
                                             <div class="col-lg-12">
-                                                <input hidden id="dem-@items.category_id" value="@models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id).Count()" />
+                                                <input hidden id="dem-@items.category_id" value="@models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).Count()" />
                                                 <input hidden id="frmPerDetail-@items.category_id" value="@items.form_personal_report_detail_id" />
                                                 <table class="table table-bordered dataTable">
                                                     <tbody>
                                                         <tr class="" style="max-width: 50px">
                                                             <th colspan="2">@(i). @items.Category.category_content</th>
                                                         </tr>
-                                                        @if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id).Count() > 0)
+                                                        @if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).Count() > 0)
                                                         {
                                                             int inputIndex = 0;
-                                                            foreach (var itemss in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id).ToList())
+                                                            foreach (var itemss in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).ToList())
                                                             {
                                                                 inputIndex++;
                                                                 <tr id="formInput-@items.category_id-@inputIndex">

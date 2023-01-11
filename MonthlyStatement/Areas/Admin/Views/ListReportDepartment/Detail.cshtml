@@ -1,7 +1,7 @@
-﻿@model MonthlyStatement.Models.PersonalReport
+﻿@model MonthlyStatement.Models.DepartmentReport
 @using MonthlyStatement.Models
 @{
-    ViewBag.Title = "PersonalDetail";
+    ViewBag.Title = "DepartmentDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 0;
     int j = 64;
@@ -17,14 +17,14 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo cá nhân: @Model.AspNetUser.Email</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn: @Model.AspNetUser.Email</h4>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            @foreach (var items in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.ToList())
+                            @foreach (var items in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.ToList())
                             {
                                 if (items.Category.category_of_id == null)
                                 {
@@ -42,22 +42,22 @@
                                     i++;
                                     <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
                                         <div class="col-lg-12">
-                                            <input hidden id="dem-@items.category_id" value="@models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id).Count()" />
-                                            <input hidden id="frmPerDetail-@items.category_id" value="@items.form_personal_report_detail_id" />
+                                            <input hidden id="dem-@items.category_id" value="@models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items.form_department_report_detail_id).Count()" />
+                                            <input hidden id="frmPerDetail-@items.category_id" value="@items.form_department_report_detail_id" />
                                             <table class="table table-bordered dataTable">
                                                 <tbody>
                                                     <tr class="" style="max-width: 50px">
                                                         <th>@(i). @items.Category.category_content</th>
                                                     </tr>
-                                                    @if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id).Count() > 0)
+                                                    @if (models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items.form_department_report_detail_id).Count() > 0)
                                                     {
                                                         int inputIndex = 0;
-                                                        foreach (var itemss in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id).ToList())
+                                                        foreach (var itemss in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items.form_department_report_detail_id).ToList())
                                                         {
                                                             inputIndex++;
                                                             <tr id="formInput-@items.category_id-@inputIndex">
                                                                 <td>
-                                                                    <input readonly type="text" value="@itemss.personal_report_content" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@items.category_id-@inputIndex">
+                                                                    <input readonly type="text" value="@itemss.department_report_content" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@items.category_id-@inputIndex">
                                                                     <p hidden id="validation-noidung-@items.category_id-@inputIndex" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
                                                                 </td>
                                                             </tr>

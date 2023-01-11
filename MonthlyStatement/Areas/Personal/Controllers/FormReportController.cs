@@ -34,7 +34,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             {
                 string emails = User.Identity.Name;
                 string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
-                if (db.PersonalReports.Where(r => r.account_id == accID).Count() < 1)
+                if (db.PersonalReports.Where(r => r.account_id.Equals(accID)).Count() < 1)
                 {
                     PersonalReport pr = new PersonalReport();
                     pr.report_period_id = (int)reportperiodid;
@@ -130,7 +130,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                 }
                 else
                 {
-                    var pers = db.PersonalReports.FirstOrDefault(r => r.account_id == accID);
+                    var pers = db.PersonalReports.FirstOrDefault(r => r.account_id.Equals(accID));
                     db.PersonalReportDetails.RemoveRange(pers.PersonalReportDetails);
                     db.PersonalReports.Remove(pers);
                     db.SaveChanges();

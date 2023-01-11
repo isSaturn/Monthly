@@ -22,7 +22,8 @@ namespace MonthlyStatement.Areas.Personal.Controllers
         }
         public ActionResult PersonalDetail(int id)
         {
-            var form = db.PersonalReports.Find(id);
+            int per = db.PersonalReports.Find(id).report_period_id;
+            var form = db.FormPersonalReports.FirstOrDefault(f => f.report_period_id == per);
             return View(form);
         }
     }
