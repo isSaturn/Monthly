@@ -12,15 +12,25 @@
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                             <h5 style="color: black">@Model.user_name</h5>
                             <div>
-                                @if (@Model.AspNetUser.AspNetRoles.Count() < 1)
+                                @if (@Model.AspNetUser == null)
                                 {
-                                    <div class="text-muted mb-0">Chưa có khoa</div>
+                                    <div class="text-muted mb-0">Chưa có vai trò</div>
                                 }
                                 else
                                 {
-                                    <div class="text-muted mb-0">
-                                        @Model.AspNetUser.AspNetRoles.First().Name
-                                    </div>
+                                    if (@Model.AspNetUser.AspNetRoles.Count() < 1)
+                                    {
+                                        <div class="text-muted mb-0">Chưa có vai trò</div>
+
+
+                                    }
+                                    else
+                                    {
+                                        <div class="text-muted mb-0">
+                                            @Model.AspNetUser.AspNetRoles.FirstOrDefault().Name
+                                        </div>
+                                    }
+
                                 }
                             </div>
                             <button data-toggle="modal" data-target="#editProfile" class="btn btn-primary">Chỉnh sửa</button>

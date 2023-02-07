@@ -19,6 +19,7 @@ namespace MonthlyStatement.Models
         public Nullable<int> faculty_id { get; set; }
         public string account_id { get; set; }
         public string department { get; set; }
+        public string email { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Faculty Faculty { get; set; }

@@ -18,10 +18,14 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var current_year = DateTime.Now.Year;
-            var check = db.ReportYears.Where(y => y.year == current_year);
-            if (check == null)
+            int check = db.ReportYears.Where(y => y.year == current_year).Count();
+
+            if (check < 1)
+            {
                 //cho phep thêm mới năm báo cáo
                 Session["ReportYear-Check"] = true;
+            }
+
             else
                 //khong cho phep them moi
                 Session["ReportYear-Check"] = false;
@@ -33,8 +37,8 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             try
             {
                 var current_year = DateTime.Now.Year;
-                var check = db.ReportYears.Where(y => y.year == current_year);
-                if (check == null)
+                int check = db.ReportYears.Where(y => y.year == current_year).Count();
+                if (check < 1)
                 {
 
                     var report_year = new ReportYear();
@@ -47,7 +51,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                     {
                         var report_period = new ReportPeriod();
                         report_period.report_year_id = report_year.report_year_id;
-                        report_period.start_date = Convert.ToDateTime(current_year + "-" + i.ToString("D2")+ "-01");
+                        report_period.start_date = Convert.ToDateTime(current_year + "-" + i.ToString("D2") + "-01");
                         report_period.deadline_date = Convert.ToDateTime(current_year + "-" + i.ToString("D2") + "-22");
 
                         report_period.end_date =

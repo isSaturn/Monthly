@@ -83,11 +83,25 @@ namespace MonthlyStatement.Controllers
             };
             // Check if user exists
             var currentUser = await UserManager.FindByEmailAsync(user.Email);
+
             if (currentUser != null)
             {
+
                 if (currentUser.Roles.Count != 0)
                 {
+                    //Add profile
+                    var pro = db.Profiles.FirstOrDefault(p => p.email.ToLower().Equals(user.Email.ToLower()));
+                    if (pro != null)
+                    {
+                        if (pro.account_id == null) 
+                        {
+                            var aspNetUser = db.AspNetUsers.FirstOrDefault(a=>a.Email.ToLower().Equals(user.Email.ToLower()));
 
+                            pro.account_id = aspNetUser.Id;
+                            db.Entry(pro).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
                     // Add role claim to user
                     ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
 
@@ -103,14 +117,19 @@ namespace MonthlyStatement.Controllers
             {
                 // Create new user
                 await UserManager.CreateAsync(user);
-                var aspNetRole = db.AspNetRoles.Find("5");
+                var aspNetRole = db.AspNetRoles.Find("6");
                 var aspNetUser = db.AspNetUsers.Find(user.Id);
                 aspNetRole.AspNetUsers.Add(aspNetUser);
                 //Add profile
-                Profile profile = new Profile();
-                profile.account_id = aspNetUser.Id;
-                db.Profiles.Add(profile);
-                db.SaveChanges();
+                var pro = db.Profiles.FirstOrDefault(p => p.email.ToLower().Equals(user.Email.ToLower()));
+                if (pro != null)
+                {
+                    var aspNetUser1 = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(user.Email.ToLower()));
+
+                    pro.account_id = aspNetUser1.Id;
+                    db.Entry(pro).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
 
             return RedirectToAction("Index", "Home");

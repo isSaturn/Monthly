@@ -62,7 +62,8 @@
                                                 @i
                                             </td>
                                             <td>
-                                                @item.AspNetUser.Email
+                                                @item.email
+
                                             </td>
                                             <td>
                                                 @if (item.user_name == null)
@@ -95,13 +96,22 @@
                                                 }
                                             </td>
                                             <td>
-                                                @if (item.AspNetUser.AspNetRoles.Count() < 1)
+                                                @if (item.AspNetUser == null)
                                                 {
                                                     <span>Chưa thêm vai trò</span>
                                                 }
                                                 else
                                                 {
-                                                    @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
+                                                    if (item.AspNetUser.AspNetRoles.Count() < 1)
+                                                    {
+                                                        <span>Chưa thêm vai trò</span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
+
+                                                    }
                                                 }
                                             </td>
                                             <td class="text-center">
