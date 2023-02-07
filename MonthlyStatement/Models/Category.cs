@@ -17,7 +17,7 @@ namespace MonthlyStatement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Category()
         {
-            this.Category1 = new HashSet<Category>();
+            this.Categories1 = new HashSet<Category>();
             this.FormDepartmentReportDetails = new HashSet<FormDepartmentReportDetail>();
             this.FormPersonalReportDetails = new HashSet<FormPersonalReportDetail>();
         }
@@ -27,8 +27,8 @@ namespace MonthlyStatement.Models
         public string category_content { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Category> Category1 { get; set; }
-        public virtual Category Category2 { get; set; }
+        public virtual ICollection<Category> Categories1 { get; set; }
+        public virtual Category Category1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormDepartmentReportDetail> FormDepartmentReportDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

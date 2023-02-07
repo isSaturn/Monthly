@@ -102,17 +102,17 @@
                                                 {
                                                     <div class="badge badge badge-warning">Thư ký</div>
                                                 }
-                                                else if (item.AspNetRoles.First().Name.Equals("Nhân viên - Giảng viên"))
-                                                {
-                                                    <div class="badge badge badge-info">Nhân viên - Giảng viên</div>
-                                                }
                                                 else if (item.AspNetRoles.First().Name.Equals("Bộ môn"))
                                                 {
                                                     <div class="badge badge badge-success">Bộ môn</div>
                                                 }
-                                                else if (item.AspNetRoles.First().Name.Equals("Chưa cấp lại quyền"))
+                                                else if (item.AspNetRoles.First().Name.Equals("Nhân viên - Giảng viên"))
                                                 {
-                                                    <div class="badge badge badge-primary">Chưa cấp lại quyền</div>
+                                                    <div class="badge badge badge-info">Nhân viên - Giảng viên</div>
+                                                }
+                                                else if (item.AspNetRoles.First().Name.Equals("Chưa cấp quyền"))
+                                                {
+                                                    <div class="badge badge badge-primary">Chưa cấp quyền</div>
                                                 }
                                             </td>
                                             <td class="text-center">

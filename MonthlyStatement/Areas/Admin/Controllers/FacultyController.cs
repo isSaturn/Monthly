@@ -225,6 +225,27 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                         if (string.IsNullOrEmpty(error))
                         {
                             string emails = data[2].ToString().Trim();
+                            var profiles = db.Profiles.FirstOrDefault(a => a.email.ToLower().Equals(emails.ToLower().Trim()));
+                            if (profiles == null)
+                            {
+                                var pro = new Profile();
+                                pro.user_name = data[1].ToString().Trim();
+                                pro.email = data[2].ToString().Trim();
+                                pro.faculty_id = khoa.faculty_id;
+                                pro.department = data[4].ToString().Trim();
+                                db.Profiles.Add(pro);
+                                db.SaveChanges();
+
+                            }
+                            else 
+                            {
+                                profiles.user_name = data[1].ToString().Trim();
+                                profiles.email = data[2].ToString().Trim();
+                                profiles.faculty_id = khoa.faculty_id;
+                                profiles.department = data[4].ToString().Trim();
+                                db.Entry(profiles).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
                             var aspNetUser = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim()));
                             if (aspNetUser != null)
                             {

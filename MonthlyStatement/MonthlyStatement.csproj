@@ -1156,6 +1156,10 @@
     <Content Include="Areas\Personal\Views\Report\Personal.cshtml" />
     <Content Include="Areas\Personal\Views\Report\PersonalDetail.cshtml" />
     <Content Include="Areas\Personal\Views\web.config" />
+    <Content Include="Areas\Admin\Views\ListReportPersonal\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportPersonal\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportDepartment\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportDepartment\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -1163,10 +1167,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\ListReportPersonal\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ListReportPersonal\Detail.cshtml" />
-    <Content Include="Areas\Admin\Views\ListReportDepartment\Detail.cshtml" />
-    <Content Include="Areas\Admin\Views\ListReportDepartment\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

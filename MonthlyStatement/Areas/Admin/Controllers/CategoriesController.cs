@@ -19,7 +19,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // GET: Admin/Categories
         public ActionResult Index()
         {
-            var categories = db.Categories.Include(c => c.Category2);
+            var categories = db.Categories.Include(c => c.Categories1);
             return View(categories.ToList());
         }
 
