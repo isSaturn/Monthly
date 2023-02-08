@@ -120,6 +120,9 @@ namespace MonthlyStatement.Controllers
                 var aspNetRole = db.AspNetRoles.Find("6");
                 var aspNetUser = db.AspNetUsers.Find(user.Id);
                 aspNetRole.AspNetUsers.Add(aspNetUser);
+                Profile profile = new Profile();
+                profile.account_id = aspNetUser.Id;
+                db.Profiles.Add(profile);
                 //Add profile
                 var pro = db.Profiles.FirstOrDefault(p => p.email.ToLower().Equals(user.Email.ToLower()));
                 if (pro != null)
@@ -130,6 +133,7 @@ namespace MonthlyStatement.Controllers
                     db.Entry(pro).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
+                db.SaveChanges();
             }
 
             return RedirectToAction("Index", "Home");
