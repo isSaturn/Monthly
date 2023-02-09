@@ -20,6 +20,8 @@ namespace MonthlyStatement.Models
         public string account_id { get; set; }
         public string department { get; set; }
         public string email { get; set; }
+        public Nullable<System.DateTime> last_login { get; set; }
+        public Nullable<System.DateTime> last_logout { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Faculty Faculty { get; set; }

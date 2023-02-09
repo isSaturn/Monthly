@@ -111,6 +111,11 @@ namespace MonthlyStatement.Controllers
 
                     context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                     context.Authentication.SignIn(identity);
+
+                    var userdb = db.Profiles.FirstOrDefault(p => p.account_id == currentUser.Id);
+                    userdb.last_login = DateTime.Now;
+                    db.SaveChanges();
+
                 }
             }
             else
@@ -144,11 +149,24 @@ namespace MonthlyStatement.Controllers
         [HttpPost]
         public ActionResult SignOut()
         {
+            // Get user information
+            var user = new ApplicationUser
+            {
+                Email = User.Identity.Name,
+                UserName = User.Identity.Name,
+            };
+            // Check if user exists
+            var currentUser =  UserManager.FindByEmail(user.Email);
             /// Send an OpenID Connect sign-out request.
             /// 
             HttpContext.GetOwinContext()
                         .Authentication
                         .SignOut(CookieAuthenticationDefaults.AuthenticationType);
+
+            var userdb = db.Profiles.FirstOrDefault(p => p.account_id == currentUser.Id);
+            userdb.last_logout = DateTime.Now;
+            db.SaveChanges();
+
             return Redirect("Login");
         }
 
