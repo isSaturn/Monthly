@@ -22,11 +22,11 @@
                             <form>
                                 <div class="table-responsive">
                                     <table class="table table-striped" style="border-collapse:unset" id="table-2">
-
                                         @foreach (var item in Model.Where(c => c.Category.category_of_id == null).ToList())
                                         {
                                             i = i + 1;
                                             int j = 0;
+
                                             <tbody>
                                                 <tr>
                                                     <td class="text-center">
@@ -42,6 +42,8 @@
                                                 foreach (var items in Model.Where(c => c.Category.category_of_id == item.category_id).ToList())
                                                 {
                                                     j++;
+
+
                                                     <tbody>
                                                         <tr>
                                                             <td class="text-center">
@@ -64,6 +66,7 @@
                                                 }
                                             }
                                         }
+
                                     </table>
                                 </div>
                             </form>
@@ -72,6 +75,125 @@
                                     <span>Vui lòng chọn minh chứng</span>
                                 </div>
                             </form>
+
+                            <br>
+
+                            <div class="card-body">
+                                <ul class="nav nav-pills" id="myTab3" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">1.THÔNG TIN NHÂN SỰ</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="false">2.CÔNG VIỆC THỰC HIỆN THEO KPI</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="contact-tab3" data-toggle="tab" href="#contact3" role="tab" aria-controls="contact" aria-selected="false">
+                                            3.TINH THẦN TRÁCH NHIỆM VỚI NHÀ TRƯỜNG
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent2">
+                                    <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
+                                        <table class="table table-striped" style="border-collapse:unset" id="table-2">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">
+                                                        1.1
+                                                    </td>
+                                                    <td>
+                                                        Họ và tên
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">
+                                                        1.2
+                                                    </td>
+                                                    <td>
+                                                        MGV
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-right">
+                                            <a href="#" role="button" class="btn btn-primary" id="saveForm">Lưu THÔNG TIN NHÂN SỰ </a>
+                                            <button class="btn btn-danger " type="reset">Reset</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
+                                        <table class="table table-striped" style="border-collapse:unset" id="table-2">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">
+                                                        2.1
+                                                    </td>
+                                                    <td>
+                                                        Công tác giảng dạy
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">
+                                                        2.1.1
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                        <br />
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                        <br />
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                        <br />
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                        <div class="text-right">
+                                            <a href="#" role="button" class="btn btn-primary" id="saveForm">Lưu CÔNG VIỆC THỰC HIỆN THEO KPI</a>
+                                            <button class="btn btn-danger " type="reset">Reset</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab3">
+                                        Vestibulum imperdiet odio sed neque ultricies, ut dapibus mi maximus. Proin ligula massa,
+                                        gravida in lacinia efficitur, hendrerit eget mauris. Pellentesque fermentum, sem interdum
+                                        molestie finibus, nulla diam varius leo, nec varius lectus elit id dolor.
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
