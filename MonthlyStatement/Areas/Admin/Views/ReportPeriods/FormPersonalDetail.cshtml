@@ -5,6 +5,8 @@
     ViewBag.Title = "FormPersonalDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 0;
+    int j = 64;
+
 }
 
 <section class="section">
@@ -20,180 +22,82 @@
                     <div class="card">
                         <div class="card-body">
                             <form>
-                                <div class="table-responsive">
-                                    <table class="table table-striped" style="border-collapse:unset" id="table-2">
-                                        @foreach (var item in Model.Where(c => c.Category.category_of_id == null).ToList())
-                                        {
-                                            i = i + 1;
-                                            int j = 0;
+                                <div id="accordion">
+                                    @foreach (var item in Model.Where(c => c.Category.category_of_id == null).ToList())
+                                    {
+                                        i = 0;
+                                        j++;
 
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        @i
-                                                    </td>
-                                                    <td style="font-weight:bold">
-                                                        @item.Category.category_content
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            if (Model.Where(c => c.Category.category_of_id == item.Category.category_id).Count() > 0)
-                                            {
-                                                foreach (var items in Model.Where(c => c.Category.category_of_id == item.category_id).ToList())
-                                                {
-                                                    j++;
+                                        <div class="accordion">
+                                            <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                                <h4>
+                                                    @(((char) j).ToString()). @item.Category.category_content
+                                                </h4>
+                                                <div class="card-header-action">
+                                                    <a data-collapse="#panel-body-@(((char) j).ToString())" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-body collapse" id="panel-body-@(((char) j).ToString())" data-parent="#accordion" style="">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" style="border-collapse:unset" id="table-2">
+                                                        <tbody>
+                                                            @if (Model.Where(c => c.Category.category_of_id == item.Category.category_id).Count() > 0)
+                                                            {
+                                                                foreach (var items in Model.Where(c => c.Category.category_of_id == item.category_id).ToList())
+                                                                {
+                                                                    i++;
 
+                                                                    <tr>
+                                                                        <td class="text-center" style="width:3%">
+                                                                            @(i)
+                                                                        </td>
+                                                                        <td>
+                                                                            @items.Category.category_content
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                                        </td>
+                                                                    </tr>
 
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                @(i).@(j)
-                                                            </td>
-                                                            <td>
-                                                                @items.Category.category_content
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                }
-                                            }
-                                        }
+                                                                }
+                                                            }
+                                                            </tbody>
+                                                        </table>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    </table>
+                                    }
+
                                 </div>
-                            </form>
-                            <form action="#" class="dropzone dz-clickable" id="mydropzone">
-                                <div class="dz-default dz-message">
-                                    <span>Vui lòng chọn minh chứng</span>
-                                </div>
-                            </form>
 
-                            <br>
-
-                            <div class="card-body">
-                                <ul class="nav nav-pills" id="myTab3" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">1.THÔNG TIN NHÂN SỰ</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="false">2.CÔNG VIỆC THỰC HIỆN THEO KPI</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="contact-tab3" data-toggle="tab" href="#contact3" role="tab" aria-controls="contact" aria-selected="false">
-                                            3.TINH THẦN TRÁCH NHIỆM VỚI NHÀ TRƯỜNG
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content" id="myTabContent2">
-                                    <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
-                                        <table class="table table-striped" style="border-collapse:unset" id="table-2">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        1.1
-                                                    </td>
-                                                    <td>
-                                                        Họ và tên
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        1.2
-                                                    </td>
-                                                    <td>
-                                                        MGV
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <div class="text-right">
-                                            <a href="#" role="button" class="btn btn-primary" id="saveForm">Lưu THÔNG TIN NHÂN SỰ </a>
-                                            <button class="btn btn-danger " type="reset">Reset</button>
+                            </form>
+                            <div class="accordion">
+                                    <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                        <h4>
+                                            @(((char) (++j)).ToString()). MINH CHỨNG
+                                        </h4>
+                                        <div class="card-header-action">
+                                            <a data-collapse="#panel-body-Z" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
                                         </div>
                                     </div>
-
-                                    <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
-                                        <table class="table table-striped" style="border-collapse:unset" id="table-2">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        2.1
-                                                    </td>
-                                                    <td>
-                                                        Công tác giảng dạy
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        2.1.1
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                        <br />
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                        <br />
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                        <br />
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                    </td>
-
-                                                </tr>
-                                            </tbody>
-
-                                        </table>
-                                        <div class="text-right">
-                                            <a href="#" role="button" class="btn btn-primary" id="saveForm">Lưu CÔNG VIỆC THỰC HIỆN THEO KPI</a>
-                                            <button class="btn btn-danger " type="reset">Reset</button>
+                                    <div class="accordion-body collapse" id="panel-body-Z" data-parent="#accordion" style="">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01" disabled>
+                                                <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
+                                            </div>
+                                            <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
                                         </div>
                                     </div>
-
-                                    <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab3">
-                                        Vestibulum imperdiet odio sed neque ultricies, ut dapibus mi maximus. Proin ligula massa,
-                                        gravida in lacinia efficitur, hendrerit eget mauris. Pellentesque fermentum, sem interdum
-                                        molestie finibus, nulla diam varius leo, nec varius lectus elit id dolor.
-                                    </div>
                                 </div>
-                            </div>
-
-
                         </div>
                     </div>
                 </div>

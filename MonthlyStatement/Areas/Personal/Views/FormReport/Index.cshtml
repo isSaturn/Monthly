@@ -32,74 +32,96 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
+                                <div id="accordion">
 
-                                @foreach (var items in Model.FormPersonalReportDetails)
-                                {
-                                    if (items.Category.category_of_id == null)
+                                    @foreach (var items in Model.FormPersonalReportDetails)
                                     {
-                                        i = 0;
-                                        j++;
-                                        <br />
-                                        <div class="section-title mt-1" style="font-weight:bold">
-                                            @(((char) j).ToString()). @items.Category.category_content.ToUpper()
+                                        if (items.Category.category_of_id == null)
+                                        {
+                                            i = 0;
+                                            j++;
+                                            <br />
+                                            <div class="accordion">
+                                                <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                                    <h4>
+                                                        @(((char) j).ToString()). @items.Category.category_content.ToUpper()
+                                                    </h4>
+                                                    <div class="card-header-action">
+                                                        <a data-collapse="#panel-body-@(((char) j).ToString())" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
+                                                    </div>
+                                                </div>
 
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        lstId += items.category_id + "-";
-                                        i++;
-                                        <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
-                                            <div class="col-lg-12">
-                                                <input hidden id="dem-@items.category_id" value="@models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).Count()" />
-                                                <input hidden id="frmPerDetail-@items.category_id" value="@items.form_personal_report_detail_id" />
-                                                <table class="table table-bordered dataTable">
-                                                    <tbody>
-                                                        <tr class="" style="max-width: 50px">
-                                                            <th colspan="2">@(i). @items.Category.category_content</th>
-                                                        </tr>
-                                                        @if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).Count() > 0)
-                                                        {
-                                                            int inputIndex = 0;
-                                                            foreach (var itemss in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).ToList())
-                                                            {
-                                                                inputIndex++;
-                                                                <tr id="formInput-@items.category_id-@inputIndex">
-                                                                    <td colspan="2">
-                                                                        <input type="text" value="@itemss.personal_report_content" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@items.category_id-@inputIndex">
-                                                                        <p hidden id="validation-noidung-@items.category_id-@inputIndex" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
-                                                                    </td>
-                                                                </tr>
-                                                            }
-                                                        }
-                                                        <tr hidden id="append-@items.category_id"></tr>
-                                                        <tr>
-                                                            <td>
-                                                                <button role="button" name="@items.category_id" id="xoanoidung-@items.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
-                                                            </td>
-                                                            <td>
-                                                                <button role="button" name="@items.category_id" id="themnoidung-@items.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
                                             </div>
-                                        </div>
+                                        }
+                                        else
+                                        {
+                                            lstId += items.category_id + "-";
+                                            i++;
+                                            <div class="accordion-body collapse" id="panel-body-@(((char) j).ToString())" data-parent="#accordion" style="">
+                                                <div class="col-lg-12">
+                                                    <input hidden id="dem-@items.category_id" value="@models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).Count()" />
+                                                    <input hidden id="frmPerDetail-@items.category_id" value="@items.form_personal_report_detail_id" />
+                                                    <table class="table table-bordered dataTable">
+                                                        <tbody>
+                                                            <tr class="" style="max-width: 50px">
+                                                                <th colspan="2">@(i). @items.Category.category_content</th>
+                                                            </tr>
+                                                            @if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).Count() > 0)
+                                                            {
+                                                                int inputIndex = 0;
+                                                                foreach (var itemss in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items.form_personal_report_detail_id && p.personal_report_id == per).ToList())
+                                                                {
+                                                                    inputIndex++;
+                                                                    <tr id="formInput-@items.category_id-@inputIndex">
+                                                                        <td colspan="2">
+                                                                            <input type="text" value="@itemss.personal_report_content" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@items.category_id-@inputIndex">
+                                                                            <p hidden id="validation-noidung-@items.category_id-@inputIndex" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            <tr hidden id="append-@items.category_id"></tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <button role="button" name="@items.category_id" id="xoanoidung-@items.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                </td>
+                                                                <td>
+                                                                    <button role="button" name="@items.category_id" id="themnoidung-@items.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            @*<div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+
+
+                                            </div>*@
+                                        }
                                     }
-                                }
-                                <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
-                                <div class="section-title mt-3" style="font-weight:bold">
-                                    <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
                                 </div>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
+                                <div class="accordion">
+                                    <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                        <h4>
+                                            @(((char) (++j)).ToString()). MINH CHỨNG
+                                        </h4>
+                                        <div class="card-header-action">
+                                            <a data-collapse="#panel-body-Z" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
+                                        </div>
                                     </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01">
-                                        <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
+                                    <div class="accordion-body collapse" id="panel-body-Z" data-parent="#accordion" style="">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01">
+                                                <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
+                                            </div>
+                                            <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                        </div>
                                     </div>
-                                    <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
                                 </div>
                                 <div class="text-right mt-3">
                                     <button id="btnSubmit" role="button" class="btn btn-primary">Lưu báo cáo</button>
@@ -114,66 +136,90 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
+                                <div id="accordion">
+                                    @foreach (var items in Model.FormPersonalReportDetails)
+                                    {
+                                        if (items.Category.category_of_id == null)
+                                        {
+                                            i = 0;
+                                            j++;
+                                            <br />
 
-                                @foreach (var items in Model.FormPersonalReportDetails)
-                                {
-                                    if (items.Category.category_of_id == null)
-                                    {
-                                        i = 0;
-                                        j++;
-                                        <br />
-                                        <div class="section-title mt-1" style="font-weight:bold">
-                                            @(((char) j).ToString()). @items.Category.category_content.ToUpper()
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        lstId += items.category_id + "-";
-                                        i++;
-                                        <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
-                                            <div class="col-lg-12">
-                                                <input hidden id="dem-@items.category_id" value="1" />
-                                                <input hidden id="frmPerDetail-@items.category_id" value="@items.form_personal_report_detail_id" />
-                                                <table class="table table-bordered dataTable">
-                                                    <tbody>
-                                                        <tr class="" style="max-width: 50px">
-                                                            <th colspan="2">@(i). @items.Category.category_content</th>
-                                                        </tr>
-                                                        <tr id="formInput-@items.category_id">
-                                                            <td colspan="2">
-                                                                <input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@items.category_id-1">
-                                                                <p hidden id="validation-noidung-@items.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr hidden id="append-@items.category_id"></tr>
-                                                        <tr>
-                                                            <td>
-                                                                <button role="button" name="@items.category_id" id="xoanoidung-@items.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
-                                                            </td>
-                                                            <td>
-                                                                <button role="button" name="@items.category_id" id="themnoidung-@items.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <div class="accordion">
+                                                <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                                    <h4>
+                                                        @(((char) j).ToString()). @items.Category.category_content.ToUpper()
+                                                    </h4>
+                                                    <div class="card-header-action">
+                                                        <a data-collapse="#panel-body-@(((char) j).ToString())" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
+                                        else
+                                        {
+                                            lstId += items.category_id + "-";
+                                            i++;
+                                            <div class="accordion-body collapse" id="panel-body-@(((char) j).ToString())" data-parent="#accordion" style="">
+                                                <div class="col-lg-12">
+                                                    <input hidden id="dem-@items.category_id" value="1" />
+                                                    <input hidden id="frmPerDetail-@items.category_id" value="@items.form_personal_report_detail_id" />
+                                                    <table class="table table-bordered dataTable">
+                                                        <tbody>
+                                                            <tr class="" style="max-width: 50px">
+                                                                <th colspan="2">@(i). @items.Category.category_content</th>
+                                                            </tr>
+                                                            <tr id="formInput-@items.category_id">
+                                                                <td colspan="2">
+                                                                    <input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@items.category_id-1">
+                                                                    <p hidden id="validation-noidung-@items.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr hidden id="append-@items.category_id"></tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <button role="button" name="@items.category_id" id="xoanoidung-@items.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                </td>
+                                                                <td>
+                                                                    <button role="button" name="@items.category_id" id="themnoidung-@items.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            @*<div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+
+                    </div>*@
+                                        }
                                     }
-                                }
+                                </div>
+
                                 <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
-                                <div class="section-title mt-3" style="font-weight:bold">
-                                    <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+
+                                <div class="accordion">
+                                    <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                        <h4>
+                                            @(((char) (++j)).ToString()). MINH CHỨNG
+                                        </h4>
+                                        <div class="card-header-action">
+                                            <a data-collapse="#panel-body-Z" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
+                                        </div>
                                     </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01">
-                                        <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
+                                    <div class="accordion-body collapse" id="panel-body-Z" data-parent="#accordion" style="">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01">
+                                                <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
+                                            </div>
+                                            <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                        </div>
                                     </div>
-                                    <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
                                 </div>
+
                                 <div class="text-right mt-3">
                                     <button id="btnSubmit" role="button" class="btn btn-primary">Lưu báo cáo</button>
                                 </div>
@@ -182,6 +228,9 @@
                     </div>
 
                 }
+
+                
+
             </div>
         </div>
     </div>
@@ -259,10 +308,6 @@
         }
     });
 </script>
-
-
-
-
 
 
 
