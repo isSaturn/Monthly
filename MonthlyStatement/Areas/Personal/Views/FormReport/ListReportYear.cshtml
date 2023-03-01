@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MonthlyStatement.Models.ReportYear>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ListReportYear";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,23 +15,23 @@
                             <h4 class="text-white" style="font-size:1.75rem">Quản lý các năm báo cáo</h4>
                         </div>
                     </div>
-                    @if (Convert.ToBoolean(Session["ReportYear-Check"]) == true)
+                    @*@if (Convert.ToBoolean(Session["ReportYear-Check"]) == true)
                     {
                         <div class="form-group">
                             <div class="col-sm-12 buttons">
                                 <button class="btn btn-primary btn-round" id="add_report_year" style="color:white"><i class="fa fa-plus"></i>Tạo năm báo cáo</button>
                             </div>
                         </div>
-                    }
+                    }*@
                     <div class="row">
                         <div hidden="hidden" id="appendata"></div>
 
                         @foreach (var item in Model)
                         {
-                            if(item.year <= DateTime.Now.Year)
+                            if (item.year <= DateTime.Now.Year)
                             {
                                 <div class="col-12 col-md-6 col-lg-3">
-                                    <a class="card card-success" href="@Url.Action("Index","ReportPeriods", new {id = item.report_year_id})">
+                                    <a class="card card-success" href="@Url.Action("ListReportPeriod","FormReport", new {id = item.report_year_id})">
                                         <div class="card-header">
                                             <h4>Năm @item.year</h4>
                                         </div>
@@ -54,7 +54,7 @@
                                     </a>
                                 </div>
                             }
-                            
+
                         }
                     </div>
                 </div>

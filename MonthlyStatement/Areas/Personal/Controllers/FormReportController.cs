@@ -234,5 +234,28 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             }
 
         }
+
+        public ActionResult ListReportYear()
+        {
+            var current_year = DateTime.Now.Year;
+            int check = db.ReportYears.Where(y => y.year == current_year).Count();
+
+            if (check < 1)
+            {
+                //cho phep thêm mới năm báo cáo
+                Session["ReportYear-Check"] = true;
+            }
+
+            else
+                //khong cho phep them moi
+                Session["ReportYear-Check"] = false;
+            return View(db.ReportYears.OrderByDescending(y => y.year).ToList());
+        }
+
+        public ActionResult ListReportPeriod(int id)
+        {
+            var reportPeriods = db.ReportPeriods.Where(r => r.report_year_id == id).ToList();
+            return View(reportPeriods);
+        }
     }
 }
