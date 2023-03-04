@@ -35,6 +35,12 @@
                                             Bộ môn
                                         </th>
                                         <th>
+                                            Đăng nhập lần cuối
+                                        </th>
+                                        <th>
+                                            Đăng xuất lần cuối
+                                        </th>
+                                        <th>
                                             Vai trò
                                         </th>
                                         <th class="text-center">
@@ -66,25 +72,45 @@
                                                 }
                                             </td>
                                             <td>
-                                                @if (item.Profiles.First().faculty_id == null)
-                                                {
-                                                    <span>Chưa có khoa</span>
-                                                }
-                                                else
-                                                {
-                                                    @item.Profiles.FirstOrDefault().Faculty.faculty_name
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.Profiles.First().department == null)
-                                                {
-                                                    <span>Chưa có bộ môn</span>
-                                                }
-                                                else
-                                                {
-                                                    @item.Profiles.FirstOrDefault().department
-                                                }
-                                            </td>
+                                                    @if (item.Profiles.First().faculty_id == null)
+                                                    {
+                                                        <span>Chưa có khoa</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Profiles.FirstOrDefault().Faculty.faculty_name
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (item.Profiles.First().department == null)
+                                                    {
+                                                        <span>Chưa có bộ môn</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Profiles.FirstOrDefault().department
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (item.Profiles.First().last_login == null)
+                                                    {
+                                                        <span></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Profiles.FirstOrDefault().last_login
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (item.Profiles.First().last_logout == null)
+                                                    {
+                                                        <span></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Profiles.FirstOrDefault().last_logout
+                                                    }
+                                                </td>
                                             <td>
                                                 @if (item.AspNetRoles.Count() < 1)
                                                 {

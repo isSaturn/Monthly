@@ -15,14 +15,9 @@
                             <h4 class="text-white" style="font-size:1.75rem">Quản lý các năm báo cáo</h4>
                         </div>
                     </div>
-                    @if (Convert.ToBoolean(Session["ReportYear-Check"]) == true)
-                    {
-                        <div class="form-group">
-                            <div class="col-sm-12 buttons">
-                                <button class="btn btn-primary btn-round" id="add_report_year" style="color:white"><i class="fa fa-plus"></i>Tạo năm báo cáo</button>
-                            </div>
+                        <div class="form-group">                   
+                                <button class="btn btn-primary" id="add_report_year" style="color:white"><i class="fa fa-plus"></i>Tạo năm báo cáo</button>
                         </div>
-                    }
                     <div class="row">
                         <div hidden="hidden" id="appendata"></div>
 
