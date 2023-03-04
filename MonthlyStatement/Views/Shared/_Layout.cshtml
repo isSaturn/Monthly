@@ -73,7 +73,7 @@
                                 <a href="@Url.Action("Personal", "Report", new { Area = "Personal" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
                             </li>
                             <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "FormReport", new { Area = "Personal" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
+                                <a href="@Url.Action("ListReportYear", "FormReport", new { Area = "Personal" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
                             </li>
                             <li class="dropdown">
                             <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
