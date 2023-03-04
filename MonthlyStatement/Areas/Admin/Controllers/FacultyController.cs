@@ -43,6 +43,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
         }
 
+        public ActionResult AddMember()
+        {
+            return View();
+        }
+
         // GET: Admin/Faculty
         public ActionResult Index()
         {
