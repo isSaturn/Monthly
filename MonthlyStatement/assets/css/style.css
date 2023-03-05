@@ -3193,8 +3193,9 @@ textarea.form-control {
     }
 
     .card .card-body {
+        
         padding-top: 20px;
-        padding-bottom: 20px
+        padding-bottom: 20px;
     }
 
         .card .card-body .section-title {
@@ -3353,7 +3354,7 @@ textarea.form-control {
     }
 
     .card.card-primary {
-        border-top: 2px solid #6777ef
+        border-top: 2px solid #fff;
     }
 
     .card.card-secondary {
@@ -6509,11 +6510,11 @@ body.layout-3 .main-footer {
             position: relative;
             display: flex;
             align-items: center;
-            height: 50px;
+            height: 63px;
             padding: 0 20px;
             width: 100%;
             letter-spacing: 0.3px;
-            color: #60686f;
+            color: #fff;
             font-weight: 600;
             text-decoration: none
         }
@@ -6545,7 +6546,7 @@ body.layout-3 .main-footer {
             }
 
             .main-sidebar .sidebar-menu li a:hover {
-                background-color: #f2f5f8
+                background-color: rgba(0, 0, 0, 0.5);
             }
 
         .main-sidebar .sidebar-menu li.active a {
@@ -6577,7 +6578,7 @@ body.layout-3 .main-footer {
         }
 
             .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
-                color: #60686f;
+                color: #fff;
                 height: 35px;
                 padding-left: 50px;
                 font-weight: 400
@@ -6602,7 +6603,7 @@ body.layout-3 .main-footer {
                     position: absolute;
                     transition: 0.5s;
                     left: 30px;
-                    color: #868e96
+                    color: #fff;
                 }
 
             .main-sidebar .sidebar-menu li ul.dropdown-menu li.active > a {
@@ -10302,9 +10303,7 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
     background-color: #6777ef
 }
 
-.theme-white .card.card-primary {
-    border-top: 2px solid #6777ef
-}
+
 
 .theme-white .fc button.fc-state-active {
     background-color: #6777ef;
