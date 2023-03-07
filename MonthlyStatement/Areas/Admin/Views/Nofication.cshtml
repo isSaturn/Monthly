@@ -1,0 +1,87 @@
+﻿
+<style>
+    .toast {
+        width: 97%;
+        height: 80px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 7px;
+        display: grid;
+        grid-template-columns: 1.3fr 6fr 0.5fr;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .success {
+        border-left: 8px solid #47f447;
+    }
+
+    .toast:not(:last-child) {
+        margin-bottom: 30px;
+    }
+
+    .form {
+        border-left: 8px solid hsl(197, 89%, 62%);
+    }
+
+    .error {
+        border-left: 8px solid #f44747;
+    }
+
+    .list {
+        border-left: 8px solid #47daf4;
+    }
+</style>
+<section class="section " style="padding: 30px">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-header bg-primary" style="height:96px">
+                            <h4 class="text-white" style="font-size:1.7rem">Thông Báo</h4>
+                        </div>
+                    </div>
+                    <div class="toast form">
+                        <div class="notification-list_content">
+                            <div class="notification-list_detail">
+                                <p>Hoàn thành báo cáo tháng 10</p>
+                                <p class="text-muted"><small>10 mins ago</small></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="toast success">
+                        <div class="notification-list_content">
+                            <div class="notification-list_detail">
+                                <p>Form báo cáo tháng 10</p>
+                                <p class="text-muted"><small>10 mins ago</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="toast list">
+                        <div class="notification-list_content">
+
+                            <div class="notification-list_detail">
+                                <p>Làm báo cáo tháng 10</p>
+
+                                <p class="text-muted"><small>10 mins ago</small></p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="toast error">
+                        <div class="notification-list_content">
+                            <div class="notification-list_detail">
+                                <p>Hết hạn nộp báo cáo</p>
+                                <p class="text-muted"><small>10 mins ago</small></p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
