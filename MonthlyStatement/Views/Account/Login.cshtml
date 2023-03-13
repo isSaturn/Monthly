@@ -4,13 +4,48 @@
     Layout = null;
 }
 <style>
-    body {
-        background-image: url('@Url.Content("~/assets/img/vlu/background.jpg")');
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+    
+    .bg-img {
+        background-position: center;
         background-size: cover;
+        min-height: 100vh;
         position: relative;
+        width: 100%;
+        background-image:url(../../assets/img/vlu/background.jpg)
     }
+
+        .bg-img::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0,0,0,0.7);
+        }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 400px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+    }
+
+        .center h2 {
+            text-align: center;
+            padding: 20px 0;
+            color: black;
+        }
+
+        .center form {
+            padding: 0 60px;
+            box-sizing: border-box;
+        }
+
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,31 +68,22 @@
 </head>
 
 <body>
-    <div class="loader"></div>
-    <div id="app">
-        <section class="section">
-            <div class="container mt-5">
-                <div class="row">
-                    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h2>Monthly Statement</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="text-center mt-4 mb-3">
-                                    <div class="card-header text-center">
-                                        <img class="mb-3 w-100" src="@Url.Content("~/assets/img/vlu/logoVL.jpg")" alt="happy-students">
-                                    </div>
-                                    <div class="text-job text-muted">Login With Mail VLU</div>
-                                </div>
-                                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                            </div>
-                        </div>
-                    </div>
+
+    <section class="section">
+        <div class="bg-img">
+        </div>
+        <div class="center">
+            <h2><img src="~/assets/img/vlu/logo2.png" alt=""><br> MONTHLY STATEMENT</h2>
+            <form method="post">
+                <div class="signup_link" style="margin: 5px 0; text-align: center; font-size: 16px; color: #666666">
+                    Signup with mail VLU
                 </div>
-            </div>
-        </section>
-    </div>
+            </form>
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </div>
+        
+    </section>
+
     <!-- General JS Scripts -->
     <script src="~/assets/js/app.min.js"></script>
     <!-- JS Libraies -->
