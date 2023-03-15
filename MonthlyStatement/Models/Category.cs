@@ -25,6 +25,7 @@ namespace MonthlyStatement.Models
         public int category_id { get; set; }
         public Nullable<int> category_of_id { get; set; }
         public string category_content { get; set; }
+        public Nullable<int> category_lv { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories1 { get; set; }

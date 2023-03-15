@@ -35,7 +35,7 @@
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
                         <a href="@Url.Action("Index", "Home", new { Area = "" })">
-                            <img alt="image" src="~/assets/img/vlu/logo.png" class="header-logo" /> <span class="logo-name"style="color:#fff">Văn Lang</span>
+                            <img alt="image" src="~/assets/img/vlu/logo.png" class="header-logo" /> <span class="logo-name" style="color:#fff">Văn Lang</span>
                         </a>
                     </div>
                     @if (User.IsInRole("Quản trị viên"))
@@ -74,6 +74,21 @@
                             </li>
                             <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "FormReport", new { Area = "Personal" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
+                            </li>
+                            <li class="dropdown">
+                            <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
+                                <a href="#" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
+                            </li>
+                        </ul>
+                    }
+                    else if (User.IsInRole("Ban phòng khoa"))
+                    {
+                        <ul class="sidebar-menu">
+                            <li class=@(ViewBag.Title == "Quản lý tham dự" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "FacManager", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="users"></i><span>Quản lý tham dự</span></a>
+                            </li>
+                            <li class=@(ViewBag.Title == "Quản lý báo cáo" ? "active" : "nav-item")>
+                                <a href="" class="nav-link"><i data-feather="edit"></i><span>Quản lý báo cáo</span></a>
                             </li>
                             <li class="dropdown">
                             <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>

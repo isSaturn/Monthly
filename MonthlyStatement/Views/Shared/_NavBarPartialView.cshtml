@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     string avt = "";
     if (Session["Avt"] != null)
     {
@@ -36,42 +37,16 @@
                     
                 </div>
                 <div class="dropdown-list-content dropdown-list-icons">
-                     <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-info text-white">
-                            <i class="far
-												fa-user"></i>
+                    <a href="#" class="dropdown-item dropdown-item-unread">
+                        <span class="dropdown-item-icon bg-primary text-white">
+                            <i class="fas
+												fa-code"></i>
                         </span> <span class="dropdown-item-desc">
-                            <b>Form</b> báo <b>
-                                cáo tháng 10
-                            </b> 
-                         <span class="time">
-                                5 Hours
+                            Template update is
+                            available now! <span class="time">
+                                2 Min
                                 Ago
                             </span>
-                        </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-success text-white">
-                            <i class="fas
-												fa-check"></i>
-                        </span> <span class="dropdown-item-desc">
-                            <b>Hoàn</b>thành báo cáo tháng 10 <b></b>  <span class="time">
-                                5
-                                Hours
-                                Ago
-                            </span>
-                        </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-danger text-white">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </span> <span class="dropdown-item-desc">
-                            Hết hạn làm báo cáo <span class="time">7 Hours Ago</span>
-                        </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-info text-white">
-                            <i class="fas
-												fa-bell"></i>
-                        </span> <span class="dropdown-item-desc">
-                            Làm báo cáo tháng 10 <span class="time">Yesterday</span>
                         </span>
                     </a>
                 </div>
@@ -80,10 +55,11 @@
                 </div>
             </div>
         </li>
+
         <li class="dropdown">
             <a href="#" data-toggle="dropdown"
                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="@Url.Content(avt)" class="rounded-circle img-fluid" > <span class="d-sm-none d-lg-inline-block"></span>
+                <img alt="image" src="@Url.Content(avt)" class="rounded-circle img-fluid"> <span class="d-sm-none d-lg-inline-block"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
                 <a href="@Url.Action("Index", "Profile",new { Area = "" })" class="dropdown-item has-icon">
@@ -105,6 +81,21 @@
                 }
             </div>
         </li>
-
+        <li>
+            <div>
+                @if (Session["name_user"] != null)
+                {
+                    <p>
+                        @Session["name_user"].ToString()
+                    </p>
+                }
+                @if (Session["role_user"] != null)
+                {
+                    <p>
+                        @Session["role_user"].ToString()
+                    </p>
+                }               
+            </div>
+        </li>
     </ul>
 </nav>
