@@ -60,9 +60,8 @@
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -197,6 +196,9 @@
     <Compile Include="Areas\Admin\Controllers\FacultyController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportDepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportPersonalController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
+    <Compile Include="Areas\FacultyAreas\Controllers\FacManagerController.cs" />
+    <Compile Include="Areas\FacultyAreas\FacultyAreasAreaRegistration.cs" />
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
     <Compile Include="Areas\Personal\Controllers\ReportController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
@@ -1142,7 +1144,6 @@
     <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Categories\Create1.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormDepartmentEdit.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormPersonalEdit.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
@@ -1173,6 +1174,10 @@
     <Content Include="Areas\Personal\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Personal\Views\FormReport\ListReportYear.cshtml" />
     <Content Include="Areas\Personal\Views\FormReport\ListReportPeriod.cshtml" />
+    <Content Include="Areas\Admin\Views\Notification\Index.cshtml" />
+    <Content Include="Areas\FacultyAreas\Views\web.config" />
+    <Content Include="Areas\FacultyAreas\Views\FacManager\Index.cshtml" />
+    <Content Include="Areas\FacultyAreas\Views\FacManager\FacMember.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1203,6 +1208,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\FacultyAreas\Data\" />
+    <Folder Include="Areas\FacultyAreas\Views\Shared\" />
     <Folder Include="Areas\Personal\Data\" />
     <Folder Include="assets\FileImport\" />
     <Folder Include="assets\FileMinhChung\" />
@@ -1255,6 +1262,12 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -99,9 +99,16 @@ namespace MonthlyStatement.Controllers
 
                             pro.account_id = aspNetUser.Id;
                             db.Entry(pro).State = System.Data.Entity.EntityState.Modified;
+
                             db.SaveChanges();
                         }
+
                     }
+
+                    var role = UserManager.GetRoles(currentUser.Id).FirstOrDefault();
+
+                    Session["name_user"] = pro.user_name;
+                    Session["role_user"] = role;
                     // Add role claim to user
                     ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
 
@@ -139,7 +146,13 @@ namespace MonthlyStatement.Controllers
                     db.SaveChanges();
                 }
                 db.SaveChanges();
+                var role = UserManager.GetRoles(currentUser.Id).FirstOrDefault();
+
+                Session["name_user"] = pro.user_name;
+                Session["role_user"] = role;
             }
+
+
 
             return RedirectToAction("Index", "Home");
         }

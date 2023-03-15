@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     string avt = "";
     if (Session["Avt"] != null)
     {
@@ -49,46 +50,6 @@
                                 Ago
                             </span>
                         </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-info text-white">
-                            <i class="far
-												fa-user"></i>
-                        </span> <span class="dropdown-item-desc">
-                            <b>You</b> and <b>
-                                Dedik
-                                Sugiharto
-                            </b> are now friends <span class="time">
-                                10 Hours
-                                Ago
-                            </span>
-                        </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-success text-white">
-                            <i class="fas
-												fa-check"></i>
-                        </span> <span class="dropdown-item-desc">
-                            <b>Kusnaedi</b> has
-                            moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">
-                                12
-                                Hours
-                                Ago
-                            </span>
-                        </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-danger text-white">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </span> <span class="dropdown-item-desc">
-                            Low disk space. Let's
-                            clean it! <span class="time">17 Hours Ago</span>
-                        </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-info text-white">
-                            <i class="fas
-												fa-bell"></i>
-                        </span> <span class="dropdown-item-desc">
-                            Welcome to Otika
-                            template! <span class="time">Yesterday</span>
-                        </span>
                     </a>
                 </div>
                 <div class="dropdown-footer text-center">
@@ -96,10 +57,11 @@
                 </div>
             </div>
         </li>
+
         <li class="dropdown">
             <a href="#" data-toggle="dropdown"
                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="@Url.Content(avt)" class="rounded-circle img-fluid" > <span class="d-sm-none d-lg-inline-block"></span>
+                <img alt="image" src="@Url.Content(avt)" class="rounded-circle img-fluid"> <span class="d-sm-none d-lg-inline-block"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
                 <a href="@Url.Action("Index", "Profile",new { Area = "" })" class="dropdown-item has-icon">
@@ -121,6 +83,21 @@
                 }
             </div>
         </li>
-
+        <li>
+            <div>
+                @if (Session["name_user"] != null)
+                {
+                    <p>
+                        @Session["name_user"].ToString()
+                    </p>
+                }
+                @if (Session["role_user"] != null)
+                {
+                    <p>
+                        @Session["role_user"].ToString()
+                    </p>
+                }               
+            </div>
+        </li>
     </ul>
 </nav>
