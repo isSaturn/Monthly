@@ -1163,13 +1163,6 @@
     <Content Include="Areas\Admin\Views\ListReportPersonal\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportDepartment\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportDepartment\Index.cshtml" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Personal\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Personal\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Personal\Views\FormReport\ListReportYear.cshtml" />
@@ -1178,6 +1171,13 @@
     <Content Include="Areas\FacultyAreas\Views\web.config" />
     <Content Include="Areas\FacultyAreas\Views\FacManager\Index.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\FacManager\FacMember.cshtml" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
