@@ -18,19 +18,21 @@ namespace MonthlyStatement.Models
         public Comment()
         {
             this.DepartmentReports = new HashSet<DepartmentReport>();
+            this.DepartmentReportDetails = new HashSet<DepartmentReportDetail>();
+            this.PersonalReportDetails = new HashSet<PersonalReportDetail>();
         }
     
         public int comment_id { get; set; }
         public string comment_content { get; set; }
         public Nullable<System.DateTime> comment_date { get; set; }
         public string account_id { get; set; }
-        public Nullable<int> personal_report_id { get; set; }
-        public Nullable<int> department_report_id { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual DepartmentReport DepartmentReport { get; set; }
-        public virtual PersonalReport PersonalReport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DepartmentReport> DepartmentReports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DepartmentReportDetail> DepartmentReportDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PersonalReportDetail> PersonalReportDetails { get; set; }
     }
 }

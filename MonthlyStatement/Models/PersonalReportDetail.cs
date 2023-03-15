@@ -18,7 +18,9 @@ namespace MonthlyStatement.Models
         public int personal_report_id { get; set; }
         public int form_personal_report_detail_id { get; set; }
         public string personal_report_content { get; set; }
+        public Nullable<int> comment_id { get; set; }
     
+        public virtual Comment Comment { get; set; }
         public virtual FormPersonalReportDetail FormPersonalReportDetail { get; set; }
         public virtual PersonalReport PersonalReport { get; set; }
     }
