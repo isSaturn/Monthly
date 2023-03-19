@@ -14,6 +14,7 @@
     var formPer = models.PersonalReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
     int per = formPer.First().personal_report_id;
 
+
 }
 
 <section class="section">
@@ -74,6 +75,45 @@
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
                             </div>
+
+                            <hr />
+                            <div class="col-12">
+                                <div class="card" style="background-color: #e9ecef">
+                                    <div class="card-body">
+                                        
+                                        <div class="chat">
+                                            @foreach (var comment in models.Comments)
+                                            {
+                                                <div class="chat-header clearfix">
+                                                    <img alt="image" src="~/assets/img/user.png" class="rounded-circle img-fluid">
+                                                    <div class="chat-about">
+                                                        <div class="chat-time form-inline">
+                                                            <div class="chat-with" style="font-style:oblique">@models.AspNetUsers.FirstOrDefault(n => n.Id.Equals(comment.account_id)).Email</div>
+                                                            &emsp;
+                                                            @comment.comment_date
+                                                        </div>
+                                                        <div class="chat-text">@comment.comment_content</div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <hr />
+                                        <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
+                                        @using (Html.BeginForm("PostComment", "CommentsPersonal", FormMethod.Post))
+                                        {
+                                            <input type="hidden" name="" value="" />
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="CommentText" style="height:200px !important"></textarea>
+                                            </div>
+                                            <div class="text-right mt-3">
+                                                <button class="btn btn-primary" type="submit">Gửi</button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

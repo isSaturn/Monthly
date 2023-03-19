@@ -193,12 +193,14 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CommentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\FacultyController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportDepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportPersonalController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacManagerController.cs" />
     <Compile Include="Areas\FacultyAreas\FacultyAreasAreaRegistration.cs" />
+    <Compile Include="Areas\Personal\Controllers\CommentsPersonalController.cs" />
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
     <Compile Include="Areas\Personal\Controllers\ReportController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
@@ -1208,9 +1210,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Comments\" />
     <Folder Include="Areas\FacultyAreas\Data\" />
     <Folder Include="Areas\FacultyAreas\Views\Shared\" />
     <Folder Include="Areas\Personal\Data\" />
+    <Folder Include="Areas\Personal\Views\CommentsPersonal\" />
+    <Folder Include="Areas\Personal\Views\Comments\" />
     <Folder Include="assets\FileImport\" />
     <Folder Include="assets\FileMinhChung\" />
     <Folder Include="assets\user\avatar\" />
