@@ -39,7 +39,7 @@
                                                 <tr>
                                                     <td class="text-center pt-2">
                                                         <div class="pretty p-switch p-fill">
-                                                            <input name="@item.category_id" type="checkbox" id="categorylv1-@item.category_id" value="@item.category_id" />
+                                                            <input name="@item.category_id" type="checkbox" id="categorylv1-@item.category_id" value="@item.category_id"/>
                                                             <div class="state">
                                                                 <label></label>
                                                             </div>
@@ -57,7 +57,10 @@
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="pretty p-switch p-fill">
-                                                                <input name="@items.category_of_id" type="checkbox" id="@(items.category_of_id)categorylv2-@(items.category_id)" value="@items.category_id" />
+                                                                <input name="@items.category_of_id"
+                                                                       type="checkbox"
+                                                                       id="@(items.category_of_id)categorylv2-@(items.category_id)" 
+                                                                       value="@items.category_id"/>
                                                                 <div class="state">
                                                                     <label></label>
                                                                 </div>
@@ -72,6 +75,30 @@
                                                         <td><a href="#" class="btn btn-primary">Edit</a></td>
                                                     </tr>
                                                 </tbody>
+                                                foreach (var itemss in lstCategory.Where(c => c.category_of_id == items.category_id).ToList())
+                                                {
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center pt-2">
+                                                                <div class="pretty p-switch p-fill">
+                                                                    <input name="@items.category_of_id-@items.category_id"
+                                                                           type="checkbox"
+                                                                           id="@(itemss.category_of_id)categorylv3-@(itemss.category_id)" value="@itemss.category_id"/>
+                                                                    <div class="state">
+                                                                        <label></label>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="media mt-3">
+                                                                    <div class="pr-5" href="#">
+                                                                    </div>@itemss.category_content
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
                                             }
                                         }
 
@@ -94,7 +121,19 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
     $(document).ready(function () {
-        //radio button
+        //radio button lv3
+        $('[id*="categorylv3-"]').on('input', function () {
+            var idlv1 = $(this).attr('name').split('-')[0];
+            var idlv2 = $(this).attr('name').split('-')[1];
+
+            if ($(this).prop('checked')) {
+                if ($('#' + idlv1 + 'categorylv2-' + idlv2).prop('checked') == false) {
+                    $('#' + idlv1 + 'categorylv2-' + idlv2).prop('checked', true);
+                    $('#categorylv1-' + idlv1).prop('checked', true);
+                }
+            }
+        });
+        //radio button lv2
         $('[id*="categorylv2-"]').on('input', function () {
             var id = $(this).attr('name');
             if ($(this).prop('checked')) {
@@ -113,6 +152,7 @@
                 }
             }
         });
+        //radio button lv1
         $('[id*="categorylv1-"]').on('input', function () {
             var id = $(this).attr('name');
             if ($(this).prop('checked') == false) {
@@ -151,6 +191,9 @@
                     data += $(this).val() + "-";
                 }
             });
+            var formData = new FormData();
+            formData.append('idReport', idReport);
+            formData.append('data', data.substring(0, data.length-1));
             swal({
                 title: 'Lưu biểu mẫu?',
                 text: 'Bạn có muốn lưu biểu mẫu?',
@@ -162,15 +205,11 @@
                     if (willAdd) {
                         $.ajax({
                             type: "POST",
-                            traditional: true,
-                            async: false,
-                            cache: false,
+                            contentType: false,
+                            dataType: "html",
+                            processData: false,
                             url: $('#requestUrl').val() + 'ReportPeriods/FormPersonalEdit',
-                            data: {
-                                idReport: idReport,
-                                data: data.substring(0, data.length - 1)
-                            },
-                            context: document.body,
+                            data: formData,
                             success: function (result) {
                                 if (result == "Success") {
                                     swal('Thêm thành công', {

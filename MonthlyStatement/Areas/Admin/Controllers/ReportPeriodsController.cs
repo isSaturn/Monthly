@@ -78,7 +78,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         }
         //department edit
         [HttpPost]
-        public ActionResult FormDepartmentEdit(int idReport, string data)
+        public ActionResult FormDepartmentEdit(int? idReport, string data)
         {
             var form = db.FormDepartmentReports.Find(idReport);
             if (form != null)
@@ -93,7 +93,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                     foreach (var item in data.Split('-'))
                     {
                         FormDepartmentReportDetail formDepartmentReportDetail = new FormDepartmentReportDetail();
-                        formDepartmentReportDetail.form_department_report_id = idReport;
+                        formDepartmentReportDetail.form_department_report_id = (int)idReport;
                         formDepartmentReportDetail.category_id = Convert.ToInt32(item);
                         db.FormDepartmentReportDetails.Add(formDepartmentReportDetail);
                     }
@@ -119,7 +119,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         //personal edit
 
         [HttpPost]
-        public ActionResult FormPersonalEdit(int idReport, string data)
+        public ActionResult FormPersonalEdit(int? idReport, string data)
         {
             var form = db.FormPersonalReports.Find(idReport);
             if (form != null)
@@ -134,15 +134,15 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                     foreach (var item in data.Split('-'))
                     {
                         FormPersonalReportDetail formPersonalReportDetail = new FormPersonalReportDetail();
-                        formPersonalReportDetail.form_personal_report_id = idReport;
+                        formPersonalReportDetail.form_personal_report_id = (int)idReport;
                         formPersonalReportDetail.category_id = Convert.ToInt32(item);
                         db.FormPersonalReportDetails.Add(formPersonalReportDetail);
                     }
                     db.SaveChanges();
                 }
-                return Json("Success", JsonRequestBehavior.AllowGet);
+                return Content("Success");
             }
-            return Json("Không tồn tại", JsonRequestBehavior.AllowGet);
+            return Content("Không tồn tại");
         }
         //department detail
         public ActionResult FormDepartmentDetail(int id)
