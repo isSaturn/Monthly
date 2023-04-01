@@ -100,6 +100,8 @@
                                     swal('Thêm thành công', {
                                         icon: 'success',
                                     });
+                                    window.location.href = $('#requestUrl').val() + 'Admin/YearReport/Index';
+
                                 } else {
                                     swal(result, {
                                         icon: 'error',
