@@ -14,7 +14,7 @@ namespace MonthlyStatement.Areas.FacultyAreas.Controllers
         CP25Team04Entities db = new CP25Team04Entities();
 
         // GET: FacultyAreas/FacManager
-        public ActionResult Index()
+        public ActionResult Indexx()
         {
             string manguoidung = db.AspNetUsers.Where(x => x.Email == User.Identity.Name).FirstOrDefault().Id;
             int makhoa = (int)db.Profiles.Where(p => p.account_id == manguoidung).FirstOrDefault().faculty_id;
@@ -25,6 +25,13 @@ namespace MonthlyStatement.Areas.FacultyAreas.Controllers
         {
             var reportPeriods = db.Faculties.Find(id);
             return View(reportPeriods);
+        }
+        public ActionResult Index()
+        {
+            string manguoidung = db.AspNetUsers.Where(x => x.Email == User.Identity.Name).FirstOrDefault().Id;
+            int makhoa = (int)db.Profiles.Where(p => p.account_id == manguoidung).FirstOrDefault().faculty_id;
+            var lstpersonal = db.PersonalReports.Where(p => p.AspNetUser.AspNetRoles.Where(a => a.Id.Equals("5")).Count() > 0).ToList();
+            return View(lstpersonal);
         }
     }
 }

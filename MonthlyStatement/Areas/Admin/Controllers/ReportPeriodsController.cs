@@ -124,8 +124,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             var form = db.FormPersonalReports.Find(idReport);
             if (form != null)
             {
+                if (form.FormPersonalReportDetails.Where(f => f.PersonalReportDetails.Count() > 0).Count() > 0)
+                    return Content("Exist");
+
                 if (string.IsNullOrEmpty(data))
-                    return Json("Vui lòng chọn danh mục", JsonRequestBehavior.AllowGet);
+                    return Content("Vui lòng chọn danh mục");
                 db.FormPersonalReportDetails.RemoveRange(form.FormPersonalReportDetails);
                 db.Entry(form).State = EntityState.Modified;
                 db.SaveChanges();
@@ -147,7 +150,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         //department detail
         public ActionResult FormDepartmentDetail(int id)
         {
-            var formDepartmentDetail = db.FormDepartmentReportDetails.Where(f =>f.form_department_report_id == id).ToList();
+            var formDepartmentDetail = db.FormDepartmentReportDetails.Where(f => f.form_department_report_id == id).ToList();
             return View(formDepartmentDetail);
         }
         //personal detail

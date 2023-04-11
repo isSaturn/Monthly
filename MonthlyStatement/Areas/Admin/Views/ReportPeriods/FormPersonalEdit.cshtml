@@ -39,7 +39,7 @@
                                                 <tr>
                                                     <td class="text-center pt-2">
                                                         <div class="pretty p-switch p-fill">
-                                                            <input name="@item.category_id" type="checkbox" id="categorylv1-@item.category_id" value="@item.category_id"/>
+                                                            <input name="@item.category_id" type="checkbox" id="categorylv1-@item.category_id" value="@item.category_id" />
                                                             <div class="state">
                                                                 <label></label>
                                                             </div>
@@ -59,8 +59,8 @@
                                                             <div class="pretty p-switch p-fill">
                                                                 <input name="@items.category_of_id"
                                                                        type="checkbox"
-                                                                       id="@(items.category_of_id)categorylv2-@(items.category_id)" 
-                                                                       value="@items.category_id"/>
+                                                                       id="@(items.category_of_id)categorylv2-@(items.category_id)"
+                                                                       value="@items.category_id" />
                                                                 <div class="state">
                                                                     <label></label>
                                                                 </div>
@@ -83,7 +83,7 @@
                                                                 <div class="pretty p-switch p-fill">
                                                                     <input name="@items.category_of_id-@items.category_id"
                                                                            type="checkbox"
-                                                                           id="@(itemss.category_of_id)categorylv3-@(itemss.category_id)" value="@itemss.category_id"/>
+                                                                           id="@(itemss.category_of_id)categorylv3-@(itemss.category_id)" value="@itemss.category_id" />
                                                                     <div class="state">
                                                                         <label></label>
                                                                     </div>
@@ -193,7 +193,7 @@
             });
             var formData = new FormData();
             formData.append('idReport', idReport);
-            formData.append('data', data.substring(0, data.length-1));
+            formData.append('data', data.substring(0, data.length - 1));
             swal({
                 title: 'Lưu biểu mẫu?',
                 text: 'Bạn có muốn lưu biểu mẫu?',
@@ -215,11 +215,19 @@
                                     swal('Thêm thành công', {
                                         icon: 'success',
                                     });
-                                } else {
+                                }
+                                else if (result == "Exist") {
+                                    swal('Form đã được sử dụng, không thể lưu', {
+                                        icon: 'info',
+                                    });
+                                }
+
+                                else {
                                     swal(result, {
                                         icon: 'error',
                                     });
                                 }
+
                             },
                             error: function (xhr) {
                                 swal(xhr.responseText, {
