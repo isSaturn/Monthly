@@ -4,14 +4,14 @@
     Layout = null;
 }
 <style>
-    
+
     .bg-img {
         background-position: center;
         background-size: cover;
         min-height: 100vh;
         position: relative;
         width: 100%;
-        background-image:url(../../assets/img/vlu/background.jpg)
+        background-image: url(../../assets/img/vlu/background.jpg)
     }
 
         .bg-img::after {
@@ -45,7 +45,6 @@
             padding: 0 60px;
             box-sizing: border-box;
         }
-
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +72,7 @@
         <div class="bg-img">
         </div>
         <div class="center">
-            <h2><img src="~/assets/img/vlu/logo2.png" alt=""><br> MONTHLY STATEMENT</h2>
+            <h2><img src="~/assets/img/vlu/LGVL.png" alt=""><br> MONTHLY STATEMENT</h2>
             <form method="post">
                 <div class="signup_link" style="margin: 5px 0; text-align: center; font-size: 16px; color: #666666">
                     Signup with mail VLU
@@ -81,7 +80,7 @@
             </form>
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </div>
-        
+
     </section>
 
     <!-- General JS Scripts -->
