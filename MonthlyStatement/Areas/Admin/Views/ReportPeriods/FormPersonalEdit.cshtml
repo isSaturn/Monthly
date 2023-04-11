@@ -215,11 +215,19 @@
                                     swal('Thêm thành công', {
                                         icon: 'success',
                                     });
-                                } else {
+                                }
+                                else if (result == "Exist") {
+                                    swal('Form đã được sử dụng, không thể lưu', {
+                                        icon: 'info',
+                                    });
+                                }
+
+                                else {
                                     swal(result, {
                                         icon: 'error',
                                     });
                                 }
+
                             },
                             error: function (xhr) {
                                 swal(xhr.responseText, {

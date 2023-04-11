@@ -198,6 +198,7 @@
     <Compile Include="Areas\Admin\Controllers\ListReportDepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportPersonalController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StaticController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacManagerController.cs" />
     <Compile Include="Areas\FacultyAreas\FacultyAreasAreaRegistration.cs" />
