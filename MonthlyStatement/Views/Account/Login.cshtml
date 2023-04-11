@@ -4,14 +4,14 @@
     Layout = null;
 }
 <style>
-    
+
     .bg-img {
         background-position: center;
         background-size: cover;
         min-height: 100vh;
         position: relative;
         width: 100%;
-        background-image:url(../../assets/img/vlu/background.jpg)
+        background-image: url(../../assets/img/vlu/background.jpg)
     }
 
         .bg-img::after {
@@ -45,7 +45,6 @@
             padding: 0 60px;
             box-sizing: border-box;
         }
-
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +80,7 @@
             </form>
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </div>
-        
+
     </section>
 
     <!-- General JS Scripts -->
