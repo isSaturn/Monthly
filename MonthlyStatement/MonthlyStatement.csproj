@@ -201,6 +201,7 @@
     <Compile Include="Areas\Admin\Controllers\StaticController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacManagerController.cs" />
+    <Compile Include="Areas\FacultyAreas\Controllers\FacReportController.cs" />
     <Compile Include="Areas\FacultyAreas\FacultyAreasAreaRegistration.cs" />
     <Compile Include="Areas\Personal\Controllers\CommentsPersonalController.cs" />
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
@@ -1174,6 +1175,12 @@
     <Content Include="Areas\FacultyAreas\Views\web.config" />
     <Content Include="Areas\FacultyAreas\Views\FacManager\Index.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\FacManager\FacMember.cshtml" />
+    <Content Include="Areas\Admin\Views\Statistical\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Notification\Index.cshtml" />
+    <Content Include="Areas\FacultyAreas\Views\FacReport\Index.cshtml" />
+    <Content Include="Areas\FacultyAreas\Views\FacReport\FacReportPerior.cshtml" />
+    <Content Include="Areas\FacultyAreas\Views\FacReport\FacManagerReportPerAndDep.cshtml" />
+    <Content Include="Areas\FacultyAreas\Views\FacReport\FacManagerReportPer.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -1181,8 +1188,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\Statistical\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Notification\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

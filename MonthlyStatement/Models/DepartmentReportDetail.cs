@@ -18,9 +18,7 @@ namespace MonthlyStatement.Models
         public int department_report_id { get; set; }
         public int form_department_report_detail_id { get; set; }
         public string department_report_content { get; set; }
-        public Nullable<int> comment_id { get; set; }
     
-        public virtual Comment Comment { get; set; }
         public virtual DepartmentReport DepartmentReport { get; set; }
         public virtual FormDepartmentReportDetail FormDepartmentReportDetail { get; set; }
     }

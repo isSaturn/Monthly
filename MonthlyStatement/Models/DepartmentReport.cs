@@ -17,6 +17,7 @@ namespace MonthlyStatement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DepartmentReport()
         {
+            this.Comments = new HashSet<Comment>();
             this.DepartmentReportDetails = new HashSet<DepartmentReportDetail>();
         }
     
@@ -29,6 +30,8 @@ namespace MonthlyStatement.Models
         public Nullable<System.DateTime> date_report { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual Comment Comment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DepartmentReportDetail> DepartmentReportDetails { get; set; }
