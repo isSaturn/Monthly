@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MonthlyStatement.Models.ReportPeriod>
+@using MonthlyStatement.Models
+
+@{
+    int i = 0;
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Quản lý kỳ báo cáo năm @Model.First().ReportYear.year</h4>
+
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-1">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="text-center">STT</th>
+                                        <th>Kỳ báo cáo</th>
+                                        <th>Ngày bắt đầu</th>
+                                        <th>Hạn báo cáo</th>
+                                        <th>Ngày kết thúc</th>
+                                        <th>Trạng thái</th>
+                                        <th class="text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+
+                                    {
+                                        i = i + 1;
+
+                                        <tr class="Search">
+                                            <td class="text-center">
+                                                @i
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("FacManagerReportPerAndDep", "FacReport", new {id = item.report_period_id })">@item.report_period_name</a>
+                                            </td>
+                                            <td>
+                                                @item.start_date.Value.ToString("dd/MM/yyyy")
+                                            </td>
+                                            <td>
+                                                @item.deadline_date.Value.ToString("dd/MM/yyyy")
+                                            </td>
+                                            <td>
+                                                @item.end_date.Value.ToString("dd/MM/yyyy")
+                                            </td>
+                                            <td>
+                                                @if (item.start_date <= DateTime.Now && item.deadline_date >= DateTime.Now)
+                                                {
+                                                    <div class="badge badge-success">Đang báo cáo</div>
+                                                }
+                                                else if (item.deadline_date <= DateTime.Now && item.end_date >= DateTime.Now)
+                                                {
+                                                    <div class="badge badge-warning">Trễ hạn báo cáo</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="badge badge-danger">Không được báo cáo</div>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="buttons">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "ReportPeriods", new { id = item.report_period_id })">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
