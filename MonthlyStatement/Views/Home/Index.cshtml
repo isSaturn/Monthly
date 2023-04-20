@@ -10,7 +10,20 @@
         </div>
     </div>
 </body>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
+
+    $(document).ready(function () {
+        $.ajax({
+            url: $('#requestUrl').val() + "Admin/Notification/SendMailAsync",
+            processData: false,
+            contentType: false,
+            dataType: "html",
+            type: "GET"
+        });
+    });
+
     var curDate = new Date();
 
     // Ngày hiện tại
