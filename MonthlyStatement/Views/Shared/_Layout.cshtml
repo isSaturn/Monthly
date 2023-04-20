@@ -77,7 +77,7 @@
                             </li>
                             <li class="dropdown">
                             <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
-                                <a href="#" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
+                                <a href="@Url.Action("Index", "Static", new { Area = "Personal" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
                             </li>
                         </ul>
                     }
@@ -92,7 +92,7 @@
                             </li>
                             <li class="dropdown">
                             <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
-                                <a href="#" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
+                                <a href="@Url.Action("Index", "Statical", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
                             </li>
                         </ul>
                     }
