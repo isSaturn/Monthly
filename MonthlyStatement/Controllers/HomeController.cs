@@ -1,10 +1,6 @@
 ﻿using MonthlyStatement.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 
 
 namespace MonthlyStatement.Controllers
@@ -16,6 +12,35 @@ namespace MonthlyStatement.Controllers
 
         public ActionResult Index()
         {
+            var id = User.Identity.Name;
+            if (Session["Faculty-exist"] == null)
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    Session["Faculty-exist"] = false;
+                }
+                else
+                {
+                    var khoa = db.Profiles.FirstOrDefault(p => p.email.ToLower().Trim().Equals(id.ToLower().Trim()));
+                    if (khoa == null)
+                    {
+                        Session["Faculty-exist"] = false;
+                    }
+                    else
+                    {
+                        int? fac = khoa.faculty_id;
+                        if (fac == null)
+
+                        {
+                            Session["Faculty-exist"] = false;
+                        }
+                        else
+                        {
+                            Session["Faculty-exist"] = true;
+                        }
+                    }
+                }
+            }
 
             return View();
         }

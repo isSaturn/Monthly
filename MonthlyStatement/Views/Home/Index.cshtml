@@ -1,4 +1,6 @@
-﻿<body data-col="2-columns" class=" 2-columns ">
+﻿
+
+<body data-col="2-columns" class=" 2-columns ">
     <!-- ////////////////////////////////////////////////////////////////////////////-->
     <div class="hero">
         <video autoplay loop muted play-inline class="back-video" style="position: fixed; min-height: 100%; min-width: 90%; right: 0; bottom: 0; z-index: -1">
@@ -10,6 +12,10 @@
         </div>
     </div>
 </body>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
 <script>
     var curDate = new Date();
 
@@ -37,4 +43,12 @@
 
     // Gán vào thẻ HTML
     document.getElementById('current-time').innerHTML = curTime + " " + current_day + " ,  " + curDay + "  " + setMonth + " " + curYear;
+
+    var checkfaculty = @Html.Raw(Json.Encode(Session["Faculty-exist"]));
+    if (checkfaculty == false) {
+        Swal.fire('Thông báo', 'Bạn chưa có khoa, cần liên hệ thư ký để thêm vào', 'info');
+    }
 </script>
+@{ 
+    Session["Faculty-exist"] = true;
+}
