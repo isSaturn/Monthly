@@ -109,6 +109,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult AttendenceList(int id)
         {
+            Session["add-user-faculty"] = db.Profiles.Where(p => p.faculty_id == null).ToList();
             var reportPeriods = db.Faculties.Find(id);
             return View(reportPeriods);
         }
