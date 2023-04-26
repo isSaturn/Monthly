@@ -21,8 +21,6 @@
                                     if (@Model.AspNetUser.AspNetRoles.Count() < 1)
                                     {
                                         <div class="text-muted mb-0">Chưa có vai trò</div>
-
-
                                     }
                                     else
                                     {
@@ -30,7 +28,6 @@
                                             @Model.AspNetUser.AspNetRoles.FirstOrDefault().Name
                                         </div>
                                     }
-
                                 }
                             </div>
                             <button data-toggle="modal" data-target="#editProfile" class="btn btn-primary">Chỉnh sửa</button>

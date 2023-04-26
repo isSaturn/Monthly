@@ -90,7 +90,7 @@ namespace MonthlyStatement.Controllers
                 if (currentUser.Roles.Count != 0)
                 {
                     //Add profile
-                    var pro = db.Profiles.FirstOrDefault(p => p.email.ToLower().Equals(user.Email.ToLower()));
+                    var pro = db.Profiles.FirstOrDefault(p => p.email.ToLower().Equals(user.UserName.ToLower()));
                     if (pro != null)
                     {
                         if (pro.account_id == null)
@@ -98,17 +98,16 @@ namespace MonthlyStatement.Controllers
                             var aspNetUser = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(user.Email.ToLower()));
 
                             pro.account_id = aspNetUser.Id;
+                            pro.email = aspNetUser.UserName;
+
                             db.Entry(pro).State = System.Data.Entity.EntityState.Modified;
 
                             db.SaveChanges();
                         }
+                        
 
                     }
 
-                    //var role = UserManager.GetRoles(currentUser.Id).FirstOrDefault();
-
-                    //Session["name_user"] = pro.user_name;
-                    //Session["role_user"] = role;
                     // Add role claim to user
                     ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
 
@@ -127,33 +126,33 @@ namespace MonthlyStatement.Controllers
             }
             else
             {
-                // Create new user
+
                 await UserManager.CreateAsync(user);
                 var aspNetRole = db.AspNetRoles.Find("6");
                 var aspNetUser = db.AspNetUsers.Find(user.Id);
                 aspNetRole.AspNetUsers.Add(aspNetUser);
-                Profile profile = new Profile();
-                profile.account_id = aspNetUser.Id;
-                db.Profiles.Add(profile);
+
                 //Add profile
-                var pro = db.Profiles.FirstOrDefault(p => p.email.ToLower().Equals(user.Email.ToLower()));
+                var pro = db.Profiles.FirstOrDefault(p => p.email.ToLower().Equals(user.UserName.ToLower()));
                 if (pro != null)
                 {
                     var aspNetUser1 = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(user.Email.ToLower()));
 
                     pro.account_id = aspNetUser1.Id;
+                    pro.email = aspNetUser1.UserName;
                     db.Entry(pro).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
+                else
+                {
+                    // Create new user
+                    Profile profile = new Profile();
+                    profile.account_id = aspNetUser.Id;
+                    profile.email = aspNetUser.UserName;
+                    db.Profiles.Add(profile);
+                }
                 db.SaveChanges();
-                //var role = UserManager.GetRoles(currentUser.Id).FirstOrDefault();
-
-                //Session["name_user"] = pro.user_name;
-                //Session["role_user"] = role;
             }
-
-
-
             return RedirectToAction("Index", "Home");
         }
 

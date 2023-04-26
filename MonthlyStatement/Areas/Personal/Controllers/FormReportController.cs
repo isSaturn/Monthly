@@ -60,6 +60,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                     }
 
                     pr.status = "Đã báo cáo";
+                    pr.date_report = DateTime.Now;
                     pr.account_id = accID;
                     db.PersonalReports.Add(pr);
                     db.SaveChanges();
@@ -159,6 +160,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                     }
 
                     pr.status = "Đã báo cáo";
+                    pr.date_report = DateTime.Now;
                     pr.account_id = accID;
                     db.PersonalReports.Add(pr);
                     db.SaveChanges();

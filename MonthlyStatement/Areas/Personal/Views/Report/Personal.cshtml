@@ -55,7 +55,7 @@
                                                 @item.ReportPeriod.report_period_name
                                             </td>
                                             <td>
-                                                Thêm cột ngày báo cáo
+                                               @String.Format("{0: dd/MM/yyy}", item.date_report)
                                             </td>
                                             <td>
                                                 @item.AspNetUser.AspNetRoles.First().Name

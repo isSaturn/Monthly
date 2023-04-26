@@ -105,7 +105,7 @@
           <Property Name="status" Type="nvarchar" MaxLength="50" />
           <Property Name="account_id" Type="nvarchar" MaxLength="128" />
           <Property Name="comment_id" Type="int" />
-          <Property Name="date_report" Type="datetime" />
+          <Property Name="date_report" Type="date" />
         </EntityType>
         <EntityType Name="Faculties">
           <Key>
@@ -178,7 +178,7 @@
           <Property Name="file_path" Type="varchar(max)" />
           <Property Name="status" Type="nvarchar" MaxLength="100" />
           <Property Name="account_id" Type="nvarchar" MaxLength="128" />
-          <Property Name="date_report" Type="datetime" />
+          <Property Name="date_report" Type="date" />
         </EntityType>
         <EntityType Name="Profiles">
           <Key>
@@ -799,7 +799,7 @@
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="comment_id" Type="Int32" />
-          <Property Name="date_report" Type="DateTime" Precision="3" />
+          <Property Name="date_report" Type="DateTime" Precision="0" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_DepartmentReport_AspNetUsers" FromRole="DepartmentReports" ToRole="AspNetUsers" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_DepartmentReports" FromRole="DepartmentReports" ToRole="Comments" />
           <NavigationProperty Name="Comment" Relationship="Self.FK_DepartmentReport_Comment" FromRole="DepartmentReports" ToRole="Comments" />
@@ -891,7 +891,7 @@
           <Property Name="file_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="date_report" Type="DateTime" Precision="3" />
+          <Property Name="date_report" Type="DateTime" Precision="0" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_PersonalReport_AspNetUsers" FromRole="PersonalReports" ToRole="AspNetUsers" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_PersonalReports" FromRole="PersonalReports" ToRole="Comments" />
           <NavigationProperty Name="PersonalReportDetails" Relationship="Self.FK_PersonalReportDetail_PersonalReport" FromRole="PersonalReports" ToRole="PersonalReportDetails" />
