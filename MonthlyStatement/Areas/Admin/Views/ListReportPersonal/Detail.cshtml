@@ -81,7 +81,7 @@
                                 <div class="card" style="background-color: #e9ecef">
                                     <div class="card-body">
                                         <div class="chat">
-                                            @foreach (var comment in models.Comments)
+                                            @foreach (var comment in models.Comments.Where(x => x.personal_report_id == idpersonalreport).ToList())
                                             {
                                                 <div class="chat-header clearfix">
                                                     <img alt="image" src="~/assets/img/user.png" class="rounded-circle img-fluid">
@@ -99,9 +99,9 @@
                                         </div>
                                         <hr />
                                         <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
-                                        @using (Html.BeginForm("PostComment", "Comments", FormMethod.Post))
+                                        @using (Html.BeginForm("PostCommentPersonal", "Comments", FormMethod.Post))
                                         {
-                                            <input type="hidden" name="" value="" />
+                                            <input type="hidden" name="id" value="@idpersonalreport" />
                                             <div class="form-group">
                                                 <textarea class="form-control" name="CommentText" style="height:200px !important"></textarea>
                                             </div>

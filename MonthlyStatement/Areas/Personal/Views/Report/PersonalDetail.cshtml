@@ -14,7 +14,6 @@
     var formPer = models.PersonalReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
     int per = formPer.First().personal_report_id;
 
-
 }
 
 <section class="section">
@@ -82,7 +81,7 @@
                                     <div class="card-body">
                                         
                                         <div class="chat">
-                                            @foreach (var comment in models.Comments)
+                                            @foreach (var comment in models.Comments.Where(x => x.personal_report_id == per).ToList())
                                             {
                                                 <div class="chat-header clearfix">
                                                     <img alt="image" src="~/assets/img/user.png" class="rounded-circle img-fluid">
@@ -102,7 +101,7 @@
                                         <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
                                         @using (Html.BeginForm("PostComment", "CommentsPersonal", FormMethod.Post))
                                         {
-                                            <input type="hidden" name="" value="" />
+                                            <input type="hidden" name="id" value="@per" />
                                             <div class="form-group">
                                                 <textarea class="form-control" name="CommentText" style="height:200px !important"></textarea>
                                             </div>
