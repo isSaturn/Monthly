@@ -1,13 +1,6 @@
 ﻿@{
     string avt = "";
-    if (Session["Avt"] != null)
-    {
-        avt = Session["Avt"].ToString();
-    }
-    else
-    {
-        avt = "~/assets/img/user.png";
-    }
+    avt = "~/assets/img/user.png";
 }
 
 <nav class="navbar navbar-expand-lg main-navbar sticky">
@@ -32,79 +25,51 @@
             </a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
                 <div class="dropdown-header">
-                    Notifications
-                    
-                </div>
-                <div class="dropdown-list-content dropdown-list-icons">
-                     <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-info text-white">
-                            <i class="far
-												fa-user"></i>
-                        </span> <span class="dropdown-item-desc">
-                            <b>Form</b> báo <b>
-                                cáo tháng 10
-                            </b> 
-                         <span class="time">
-                                5 Hours
-                                Ago
-                            </span>
-                        </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-success text-white">
-                            <i class="fas
-												fa-check"></i>
-                        </span> <span class="dropdown-item-desc">
-                            <b>Hoàn</b>thành báo cáo tháng 10 <b></b>  <span class="time">
-                                5
-                                Hours
-                                Ago
-                            </span>
-                        </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-danger text-white">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </span> <span class="dropdown-item-desc">
-                            Hết hạn làm báo cáo <span class="time">7 Hours Ago</span>
-                        </span>
-                    </a> <a href="#" class="dropdown-item">
-                        <span class="dropdown-item-icon bg-info text-white">
-                            <i class="fas
-												fa-bell"></i>
-                        </span> <span class="dropdown-item-desc">
-                            Làm báo cáo tháng 10 <span class="time">Yesterday</span>
-                        </span>
-                    </a>
+                    Thông báo
                 </div>
                 <div class="dropdown-footer text-center">
-                    <a href="~/Areas/Admin/Views/Nofication.html">View All <i class="fas fa-chevron-right"></i></a>
+                    <a href="">Xem tất cả<i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </li>
         <li class="dropdown">
             <a href="#" data-toggle="dropdown"
                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="@Url.Content(avt)" class="rounded-circle img-fluid" > <span class="d-sm-none d-lg-inline-block"></span>
+                <img alt="image" src="@Url.Content(avt)" class="rounded-circle img-fluid"> <span class="d-sm-none d-lg-inline-block"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
                 <a href="@Url.Action("Index", "Profile",new { Area = "" })" class="dropdown-item has-icon">
                     <i class="far fa-user"> </i>
-                    Profile
+                    Hồ sơ
                 </a>
                 @*<a href="timeline.html" class="dropdown-item has-icon">
-                        <i class="fas fa-bolt"></i>
-                        Activities
-                    </a>
-                    <a href="#" class="dropdown-item has-icon">
-                        <i class="fas fa-cog"></i>
-                        Settings
-                    </a>*@
+                    <i class="fas fa-bolt"></i>
+                    activities
+                </a>
+                <a href="#" class="dropdown-item has-icon">
+                    <i class="fas fa-cog"></i>
+                    settings
+                </a>*@
                 <div class="dropdown-divider"></div>
                 @using (@Html.BeginForm("SignOut", "Account", new { Area = "" }, FormMethod.Post, new { id = "logoutForm" }))
                 {
                     <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item has-icon text-danger"><i class="ft-power mr-2"></i><span>Đăng xuất</span></a>
                 }
             </div>
-        </li>
 
+        </li>
+        <li>
+            <div>
+                @User.Identity.Name
+            </div>
+            <div>
+                Vai trò:
+                @(User.IsInRole("Quản trị viên") ? "Quản trị viên" :
+                User.IsInRole("Ban phòng khoa" )? "Ban phòng khoa" :
+                User.IsInRole("Thư ký") ? "Thư ký" :
+                User.IsInRole("Bộ môn") ? "Bộ môn" :
+                User.IsInRole("Nhân viên - Giảng viên") ? "Nhân viên - Giảng viên" : "Chưa cấp quyền")
+            </div>
+        </li>
     </ul>
 </nav>

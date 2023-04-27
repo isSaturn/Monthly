@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MonthlyStatement.Models.DepartmentReport>
+﻿@model IEnumerable<MonthlyStatement.Models.PersonalReport>
 
 @{
     int i = 0;
@@ -12,7 +12,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Quản lý danh sách báo cáo bộ môn</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Quản lý danh sách báo cáo cá nhân</h4>
 
                     </div>
                     <div class="card-body">
@@ -45,7 +45,7 @@
                                                 @item.ReportPeriod.report_period_name
                                             </td>
                                             <td>
-                                                @String.Format("{0: dd/MM/yyy}", item.date_report)
+                                                Thêm cột ngày báo cáo
                                             </td>
                                             <td>
                                                 @item.AspNetUser.AspNetRoles.First().Name
@@ -56,7 +56,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("Detail","ListReportDepartment", new {id = item.department_report_id})">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("Detail","ListReportPersonal", new {id = item.personal_report_id})">
                                                         Xem
                                                     </a>
                                                 </div>
@@ -72,3 +72,4 @@
         </div>
     </div>
 </section>
+

@@ -1,14 +1,13 @@
 ﻿@model MonthlyStatement.Models.Faculty
-@using MonthlyStatement.Models
+
 
 @{
     int i = 0;
-    int j = 0;
 }
 @{
     ViewBag.Title = "AttendenceList";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var usernonfaculty = Session["add-user-faculty"] as IEnumerable<Profile>;
+
 }
 
 <section class="section">
@@ -18,7 +17,6 @@
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
                         <h3 class="text-white" style="font-size:1.75rem">Danh sách thành viên của khoa @Model.faculty_name</h3>
-                        <input hidden="hidden" value="@Model.faculty_id" id="faculty_id" />
                     </div>
                     <div class="card-body">
                         <div class="col-sm-12 buttons">
@@ -142,7 +140,7 @@
 </section>
 <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="formModal"
      aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="formModal">Thêm thành viên</h5>
@@ -150,130 +148,41 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
+            @using (Html.BeginForm("AddMember", "Faculty", FormMethod.Post, new { }))
+            {
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="table-themthanhvien">
-                            <thead>
-                                <tr role="row">
-                                    <th class="text-center">
-                                        STT
-                                    </th>
-                                    <th>
-                                        Email
-                                    </th>
-                                    <th>
-                                        Tên
-                                    </th>
-                                    <th>
-                                        Bộ môn
-                                    </th>
-                                    <th>
-                                        Vai trò
-                                    </th>
-                                    <th class="text-center">
-                                        Thao tác
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in usernonfaculty)
-
-                                {
-                                    
-                                    j = j + 1;
-                                    
-                                    <tr>
-                                        <td class="text-center">
-                                            @j
-                                        </td>
-                                        <td>
-                                            @item.email
-
-                                        </td>
-                                        <td>
-                                            @if (item.user_name == null)
-                                            {
-                                                <span>Chưa có tên</span>
-                                            }
-                                            else
-                                            {
-                                                @item.user_name
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.department == null)
-                                            {
-                                                <span>Chưa thêm bộ môn</span>
-                                            }
-                                            else
-                                            {
-                                                @item.department
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.AspNetUser == null)
-                                            {
-                                                <span>Chưa thêm vai trò</span>
-                                            }
-                                            else
-                                            {
-                                                if (item.AspNetUser.AspNetRoles.Count() < 1)
-                                                {
-                                                    <span>Chưa thêm vai trò</span>
-
-                                                }
-                                                else
-                                                {
-                                                    @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
-
-                                                }
-                                            }
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="buttons">
-                                                <a id="Themthanhvienvaokhoa-@item.profile_id" name="@item.profile_id" class="btn btn-icon btn-primary" data-original-title="Thêm">
-                                                    <i>+</i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    @*<form class="">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Nhập email" name="email" value="">
-                                </div>
+                    <form class="">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập email" name="email" value="">
                             </div>
-                            <div class="form-group">
-                                <label>Họ và tên</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Nhập họ và tên" name="name" value="">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Họ và tên</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập họ và tên" name="name" value="">
                             </div>
-                            <div class="form-group">
-                                <label>Bộ môn</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Nhập bộ môn" name="bomon" value="">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Bộ môn</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập bộ môn" name="bomon" value="">
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Vai trò</label>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label class="small mb-1">Vai trò</label>
                             </div>
+                        </div>
 
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Thêm thành viên</button>
-                                <button type="button" class="btn btn-secondary m-t-15" data-dismiss="modal">Đóng</button>
-                            </div>
-                        </form>*@
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Thêm thành viên</button>
+                            <button type="button" class="btn btn-secondary m-t-15" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>
                 </div>
-
+            }
         </div>
     </div>
 </div>
@@ -304,9 +213,7 @@
 </div>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
-
     $(document).ready(function () {
-        $('#table-themthanhvien').DataTable();
         var readURL = function (input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

@@ -42,7 +42,10 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // GET: Admin/Categories/Create
         public ActionResult Create()
         {
-            ViewBag.category_of_id = new SelectList(db.Categories, "category_id", "category_content");
+            Session["category-lv1"] = db.Categories.Where(c => c.category_lv == 1).ToList();
+            Session["category-lv2"] = db.Categories.Where(c => c.category_lv == 2).ToList();
+
+
             return View(new Category());
         }
 
@@ -50,43 +53,40 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "category_id,category_of_id,category_content")] Category category)
+        public ActionResult Create(string content)
         {
-            if (ModelState.IsValid)
+            if (content.Split('-').Count() == 1) 
             {
+                Category category = new Category();
+                category.category_lv = 1;
+                category.category_content= content;
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.category_of_id = new SelectList(db.Categories, "category_id", "category_content", category.category_of_id);
-            return View(category);
-        }
-        [HttpGet]
-
-        // GET: Admin/Categories/Create
-        public ActionResult Create1()
-        {
-            ViewBag.category_of_id = new SelectList(db.Categories.Where(c => c.category_of_id == null).ToList(), "category_id", "category_content");
-            return View(new Category());
-        }
-
-        // POST: Admin/Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        public ActionResult Create1([Bind(Include = "category_id,category_of_id,category_content")] Category category)
-        {
-            if (ModelState.IsValid)
+                
+            }else if (content.Split('-').Count() == 2)
             {
+                Category category = new Category();
+                category.category_lv = 2;
+                category.category_of_id = Convert.ToInt32(content.Split('-')[0]);
+                category.category_content = content.Split('-')[1];
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+            }else if (content.Split('-').Count() == 3) 
+            {
+                Category category = new Category();
+                category.category_lv = 3;
+                category.category_of_id = Convert.ToInt32(content.Split('-')[1]);
+                category.category_content = content.Split('-')[2];
+                db.Categories.Add(category);
+                db.SaveChanges();
             }
-
-            ViewBag.category_of_id = new SelectList(db.Categories, "category_id", "category_content", category.category_of_id);
-            return View(category);
+            else
+            {
+                return Content("error");
+            }
+                return Content("success");
         }
+       
         [HttpGet]
         // GET: Admin/Categories/Edit/5
         public ActionResult Edit(int? id)

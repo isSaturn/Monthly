@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.Security.Claims;
+using Microsoft.Owin;
+using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -25,7 +27,13 @@ namespace MonthlyStatement
 
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                CookieSameSite = SameSiteMode.None,
+                CookieHttpOnly = true,
+                CookieSecure = CookieSecureOption.Always,
+                CookieManager = new SystemWebCookieManager()
+            });
 
             app.UseOpenIdConnectAuthentication(
                 new OpenIdConnectAuthenticationOptions

@@ -9,6 +9,8 @@
 
     CP25Team04Entities models = new CP25Team04Entities();
     int idperiod = Model.report_period_id;
+    int idpersonalreport = Model.personal_report_id;
+
 }
 
 <section class="section">
@@ -78,41 +80,37 @@
                             <div class="col-12">
                                 <div class="card" style="background-color: #e9ecef">
                                     <div class="card-body">
+                                        <div class="chat">
+                                            @foreach (var comment in models.Comments.Where(x => x.personal_report_id == idpersonalreport).ToList())
+                                            {
+                                                <div class="chat-header clearfix">
+                                                    <img alt="image" src="~/assets/img/user.png" class="rounded-circle img-fluid">
+                                                    <div class="chat-about">
+                                                        <div class="chat-time form-inline">
+                                                            <div class="chat-with" style="font-style:oblique">@models.AspNetUsers.FirstOrDefault(n => n.Id.Equals(comment.account_id)).Email</div>
+                                                            &emsp;
+                                                            @comment.comment_date
+                                                        </div>
+                                                        <div class="chat-text">@comment.comment_content</div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <hr />
                                         <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
-                                        <form>
-                                            <input type="hidden" name="" value="" />
+                                        @using (Html.BeginForm("PostCommentPersonal", "Comments", FormMethod.Post))
+                                        {
+                                            <input type="hidden" name="id" value="@idpersonalreport" />
                                             <div class="form-group">
-                                                <textarea class="form-control" style="height:200px !important"></textarea>
+                                                <textarea class="form-control" name="CommentText" style="height:200px !important"></textarea>
                                             </div>
                                             <div class="text-right mt-3">
-                                                <button class="btn btn-primary" type="submit">Gửi</button>
+                                                <button class="btn btn-primary" type="submit">
+                                                    Gửi
+                                                </button>
                                             </div>
-                                        </form>
-                                        <hr />
-                                        <div class="chat">
-                                            <div class="chat-header clearfix">
-                                                <img src="~/assets/img/users/user-1.png" alt="avatar">
-                                                <div class="chat-about">
-                                                    <div class="chat-time form-inline">
-                                                        <div class="chat-with" style="font-style:oblique">ADMIN</div>
-                                                        &emsp;
-                                                        -- 10:59 --
-                                                    </div>
-                                                    <div class="chat-text">Cần bổ sung báo cáo</div>
-                                                </div>
-                                            </div>
-                                            <div class="chat-header clearfix">
-                                                <img src="~/assets/img/users/user-2.png" alt="avatar">
-                                                <div class="chat-about">
-                                                    <div class="chat-time form-inline">
-                                                        <div class="chat-with" style="font-style:oblique">STAFF</div>
-                                                        &emsp;
-                                                        -- 11:20 --
-                                                    </div>
-                                                    <div class="chat-text">Mình sẽ bổ sung</div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
