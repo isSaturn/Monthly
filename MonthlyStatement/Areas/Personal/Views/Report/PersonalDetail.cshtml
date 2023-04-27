@@ -99,7 +99,7 @@
                                         </div>
                                         <hr />
                                         <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
-                                        @using (Html.BeginForm("PostComment", "CommentsPersonal", FormMethod.Post))
+                                        @using (Html.BeginForm("PostCommentAsync", "CommentsPersonal", FormMethod.Post))
                                         {
                                             <input type="hidden" name="id" value="@per" />
                                             <div class="form-group">

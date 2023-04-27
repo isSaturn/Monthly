@@ -73,10 +73,10 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             c.comment_date = DateTime.Now;
             c.account_id = userId;
             c.personal_report_id = id;
-            db.Comments.Add(c);
-            db.SaveChanges();
+           /* db.Comments.Add(c);
+            db.SaveChanges();*/
 
-            
+
             await UserManager.SendEmailAsync(mail,
                            "Thông báo bình luận từ " + userId,
                            "Nội dung: " + c.comment_content);
