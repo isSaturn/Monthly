@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace MonthlyStatement.Areas.Personal.Controllers
 {
-    [Authorize(Roles = "Nhân viên - Giảng viên")]
+    [Authorize(Roles = "Giảng viên")]
     public class FormReportController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();
