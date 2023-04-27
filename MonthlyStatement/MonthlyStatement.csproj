@@ -201,6 +201,7 @@
     <Compile Include="Areas\Admin\Controllers\StaticController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManager.cs" />
+    <Compile Include="Areas\Department\DepartmentAreaRegistration.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacManagerController.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacReportController.cs" />
     <Compile Include="Areas\FacultyAreas\FacultyAreasAreaRegistration.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
     <Compile Include="Areas\Personal\Controllers\ReportController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
+    <Compile Include="Areas\Staff\StaffAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -1189,6 +1191,8 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Department\Views\web.config" />
+    <Content Include="Areas\Staff\Views\web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1221,11 +1225,17 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Comments\" />
     <Folder Include="Areas\Admin\Views\IdConfig\" />
+    <Folder Include="Areas\Department\Controllers\" />
+    <Folder Include="Areas\Department\Data\" />
+    <Folder Include="Areas\Department\Views\Shared\" />
     <Folder Include="Areas\FacultyAreas\Data\" />
     <Folder Include="Areas\FacultyAreas\Views\Shared\" />
     <Folder Include="Areas\Personal\Data\" />
     <Folder Include="Areas\Personal\Views\CommentsPersonal\" />
     <Folder Include="Areas\Personal\Views\Comments\" />
+    <Folder Include="Areas\Staff\Controllers\" />
+    <Folder Include="Areas\Staff\Data\" />
+    <Folder Include="Areas\Staff\Views\Shared\" />
     <Folder Include="assets\FileImport\" />
     <Folder Include="assets\FileMinhChung\" />
     <Folder Include="assets\user\avatar\" />

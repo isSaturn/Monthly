@@ -14,6 +14,7 @@ using MonthlyStatement.Models;
 
 namespace MonthlyStatement.Areas.Personal.Controllers
 {
+    [Authorize(Roles = "Giảng viên")]
     public class CommentsPersonalController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();
