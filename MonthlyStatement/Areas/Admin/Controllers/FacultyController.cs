@@ -114,9 +114,15 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View(reportPeriods);
         }
         [HttpPost]
-        public ActionResult AddUser(int id)
+        public ActionResult AddUser(int id, int khoa)
         {
-            return View();
+            var user = db.Profiles.Find(id);
+            user.faculty_id = khoa;
+
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Content("Success");
         }
         [HttpPost]
         public ActionResult ImportUser(HttpPostedFileBase lstUser)
@@ -291,5 +297,19 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return Content("DanhSach");
         }
+
+        public ActionResult DeleteFaculty(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                var prof = db.Profiles.FirstOrDefault(t => t.account_id.Equals(id));
+                prof.faculty_id = null;
+                db.Entry(prof).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+
+        }
+
     }
 }
