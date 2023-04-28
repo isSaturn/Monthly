@@ -1,0 +1,129 @@
+﻿@model IEnumerable<MonthlyStatement.Models.ReportYear>
+
+@{
+    ViewBag.Title = "ListReportYear";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-header bg-primary" style="height:100px">
+                            <h4 class="text-white" style="font-size:1.75rem">Quản lý các năm báo cáo</h4>
+                        </div>
+                    </div>
+                    @*@if (Convert.ToBoolean(Session["ReportYear-Check"]) == true)
+                        {
+                            <div class="form-group">
+                                <div class="col-sm-12 buttons">
+                                    <button class="btn btn-primary btn-round" id="add_report_year" style="color:white"><i class="fa fa-plus"></i>Tạo năm báo cáo</button>
+                                </div>
+                            </div>
+                        }*@
+                    <div class="row">
+                        <div hidden="hidden" id="appendata"></div>
+
+                        @foreach (var item in Model)
+                        {
+                            if (item.year <= DateTime.Now.Year)
+                            {
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <a class="card card-success" href="@Url.Action("ListReportPeriod","FormStaffReport", new {id = item.report_year_id})">
+                                        <div class="card-header">
+                                            <h4>Năm @item.year</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>Các kỳ báo cáo năm @item.year</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-12 col-md-6 col-lg-3" style="pointer-events:none; opacity:0.4">
+                                    <a class="card card-secondary" href="#">
+                                        <div class="card-header">
+                                            <h4>Năm @item.year</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>Các kỳ báo cáo năm @item.year</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function Contains(text_one, text_two) {
+            if (text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#Search").keyup(function () {
+            var searchText = $("#Search").val().toLowerCase();
+            $(".Search").each(function () {
+                if (!Contains($(this).text().toLowerCase(), searchText)) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        });
+        $("#add_report_year").click(function () {
+            swal({
+                title: 'Thêm báo cáo?',
+                text: 'Bạn có muốn thêm báo cáo của năm nay không?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willAdd) => {
+                    if (willAdd) {
+                        $.ajax({
+                            type: "POST",
+                            traditional: true,
+                            async: false,
+                            cache: false,
+                            url: $('#requestUrl').val() + 'YearReport/Create',
+                            context: document.body,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    $("#appendate").replaceWith("");
+                                    $("#add_report_year").replaceWith("");
+                                    swal('Thêm thành công', {
+                                        icon: 'success',
+                                    });
+                                } else {
+                                    swal(result, {
+                                        icon: 'error',
+                                    });
+                                }
+                            },
+                            error: function (xhr) {
+                                swal(xhr.responseText, {
+                                    icon: 'error',
+                                });
+                                //debugger;
+                                console.log(xhr.responseText);
+                                alert("Error has occurred..");
+                            }
+                        });
+
+                    }
+                });
+        });
+    });
+
+</script>

@@ -209,6 +209,9 @@
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
     <Compile Include="Areas\Personal\Controllers\ReportController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
+    <Compile Include="Areas\Staff\Controllers\CommentsStaffController.cs" />
+    <Compile Include="Areas\Staff\Controllers\FormStaffReportController.cs" />
+    <Compile Include="Areas\Staff\Controllers\StaffReportController.cs" />
     <Compile Include="Areas\Staff\StaffAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -261,6 +264,12 @@
     <Compile Include="Models\FormPersonalReportDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FormStaffReport.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormStaffReportDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Model1.Context.cs">
@@ -294,6 +303,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReportYear.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StaffReport.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StaffReportDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
@@ -1193,6 +1208,11 @@
     </Content>
     <Content Include="Areas\Department\Views\web.config" />
     <Content Include="Areas\Staff\Views\web.config" />
+    <Content Include="Areas\Staff\Views\FormStaffReport\Index.cshtml" />
+    <Content Include="Areas\Staff\Views\FormStaffReport\ListReportPeriod.cshtml" />
+    <Content Include="Areas\Staff\Views\FormStaffReport\ListReportYear.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffReport\Staff.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffReport\StaffDetail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1223,18 +1243,14 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Comments\" />
-    <Folder Include="Areas\Admin\Views\IdConfig\" />
     <Folder Include="Areas\Department\Controllers\" />
     <Folder Include="Areas\Department\Data\" />
     <Folder Include="Areas\Department\Views\Shared\" />
     <Folder Include="Areas\FacultyAreas\Data\" />
     <Folder Include="Areas\FacultyAreas\Views\Shared\" />
     <Folder Include="Areas\Personal\Data\" />
-    <Folder Include="Areas\Personal\Views\CommentsPersonal\" />
-    <Folder Include="Areas\Personal\Views\Comments\" />
-    <Folder Include="Areas\Staff\Controllers\" />
     <Folder Include="Areas\Staff\Data\" />
+    <Folder Include="Areas\Staff\Views\CommentsStaff\" />
     <Folder Include="Areas\Staff\Views\Shared\" />
     <Folder Include="assets\FileImport\" />
     <Folder Include="assets\FileMinhChung\" />

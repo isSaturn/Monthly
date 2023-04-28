@@ -1,24 +1,34 @@
-﻿@model IEnumerable<MonthlyStatement.Models.PersonalReport>
-
+﻿@model IEnumerable<MonthlyStatement.Models.StaffReport>
 @{
     int i = 0;
-
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Staff";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <section class="section">
     <div class="section-body">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Quản lý danh sách báo cáo cá nhân</h4>
-
+                        <h4 class="text-white" style="font-size:1.75rem">Danh sách báo cáo</h4>
+                        <div class="card-header-form">
+                            <form>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="Search" placeholder="Tìm kiếm" aria-label="Search" data-width="200" style="width: 200px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="card-body">
+                </div>
 
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="table-1">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info">
                                 <thead>
                                     <tr role="row">
                                         <th class="text-center">STT</th>
@@ -27,7 +37,7 @@
                                         <th>Ngày báo cáo</th>
                                         <th>Vai trò</th>
                                         <th>Trạng thái</th>
-                                        <th class="text-center">Thao tác</th>
+                                        <th class="text-center"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -50,29 +60,12 @@
                                             <td>
                                                 @item.AspNetUser.AspNetRoles.First().Name
                                             </td>
-
                                             <td>
-                                                @if (item.status.Count() < 1)
-                                                {
-                                                    <div class="badge badge badge-shadow">Chưa báo cáo</div>
-
-                                                }
-                                                else if (item.status.Equals("Đã báo cáo"))
-                                                {
-                                                    <div class="badge badge badge-success">Đã báo cáo</div>
-                                                }
-                                                else if (item.status.Equals("Trễ báo cáo"))
-                                                {
-                                                    <div class="badge badge badge-warning">Trễ báo cáo</div>
-                                                }
-                                                else if (item.status.Equals("Không báo cáo"))
-                                                {
-                                                    <div class="badge badge badge-danger">Không báo cáo</div>
-                                                }
+                                                <div class="badge badge-success">@item.status</div>
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("Detail","ListReportPersonal", new {id = item.personal_report_id})">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("StaffDetail","Report", new {id = item.staff_report_id})">
                                                         Xem
                                                     </a>
                                                 </div>
@@ -88,4 +81,23 @@
         </div>
     </div>
 </section>
-
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function Contains(text_one, text_two) {
+            if (text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#Search").keyup(function () {
+            var searchText = $("#Search").val().toLowerCase();
+            $(".Search").each(function () {
+                if (!Contains($(this).text().toLowerCase(), searchText)) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>

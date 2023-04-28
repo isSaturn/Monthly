@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -85,6 +85,7 @@
           <Property Name="account_id" Type="nvarchar" MaxLength="128" />
           <Property Name="personal_report_id" Type="int" />
           <Property Name="department_report_id" Type="int" />
+          <Property Name="staff_report_id" Type="int" />
         </EntityType>
         <EntityType Name="DepartmentReportDetails">
           <Key>
@@ -150,6 +151,24 @@
           <Property Name="form_personal_report_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="report_period_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="FormStaffReportDetails">
+          <Key>
+            <PropertyRef Name="form_staff_report_detail_id" />
+          </Key>
+          <Property Name="form_staff_report_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="form_staff_report_id" Type="int" Nullable="false" />
+          <Property Name="row" Type="int" />
+          <Property Name="col" Type="int" />
+          <Property Name="status" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="FormStaffReports">
+          <Key>
+            <PropertyRef Name="form_staff_report_id" />
+          </Key>
+          <Property Name="form_staff_report_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="report_period_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Notifications">
           <Key>
             <PropertyRef Name="notification_id" />
@@ -210,6 +229,26 @@
           </Key>
           <Property Name="report_year_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="year" Type="int" />
+        </EntityType>
+        <EntityType Name="StaffReportDetails">
+          <Key>
+            <PropertyRef Name="staff_report_detail_id" />
+          </Key>
+          <Property Name="staff_report_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="staff_report_id" Type="int" Nullable="false" />
+          <Property Name="form_staff_report_detail_id" Type="int" Nullable="false" />
+          <Property Name="staff_report_content" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="StaffReports">
+          <Key>
+            <PropertyRef Name="staff_report_id" />
+          </Key>
+          <Property Name="staff_report_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="report_period_id" Type="int" Nullable="false" />
+          <Property Name="file_path" Type="varchar(max)" />
+          <Property Name="status" Type="nvarchar" MaxLength="100" />
+          <Property Name="account_id" Type="nvarchar" MaxLength="128" />
+          <Property Name="date_report" Type="date" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -290,6 +329,18 @@
             </Principal>
             <Dependent Role="Comments">
               <PropertyRef Name="personal_report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_StaffReports">
+          <End Role="StaffReports" Type="Self.StaffReports" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffReports">
+              <PropertyRef Name="staff_report_id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="staff_report_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -429,6 +480,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FormStaffReportDetails_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="FormStaffReportDetails" Type="Self.FormStaffReportDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="FormStaffReportDetails">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormStaffReportDetails_FormStaffReports">
+          <End Role="FormStaffReports" Type="Self.FormStaffReports" Multiplicity="1" />
+          <End Role="FormStaffReportDetails" Type="Self.FormStaffReportDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormStaffReports">
+              <PropertyRef Name="form_staff_report_id" />
+            </Principal>
+            <Dependent Role="FormStaffReportDetails">
+              <PropertyRef Name="form_staff_report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormStaffReports_ReportPeriods">
+          <End Role="ReportPeriods" Type="Self.ReportPeriods" Multiplicity="1" />
+          <End Role="FormStaffReports" Type="Self.FormStaffReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportPeriods">
+              <PropertyRef Name="report_period_id" />
+            </Principal>
+            <Dependent Role="FormStaffReports">
+              <PropertyRef Name="report_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Notification_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
@@ -525,6 +612,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StaffReportDetails_FormStaffReportDetails">
+          <End Role="FormStaffReportDetails" Type="Self.FormStaffReportDetails" Multiplicity="1" />
+          <End Role="StaffReportDetails" Type="Self.StaffReportDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormStaffReportDetails">
+              <PropertyRef Name="form_staff_report_detail_id" />
+            </Principal>
+            <Dependent Role="StaffReportDetails">
+              <PropertyRef Name="form_staff_report_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StaffReportDetails_StaffReports">
+          <End Role="StaffReports" Type="Self.StaffReports" Multiplicity="1" />
+          <End Role="StaffReportDetails" Type="Self.StaffReportDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffReports">
+              <PropertyRef Name="staff_report_id" />
+            </Principal>
+            <Dependent Role="StaffReportDetails">
+              <PropertyRef Name="staff_report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StaffReports_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="StaffReports" Type="Self.StaffReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StaffReports">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StaffReports_ReportPeriods">
+          <End Role="ReportPeriods" Type="Self.ReportPeriods" Multiplicity="1" />
+          <End Role="StaffReports" Type="Self.StaffReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportPeriods">
+              <PropertyRef Name="report_period_id" />
+            </Principal>
+            <Dependent Role="StaffReports">
+              <PropertyRef Name="report_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Table1_FormPersonalReport">
           <End Role="FormPersonalReports" Type="Self.FormPersonalReports" Multiplicity="1" />
           <End Role="FormPersonalReportDetails" Type="Self.FormPersonalReportDetails" Multiplicity="*" />
@@ -565,12 +700,16 @@
           <EntitySet Name="FormDepartmentReports" EntityType="Self.FormDepartmentReports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormPersonalReportDetails" EntityType="Self.FormPersonalReportDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormPersonalReports" EntityType="Self.FormPersonalReports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormStaffReportDetails" EntityType="Self.FormStaffReportDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormStaffReports" EntityType="Self.FormStaffReports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonalReportDetails" EntityType="Self.PersonalReportDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonalReports" EntityType="Self.PersonalReports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportPeriods" EntityType="Self.ReportPeriods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportYears" EntityType="Self.ReportYears" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffReportDetails" EntityType="Self.StaffReportDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffReports" EntityType="Self.StaffReports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="Self.FK_AspNetUserRoles_AspNetRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -594,6 +733,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Comments_PersonalReports" Association="Self.FK_Comments_PersonalReports">
             <End Role="PersonalReports" EntitySet="PersonalReports" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_StaffReports" Association="Self.FK_Comments_StaffReports">
+            <End Role="StaffReports" EntitySet="StaffReports" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -640,6 +783,18 @@
             <End Role="ReportPeriods" EntitySet="ReportPeriods" />
             <End Role="FormPersonalReports" EntitySet="FormPersonalReports" />
           </AssociationSet>
+          <AssociationSet Name="FK_FormStaffReportDetails_Categories" Association="Self.FK_FormStaffReportDetails_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="FormStaffReportDetails" EntitySet="FormStaffReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormStaffReportDetails_FormStaffReports" Association="Self.FK_FormStaffReportDetails_FormStaffReports">
+            <End Role="FormStaffReports" EntitySet="FormStaffReports" />
+            <End Role="FormStaffReportDetails" EntitySet="FormStaffReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormStaffReports_ReportPeriods" Association="Self.FK_FormStaffReports_ReportPeriods">
+            <End Role="ReportPeriods" EntitySet="ReportPeriods" />
+            <End Role="FormStaffReports" EntitySet="FormStaffReports" />
+          </AssociationSet>
           <AssociationSet Name="FK_Notification_AspNetUsers" Association="Self.FK_Notification_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Notifications" EntitySet="Notifications" />
@@ -672,6 +827,22 @@
             <End Role="ReportYears" EntitySet="ReportYears" />
             <End Role="ReportPeriods" EntitySet="ReportPeriods" />
           </AssociationSet>
+          <AssociationSet Name="FK_StaffReportDetails_FormStaffReportDetails" Association="Self.FK_StaffReportDetails_FormStaffReportDetails">
+            <End Role="FormStaffReportDetails" EntitySet="FormStaffReportDetails" />
+            <End Role="StaffReportDetails" EntitySet="StaffReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffReportDetails_StaffReports" Association="Self.FK_StaffReportDetails_StaffReports">
+            <End Role="StaffReports" EntitySet="StaffReports" />
+            <End Role="StaffReportDetails" EntitySet="StaffReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffReports_AspNetUsers" Association="Self.FK_StaffReports_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="StaffReports" EntitySet="StaffReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffReports_ReportPeriods" Association="Self.FK_StaffReports_ReportPeriods">
+            <End Role="ReportPeriods" EntitySet="ReportPeriods" />
+            <End Role="StaffReports" EntitySet="StaffReports" />
+          </AssociationSet>
           <AssociationSet Name="FK_Table1_FormPersonalReport" Association="Self.FK_Table1_FormPersonalReport">
             <End Role="FormPersonalReports" EntitySet="FormPersonalReports" />
             <End Role="FormPersonalReportDetails" EntitySet="FormPersonalReportDetails" />
@@ -681,8 +852,7 @@
             <End Role="FormPersonalReportDetails" EntitySet="FormPersonalReportDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CP25Team04Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -739,6 +909,7 @@
           <NavigationProperty Name="PersonalReports" Relationship="Self.FK_PersonalReport_AspNetUsers" FromRole="AspNetUsers" ToRole="PersonalReports" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_AspNetUsers" FromRole="AspNetUsers" ToRole="Profiles" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="StaffReports" Relationship="CP25Team04Model.FK_StaffReports_AspNetUsers" FromRole="AspNetUser" ToRole="StaffReport" />
         </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -762,6 +933,7 @@
           <NavigationProperty Name="Category1" Relationship="Self.FK_Category_Category" FromRole="Categories1" ToRole="Categories" />
           <NavigationProperty Name="FormDepartmentReportDetails" Relationship="Self.FK_FormDepartmentReportDetail_Category" FromRole="Categories" ToRole="FormDepartmentReportDetails" />
           <NavigationProperty Name="FormPersonalReportDetails" Relationship="Self.FK_Table1_Table11" FromRole="Categories" ToRole="FormPersonalReportDetails" />
+          <NavigationProperty Name="FormStaffReportDetails" Relationship="CP25Team04Model.FK_FormStaffReportDetails_Categories" FromRole="Category" ToRole="FormStaffReportDetail" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -777,6 +949,8 @@
           <NavigationProperty Name="DepartmentReport" Relationship="Self.FK_Comments_DepartmentReports" FromRole="Comments" ToRole="DepartmentReports" />
           <NavigationProperty Name="PersonalReport" Relationship="Self.FK_Comments_PersonalReports" FromRole="Comments" ToRole="PersonalReports" />
           <NavigationProperty Name="DepartmentReports" Relationship="Self.FK_DepartmentReport_Comment" FromRole="Comments" ToRole="DepartmentReports" />
+          <Property Name="staff_report_id" Type="Int32" />
+          <NavigationProperty Name="StaffReport" Relationship="CP25Team04Model.FK_Comments_StaffReports" FromRole="Comment" ToRole="StaffReport" />
         </EntityType>
         <EntityType Name="DepartmentReportDetail">
           <Key>
@@ -927,6 +1101,8 @@
           <NavigationProperty Name="FormPersonalReports" Relationship="Self.FK_FormPersonalReport_ReportPeriod" FromRole="ReportPeriods" ToRole="FormPersonalReports" />
           <NavigationProperty Name="PersonalReports" Relationship="Self.FK_PersonalReport_ReportPeriod" FromRole="ReportPeriods" ToRole="PersonalReports" />
           <NavigationProperty Name="ReportYear" Relationship="Self.FK_ReportPeriod_ReportYear" FromRole="ReportPeriods" ToRole="ReportYears" />
+          <NavigationProperty Name="FormStaffReports" Relationship="CP25Team04Model.FK_FormStaffReports_ReportPeriods" FromRole="ReportPeriod" ToRole="FormStaffReport" />
+          <NavigationProperty Name="StaffReports" Relationship="CP25Team04Model.FK_StaffReports_ReportPeriods" FromRole="ReportPeriod" ToRole="StaffReport" />
         </EntityType>
         <EntityType Name="ReportYear">
           <Key>
@@ -1380,7 +1556,188 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="FormStaffReportDetails" EntityType="CP25Team04Model.FormStaffReportDetail" />
+          <EntitySet Name="FormStaffReports" EntityType="CP25Team04Model.FormStaffReport" />
+          <EntitySet Name="StaffReportDetails" EntityType="CP25Team04Model.StaffReportDetail" />
+          <EntitySet Name="StaffReports" EntityType="CP25Team04Model.StaffReport" />
+          <AssociationSet Name="FK_StaffReports_AspNetUsers" Association="CP25Team04Model.FK_StaffReports_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="StaffReport" EntitySet="StaffReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_StaffReports" Association="CP25Team04Model.FK_Comments_StaffReports">
+            <End Role="StaffReport" EntitySet="StaffReports" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormStaffReportDetails_FormStaffReports" Association="CP25Team04Model.FK_FormStaffReportDetails_FormStaffReports">
+            <End Role="FormStaffReport" EntitySet="FormStaffReports" />
+            <End Role="FormStaffReportDetail" EntitySet="FormStaffReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffReportDetails_FormStaffReportDetails" Association="CP25Team04Model.FK_StaffReportDetails_FormStaffReportDetails">
+            <End Role="FormStaffReportDetail" EntitySet="FormStaffReportDetails" />
+            <End Role="StaffReportDetail" EntitySet="StaffReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormStaffReports_ReportPeriods" Association="CP25Team04Model.FK_FormStaffReports_ReportPeriods">
+            <End Role="ReportPeriod" EntitySet="ReportPeriods" />
+            <End Role="FormStaffReport" EntitySet="FormStaffReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffReports_ReportPeriods" Association="CP25Team04Model.FK_StaffReports_ReportPeriods">
+            <End Role="ReportPeriod" EntitySet="ReportPeriods" />
+            <End Role="StaffReport" EntitySet="StaffReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffReportDetails_StaffReports" Association="CP25Team04Model.FK_StaffReportDetails_StaffReports">
+            <End Role="StaffReport" EntitySet="StaffReports" />
+            <End Role="StaffReportDetail" EntitySet="StaffReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormStaffReportDetails_Categories" Association="CP25Team04Model.FK_FormStaffReportDetails_Categories">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="FormStaffReportDetail" EntitySet="FormStaffReportDetails" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="FormStaffReportDetail">
+          <Key>
+            <PropertyRef Name="form_staff_report_detail_id" />
+          </Key>
+          <Property Name="form_staff_report_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="form_staff_report_id" Type="Int32" Nullable="false" />
+          <Property Name="row" Type="Int32" />
+          <Property Name="col" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FormStaffReport" Relationship="CP25Team04Model.FK_FormStaffReportDetails_FormStaffReports" FromRole="FormStaffReportDetail" ToRole="FormStaffReport" />
+          <NavigationProperty Name="StaffReportDetails" Relationship="CP25Team04Model.FK_StaffReportDetails_FormStaffReportDetails" FromRole="FormStaffReportDetail" ToRole="StaffReportDetail" />
+          <NavigationProperty Name="Category" Relationship="CP25Team04Model.FK_FormStaffReportDetails_Categories" FromRole="FormStaffReportDetail" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="FormStaffReport">
+          <Key>
+            <PropertyRef Name="form_staff_report_id" />
+          </Key>
+          <Property Name="form_staff_report_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="report_period_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FormStaffReportDetails" Relationship="CP25Team04Model.FK_FormStaffReportDetails_FormStaffReports" FromRole="FormStaffReport" ToRole="FormStaffReportDetail" />
+          <NavigationProperty Name="ReportPeriod" Relationship="CP25Team04Model.FK_FormStaffReports_ReportPeriods" FromRole="FormStaffReport" ToRole="ReportPeriod" />
+        </EntityType>
+        <EntityType Name="StaffReportDetail">
+          <Key>
+            <PropertyRef Name="staff_report_detail_id" />
+          </Key>
+          <Property Name="staff_report_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="staff_report_id" Type="Int32" Nullable="false" />
+          <Property Name="form_staff_report_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="staff_report_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FormStaffReportDetail" Relationship="CP25Team04Model.FK_StaffReportDetails_FormStaffReportDetails" FromRole="StaffReportDetail" ToRole="FormStaffReportDetail" />
+          <NavigationProperty Name="StaffReport" Relationship="CP25Team04Model.FK_StaffReportDetails_StaffReports" FromRole="StaffReportDetail" ToRole="StaffReport" />
+        </EntityType>
+        <EntityType Name="StaffReport">
+          <Key>
+            <PropertyRef Name="staff_report_id" />
+          </Key>
+          <Property Name="staff_report_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="report_period_id" Type="Int32" Nullable="false" />
+          <Property Name="file_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="date_report" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="AspNetUser" Relationship="CP25Team04Model.FK_StaffReports_AspNetUsers" FromRole="StaffReport" ToRole="AspNetUser" />
+          <NavigationProperty Name="Comments" Relationship="CP25Team04Model.FK_Comments_StaffReports" FromRole="StaffReport" ToRole="Comment" />
+          <NavigationProperty Name="ReportPeriod" Relationship="CP25Team04Model.FK_StaffReports_ReportPeriods" FromRole="StaffReport" ToRole="ReportPeriod" />
+          <NavigationProperty Name="StaffReportDetails" Relationship="CP25Team04Model.FK_StaffReportDetails_StaffReports" FromRole="StaffReport" ToRole="StaffReportDetail" />
+        </EntityType>
+        <Association Name="FK_StaffReports_AspNetUsers">
+          <End Type="CP25Team04Model.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="CP25Team04Model.StaffReport" Role="StaffReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StaffReport">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_StaffReports">
+          <End Type="CP25Team04Model.StaffReport" Role="StaffReport" Multiplicity="0..1" />
+          <End Type="CP25Team04Model.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffReport">
+              <PropertyRef Name="staff_report_id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="staff_report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormStaffReportDetails_FormStaffReports">
+          <End Type="CP25Team04Model.FormStaffReport" Role="FormStaffReport" Multiplicity="1" />
+          <End Type="CP25Team04Model.FormStaffReportDetail" Role="FormStaffReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormStaffReport">
+              <PropertyRef Name="form_staff_report_id" />
+            </Principal>
+            <Dependent Role="FormStaffReportDetail">
+              <PropertyRef Name="form_staff_report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StaffReportDetails_FormStaffReportDetails">
+          <End Type="CP25Team04Model.FormStaffReportDetail" Role="FormStaffReportDetail" Multiplicity="1" />
+          <End Type="CP25Team04Model.StaffReportDetail" Role="StaffReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormStaffReportDetail">
+              <PropertyRef Name="form_staff_report_detail_id" />
+            </Principal>
+            <Dependent Role="StaffReportDetail">
+              <PropertyRef Name="form_staff_report_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormStaffReports_ReportPeriods">
+          <End Type="CP25Team04Model.ReportPeriod" Role="ReportPeriod" Multiplicity="1" />
+          <End Type="CP25Team04Model.FormStaffReport" Role="FormStaffReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportPeriod">
+              <PropertyRef Name="report_period_id" />
+            </Principal>
+            <Dependent Role="FormStaffReport">
+              <PropertyRef Name="report_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StaffReports_ReportPeriods">
+          <End Type="CP25Team04Model.ReportPeriod" Role="ReportPeriod" Multiplicity="1" />
+          <End Type="CP25Team04Model.StaffReport" Role="StaffReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportPeriod">
+              <PropertyRef Name="report_period_id" />
+            </Principal>
+            <Dependent Role="StaffReport">
+              <PropertyRef Name="report_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StaffReportDetails_StaffReports">
+          <End Type="CP25Team04Model.StaffReport" Role="StaffReport" Multiplicity="1" />
+          <End Type="CP25Team04Model.StaffReportDetail" Role="StaffReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffReport">
+              <PropertyRef Name="staff_report_id" />
+            </Principal>
+            <Dependent Role="StaffReportDetail">
+              <PropertyRef Name="staff_report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormStaffReportDetails_Categories">
+          <End Type="CP25Team04Model.Category" Role="Category" Multiplicity="1" />
+          <End Type="CP25Team04Model.FormStaffReportDetail" Role="FormStaffReportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="FormStaffReportDetail">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1455,6 +1812,7 @@
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="CP25Team04Model.Comment">
               <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="staff_report_id" ColumnName="staff_report_id" />
                 <ScalarProperty Name="comment_id" ColumnName="comment_id" />
                 <ScalarProperty Name="comment_content" ColumnName="comment_content" />
                 <ScalarProperty Name="comment_date" ColumnName="comment_date" />
@@ -1621,6 +1979,48 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="FormStaffReportDetails">
+            <EntityTypeMapping TypeName="CP25Team04Model.FormStaffReportDetail">
+              <MappingFragment StoreEntitySet="FormStaffReportDetails">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="col" ColumnName="col" />
+                <ScalarProperty Name="row" ColumnName="row" />
+                <ScalarProperty Name="form_staff_report_id" ColumnName="form_staff_report_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="form_staff_report_detail_id" ColumnName="form_staff_report_detail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormStaffReports">
+            <EntityTypeMapping TypeName="CP25Team04Model.FormStaffReport">
+              <MappingFragment StoreEntitySet="FormStaffReports">
+                <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
+                <ScalarProperty Name="form_staff_report_id" ColumnName="form_staff_report_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StaffReportDetails">
+            <EntityTypeMapping TypeName="CP25Team04Model.StaffReportDetail">
+              <MappingFragment StoreEntitySet="StaffReportDetails">
+                <ScalarProperty Name="staff_report_content" ColumnName="staff_report_content" />
+                <ScalarProperty Name="form_staff_report_detail_id" ColumnName="form_staff_report_detail_id" />
+                <ScalarProperty Name="staff_report_id" ColumnName="staff_report_id" />
+                <ScalarProperty Name="staff_report_detail_id" ColumnName="staff_report_detail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StaffReports">
+            <EntityTypeMapping TypeName="CP25Team04Model.StaffReport">
+              <MappingFragment StoreEntitySet="StaffReports">
+                <ScalarProperty Name="date_report" ColumnName="date_report" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="file_path" ColumnName="file_path" />
+                <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
+                <ScalarProperty Name="staff_report_id" ColumnName="staff_report_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

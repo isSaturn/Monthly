@@ -52,8 +52,25 @@
                                             </td>
 
                                             <td>
-                                                <div class="badge badge-success">@item.status</div>
+                                                @if (item.status.Count() < 1)
+                                                {
+                                                    <div class="badge badge badge-shadow">Chưa báo cáo</div>
+
+                                                }
+                                                else if (item.status.Equals("Đã báo cáo"))
+                                                {
+                                                    <div class="badge badge badge-primary">Đã báo cáo</div>
+                                                }
+                                                else if (item.status.Equals("Trễ báo cáo"))
+                                                {
+                                                    <div class="badge badge badge-danger">Trễ báo cáo</div>
+                                                }
+                                                else if (item.status.Equals("Không báo cáo"))
+                                                {
+                                                    <div class="badge badge badge-danger">Không báo cáo</div>
+                                                }
                                             </td>
+
                                             <td class="text-center">
                                                 <div class="buttons">
                                                     <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("Detail","ListReportDepartment", new {id = item.department_report_id})">
