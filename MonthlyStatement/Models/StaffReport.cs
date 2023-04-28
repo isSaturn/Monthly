@@ -12,27 +12,27 @@ namespace MonthlyStatement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class StaffReport
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Comment()
+        public StaffReport()
         {
-            this.DepartmentReports = new HashSet<DepartmentReport>();
+            this.Comments = new HashSet<Comment>();
+            this.StaffReportDetails = new HashSet<StaffReportDetail>();
         }
     
-        public int comment_id { get; set; }
-        public string comment_content { get; set; }
-        public Nullable<System.DateTime> comment_date { get; set; }
+        public int staff_report_id { get; set; }
+        public int report_period_id { get; set; }
+        public string file_path { get; set; }
+        public string status { get; set; }
         public string account_id { get; set; }
-        public Nullable<int> personal_report_id { get; set; }
-        public Nullable<int> department_report_id { get; set; }
-        public Nullable<int> staff_report_id { get; set; }
+        public Nullable<System.DateTime> date_report { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual DepartmentReport DepartmentReport { get; set; }
-        public virtual PersonalReport PersonalReport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DepartmentReport> DepartmentReports { get; set; }
-        public virtual StaffReport StaffReport { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ReportPeriod ReportPeriod { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StaffReportDetail> StaffReportDetails { get; set; }
     }
 }

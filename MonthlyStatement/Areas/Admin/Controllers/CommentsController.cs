@@ -77,9 +77,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             db.SaveChanges();*/
 
 
-            await UserManager.SendEmailAsync(mail,
-                           "Thông báo bình luận từ " + userId,
-                           "Nội dung: " + c.comment_content);
+
 
             return RedirectToAction("Index", "ListReportPersonal");
         }
