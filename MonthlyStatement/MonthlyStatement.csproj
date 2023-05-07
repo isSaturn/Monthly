@@ -200,7 +200,6 @@
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Admin\Controllers\StaticController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
-    <Compile Include="Areas\Admin\Controllers\UserManager.cs" />
     <Compile Include="Areas\Department\DepartmentAreaRegistration.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacManagerController.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacReportController.cs" />
