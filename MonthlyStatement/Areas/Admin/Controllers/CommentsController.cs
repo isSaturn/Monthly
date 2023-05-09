@@ -73,11 +73,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             c.comment_date = DateTime.Now;
             c.account_id = userId;
             c.personal_report_id = id;
-           /* db.Comments.Add(c);
-            db.SaveChanges();*/
+            db.Comments.Add(c);
+            db.SaveChanges();
 
 
-
+            await UserManager.SendEmailAsync(account_id,"Thông báo bình luận từ " + emails, "Nội dung: " + c.comment_content);
 
             return RedirectToAction("Index", "ListReportPersonal");
         }
@@ -102,8 +102,8 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             db.SaveChanges();
 
 
-            await UserManager.SendEmailAsync(mail,
-                           "Thông báo bình luận từ " + userId,
+            await UserManager.SendEmailAsync(account_id,
+                           "Thông báo bình luận từ " + emails,
                            "Nội dung: " + c.comment_content);
 
             return RedirectToAction("Index", "ListReportDepartment");
