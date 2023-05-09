@@ -6,123 +6,132 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 0;
     int j = 64;
+    string lstId = "";
 
+    CP25Team04Entities models = new CP25Team04Entities();
+    int idperiod = Model.First().FormStaffReport.report_period_id;
+    var form = models.StaffReports.Where(p => p.report_period_id == idperiod);
+    string emails = User.Identity.Name;
+    string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+    var formPer = models.StaffReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
 }
 
-<section class="section">
-    <div class="section-body">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo nhân viên</h4>
-                    </div>
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            @foreach (var items in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_lv == 1).ToList())
+            {
+
+                i = 0;
+                j++;
+                <br />
+                <div class="section-title mt-1" style="font-weight:bold">
+                    @(((char) j).ToString()). @items.Category.category_content.ToUpper()
+
                 </div>
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <form>
-                                <div id="accordion">
-                                    @foreach (var item in Model.Where(c => c.Category.category_of_id == null).ToList())
+
+                foreach (var items_lv2 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
+                {
+                    lstId += items_lv2.category_id + "-";
+                    i++;
+
+                    <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+                        <div class="col-lg-12">
+
+                            <table class="table table-bordered dataTable">
+                                <tbody>
+                                    <tr class="" style="max-width: 50px">
+                                        <th>@(i). @items_lv2.Category.category_content</th>
+                                    </tr>
+
+                                    @if (models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_lv2.form_staff_report_detail_id).Count() > 0)
                                     {
-                                        i = 0;
-                                        j++;
 
-                                        <div class="accordion">
-                                            <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
-                                                <h4>
-                                                    @(((char) j).ToString()). @item.Category.category_content
-                                                </h4>
-                                                <div class="card-header-action">
-                                                    <a data-collapse="#panel-body-@(((char) j).ToString())" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-body collapse" id="panel-body-@(((char) j).ToString())" data-parent="#accordion" style="">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped" style="border-collapse:unset" id="table-2">
-                                                        <tbody>
-                                                            @if (Model.Where(c => c.Category.category_of_id == item.Category.category_id).Count() > 0)
-                                                            {
-                                                                foreach (var items in Model.Where(c => c.Category.category_of_id == item.category_id).ToList())
-                                                                {
-                                                                    i++;
-
-                                                                    <tr>
-                                                                        <td class="text-center" style="width:3%">
-                                                                            @(i)
-                                                                        </td>
-                                                                        <td>
-                                                                            @items.Category.category_content
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                        </td>
-                                                                        <td>
-                                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                                        </td>
-                                                                    </tr>
-                                                                    foreach (var itemss in Model.Where(c => c.Category.category_of_id == items.category_id).ToList())
-                                                                    {
-
-                                                                        i++;
-
-                                                                        <tr>
-                                                                            <td class="text-center" style="width:3%">
-                                                                                @(i)
-                                                                            </td>
-                                                                            <td>
-                                                                                @itemss.Category.category_content
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                    }
-                                                                }
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                        int inputIndex = 0;
+                                        if (!models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
+                                        {
+                                            foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_lv2.form_staff_report_detail_id).ToList())
+                                            {
+                                                inputIndex++;
+                                                <tr id="formInput-@items_lv2.category_id-@inputIndex">
+                                                    <td>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_lv2.form_staff_report_detail_id).ToList())
+                                            {
+                                                inputIndex++;
+                                <tr id="formInput-@items_lv2.category_id-@inputIndex">
+                                    <td>
+                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                    </td>
+                                </tr>
+                                            }
+                                        }
                                     }
+                                    <tr hidden id="append-@items.category_id"></tr>
+                                </tbody>
+                            </table>
 
-                                </div>
+                        </div>
 
-                            </form>
-                            <div class="accordion">
-                                <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
-                                    <h4>
-                                        @(((char) (++j)).ToString()). MINH CHỨNG
-                                    </h4>
-                                    <div class="card-header-action">
-                                        <a data-collapse="#panel-body-Z" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
+                    </div>
+                    if (models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
+                    {
+                        <div>
+                            <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+                                @foreach (var items_lv3 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id).ToList())
+                                {
+                                    <div class="col">
+                                        <table class="table table-bordered dataTable">
+                                            <tbody>
+                                                <tr class="" style="max-width: 50px">
+                                                    <th>@items_lv3.Category.category_content</th>
+                                                </tr>
+                                                @{ var items_groupby = models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && items_lv3.form_staff_report_detail_id == x.form_staff_report_detail_id).GroupBy(x => x.form_staff_report_detail_id).ToList();}
+
+                                                @foreach (var item in items_groupby)
+                                                {
+                                                    foreach (var items_content_lv3 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && x.form_staff_report_detail_id == item.Key).ToList())
+                                                    {
+                                                        int inputIndex = 0;
+                                                        inputIndex++;
+                                                        if (models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_content_lv3.form_staff_report_detail_id).Count() > 0)
+                                                        {
+                                                            foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_content_lv3.form_staff_report_detail_id).ToList())
+                                                            {
+                                                                <tr id="formInput-@items_lv2.category_id-@inputIndex">
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                <tr hidden id="append-@items.category_id"></tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                <div class="accordion-body collapse" id="panel-body-Z" data-parent="#accordion" style="">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01" disabled>
-                                            <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
-                                        </div>
-                                        <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
-                                    </div>
-                                </div>
+                                }
                             </div>
                         </div>
-                    </div>
-                </div>
+                    }
+                }
+            }
+            <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
+            <div class="section-title mt-3" style="font-weight:bold">
+                <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
+            </div>
+            <div class="card-body">
+                <form action="#" class="dropzone dz-clickable" id="mydropzone">
+                    <div class="dz-default dz-message"><span>Tệp đính kèm</span></div>
+                </form>
             </div>
         </div>
     </div>
-</section>
+</div>

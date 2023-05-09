@@ -55,12 +55,4 @@
 
     // Gán vào thẻ HTML
     document.getElementById('current-time').innerHTML = curTime + " " + current_day + " ,  " + curDay + "  " + setMonth + " " + curYear;
-
-    var checkfaculty = @Html.Raw(Json.Encode(Session["Faculty-exist"]));
-    if (checkfaculty == false) {
-        Swal.fire('Thông báo', 'Bạn chưa có khoa, cần liên hệ thư ký để thêm vào', 'info');
-    }
 </script>
-@{ 
-    Session["Faculty-exist"] = true;
-}

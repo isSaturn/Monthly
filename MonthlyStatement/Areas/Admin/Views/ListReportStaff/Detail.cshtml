@@ -1,7 +1,7 @@
-﻿@model MonthlyStatement.Models.PersonalReport
+﻿@model MonthlyStatement.Models.StaffReport
 @using MonthlyStatement.Models
 @{
-    ViewBag.Title = "PersonalDetail";
+    ViewBag.Title = "StaffDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 0;
     int j = 64;
@@ -9,7 +9,7 @@
 
     CP25Team04Entities models = new CP25Team04Entities();
     int idperiod = Model.report_period_id;
-    int idpersonalreport = Model.personal_report_id;
+    int idstaffreport = Model.staff_report_id;
 
 }
 
@@ -26,7 +26,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            @foreach (var items in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_lv == 1).ToList())
+                            @foreach (var items in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_lv == 1).ToList())
                             {
 
                                 i = 0;
@@ -37,7 +37,7 @@
 
                                 </div>
 
-                                foreach (var items_lv2 in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
+                                foreach (var items_lv2 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
                                 {
                                     lstId += items_lv2.category_id + "-";
                                     i++;
@@ -50,29 +50,29 @@
                                                     <tr class="" style="max-width: 50px">
                                                         <th>@(i). @items_lv2.Category.category_content</th>
                                                     </tr>
-                                                    @if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id).Count() > 0)
+                                                    @if (models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_lv2.form_staff_report_detail_id).Count() > 0)
                                                     {
                                                         int inputIndex = 0;
-                                                        if (!models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
+                                                        if (!models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
                                                         {
-                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id).ToList())
+                                                            foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_lv2.form_staff_report_detail_id).ToList())
                                                             {
                                                                 inputIndex++;
                                                                 <tr id="formInput-@items_lv2.category_id-@inputIndex">
                                                                     <td>
-                                                                        <input readonly type="text" value="@items_content.personal_report_content" class="form-control" id="noidung-@items_lv2.category_id-@inputIndex">
+                                                                        <input readonly type="text" value="@items_content.staff_report_content" class="form-control" id="noidung-@items_lv2.category_id-@inputIndex">
                                                                     </td>
                                                                 </tr>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id).ToList())
+                                                            foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_lv2.form_staff_report_detail_id).ToList())
                                                             {
                                                                 inputIndex++;
                                                                 <tr id="formInput-@items_lv2.category_id-@inputIndex" class="d-none">
                                                                     <td>
-                                                                        <input readonly type="text" value="@items_content.personal_report_content" class="form-control" id="noidung-@items_lv2.category_id-@inputIndex">
+                                                                        <input readonly type="text" value="@items_content.staff_report_content" class="form-control" id="noidung-@items_lv2.category_id-@inputIndex">
                                                                     </td>
                                                                 </tr>
                                                             }
@@ -87,11 +87,11 @@
                                         </div>
 
                                     </div>
-                                    if (models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
+                                    if (models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
                                     {
                                         <div>
                                             <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
-                                                @foreach (var items_lv3 in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id).ToList())
+                                                @foreach (var items_lv3 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id).ToList())
                                                 {
                                                     <div class="col">
                                                         <table class="table table-bordered dataTable">
@@ -99,21 +99,21 @@
                                                                 <tr class="" style="max-width: 50px">
                                                                     <th>@items_lv3.Category.category_content</th>
                                                                 </tr>
-                                                                @{ var items_groupby = models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id &&items_lv3.form_personal_report_detail_id == x.form_personal_report_detail_id).GroupBy(x => x.form_personal_report_detail_id).ToList();}
+                                                                @{ var items_groupby = models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && items_lv3.form_staff_report_detail_id == x.form_staff_report_detail_id).GroupBy(x => x.form_staff_report_detail_id).ToList();}
 
                                                                 @foreach (var item in items_groupby)
                                                                 {
-                                                                    foreach (var items_content_lv3 in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && x.form_personal_report_detail_id == item.Key).ToList())
+                                                                    foreach (var items_content_lv3 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && x.form_staff_report_detail_id == item.Key).ToList())
                                                                     {
                                                                         int inputIndex = 0;
                                                                         inputIndex++;
-                                                                        if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_content_lv3.form_personal_report_detail_id).Count() > 0)
+                                                                        if (models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_content_lv3.form_staff_report_detail_id).Count() > 0)
                                                                         {
-                                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_content_lv3.form_personal_report_detail_id).ToList())
+                                                                            foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_content_lv3.form_staff_report_detail_id).ToList())
                                                                             {
                                                                                 <tr>
                                                                                     <td>
-                                                                                        <input readonly type="text" value="@items_content.personal_report_content" class="form-control" id="noidung-@items_content_lv3.category_id-@inputIndex">
+                                                                                        <input readonly type="text" value="@items_content.staff_report_content" class="form-control" id="noidung-@items_content_lv3.category_id-@inputIndex">
                                                                                     </td>
                                                                                 </tr>
                                                                             }
@@ -139,7 +139,7 @@
                                 <div class="card" style="background-color: #e9ecef">
                                     <div class="card-body">
                                         <div class="chat">
-                                            @foreach (var comment in models.Comments.Where(x => x.personal_report_id == idpersonalreport).ToList())
+                                            @foreach (var comment in models.Comments.Where(x => x.staff_report_id == idstaffreport).ToList())
                                             {
                                                 <div class="chat-header clearfix">
                                                     <img alt="image" src="~/assets/img/user.png" class="rounded-circle img-fluid">
@@ -156,9 +156,9 @@
                                         </div>
                                         <hr />
                                         <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
-                                        @using (Html.BeginForm("PostCommentPersonal", "Comments", FormMethod.Post))
+                                        @using (Html.BeginForm("PostCommentstaff", "Comments", FormMethod.Post))
                                         {
-                                            <input type="hidden" name="id" value="@idpersonalreport" />
+                                            <input type="hidden" name="id" value="@idstaffreport" />
                                             <div class="form-group">
                                                 <textarea class="form-control" name="CommentText" style="height:200px !important"></textarea>
                                             </div>

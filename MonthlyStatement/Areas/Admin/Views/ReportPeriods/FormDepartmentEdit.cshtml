@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn: @Model.ReportPeriod.report_period_name</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Chỉnh sửa báo cáo bộ môn: @Model.ReportPeriod.report_period_name</h4>
                     </div>
                 </div>
                 <div class="col-12">
@@ -24,11 +24,12 @@
                                     <input value="@Model.form_department_report_id" id="idReportPeriod" hidden="hidden">
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-2">
+                                    <table class="table table-striped" id="table-3">
                                         <thead>
                                             <tr>
                                                 <th class="text-center pt-3">
                                                 </th>
+                                                <th>Cấp danh mục</th>
                                                 <th>Tên danh mục</th>
                                                 <th>Chức năng</th>
                                             </tr>
@@ -45,14 +46,11 @@
                                                             </div>
                                                         </div>
                                                     </td>
+                                                    <td>LV 1</td>
                                                     <td style="font-weight:bold">
-                                                        <label id="category_name-@item.category_id">
-                                                            @item.category_content
-                                                        </label>
+                                                        @item.category_content
                                                     </td>
-                                                    <td>
-                                                        <a href="#" class="btn btn-primary" id="editCategory-@item.category_id" name="@item.category_id">Edit</a>
-                                                    </td>
+                                                    <td><a href="@Url.Action("Edit", "Categories", new { id = item.category_id })" class="btn btn-primary">Edit</a></td>
                                                 </tr>
                                             </tbody>
                                             foreach (var items in lstCategory.Where(c => c.category_of_id == item.category_id).ToList())
@@ -61,28 +59,55 @@
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="pretty p-switch p-fill">
-                                                                <input name="@items.category_of_id" type="checkbox" id="@(items.category_of_id)categorylv2-@(items.category_id)" value="@items.category_id" />
+                                                                <input name="@items.category_of_id"
+                                                                       type="checkbox"
+                                                                       id="@(items.category_of_id)categorylv2-@(items.category_id)"
+                                                                       value="@items.category_id" />
                                                                 <div class="state">
                                                                     <label></label>
                                                                 </div>
                                                             </div>
                                                         </td>
+                                                        <td>LV 2</td>
                                                         <td>
                                                             <div class="media mt-3">
-                                                                <div class="pr-5" href="#">
-                                                                </div>
-                                                                <label id="category_name-@items.category_id">
-                                                                    @items.category_content
-                                                                </label>
+                                                                <div class="pr-3" href="#">
+                                                                </div>@items.category_content
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-primary" id="editCategory-@(items.category_id)" name="@items.category_id">Edit</a>
-                                                        </td>
+                                                        <td><a href="@Url.Action("Edit", "Categories", new { id = item.category_id })" class="btn btn-primary">Edit</a></td>
                                                     </tr>
                                                 </tbody>
+                                                foreach (var itemss in lstCategory.Where(c => c.category_of_id == items.category_id).ToList())
+                                                {
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center pt-2">
+                                                                <div class="pretty p-switch p-fill">
+                                                                    <input name="@items.category_of_id-@items.category_id"
+                                                                           type="checkbox"
+                                                                           id="@(itemss.category_of_id)categorylv3-@(itemss.category_id)" value="@itemss.category_id" />
+                                                                    <div class="state">
+                                                                        <label></label>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>LV 3</td>
+
+                                                            <td>
+                                                                <div class="media mt-3">
+                                                                    <div class="pr-5" href="#">
+                                                                    </div>@itemss.category_content
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="@Url.Action("Edit", "Categories", new { id = item.category_id })" class="btn btn-primary">Edit</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
                                             }
                                         }
+
+
                                     </table>
                                 </div>
                                 <div class="text-right">
@@ -98,65 +123,22 @@
     </div>
 </section>
 
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-
 <script>
     $(document).ready(function () {
-        //button edit category
-        $('[id^="editCategory-"]').click(function () {
-            let id = $(this).attr("name");
-            Swal.fire({
-                title: 'Chỉnh sửa danh mục',
-                input: 'text',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                showCancelButton: true,
-                confirmButtonText: 'Ok',
-                showLoaderOnConfirm: true,
-                preConfirm: (text) => {
-                    if (text.trim().length < 1) {
-                        Swal.showValidationMessage(
-                            `Không được bỏ trống`)
-                        return false;
-                    } else {
-                        $.ajax({
-                            type: "POST",
-                            traditional: true,
-                            async: false,
-                            cache: false,
-                            url: $('#requestUrl').val() + 'Categories/EditCategory',
-                            data: {
-                                id: id,
-                                name: text.trim()
-                            },
-                            context: document.body,
-                            success: function (result) {
-                                if (result == "Success") {
-                                    $('#category_name-' + id).text(text.trim());
-                                    Swal.fire('Chỉnh sửa thành công','Bạn đã chỉnh sửa danh mục thành công','success'
-                                    )
-                                }
-                                else {
-                                    Swal.fire('Không thành công', result, 'error')
-                                }
-                            },
-                            error: function (xhr) {
-                                swal(xhr.responseText, {
-                                    icon: 'error',
-                                });
-                                //debugger;
-                                console.log(xhr.responseText);
-                                alert("Error has occurred..");
-                            }
-                        });
-                    }               
-                },
-                allowOutsideClick: () => !Swal.isLoading()
-            })
+        //radio button lv3
+        $('[id*="categorylv3-"]').on('input', function () {
+            var idlv1 = $(this).attr('name').split('-')[0];
+            var idlv2 = $(this).attr('name').split('-')[1];
+
+            if ($(this).prop('checked')) {
+                if ($('#' + idlv1 + 'categorylv2-' + idlv2).prop('checked') == false) {
+                    $('#' + idlv1 + 'categorylv2-' + idlv2).prop('checked', true);
+                    $('#categorylv1-' + idlv1).prop('checked', true);
+                }
+            }
         });
-        //radio button
+        //radio button lv2
         $('[id*="categorylv2-"]').on('input', function () {
             var id = $(this).attr('name');
             if ($(this).prop('checked')) {
@@ -175,6 +157,7 @@
                 }
             }
         });
+        //radio button lv1
         $('[id*="categorylv1-"]').on('input', function () {
             var id = $(this).attr('name');
             if ($(this).prop('checked') == false) {
@@ -182,6 +165,26 @@
                     $(this).prop('checked', false);
                 });
             }
+        });
+        //button edit
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.profile-pic').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+
+        $(".upload-button").on('click', function () {
+            $(".file-upload").click();
         });
 
         //button save form
@@ -193,6 +196,9 @@
                     data += $(this).val() + "-";
                 }
             });
+            var formData = new FormData();
+            formData.append('idReport', idReport);
+            formData.append('data', data.substring(0, data.length - 1));
             swal({
                 title: 'Lưu biểu mẫu?',
                 text: 'Bạn có muốn lưu biểu mẫu?',
@@ -204,25 +210,29 @@
                     if (willAdd) {
                         $.ajax({
                             type: "POST",
-                            traditional: true,
-                            async: false,
-                            cache: false,
+                            contentType: false,
+                            dataType: "html",
+                            processData: false,
                             url: $('#requestUrl').val() + 'ReportPeriods/FormDepartmentEdit',
-                            data: {
-                                idReport: idReport,
-                                data: data.substring(0, data.length - 1)
-                            },
-                            context: document.body,
+                            data: formData,
                             success: function (result) {
                                 if (result == "Success") {
                                     swal('Thêm thành công', {
                                         icon: 'success',
                                     });
-                                } else {
+                                }
+                                else if (result == "Exist") {
+                                    swal('Form đã được sử dụng, không thể lưu', {
+                                        icon: 'info',
+                                    });
+                                }
+
+                                else {
                                     swal(result, {
                                         icon: 'error',
                                     });
                                 }
+
                             },
                             error: function (xhr) {
                                 swal(xhr.responseText, {
@@ -239,4 +249,6 @@
         });
     });
 </script>
+
+
 
