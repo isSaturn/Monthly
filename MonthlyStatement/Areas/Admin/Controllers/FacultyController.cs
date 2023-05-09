@@ -114,10 +114,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View(reportPeriods);
         }
         [HttpPost]
-        public ActionResult AddUser(int id, int khoa)
+        public ActionResult AddUser(int id, int khoa, string email)
         {
             var user = db.Profiles.Find(id);
             user.faculty_id = khoa;
+            user.email = email;
 
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
