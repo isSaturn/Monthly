@@ -61,12 +61,26 @@
                                                 @item.AspNetUser.AspNetRoles.First().Name
                                             </td>
                                             <td>
-                                                <div class="badge badge-success">@item.status</div>
+                                                @if (item.status == "Đã báo cáo")
+                                                {
+                                                    <div class="badge badge-success">@item.status</div>
+                                                }
+                                                else if (item.status == "Trễ báo cáo")
+                                                {
+                                                    <div class="badge badge-warning">@item.status</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="badge badge-danger">@item.status</div>
+                                                }
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("StaffDetail","Report", new {id = item.staff_report_id})">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("StaffDetail","StaffReport", new {id = item.staff_report_id})">
                                                         Xem
+                                                    </a>
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("StaffReportEdit","StaffReport", new {id = item.staff_report_id})">
+                                                        Chỉnh sửa
                                                     </a>
                                                 </div>
                                             </td>

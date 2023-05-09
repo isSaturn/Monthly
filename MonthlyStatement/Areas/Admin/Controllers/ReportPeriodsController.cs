@@ -99,7 +99,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                     }
                     db.SaveChanges();
                 }
-                return Json("Success", JsonRequestBehavior.AllowGet);
+                return Content("Success");
             }
             return Json("Không tồn tại", JsonRequestBehavior.AllowGet);
         }
@@ -182,7 +182,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                     {
                         FormStaffReportDetail formStaffReportDetail = new FormStaffReportDetail();
                         formStaffReportDetail.form_staff_report_id = (int)idReport;
-                        formStaffReportDetail.form_staff_report_id = Convert.ToInt32(item);
+                        formStaffReportDetail.category_id = Convert.ToInt32(item);
                         db.FormStaffReportDetails.Add(formStaffReportDetail);
                     }
                     db.SaveChanges();

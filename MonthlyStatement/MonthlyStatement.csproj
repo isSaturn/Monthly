@@ -197,9 +197,13 @@
     <Compile Include="Areas\Admin\Controllers\FacultyController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportDepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportPersonalController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ListReportStaffController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Admin\Controllers\StaticController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
+    <Compile Include="Areas\Department\Controllers\CommentsDepartmentController.cs" />
+    <Compile Include="Areas\Department\Controllers\FormDepartmentReportController.cs" />
+    <Compile Include="Areas\Department\Controllers\DepartmentReportController.cs" />
     <Compile Include="Areas\Department\DepartmentAreaRegistration.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacManagerController.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacReportController.cs" />
@@ -1168,8 +1172,6 @@
     <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormDepartmentEdit.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormPersonalEdit.cshtml" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Faculty\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Faculty\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Faculty\Edit.cshtml" />
@@ -1185,7 +1187,6 @@
     <Content Include="Areas\Admin\Views\ListReportPersonal\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportDepartment\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportDepartment\Index.cshtml" />
-    <Content Include="Areas\Personal\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Personal\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Personal\Views\FormReport\ListReportYear.cshtml" />
     <Content Include="Areas\Personal\Views\FormReport\ListReportPeriod.cshtml" />
@@ -1215,6 +1216,15 @@
     <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffEdit.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffDetail.cshtml" />
     <Content Include="Areas\Personal\Views\Report\PersonalReportEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportStaff\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportStaff\Detail.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffReport\StaffReportEdit.cshtml" />
+    <Content Include="Areas\Department\Views\FormDepartmentReport\Index.cshtml" />
+    <Content Include="Areas\Department\Views\FormDepartmentReport\ListReportPeriod.cshtml" />
+    <Content Include="Areas\Department\Views\FormDepartmentReport\ListReportYear.cshtml" />
+    <Content Include="Areas\Department\Views\DepartmentReport\Department.cshtml" />
+    <Content Include="Areas\Department\Views\DepartmentReport\DepartmentDetail.cshtml" />
+    <Content Include="Areas\Department\Views\DepartmentReport\DepartmentReportEdit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1245,14 +1255,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Department\Controllers\" />
     <Folder Include="Areas\Department\Data\" />
     <Folder Include="Areas\Department\Views\Shared\" />
     <Folder Include="Areas\FacultyAreas\Data\" />
     <Folder Include="Areas\FacultyAreas\Views\Shared\" />
     <Folder Include="Areas\Personal\Data\" />
     <Folder Include="Areas\Staff\Data\" />
-    <Folder Include="Areas\Staff\Views\CommentsStaff\" />
     <Folder Include="Areas\Staff\Views\Shared\" />
     <Folder Include="assets\FileImport\" />
     <Folder Include="assets\FileMinhChung\" />
