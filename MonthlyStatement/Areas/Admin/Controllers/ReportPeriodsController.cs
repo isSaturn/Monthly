@@ -147,6 +147,50 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return Content("Không tồn tại");
         }
+        //staff view edit
+
+        public ActionResult FormStaffEdit(int id)
+        {
+            var form = db.FormStaffReports.Find(id);
+            if (form != null)
+            {
+                Session["FormStaffEdit-lstCategory"] = db.Categories.ToList();
+                return View(form);
+
+            }
+            return RedirectToAction("Index", "ReportPeriods");
+        }
+        //personal edit
+
+        [HttpPost]
+        public ActionResult FormStaffEdit(int? idReport, string data)
+        {
+            var form = db.FormStaffReports.Find(idReport);
+            if (form != null)
+            {
+                if (form.FormStaffReportDetails.Where(f => f.StaffReportDetails.Count() > 0).Count() > 0)
+                    return Content("Exist");
+
+                if (string.IsNullOrEmpty(data))
+                    return Content("Vui lòng chọn danh mục");
+                db.FormStaffReportDetails.RemoveRange(form.FormStaffReportDetails);
+                db.Entry(form).State = EntityState.Modified;
+                db.SaveChanges();
+                if (data.IndexOf("-") != -1)
+                {
+                    foreach (var item in data.Split('-'))
+                    {
+                        FormStaffReportDetail formStaffReportDetail = new FormStaffReportDetail();
+                        formStaffReportDetail.form_staff_report_id = (int)idReport;
+                        formStaffReportDetail.form_staff_report_id = Convert.ToInt32(item);
+                        db.FormStaffReportDetails.Add(formStaffReportDetail);
+                    }
+                    db.SaveChanges();
+                }
+                return Content("Success");
+            }
+            return Content("Không tồn tại");
+        }
         //department detail
         public ActionResult FormDepartmentDetail(int id)
         {
@@ -159,7 +203,12 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             var formPersonalDetail = db.FormPersonalReportDetails.Where(f => f.form_personal_report_id == id).ToList();
             return View(formPersonalDetail);
         }
-
+        //staff detail
+        public ActionResult FormStaffDetail(int id)
+        {
+            var formStaffDetail = db.FormStaffReportDetails.Where(f => f.form_staff_report_id == id).ToList();
+            return View(formStaffDetail);
+        }
 
         protected override void Dispose(bool disposing)
         {

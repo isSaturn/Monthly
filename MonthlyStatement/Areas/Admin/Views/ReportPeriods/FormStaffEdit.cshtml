@@ -1,10 +1,10 @@
-﻿@model  MonthlyStatement.Models.FormPersonalReport
+﻿@model  MonthlyStatement.Models.FormStaffReport
 @using MonthlyStatement.Models
 
 @{
-    ViewBag.Title = "FormPersonalEdit";
+    ViewBag.Title = "FormStaffEdit";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var lstCategory = Session["FormPersonalEdit-lstCategory"] as IEnumerable<Category>;
+    var lstCategory = Session["FormStaffEdit-lstCategory"] as IEnumerable<Category>;
 }
 
 <section class="section">
@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo giảng viên: @Model.ReportPeriod.report_period_name</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo nhân viên: @Model.ReportPeriod.report_period_name</h4>
                     </div>
                 </div>
                 <div class="col-12">
@@ -21,7 +21,7 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <input value="@Model.form_personal_report_id" id="idReportPeriod" hidden="hidden">
+                                    <input value="@Model.form_staff_report_id" id="idReportPeriod" hidden="hidden">
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-3">
@@ -213,7 +213,7 @@
                             contentType: false,
                             dataType: "html",
                             processData: false,
-                            url: $('#requestUrl').val() + 'ReportPeriods/FormPersonalEdit',
+                            url: $('#requestUrl').val() + 'ReportPeriods/FormStaffEdit',
                             data: formData,
                             success: function (result) {
                                 if (result == "Success") {

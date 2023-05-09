@@ -55,15 +55,16 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(string content)
         {
-            if (content.Split('-').Count() == 1) 
+            if (content.Split('-').Count() == 1)
             {
                 Category category = new Category();
                 category.category_lv = 1;
-                category.category_content= content;
+                category.category_content = content;
                 db.Categories.Add(category);
                 db.SaveChanges();
-                
-            }else if (content.Split('-').Count() == 2)
+
+            }
+            else if (content.Split('-').Count() == 2)
             {
                 Category category = new Category();
                 category.category_lv = 2;
@@ -71,7 +72,14 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                 category.category_content = content.Split('-')[1];
                 db.Categories.Add(category);
                 db.SaveChanges();
-            }else if (content.Split('-').Count() == 3) 
+                Category category_lv3 = new Category();
+                category_lv3.category_lv = 3;
+                category_lv3.category_of_id = category.category_id;
+                category_lv3.category_content = content.Split('-')[1];
+                db.Categories.Add(category_lv3);
+                db.SaveChanges();
+            }
+            else if (content.Split('-').Count() == 3)
             {
                 Category category = new Category();
                 category.category_lv = 3;
@@ -84,9 +92,9 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             {
                 return Content("error");
             }
-                return Content("success");
+            return Content("success");
         }
-       
+
         [HttpGet]
         // GET: Admin/Categories/Edit/5
         public ActionResult Edit(int? id)

@@ -1212,6 +1212,9 @@
     <Content Include="Areas\Staff\Views\FormStaffReport\ListReportYear.cshtml" />
     <Content Include="Areas\Staff\Views\StaffReport\Staff.cshtml" />
     <Content Include="Areas\Staff\Views\StaffReport\StaffDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffDetail.cshtml" />
+    <Content Include="Areas\Personal\Views\Report\PersonalReportEdit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

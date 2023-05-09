@@ -1,8 +1,8 @@
-﻿@model IEnumerable<MonthlyStatement.Models.FormPersonalReportDetail>
+﻿@model IEnumerable<MonthlyStatement.Models.FormStaffReportDetail>
 @using MonthlyStatement.Models
 
 @{
-    ViewBag.Title = "FormPersonalDetail";
+    ViewBag.Title = "FormStaffDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 0;
     int j = 64;
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo giảng viên</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo nhân viên</h4>
                     </div>
                 </div>
                 <div class="col-12">
@@ -64,7 +64,7 @@
                                                                     </tr>
                                                                     foreach (var itemss in Model.Where(c => c.Category.category_of_id == items.category_id).ToList())
                                                                     {
-                                                                        
+
                                                                         i++;
 
                                                                         <tr>
@@ -87,7 +87,7 @@
                                                                 }
                                                             }
                                                         </tbody>
-                                                        </table>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,27 +98,27 @@
 
                             </form>
                             <div class="accordion">
-                                    <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
-                                        <h4>
-                                            @(((char) (++j)).ToString()). MINH CHỨNG
-                                        </h4>
-                                        <div class="card-header-action">
-                                            <a data-collapse="#panel-body-Z" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-body collapse" id="panel-body-Z" data-parent="#accordion" style="">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                            </div>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01" disabled>
-                                                <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
-                                            </div>
-                                            <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
-                                        </div>
+                                <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                    <h4>
+                                        @(((char) (++j)).ToString()). MINH CHỨNG
+                                    </h4>
+                                    <div class="card-header-action">
+                                        <a data-collapse="#panel-body-Z" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
+                                <div class="accordion-body collapse" id="panel-body-Z" data-parent="#accordion" style="">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01" disabled>
+                                            <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
+                                        </div>
+                                        <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
