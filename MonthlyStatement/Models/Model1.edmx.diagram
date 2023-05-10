@@ -21,7 +21,7 @@
         <EntityTypeShape EntityType="CP25Team04Model.FormPersonalReport" Width="1.5" PointX="6" PointY="24.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.Notification" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.PersonalReportDetail" Width="1.5" PointX="10.5" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP25Team04Model.PersonalReport" Width="1.5" PointX="8.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CP25Team04Model.PersonalReport" Width="1.5" PointX="13.125" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.Profile" Width="1.5" PointX="8.25" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.ReportPeriod" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CP25Team04Model.ReportYear" Width="1.5" PointX="3.75" PointY="4.625" IsExpanded="true" />

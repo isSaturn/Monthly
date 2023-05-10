@@ -72,7 +72,7 @@ namespace MonthlyStatement.Areas.Staff.Controllers
             string mail = db.AspNetUsers.FirstOrDefault(m => m.Id == account_id).Email;*/
 
 
-            var list_send_comment = db.Comments.Where(p => p.staff_report_id == id).ToArray();
+            /*var list_send_comment = db.Comments.Where(p => p.staff_report_id == id).ToArray();*/
 
 
             Comment c = new Comment();

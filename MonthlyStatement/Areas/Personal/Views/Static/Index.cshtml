@@ -1,0 +1,151 @@
+﻿@model IEnumerable<MonthlyStatement.Models.ReportPeriod>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Thống kê các kỳ báo cáo</h4>
+
+                    </div>
+                    <div class="tableContainer">
+                        <table>
+
+                            <thead>
+                                <tr class="columnHeaders">
+                                    <th class="columnHeader emptyCell" title="Empty cell"></th>
+                                    <th scope="col" class="columnHeader">Hoàn thành</th>
+                                    <th scope="col" class="columnHeader">Chưa hoàn thành</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @foreach (var item in Model)
+                                {
+                                <tr class="tableBodyRow">
+                                    <th scope="row" class="rowHeader">@item.report_period_name</th>
+                                    @if (item.PersonalReports.Any(p => p.AspNetUser.Email == User.Identity.Name))
+                                    {
+                                        <td>
+                                            <span title="Feature is included" class="featureCheck">✔</span>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <span title="Feature is not included" class="featureX">✘</span>
+                                        </td>
+                                    }
+
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+
+    .tableContainer {
+        overflow: auto;
+        overflow-anchor: none;
+        position: relative;
+    }
+
+        .tableContainer caption {
+            height: 0px;
+        }
+
+    thead tr {
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 999;
+    }
+
+    .rowHeader, [scope="colgroup"] span {
+        left: 0;
+        position: sticky;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        table-layout: auto;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+        min-width: 100px;
+        max-width: 100px;
+        background: #ffffff;
+    }
+
+    .mobileColumnGroup th {
+        text-align: left;
+    }
+
+    .rowHeader {
+        text-align: left;
+    }
+
+    .featureCheck {
+        color: green;
+    }
+
+    .featureX {
+        color: red;
+    }
+
+    thead.stickyHeader {
+        position: fixed;
+        z-index: 999;
+        overflow-x: scroll;
+        top: 0px;
+    }
+
+        thead.stickyHeader.atBottom {
+            position: absolute;
+            z-index: 999;
+            bottom: 0px;
+            left: 0px !important;
+            top: initial;
+            width: initial !important;
+            overflow-x: clip;
+        }
+
+    thead::-webkit-scrollbar {
+        height: 0px;
+    }
+
+    .horizontal-scroller {
+        position: fixed;
+        bottom: 0;
+        height: 30px;
+        overflow: auto;
+        overflow-y: hidden;
+    }
+
+    .horizontal-scroller-content {
+        height: 30px;
+    }
+</style>

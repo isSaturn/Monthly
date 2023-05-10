@@ -197,6 +197,7 @@
     <Compile Include="Areas\Admin\Controllers\FacultyController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportDepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportPersonalController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ListReportStaffController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Admin\Controllers\StaticController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Areas\Personal\Controllers\CommentsPersonalController.cs" />
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
     <Compile Include="Areas\Personal\Controllers\ReportController.cs" />
+    <Compile Include="Areas\Personal\Controllers\StaticController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Areas\Staff\Controllers\CommentsStaffController.cs" />
     <Compile Include="Areas\Staff\Controllers\FormStaffReportController.cs" />
@@ -1212,6 +1214,8 @@
     <Content Include="Areas\Staff\Views\FormStaffReport\ListReportYear.cshtml" />
     <Content Include="Areas\Staff\Views\StaffReport\Staff.cshtml" />
     <Content Include="Areas\Staff\Views\StaffReport\StaffDetail.cshtml" />
+    <Content Include="Areas\Personal\Views\static.cshtml" />
+    <Content Include="Areas\Personal\Views\Static\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1242,6 +1246,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\ListReportStaff\" />
     <Folder Include="Areas\Department\Controllers\" />
     <Folder Include="Areas\Department\Data\" />
     <Folder Include="Areas\Department\Views\Shared\" />

@@ -72,7 +72,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             string mail = db.AspNetUsers.FirstOrDefault(m => m.Id == account_id).Email;*/
 
 
-            var list_send_comment = db.Comments.Where(p => p.personal_report_id == id).ToArray();
+            /*var list_send_comment = db.Comments.Where(p => p.personal_report_id == id).ToArray();*/
 
 
             Comment c = new Comment();
@@ -83,13 +83,13 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             db.Comments.Add(c);
             db.SaveChanges();
 
-            //for (int i = 0; i < list_send_comment.Length; i++)
-            //{
-            //    await UserManager.SendEmailAsync(list_send_comment[i].account_id,
-            //                  "Thông báo bình luận từ " + userId,
-            //                  "Nội dung: " + c.comment_content);
+            /*for (int i = 0; i < list_send_comment.Length; i++)
+            {
+                await UserManager.SendEmailAsync(list_send_comment[i].account_id,
+                              "Thông báo bình luận từ " + userId,
+                             "Nội dung: " + c.comment_content);
 
-            //}
+            }*/
             return RedirectToAction("Personal", "Report");
         }
         
