@@ -90,7 +90,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                              "Nội dung: " + c.comment_content);
 
             }*/
-            return RedirectToAction("Personal", "Report");
+            return RedirectToAction("PersonalDetail", "Report", new { id = c.personal_report_id });
         }
 
     }

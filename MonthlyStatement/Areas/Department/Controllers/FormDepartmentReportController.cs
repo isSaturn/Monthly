@@ -23,11 +23,15 @@ namespace MonthlyStatement.Areas.Department.Controllers
             {
                 var current_time = DateTime.Now;
                 var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= current_time && d.end_date >= current_time);
-
-                if (db.DepartmentReports.Any(p => p.ReportPeriod != null))
+                if (!db.FormDepartmentReportDetails.Any(f => f.FormDepartmentReport.report_period_id == check.report_period_id))
+                {
+                    ViewBag.CheckFormDep = true;
+                }
+                else if (db.DepartmentReports.Any(p => p.ReportPeriod != null))
                 {
                     ViewBag.Check = true;
                 }
+
                 ViewBag.PeriodsId = check.report_period_id;
                 return View(check.FormDepartmentReports.First());
             }

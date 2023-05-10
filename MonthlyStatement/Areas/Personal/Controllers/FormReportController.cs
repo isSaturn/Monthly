@@ -23,11 +23,15 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             {
                 var current_time = DateTime.Now;
                 var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= current_time && d.end_date >= current_time);
-
-                if (db.PersonalReports.Any(p => p.ReportPeriod != null))
+                if (!db.FormPersonalReportDetails.Any(f => f.FormPersonalReport.report_period_id == check.report_period_id))
+                {
+                    ViewBag.CheckFormPer = true;
+                }
+                else if (db.PersonalReports.Any(p => p.ReportPeriod != null))
                 {
                     ViewBag.Check = true;
                 }
+
                 ViewBag.PeriodsId = check.report_period_id;
                 return View(check.FormPersonalReports.First());
             }

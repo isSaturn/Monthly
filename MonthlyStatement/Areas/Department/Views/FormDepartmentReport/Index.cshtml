@@ -6,6 +6,22 @@
     int j = 64;
     int k = 0;
 
+
+}
+@if (ViewBag.CheckFormDep == true)
+{
+    <div class="alert alert-danger" role="alert">
+        Chưa có biểu mẫu báo cáo của tháng này
+    </div>
+}
+else if (ViewBag.Check == true)
+{
+    <div class="alert alert-danger" role="alert">
+        Bạn đã báo cáo tháng này!
+    </div>
+}
+else
+{
     string lstId = "";
 
     CP25Team04Entities models = new CP25Team04Entities();
@@ -15,16 +31,6 @@
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.DepartmentReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
-}
-
-@if (ViewBag.Check == true)
-{
-    <div class="alert alert-danger" role="alert">
-        Bạn đã báo cáo tháng này!
-    </div>
-}
-else
-{
     <section class="section">
         <input hidden value="@Model.report_period_id" id="report_period_id" />
         <div class="section-body">

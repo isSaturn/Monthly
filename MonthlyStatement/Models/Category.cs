@@ -19,8 +19,8 @@ namespace MonthlyStatement.Models
         {
             this.Categories1 = new HashSet<Category>();
             this.FormDepartmentReportDetails = new HashSet<FormDepartmentReportDetail>();
-            this.FormPersonalReportDetails = new HashSet<FormPersonalReportDetail>();
             this.FormStaffReportDetails = new HashSet<FormStaffReportDetail>();
+            this.FormPersonalReportDetails = new HashSet<FormPersonalReportDetail>();
         }
     
         public int category_id { get; set; }
@@ -34,8 +34,8 @@ namespace MonthlyStatement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormDepartmentReportDetail> FormDepartmentReportDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FormPersonalReportDetail> FormPersonalReportDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormStaffReportDetail> FormStaffReportDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FormPersonalReportDetail> FormPersonalReportDetails { get; set; }
     }
 }

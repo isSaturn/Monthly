@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -195,23 +196,31 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         public ActionResult FormDepartmentDetail(int id)
         {
             var formDepartmentDetail = db.FormDepartmentReportDetails.Where(f => f.form_department_report_id == id).ToList();
-            if (!db.FormDepartmentReportDetails.Any(f => f.Category.category_lv == null))
+            if (!formDepartmentDetail.Any())
             {
-                return View(formDepartmentDetail);
+                ViewBag.FormDep = true;
             }
-            ViewBag.FormDep = true;
             return View(formDepartmentDetail);
         }
         //personal detail
         public ActionResult FormPersonalDetail(int id)
         {
             var formPersonalDetail = db.FormPersonalReportDetails.Where(f => f.form_personal_report_id == id).ToList();
+
+            if (!formPersonalDetail.Any())
+            {
+                ViewBag.FormPer = true;
+            }
             return View(formPersonalDetail);
         }
         //staff detail
         public ActionResult FormStaffDetail(int id)
         {
             var formStaffDetail = db.FormStaffReportDetails.Where(f => f.form_staff_report_id == id).ToList();
+            if (!formStaffDetail.Any())
+            {
+                ViewBag.FormSta = true;
+            }
             return View(formStaffDetail);
         }
 
