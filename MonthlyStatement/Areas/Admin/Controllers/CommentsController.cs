@@ -77,9 +77,9 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             db.SaveChanges();
 
 
-            await UserManager.SendEmailAsync(account_id,"Thông báo bình luận từ " + emails, "Nội dung: " + c.comment_content);
+            await UserManager.SendEmailAsync(account_id, "Thông báo bình luận từ " + emails, "Nội dung: " + c.comment_content);
 
-            return RedirectToAction("Index", "ListReportPersonal");
+            return RedirectToAction("Detail", "ListReportPersonal", new { id = c.personal_report_id });
         }
 
 
@@ -106,7 +106,32 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                            "Thông báo bình luận từ " + emails,
                            "Nội dung: " + c.comment_content);
 
-            return RedirectToAction("Index", "ListReportDepartment");
+            return RedirectToAction("Detail", "ListReportDepartment", new { id = c.department_report_id });
+        }
+        [HttpPost]
+        // GET: Admin/Comments
+        public async Task<ActionResult> PostCommentStaff(string CommentText, int id)
+        {
+            string emails = User.Identity.Name;
+            string userId = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+
+            string account_id = db.StaffReports.FirstOrDefault(t => t.staff_report_id == id).account_id;
+            string mail = db.AspNetUsers.FirstOrDefault(m => m.Id == account_id).Email;
+
+            Comment c = new Comment();
+            c.comment_content = CommentText;
+            c.comment_date = DateTime.Now;
+            c.account_id = userId;
+            c.staff_report_id = id;
+            db.Comments.Add(c);
+            db.SaveChanges();
+
+
+            await UserManager.SendEmailAsync(account_id,
+                           "Thông báo bình luận từ " + emails,
+                           "Nội dung: " + c.comment_content);
+
+            return RedirectToAction("Detail", "ListReportStaff", new { id = c.staff_report_id });
         }
     }
 }

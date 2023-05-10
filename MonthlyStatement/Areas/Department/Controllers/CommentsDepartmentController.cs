@@ -90,7 +90,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
             //                  "Nội dung: " + c.comment_content);
 
             //}
-            return RedirectToAction("Department", "Report");
+            return RedirectToAction("DepartmentDetail", "DepartmentReport", new { id = c.department_report_id });
         }
 
     }

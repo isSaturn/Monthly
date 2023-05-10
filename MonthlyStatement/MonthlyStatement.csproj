@@ -1199,13 +1199,6 @@
     <Content Include="Areas\FacultyAreas\Views\FacReport\FacReportPerior.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\FacReport\FacManagerReportPerAndDep.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\FacReport\FacManagerReportPer.cshtml" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Department\Views\web.config" />
     <Content Include="Areas\Staff\Views\web.config" />
     <Content Include="Areas\Staff\Views\FormStaffReport\Index.cshtml" />
@@ -1223,6 +1216,19 @@
     <Content Include="Areas\Personal\Views\Static\Index.cshtml" />
     <Content Include="Areas\Personal\Views\Index.cshtml" />
     <Content Include="Areas\Personal\Views\static.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportStaff\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\ListReportStaff\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Statical" />
+    <Content Include="Areas\Staff\Views\StaffReport\StaffReportEdit.cshtml" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

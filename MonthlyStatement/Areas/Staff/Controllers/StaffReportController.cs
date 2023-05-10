@@ -46,7 +46,6 @@ namespace MonthlyStatement.Areas.Staff.Controllers
             db.StaffReportDetails.RemoveRange(pers.StaffReportDetails);
             db.StaffReports.Remove(pers);
             db.SaveChanges();
-            pr.report_period_id = (int)reportperiodid;
 
             if (fileMinhChung != null)
             {

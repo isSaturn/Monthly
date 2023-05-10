@@ -90,7 +90,7 @@ namespace MonthlyStatement.Areas.Staff.Controllers
             //                  "Nội dung: " + c.comment_content);
 
             //}
-            return RedirectToAction("Staff", "Report");
+            return RedirectToAction("StaffDetail", "StaffReport", new { id = c.staff_report_id });
         }
 
     }

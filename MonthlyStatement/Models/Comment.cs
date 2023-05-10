@@ -31,8 +31,8 @@ namespace MonthlyStatement.Models
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual DepartmentReport DepartmentReport { get; set; }
         public virtual PersonalReport PersonalReport { get; set; }
+        public virtual StaffReport StaffReport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DepartmentReport> DepartmentReports { get; set; }
-        public virtual StaffReport StaffReport { get; set; }
     }
 }

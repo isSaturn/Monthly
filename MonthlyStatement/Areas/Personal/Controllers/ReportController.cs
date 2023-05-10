@@ -28,7 +28,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             return View(form);
         }
         public ActionResult PersonalReportEdit(int id)
-        {            
+        {
             var per = db.PersonalReports.Find(id);
             var form = db.FormPersonalReports.FirstOrDefault(f => f.report_period_id == per.report_period_id);
             var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= form.ReportPeriod.start_date && d.end_date >= form.ReportPeriod.end_date);
@@ -46,7 +46,6 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             db.PersonalReportDetails.RemoveRange(pers.PersonalReportDetails);
             db.PersonalReports.Remove(pers);
             db.SaveChanges();
-            pr.report_period_id = (int)reportperiodid;
 
             if (fileMinhChung != null)
             {

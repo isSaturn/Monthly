@@ -24,8 +24,8 @@ namespace MonthlyStatement.Models
             this.Notifications = new HashSet<Notification>();
             this.PersonalReports = new HashSet<PersonalReport>();
             this.Profiles = new HashSet<Profile>();
-            this.AspNetRoles = new HashSet<AspNetRole>();
             this.StaffReports = new HashSet<StaffReport>();
+            this.AspNetRoles = new HashSet<AspNetRole>();
         }
     
         public string Id { get; set; }
@@ -56,8 +56,8 @@ namespace MonthlyStatement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StaffReport> StaffReports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
     }
 }
