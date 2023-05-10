@@ -10,7 +10,7 @@ using MonthlyStatement.Models;
 namespace MonthlyStatement.Areas.Personal.Controllers
 {
     [Authorize(Roles = "Giảng viên")]
-    public class DepartmentReportController : Controller
+    public class ReportController : Controller
     {
         CP25Team04Entities db = new CP25Team04Entities();
         // GET: Personal/Report

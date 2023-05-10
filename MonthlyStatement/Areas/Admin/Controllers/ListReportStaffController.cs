@@ -7,8 +7,6 @@ using System.Web.Mvc;
 
 namespace MonthlyStatement.Areas.Admin.Controllers
 {
-    public class ListReportStaffController : Controller
-    {
     [Authorize(Roles = "Quản trị viên")]
 
     public class ListReportStaffController : Controller
@@ -18,13 +16,12 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // GET: Admin/ListReportPersonal
         public ActionResult Index()
         {
-            return View(db.StaffReports.ToList());
+            return View(db.PersonalReports.ToList());
         }
         public ActionResult Detail(int id)
         {
-            var form = db.StaffReports.Find(id);
+            var form = db.PersonalReports.Find(id);
             return View(form);
         }
     }
-}
 }

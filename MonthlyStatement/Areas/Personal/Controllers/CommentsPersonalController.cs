@@ -15,7 +15,7 @@ using MonthlyStatement.Models;
 namespace MonthlyStatement.Areas.Personal.Controllers
 {
     [Authorize(Roles = "Giảng viên")]
-    public class CommentsDepartmentController : Controller
+    public class CommentsPersonalController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();
 
@@ -23,10 +23,10 @@ namespace MonthlyStatement.Areas.Personal.Controllers
         private ApplicationSignInManager _signInManager;
 
 
-        public CommentsDepartmentController()
+        public CommentsPersonalController()
         {
         }
-        public CommentsDepartmentController(ApplicationAccountManager userManager, ApplicationSignInManager signInManager)
+        public CommentsPersonalController(ApplicationAccountManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -43,7 +43,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                 _signInManager = value;
             }
         }
-        public CommentsDepartmentController(ApplicationAccountManager userManager)
+        public CommentsPersonalController(ApplicationAccountManager userManager)
         {
             UserManager = userManager;
         }
