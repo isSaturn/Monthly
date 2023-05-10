@@ -7,6 +7,8 @@ using System.Web.Mvc;
 
 namespace MonthlyStatement.Areas.Personal.Controllers
 {
+    [Authorize(Roles = "Giảng viên")]
+
     public class StaticController : Controller
     {
 
