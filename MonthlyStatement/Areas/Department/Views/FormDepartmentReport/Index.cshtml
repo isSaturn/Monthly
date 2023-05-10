@@ -1,4 +1,4 @@
-﻿@model  MonthlyStatement.Models.FormStaffReport
+﻿@model  MonthlyStatement.Models.FormDepartmentReport
 @using MonthlyStatement.Models
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,10 +11,10 @@
     CP25Team04Entities models = new CP25Team04Entities();
     int idKy = ViewBag.PeriodsId;
 
-    var form = models.StaffReports.Where(p => p.report_period_id == idKy);
+    var form = models.DepartmentReports.Where(p => p.report_period_id == idKy);
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
-    var formPer = models.StaffReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
+    var formPer = models.DepartmentReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
 }
 
 @if (ViewBag.Check == true)
@@ -53,9 +53,9 @@ else
                             <div class="card-body">
                                 <div id="accordion">
 
-                                    @if (Model.FormStaffReportDetails.Count() > 0)
+                                    @if (Model.FormDepartmentReportDetails.Count() > 0)
                                     {
-                                        foreach (var items in Model.FormStaffReportDetails)
+                                        foreach (var items in Model.FormDepartmentReportDetails)
                                         {
                                             if (items.Category.category_of_id == null)
                                             {
@@ -73,15 +73,15 @@ else
                                                         </div>
                                                     </div>
                                                 </div>
-                                                foreach (var itemss in Model.FormStaffReportDetails.Where(c => c.Category.category_of_id == items.category_id && c.Category.category_lv == 2).ToList())
+                                                foreach (var itemss in Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == items.category_id && c.Category.category_lv == 2).ToList())
                                                 {
                                                     lstId += itemss.category_id + "-";
                                                     i++;
                                                     <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
                                                         <div class="col-lg-12 ">
                                                             <input hidden id="dem-@itemss.category_id" value="1" />
-                                                            <input hidden id="frmPerDetail-@itemss.category_id" value="@itemss.form_staff_report_detail_id" />
-                                                            @if (Model.FormStaffReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).Count() < 1)
+                                                            <input hidden id="frmPerDetail-@itemss.category_id" value="@itemss.form_department_report_detail_id" />
+                                                            @if (Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).Count() < 1)
                                                             {
                                                                 <table class="table table-bordered dataTable">
                                                                     <tbody>
@@ -118,7 +118,7 @@ else
                                                                         <tr class="" style="max-width: 50px">
                                                                             <th colspan="2">@(i). @itemss.Category.category_content</th>
                                                                         </tr>
-                                                                        @if (!Model.FormStaffReportDetails.Any(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3))
+                                                                        @if (!Model.FormDepartmentReportDetails.Any(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3))
                                                                         {
                                                                             <tr id="formInput-@itemss.category_id">
                                                                                 <td colspan="2">
@@ -140,7 +140,7 @@ else
                                                                         }
                                                                     </tbody>
                                                                 </table>
-                                                                foreach (var itemsss in Model.FormStaffReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).ToList())
+                                                                foreach (var itemsss in Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).ToList())
                                                                 {
                                                                     lstId += itemsss.category_id + "-";
                                                                     k++;
@@ -148,7 +148,7 @@ else
                                                                     <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
                                                                         <div class="col-lg-12 ">
                                                                             <input hidden id="dem-@itemsss.category_id" value="1" />
-                                                                            <input hidden id="frmPerDetail-@itemsss.category_id" value="@itemsss.form_staff_report_detail_id" />
+                                                                            <input hidden id="frmPerDetail-@itemsss.category_id" value="@itemsss.form_department_report_detail_id" />
                                                                             <table class="table table-bordered dataTable">
                                                                                 <tbody>
                                                                                     <tr class="" style="max-width: 50px">
@@ -283,7 +283,7 @@ else
             formData.append("reportperiodid", $('#report_period_id').val());
 
             $.ajax({
-                url: $('#requestUrl').val() + 'Staff/FormStaffReport/submitFormReport',
+                url: $('#requestUrl').val() + 'Department/FormDepartmentReport/submitFormReport',
                 type: 'POST',
                 dataType: 'html',
                 contentType: false,

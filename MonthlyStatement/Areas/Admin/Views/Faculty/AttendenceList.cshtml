@@ -70,7 +70,14 @@
                                                 @i
                                             </td>
                                             <td>
-                                                @item.email
+                                                @if (item.account_id == null)
+                                                {
+                                                    <span>Chưa có email</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.AspNetUser.Email
+                                                }
 
                                             </td>
                                             <td>
@@ -191,8 +198,14 @@
                                             @j
                                         </td>
                                         <td>
-                                            @item.email
-
+                                            @if (item.account_id == null)
+                                            {
+                                                <span>Chưa có email</span>
+                                            }
+                                            else
+                                            {
+                                                @item.AspNetUser.Email
+                                            }
                                         </td>
                                         <td>
                                             @if (item.user_name == null)
@@ -313,6 +326,7 @@
         var formData = new FormData();
         formData.append('id', id);
         formData.append('khoa', khoa);
+
 
         $.ajax({
             url: $('#requestUrl').val() + 'Admin/Faculty/AddUser',

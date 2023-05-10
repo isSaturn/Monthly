@@ -70,6 +70,10 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                         formPersonalReport.report_period_id = report_period.report_period_id;
                         db.FormPersonalReports.Add(formPersonalReport);
 
+                        FormStaffReport formStaffReport = new FormStaffReport();
+                        formStaffReport.report_period_id = report_period.report_period_id;
+                        db.FormStaffReports.Add(formStaffReport);
+
                         db.SaveChanges();
 
                     }

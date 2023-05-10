@@ -1,7 +1,7 @@
-﻿@model IEnumerable<MonthlyStatement.Models.PersonalReport>
+﻿@model IEnumerable<MonthlyStatement.Models.DepartmentReport>
 @{
     int i = 0;
-    ViewBag.Title = "Personal";
+    ViewBag.Title = "Department";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -55,7 +55,7 @@
                                                 @item.ReportPeriod.report_period_name
                                             </td>
                                             <td>
-                                               @String.Format("{0: dd/MM/yyy}", item.date_report)
+                                                @String.Format("{0: dd/MM/yyy}", item.date_report)
                                             </td>
                                             <td>
                                                 @item.AspNetUser.AspNetRoles.First().Name
@@ -69,17 +69,17 @@
                                                 {
                                                     <div class="badge badge-warning">@item.status</div>
                                                 }
-                                                else 
-                                                { 
+                                                else
+                                                {
                                                     <div class="badge badge-danger">@item.status</div>
                                                 }
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("PersonalDetail","Report", new {id = item.personal_report_id})">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("DepartmentDetail","DepartmentReport", new {id = item.department_report_id})">
                                                         Xem
                                                     </a>
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("PersonalReportEdit","Report", new {id = item.personal_report_id})">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("DepartmentReportEdit","DepartmentReport", new {id = item.department_report_id})">
                                                         Chỉnh sửa
                                                     </a>
                                                 </div>

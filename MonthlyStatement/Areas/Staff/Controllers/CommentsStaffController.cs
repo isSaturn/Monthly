@@ -63,7 +63,7 @@ namespace MonthlyStatement.Areas.Staff.Controllers
 
         [HttpPost]
         // GET: Staff/CommentsStaff
-        public async Task<ActionResult> PostCommentAsync(string CommentText, int id)
+        public ActionResult PostComment(string CommentText, int id)
         {
             string emails = User.Identity.Name;
             string userId = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;

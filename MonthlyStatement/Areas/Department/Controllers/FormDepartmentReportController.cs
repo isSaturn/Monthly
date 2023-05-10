@@ -10,26 +10,26 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MonthlyStatement.Areas.Staff.Controllers
+namespace MonthlyStatement.Areas.Department.Controllers
 {
-    [Authorize(Roles = "Nhân viên")]
-    public class FormStaffReportController : Controller
+    [Authorize(Roles = "Bộ môn")]
+    public class FormDepartmentReportController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();
 
-        // GET: Staff/Report
+        // GET: Department/Report
         public ActionResult Index()
         {
             {
                 var current_time = DateTime.Now;
                 var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= current_time && d.end_date >= current_time);
 
-                if (db.StaffReports.Any(p => p.ReportPeriod != null))
+                if (db.DepartmentReports.Any(p => p.ReportPeriod != null))
                 {
                     ViewBag.Check = true;
                 }
                 ViewBag.PeriodsId = check.report_period_id;
-                return View(check.FormStaffReports.First());
+                return View(check.FormDepartmentReports.First());
             }
         }
         [HttpPost]
@@ -39,7 +39,7 @@ namespace MonthlyStatement.Areas.Staff.Controllers
             {
                 string emails = User.Identity.Name;
                 string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
-                StaffReport pr = new StaffReport();
+                DepartmentReport pr = new DepartmentReport();
                 pr.report_period_id = (int)reportperiodid;
 
                 if (fileMinhChung != null)
@@ -65,7 +65,7 @@ namespace MonthlyStatement.Areas.Staff.Controllers
                 pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
                 pr.date_report = DateTime.Now;
                 pr.account_id = accID;
-                db.StaffReports.Add(pr);
+                db.DepartmentReports.Add(pr);
                 db.SaveChanges();
 
                 if (data.IndexOf("~") != -1) //Có nhiều form detail
@@ -80,11 +80,11 @@ namespace MonthlyStatement.Areas.Staff.Controllers
 
                             foreach (var items in lstNoiDung)
                             {
-                                StaffReportDetail perDetail = new StaffReportDetail();
-                                perDetail.staff_report_id = pr.staff_report_id;
-                                perDetail.form_staff_report_detail_id = Int32.Parse(idFrm);
-                                perDetail.staff_report_content = items;
-                                db.StaffReportDetails.Add(perDetail);
+                                DepartmentReportDetail perDetail = new DepartmentReportDetail();
+                                perDetail.department_report_id = pr.department_report_id;
+                                perDetail.form_department_report_detail_id = Int32.Parse(idFrm);
+                                perDetail.department_report_content = items;
+                                db.DepartmentReportDetails.Add(perDetail);
                             }
                         }
                         else
@@ -92,11 +92,11 @@ namespace MonthlyStatement.Areas.Staff.Controllers
                             string idFrm = item.Split('=')[0];
                             var noiDung = item.Split('=')[1];
 
-                            StaffReportDetail perDetail = new StaffReportDetail();
-                            perDetail.staff_report_id = pr.staff_report_id;
-                            perDetail.form_staff_report_detail_id = Int32.Parse(idFrm);
-                            perDetail.staff_report_content = noiDung;
-                            db.StaffReportDetails.Add(perDetail);
+                            DepartmentReportDetail perDetail = new DepartmentReportDetail();
+                            perDetail.department_report_id = pr.department_report_id;
+                            perDetail.form_department_report_detail_id = Int32.Parse(idFrm);
+                            perDetail.department_report_content = noiDung;
+                            db.DepartmentReportDetails.Add(perDetail);
                         }
                     }
                 }
@@ -109,11 +109,11 @@ namespace MonthlyStatement.Areas.Staff.Controllers
 
                         foreach (var items in lstNoiDung)
                         {
-                            StaffReportDetail perDetail = new StaffReportDetail();
-                            perDetail.staff_report_id = pr.staff_report_id;
-                            perDetail.form_staff_report_detail_id = Int32.Parse(idFrm);
-                            perDetail.staff_report_content = items;
-                            db.StaffReportDetails.Add(perDetail);
+                            DepartmentReportDetail perDetail = new DepartmentReportDetail();
+                            perDetail.department_report_id = pr.department_report_id;
+                            perDetail.form_department_report_detail_id = Int32.Parse(idFrm);
+                            perDetail.department_report_content = items;
+                            db.DepartmentReportDetails.Add(perDetail);
                         }
                     }
                     else
@@ -121,11 +121,11 @@ namespace MonthlyStatement.Areas.Staff.Controllers
                         string idFrm = data.Split('=')[0];
                         var noiDung = data.Split('=')[1];
 
-                        StaffReportDetail perDetail = new StaffReportDetail();
-                        perDetail.staff_report_id = pr.staff_report_id;
-                        perDetail.form_staff_report_detail_id = Int32.Parse(idFrm);
-                        perDetail.staff_report_content = noiDung;
-                        db.StaffReportDetails.Add(perDetail);
+                        DepartmentReportDetail perDetail = new DepartmentReportDetail();
+                        perDetail.department_report_id = pr.department_report_id;
+                        perDetail.form_department_report_detail_id = Int32.Parse(idFrm);
+                        perDetail.department_report_content = noiDung;
+                        db.DepartmentReportDetails.Add(perDetail);
                     }
 
                 }
