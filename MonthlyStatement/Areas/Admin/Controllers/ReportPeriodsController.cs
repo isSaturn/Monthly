@@ -195,6 +195,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         public ActionResult FormDepartmentDetail(int id)
         {
             var formDepartmentDetail = db.FormDepartmentReportDetails.Where(f => f.form_department_report_id == id).ToList();
+            if (!db.FormDepartmentReportDetails.Any(f => f.Category.category_lv == null))
+            {
+                return View(formDepartmentDetail);
+            }
+            ViewBag.FormDep = true;
             return View(formDepartmentDetail);
         }
         //personal detail

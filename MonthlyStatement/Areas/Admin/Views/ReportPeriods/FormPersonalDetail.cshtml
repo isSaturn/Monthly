@@ -43,36 +43,11 @@
                                     <tr class="" style="max-width: 50px">
                                         <th>@(i). @items_lv2.Category.category_content</th>
                                     </tr>
-
-                                    @if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id).Count() > 0)
-                                    {
-
-                                        int inputIndex = 0;
-                                        if (!models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
-                                        {
-                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id).ToList())
-                                            {
-                                                inputIndex++;
-                                                <tr id="formInput-@items_lv2.category_id-@inputIndex">
-                                                    <td>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id).ToList())
-                                            {
-                                                inputIndex++;
-                                                <tr id="formInput-@items_lv2.category_id-@inputIndex" class="d-none">
-                                                    <td>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                        </td>
+                                    </tr>                                  
                                     <tr hidden id="append-@items.category_id"></tr>
                                 </tbody>
                             </table>
@@ -92,27 +67,11 @@
                                                 <tr class="" style="max-width: 50px">
                                                     <th>@items_lv3.Category.category_content</th>
                                                 </tr>
-                                                @{ var items_groupby = models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && items_lv3.form_personal_report_detail_id == x.form_personal_report_detail_id).GroupBy(x => x.form_personal_report_detail_id).ToList();}
-
-                                                @foreach (var item in items_groupby)
-                                                {
-                                                    foreach (var items_content_lv3 in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && x.form_personal_report_detail_id == item.Key).ToList())
-                                                    {
-                                                        int inputIndex = 0;
-                                                        inputIndex++;
-                                                        if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_content_lv3.form_personal_report_detail_id).Count() > 0)
-                                                        {
-                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_content_lv3.form_personal_report_detail_id).ToList())
-                                                            {
-                                                                <tr>
-                                                                    <td>
-                                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                                    </td>
-                                                                </tr>
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                    </td>
+                                                </tr>
                                                 <tr hidden id="append-@items.category_id"></tr>
                                             </tbody>
                                         </table>
