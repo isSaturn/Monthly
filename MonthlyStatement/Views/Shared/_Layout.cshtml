@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Admin Monthly Statement</title>
+    <title> Monthly Statement</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="~/assets/css/app.min.css" />
     <link rel="stylesheet" href="~/assets/bundles/datatables/datatables.min.css">
@@ -31,11 +31,11 @@
             @{
                 Html.RenderPartial("_NavBarPartialView");
             }
-            <div class="main-sidebar sidebar-style-2" style="background-image: linear-gradient(rgba(241, 23, 52, 0.9), rgba(20, 13, 18, 0.9)),url(../../assets/img/vanlangcs3.jpg); background-position: center; background-repeat: no-repeat; background-size: cover">
+            <div class="main-sidebar sidebar-style-2" style="background-image: linear-gradient(135deg,#ce1b28 0%, rgba(20, 13, 18, 0.9)),url(../../assets/img/vanlangcs3.jpg); background-position: center; background-repeat: no-repeat; background-size: cover ">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
                         <a href="@Url.Action("Index", "Home", new { Area = "" })">
-                            <img alt="image" src="~/assets/img/vlu/logo.png" class="header-logo" /> <span class="logo-name" style="color:#fff">Văn Lang</span>
+                            <img alt="image" src="~/assets/img/vlu/header.png" class="header-logo" /> <span class="logo-name" style="color:#fff">Monthly</span>
                         </a>
                     </div>
                     @if (User.IsInRole("Quản trị viên"))
@@ -76,6 +76,7 @@
                             <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "FormReport", new { Area = "Personal" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
                             </li>
+                            <li class="dropdown">
                             <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "Static", new { Area = "Personal" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
                             </li>
@@ -90,6 +91,7 @@
                             <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "FormStaffReport", new { Area = "Staff" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
                             </li>
+                            <li class="dropdown">
                             <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "Static", new { Area = "Staff" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
                             </li>
@@ -104,6 +106,7 @@
                             <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "FormDepartmentReport", new { Area = "Department" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
                             </li>
+                            <li class="dropdown">
                             <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "Static", new { Area = "Department" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
                             </li>
