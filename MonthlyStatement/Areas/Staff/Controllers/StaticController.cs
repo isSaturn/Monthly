@@ -8,13 +8,11 @@ using System.Web.Mvc;
 namespace MonthlyStatement.Areas.Staff.Controllers
 {
     [Authorize(Roles = "Nhân viên")]
-
     public class StaticController : Controller
     {
 
         private CP25Team04Entities db = new CP25Team04Entities();
-
-        // GET: Personal/Static
+        // GET: Staff/Static
         public ActionResult Index()
         {
             var report_period = db.ReportPeriods.Where(r => r.ReportYear.year == DateTime.Now.Year).ToList();

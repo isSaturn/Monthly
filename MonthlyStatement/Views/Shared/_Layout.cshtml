@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title> Monthly Statement</title>
+    <title>Admin Monthly Statement</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="~/assets/css/app.min.css" />
     <link rel="stylesheet" href="~/assets/bundles/datatables/datatables.min.css">
@@ -31,7 +31,7 @@
             @{
                 Html.RenderPartial("_NavBarPartialView");
             }
-            <div class="main-sidebar sidebar-style-2" style="background-image: linear-gradient(135deg,#ce1b28 0%, rgba(20, 13, 18, 0.9)),url(../../assets/img/vanlangcs3.jpg); background-position: center; background-repeat: no-repeat; background-size: cover ">
+            <div class="main-sidebar sidebar-style-2" style="background-image: linear-gradient(#ce1b28 0%, rgba(20, 13, 18, 0.9)),url(../../assets/img/vanlangcs3.jpg); background-position: center; background-repeat: no-repeat; background-size: cover ">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
                         <a href="@Url.Action("Index", "Home", new { Area = "" })">
@@ -40,93 +40,115 @@
                     </div>
                     @if (User.IsInRole("Quản trị viên"))
                     {
-                        <ul class="sidebar-menu">
-                            <li class=@(ViewBag.Title == "Quản lý tài quản" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "Accounts", new { Area = "Admin" })" class="nav-link"><i data-feather="user-check"></i><span>Quản lý tài khoản</span></a>
-                            </li>
-                            <li class=@(ViewBag.Title == "Quản lý khoa" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "Faculty", new { Area = "Admin" })" class="nav-link"><i data-feather="book"></i><span>Quản lý khoa</span></a>
-                            </li>
-                            <li class=@(ViewBag.Title == "Quản lý danh mục" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "Categories", new { Area = "Admin" })" class="nav-link"><i data-feather="grid"></i><span>Quản lý danh mục</span></a>
-                            </li>
-                            <li class="dropdown">
-                            <li class=@(ViewBag.Title == "Quản lý báo cáo" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "YearReport", new { Area = "Admin" })" class="nav-link"><i data-feather="briefcase"></i><span>Quản lý kỳ báo cáo</span></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="nav-link" href="@Url.Action("Index", "ListReportDepartment", new { Area = "Admin" })">Bộ môn</a></li>
-                                    <li><a class="nav-link" href="@Url.Action("Index", "ListReportPersonal", new { Area = "Admin" })">Giảng viên</a></li>
-                                    <li><a class="nav-link" href="@Url.Action("Index", "ListReportStaff", new { Area = "Admin" })">Nhân viên</a></li>
+                <ul class="sidebar-menu">
+                    <li class=@(ViewBag.Title == "Quản lý tài quản" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "Accounts", new { Area = "Admin" })" class="nav-link"><i data-feather="user-check"></i><span>Quản lý tài khoản</span></a>
+                    </li>
+                    <li class=@(ViewBag.Title == "Quản lý khoa" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "Faculty", new { Area = "Admin" })" class="nav-link"><i data-feather="book"></i><span>Quản lý khoa</span></a>
+                    </li>
+                    <li class=@(ViewBag.Title == "Quản lý danh mục" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "Categories", new { Area = "Admin" })" class="nav-link"><i data-feather="grid"></i><span>Quản lý danh mục</span></a>
+                    </li>
+                    <li class="dropdown">
+                    <li class=@(ViewBag.Title == "Quản lý báo cáo" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "YearReport", new { Area = "Admin" })" class="nav-link"><i data-feather="briefcase"></i><span>Quản lý kỳ báo cáo</span></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="@Url.Action("Index", "ListReportDepartment", new { Area = "Admin" })">Bộ môn</a></li>
+                            <li><a class="nav-link" href="@Url.Action("Index", "ListReportPersonal", new { Area = "Admin" })">Giảng viên</a></li>
+                            <li><a class="nav-link" href="@Url.Action("Index", "ListReportStaff", new { Area = "Admin" })">Nhân viên</a></li>
+                        </ul>
+                    </li>
+                    <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "Statistical", new { Area = "Admin" })" class="nav-linkn"><i data-feather="bar-chart"></i><span>Thống kê</span></a>
+                    </li>
+                </ul> }
+                            else if (User.IsInRole("Giảng viên"))
+                            {
+                <ul class="sidebar-menu">
+                    <li class=@(ViewBag.Title == "Quản lý báo báo" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Personal", "Report", new { Area = "Personal" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
+                    </li>
+                    <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "FormReport", new { Area = "Personal" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
+                    </li>
+                    <li class="dropdown">
+                    <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "Static", new { Area = "Personal" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
+                    </li>
+                </ul> }
+                            else if (User.IsInRole("Nhân viên"))
+                            {
+                <ul class="sidebar-menu">
+                    <li class=@(ViewBag.Title == "Quản lý báo báo" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Staff", "StaffReport", new { Area = "Staff" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
+                    </li>
+                    <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "FormStaffReport", new { Area = "Staff" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
+                    </li>
+                    <li class="dropdown">
+                    <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "Static", new { Area = "Staff" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
+                    </li>
+                </ul> }
+                            else if (User.IsInRole("Bộ môn"))
+                            {
+                <ul class="sidebar-menu">
+                    <li class=@(ViewBag.Title == "Quản lý báo báo" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Department", "DepartmentReport", new { Area = "Department" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
+                    </li>
+                    <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "FormDepartmentReport", new { Area = "Department" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
+                    </li>
+                    <li class="dropdown">
+                    <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "Static", new { Area = "Department" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
+                    </li>
+                </ul> }
+                            else if (User.IsInRole("Ban phòng khoa"))
+                            {
+                <ul class="sidebar-menu">
+                    <li class=@(ViewBag.Title == "Quản lý tham dự" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "FacManager", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="users"></i><span>Quản lý tham dự</span></a>
+                    </li>
+                    <li class=@(ViewBag.Title == "Quản lý báo cáo" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "FacReport", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý báo cáo</span></a>
+                    </li>
+                    <li class="dropdown">
+                    <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
+                        <a href="@Url.Action("Index", "Statical", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
+                    </li>
+                </ul> }
+                            else if (User.IsInRole("Thư ký"))
+                            {
+                                <ul class="sidebar-menu">
+                                    
+                                    <li class=@(ViewBag.Title == "Quản lý khoa" ? "active" : "nav-item")>
+                                        <a href="@Url.Action("Index", "Faculty", new { Area = "Secretary" })" class="nav-link"><i data-feather="book"></i><span>Quản lý khoa</span></a>
+                                    </li>
+                                    <li class=@(ViewBag.Title == "Quản lý danh mục" ? "active" : "nav-item")>
+                                        <a href="@Url.Action("Index", "Categories", new { Area = "Secretary" })" class="nav-link"><i data-feather="grid"></i><span>Quản lý danh mục</span></a>
+                                    </li>
+                                    <li class="dropdown">
+                                    <li class=@(ViewBag.Title == "Quản lý báo cáo" ? "active" : "nav-item")>
+                                        <a href="@Url.Action("Index", "YearReport", new { Area = "Secretary" })" class="nav-link"><i data-feather="briefcase"></i><span>Quản lý kỳ báo cáo</span></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="nav-link" href="@Url.Action("Index", "ListReportDepartment", new { Area = "Secretary" })">Bộ môn</a></li>
+                                            <li><a class="nav-link" href="@Url.Action("Index", "ListReportPersonal", new { Area = "Secretary" })">Giảng viên</a></li>
+                                            <li><a class="nav-link" href="@Url.Action("Index", "ListReportStaff", new { Area = "Secretary" })">Nhân viên</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
+                                        <a href="@Url.Action("Index", "Statistical", new { Area = "Secretary" })" class="nav-linkn"><i data-feather="bar-chart"></i><span>Thống kê</span></a>
+                                    </li>
                                 </ul>
-                            </li>
-                            <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "Statistical", new { Area = "Admin" })" class="nav-linkn"><i data-feather="bar-chart"></i><span>Thống kê</span></a>
-                            </li>
-                        </ul>
-                    }
-                    else if (User.IsInRole("Giảng viên"))
-                    {
-                        <ul class="sidebar-menu">
-                            <li class=@(ViewBag.Title == "Quản lý báo báo" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Personal", "Report", new { Area = "Personal" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
-                            </li>
-                            <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "FormReport", new { Area = "Personal" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
-                            </li>
-                            <li class="dropdown">
-                            <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "Static", new { Area = "Personal" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
-                            </li>
-                        </ul>
-                    }
-                    else if (User.IsInRole("Nhân viên"))
-                    {
-                        <ul class="sidebar-menu">
-                            <li class=@(ViewBag.Title == "Quản lý báo báo" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Staff", "StaffReport", new { Area = "Staff" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
-                            </li>
-                            <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "FormStaffReport", new { Area = "Staff" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
-                            </li>
-                            <li class="dropdown">
-                            <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "Static", new { Area = "Staff" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
-                            </li>
-                        </ul>
-                    }
-                    else if (User.IsInRole("Bộ môn"))
-                    {
-                        <ul class="sidebar-menu">
-                            <li class=@(ViewBag.Title == "Quản lý báo báo" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Department", "DepartmentReport", new { Area = "Department" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
-                            </li>
-                            <li class=@(ViewBag.Title == "Quản lý biểu mẫu" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "FormDepartmentReport", new { Area = "Department" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý biểu mẫu</span></a>
-                            </li>
-                            <li class="dropdown">
-                            <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "Static", new { Area = "Department" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
-                            </li>
-                        </ul>
-                    }
-                    else if (User.IsInRole("Ban phòng khoa"))
-                    {
-                        <ul class="sidebar-menu">
-                            <li class=@(ViewBag.Title == "Quản lý tham dự" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "FacManager", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="users"></i><span>Quản lý tham dự</span></a>
-                            </li>
-                            <li class=@(ViewBag.Title == "Quản lý báo cáo" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "FacReport", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="edit"></i><span>Quản lý báo cáo</span></a>
-                            </li>
-                            <li class="dropdown">
-                            <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "Statical", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
-                            </li>
-                        </ul>
-                    }
+                            }
                 </aside>
             </div>
             <!-- Main Content -->
