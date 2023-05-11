@@ -14,6 +14,7 @@ using MonthlyStatement.Models;
 
 namespace MonthlyStatement.Areas.Personal.Controllers
 {
+    [Authorize(Roles = "Giảng viên")]
     public class CommentsPersonalController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();
@@ -62,7 +63,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
 
         [HttpPost]
         // GET: Personal/CommentsPersonal
-        public async Task<ActionResult> PostCommentAsync(string CommentText, int id)
+        public ActionResult PostComment(string CommentText, int id)
         {
             string emails = User.Identity.Name;
             string userId = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
@@ -71,7 +72,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             string mail = db.AspNetUsers.FirstOrDefault(m => m.Id == account_id).Email;*/
 
 
-            var list_send_comment = db.Comments.Where(p => p.personal_report_id == id).ToArray();
+            /*var list_send_comment = db.Comments.Where(p => p.personal_report_id == id).ToArray();*/
 
 
             Comment c = new Comment();
@@ -82,15 +83,15 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             db.Comments.Add(c);
             db.SaveChanges();
 
-            for (int i = 0; i < list_send_comment.Length; i++)
+            /*for (int i = 0; i < list_send_comment.Length; i++)
             {
                 await UserManager.SendEmailAsync(list_send_comment[i].account_id,
                               "Thông báo bình luận từ " + userId,
-                              "Nội dung: " + c.comment_content);
+                             "Nội dung: " + c.comment_content);
 
-            }
-            return RedirectToAction("Personal", "Report");
+            }*/
+            return RedirectToAction("PersonalDetail", "Report", new { id = c.personal_report_id });
         }
-        
+
     }
 }

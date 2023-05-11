@@ -2,7 +2,7 @@
 @using MonthlyStatement.Models
 
 @{
-    ViewBag.Title = "FormDepartmentEdit";
+    ViewBag.Title = "FormPersonalEdit";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var lstCategory = Session["FormPersonalEdit-lstCategory"] as IEnumerable<Category>;
 }
@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn: @Model.ReportPeriod.report_period_name</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Chỉnh sửa báo cáo giảng viên: @Model.ReportPeriod.report_period_name</h4>
                     </div>
                 </div>
                 <div class="col-12">
@@ -24,11 +24,12 @@
                                     <input value="@Model.form_personal_report_id" id="idReportPeriod" hidden="hidden">
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-2">
+                                    <table class="table table-striped" id="table-3">
                                         <thead>
                                             <tr>
                                                 <th class="text-center pt-3">
                                                 </th>
+                                                <th>Cấp danh mục</th>
                                                 <th>Tên danh mục</th>
                                                 <th>Chức năng</th>
                                             </tr>
@@ -45,10 +46,11 @@
                                                             </div>
                                                         </div>
                                                     </td>
+                                                    <td>LV 1</td>
                                                     <td style="font-weight:bold">
                                                         @item.category_content
                                                     </td>
-                                                    <td><a href="#" class="btn btn-primary">Edit</a></td>
+                                                    <td><a href="@Url.Action("Edit", "Categories", new { id = item.category_id })" class="btn btn-primary">Edit</a></td>
                                                 </tr>
                                             </tbody>
                                             foreach (var items in lstCategory.Where(c => c.category_of_id == item.category_id).ToList())
@@ -66,13 +68,14 @@
                                                                 </div>
                                                             </div>
                                                         </td>
+                                                        <td>LV 2</td>
                                                         <td>
                                                             <div class="media mt-3">
-                                                                <div class="pr-5" href="#">
+                                                                <div class="pr-3" href="#">
                                                                 </div>@items.category_content
                                                             </div>
                                                         </td>
-                                                        <td><a href="#" class="btn btn-primary">Edit</a></td>
+                                                        <td><a href="@Url.Action("Edit", "Categories", new { id = item.category_id })" class="btn btn-primary">Edit</a></td>
                                                     </tr>
                                                 </tbody>
                                                 foreach (var itemss in lstCategory.Where(c => c.category_of_id == items.category_id).ToList())
@@ -89,13 +92,15 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
+                                                            <td>LV 3</td>
+
                                                             <td>
                                                                 <div class="media mt-3">
                                                                     <div class="pr-5" href="#">
                                                                     </div>@itemss.category_content
                                                                 </div>
                                                             </td>
-                                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
+                                                            <td><a href="@Url.Action("Edit", "Categories", new { id = item.category_id })" class="btn btn-primary">Edit</a></td>
                                                         </tr>
                                                     </tbody>
                                                 }

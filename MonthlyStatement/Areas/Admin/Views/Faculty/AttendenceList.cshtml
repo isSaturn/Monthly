@@ -70,7 +70,14 @@
                                                 @i
                                             </td>
                                             <td>
-                                                @item.email
+                                                @if (item.account_id == null)
+                                                {
+                                                    <span>Chưa có email</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.AspNetUser.Email
+                                                }
 
                                             </td>
                                             <td>
@@ -126,6 +133,9 @@
                                                 <div class="buttons">
                                                     <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.account_id })">
                                                         <i class="far fa-edit"></i>
+                                                    </a>
+                                                    <a class="btn btn-icon btn-danger" data-original-title="Xóa" href="@Url.Action("DeleteFaculty", "Faculty", new { id = item.account_id })">
+                                                        <i class="far fa-trash-alt"></i>
                                                     </a>
                                                 </div>
                                             </td>
@@ -188,8 +198,14 @@
                                             @j
                                         </td>
                                         <td>
-                                            @item.email
-
+                                            @if (item.account_id == null)
+                                            {
+                                                <span>Chưa có email</span>
+                                            }
+                                            else
+                                            {
+                                                @item.AspNetUser.Email
+                                            }
                                         </td>
                                         <td>
                                             @if (item.user_name == null)
@@ -304,6 +320,27 @@
 </div>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
+    $('[id^="Themthanhvienvaokhoa-"]').on('click', function () {
+        var id = $(this).attr('name');
+        var khoa = $('#faculty_id').val();
+        var formData = new FormData();
+        formData.append('id', id);
+        formData.append('khoa', khoa);
+
+
+        $.ajax({
+            url: $('#requestUrl').val() + 'Admin/Faculty/AddUser',
+            type: 'POST',
+            dataType: 'html',
+            contentType: false,
+            processData: false,
+            data: formData
+        }).done(function (ketqua) {
+            swal('Thành công', 'Thêm thành viên thành công', 'success');
+            window.location.reload();
+        });
+    });
+
 
     $(document).ready(function () {
         $('#table-themthanhvien').DataTable();

@@ -111,36 +111,40 @@
                                                         @item.Profiles.FirstOrDefault().last_logout
                                                     }
                                                 </td>
-                                            <td>
-                                                @if (item.AspNetRoles.Count() < 1)
-                                                {
-                                                    <div class="badge badge badge-shadow">Không có vai trò</div>
-                                                }
-                                                else if (item.AspNetRoles.First().Name.Equals("Quản trị viên"))
-                                                {
-                                                    <div class="badge badge badge-dark">Quản trị viên</div>
-                                                }
-                                                else if (item.AspNetRoles.First().Name.Equals("Ban phòng khoa"))
-                                                {
-                                                    <div class="badge badge badge-danger">Ban phòng khoa</div>
-                                                }
-                                                else if (item.AspNetRoles.First().Name.Equals("Thư ký"))
-                                                {
-                                                    <div class="badge badge badge-warning">Thư ký</div>
-                                                }
-                                                else if (item.AspNetRoles.First().Name.Equals("Bộ môn"))
-                                                {
-                                                    <div class="badge badge badge-success">Bộ môn</div>
-                                                }
-                                                else if (item.AspNetRoles.First().Name.Equals("Nhân viên - Giảng viên"))
-                                                {
-                                                    <div class="badge badge badge-info">Nhân viên - Giảng viên</div>
-                                                }
-                                                else if (item.AspNetRoles.First().Name.Equals("Chưa cấp quyền"))
-                                                {
-                                                    <div class="badge badge badge-primary">Chưa cấp quyền</div>
-                                                }
-                                            </td>
+                                                <td>
+                                                    @if (item.AspNetRoles.Count() < 1)
+                                                    {
+                                                        <div class="badge badge badge-shadow">Không có vai trò</div>
+                                                    }
+                                                    else if (item.AspNetRoles.First().Name.Equals("Quản trị viên"))
+                                                    {
+                                                        <div class="badge badge badge-dark">Quản trị viên</div>
+                                                    }
+                                                    else if (item.AspNetRoles.First().Name.Equals("Ban phòng khoa"))
+                                                    {
+                                                        <div class="badge badge badge-danger">Ban phòng khoa</div>
+                                                    }
+                                                    else if (item.AspNetRoles.First().Name.Equals("Thư ký"))
+                                                    {
+                                                        <div class="badge badge badge-warning">Thư ký</div>
+                                                    }
+                                                    else if (item.AspNetRoles.First().Name.Equals("Bộ môn"))
+                                                    {
+                                                        <div class="badge badge badge-info">Bộ môn</div>
+                                                    }
+                                                    else if (item.AspNetRoles.First().Name.Equals("Giảng viên"))
+                                                    {
+                                                        <div class="badge badge badge-success">Giảng viên</div>
+                                                    }
+                                                    else if (item.AspNetRoles.First().Name.Equals("Nhân viên"))
+                                                    {
+                                                        <div class="badge badge badge-success">Nhân viên</div>
+                                                    }
+                                                    else if (item.AspNetRoles.First().Name.Equals("Chưa cấp quyền"))
+                                                    {
+                                                        <div class="badge badge badge-primary">Chưa cấp quyền</div>
+                                                    }
+                                                </td>
                                             <td class="text-center">
                                                 <div class="buttons">
                                                     <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.Id })">

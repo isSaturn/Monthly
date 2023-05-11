@@ -68,7 +68,8 @@
                 User.IsInRole("Ban phòng khoa" )? "Ban phòng khoa" :
                 User.IsInRole("Thư ký") ? "Thư ký" :
                 User.IsInRole("Bộ môn") ? "Bộ môn" :
-                User.IsInRole("Nhân viên - Giảng viên") ? "Nhân viên - Giảng viên" : "Chưa cấp quyền")
+                User.IsInRole("Giảng viên") ? "Giảng viên" : 
+                User.IsInRole("Nhân viên") ? "Nhân viên" : "Chưa cấp quyền")
             </div>
         </li>
     </ul>

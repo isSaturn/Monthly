@@ -1,0 +1,292 @@
+﻿@model  MonthlyStatement.Models.FormPersonalReport
+@using MonthlyStatement.Models
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 0;
+    int j = 64;
+    int k = 0;
+
+    string lstId = "";
+
+    CP25Team04Entities models = new CP25Team04Entities();
+    int idKy = ViewBag.PeriodsId;
+
+    var form = models.PersonalReports.Where(p => p.report_period_id == idKy);
+    string emails = User.Identity.Name;
+    string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+    var formPer = models.PersonalReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
+}
+
+
+<section class="section">
+    <input hidden value="@Model.report_period_id" id="report_period_id" />
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">@Model.ReportPeriod.report_period_name</h4>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="accordion">
+
+                                @if (Model.FormPersonalReportDetails.Count() > 0)
+                                {
+                                    foreach (var items in Model.FormPersonalReportDetails)
+                                    {
+                                        if (items.Category.category_of_id == null)
+                                        {
+                                            i = 0;
+                                            j++;
+                                            <br />
+
+                                            <div class="accordion">
+                                                <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                                    <h4>
+                                                        @(((char)j).ToString()). @items.Category.category_content.ToUpper()
+                                                    </h4>
+                                                    <div class="card-header-action">
+                                                        <a data-collapse="#panel-body-@(((char)j).ToString())" class="btn btn-icon" href="#@(((char)j).ToString())"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            foreach (var itemss in Model.FormPersonalReportDetails.Where(c => c.Category.category_of_id == items.category_id && c.Category.category_lv == 2).ToList())
+                                            {
+                                                lstId += itemss.category_id + "-";
+                                                i++;
+                                                <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
+                                                    <div class="col-lg-12 ">
+                                                        <input hidden id="dem-@itemss.category_id" value="1" />
+                                                        <input hidden id="frmPerDetail-@itemss.category_id" value="@itemss.form_personal_report_detail_id" />
+                                                        @if (Model.FormPersonalReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).Count() < 1)
+                                                        {
+                                                            int inputIndex = 0;
+
+                                                            <table class="table table-bordered dataTable">
+
+                                                                <tbody>
+                                                                    <tr class="" style="max-width: 50px">
+                                                                        <th colspan="2">@(i). @itemss.Category.category_content</th>
+                                                                    </tr>
+                                                                    @foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == itemss.form_personal_report_detail_id).ToList())
+                                                                    {
+                                                                        inputIndex++;
+
+                                                                        <tr id="formInput-@itemss.category_id">
+                                                                            <td colspan="2">
+                                                                                <input type="text" value="@items_content.personal_report_content" class="form-control" id="noidung-@itemss.category_id-@inputIndex">
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                    <tr hidden id="append-@itemss.category_id"></tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <button role="button" name="@itemss.category_id" id="xoanoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button role="button" name="@itemss.category_id" id="themnoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        else
+                                                        {
+                                                            <table class="table table-bordered dataTable">
+
+                                                                <tbody>
+                                                                    <tr class="" style="max-width: 50px">
+                                                                        <th colspan="2">@(i). @itemss.Category.category_content</th>
+                                                                    </tr>
+                                                                    @if (!Model.FormPersonalReportDetails.Any(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3))
+                                                                    {
+                                                                        <tr id="formInput-@itemss.category_id">
+                                                                            <td colspan="2">
+                                                                                <input value="@itemss.Category.category_content" type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemss.category_id-1">
+                                                                                <p hidden id="validation-noidung-@itemss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr hidden id="append-@itemss.category_id"></tr>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <tr id="formInput-@itemss.category_id" class="d-none">
+                                                                            <td colspan="2">
+                                                                                <input value="@itemss.Category.category_content" type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemss.category_id-1">
+                                                                                <p hidden id="validation-noidung-@itemss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr hidden id="append-@itemss.category_id"></tr>
+                                                                    }
+
+                                                                </tbody>
+                                                            </table>
+                                                            foreach (var itemsss in Model.FormPersonalReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).ToList())
+                                                            {
+                                                                lstId += itemsss.category_id + "-";
+                                                                k++;
+                                                                int inputIndex = 0;
+
+                                                                <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
+                                                                    <div class="col-lg-12 ">
+                                                                        <input hidden id="dem-@itemsss.category_id" value="1" />
+                                                                        <input hidden id="frmPerDetail-@itemsss.category_id" value="@itemsss.form_personal_report_detail_id" />
+                                                                        <table class="table table-bordered dataTable">
+                                                                            <tbody>
+                                                                                <tr class="" style="max-width: 50px">
+                                                                                    <th colspan="2">@(i).@(k) @itemsss.Category.category_content</th>
+                                                                                </tr>
+                                                                                @foreach (var items_content_lv3 in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == itemsss.form_personal_report_detail_id).ToList())
+                                                                                {
+                                                                                    inputIndex++;
+
+                                                                                    <tr id="formInput-@itemsss.category_id">
+                                                                                        <td colspan="2">
+                                                                                            <input type="text" value="@items_content_lv3.personal_report_content" class="form-control" id="noidung-@itemsss.category_id-@inputIndex">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                }
+                                                                                <tr hidden id="append-@itemsss.category_id"></tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <button role="button" name="@itemsss.category_id" id="xoanoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <button role="button" name="@itemsss.category_id" id="themnoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                        }
+
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        }
+                                    }
+                                }
+
+                            </div>
+
+                            <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
+
+                            @*<div class="accordion">
+                                    <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                        <h4>
+                                            @(((char) (++j)).ToString()). MINH CHỨNG
+                                        </h4>
+                                        <div class="card-header-action">
+                                            <a data-collapse="#panel-body-Z" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-body collapse" id="panel-body-Z" data-parent="#accordion" style="">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01">
+                                                <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
+                                            </div>
+                                            <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                            <div class="text-right mt-3">
+                                <button id="btnSubmit" role="button" class="btn btn-primary">Lưu báo cáo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    //Thêm input
+    $('[id^="themnoidung-"]').on('click', function (e) {
+        let id = $(this).attr("name");
+        let inputCount = Number($('#dem-' + id).val()) + 1;
+        $('#append-' + id).replaceWith('<tr id="formInput-' + id + '-' + inputCount + '"><td colspan="2"><input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-' + id + '-' + inputCount + '">'
+            + '<p hidden id="validation-noidung-' + id + '-' + inputCount + '" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>'
+            + '</td ></tr > <tr hidden id="append-' + id + '"></tr>');
+        $('#dem-' + id).val(inputCount);
+    });
+    $('[id^="xoanoidung-"]').on('click', function () {
+        let id = $(this).attr("name");
+        let inputCount = Number($('#dem-' + id).val());
+        if (inputCount > 1) {
+            $('#formInput-' + id + '-' + inputCount).remove();
+            $('#dem-' + id).val((inputCount - 1));
+        }
+    });
+    //xóa input
+    $('#btnSubmit').on('click', function () {
+        var lstCate = $('#lstCategory').val().split('-');
+        var datas = ""; //Chuỗi data phân tách nhau bởi các ký tự: idform1=noidung1-noidung2~idform2=noidung1-noidung2
+        var check = true;
+        for (var i = 0; i < lstCate.length; i++) {
+            if (Number($('#dem-' + lstCate[i]).val()) < 2) {
+                $('#validation-noidung-' + lstCate[i] + "-1").hide();
+                if ($('#noidung-' + lstCate[i] + "-1").val().trim().length < 1) {
+                    check = false;
+                    $('#validation-noidung-' + lstCate[i] + "-1").text("Vui lòng không bỏ trống thông tin này!").show().prop("hidden", false);
+                } else {
+                    datas += $('#frmPerDetail-' + lstCate[i]).val() + "=" + $('#noidung-' + lstCate[i] + "-1").val().trim() + "~";
+                }
+            }
+            else {
+                datas += $('#frmPerDetail-' + lstCate[i]).val() + "=";
+                for (var j = 1; j <= Number($('#dem-' + lstCate[i]).val()); j++) {
+                    $('#validation-noidung-' + lstCate[i] + "-" + j).hide();
+                    if ($('#noidung-' + lstCate[i] + "-" + j).val().trim().length < 1) {
+                        check = false;
+                        $('#validation-noidung-' + lstCate[i] + "-" + j).text("Vui lòng không bỏ trống thông tin này!").show().prop("hidden", false);
+                    } else {
+                        if (Number($('#dem-' + lstCate[i]).val()) > j)
+                            datas += $('#noidung-' + lstCate[i] + "-" + j).val().trim() + "-";
+                        else
+                            datas += $('#noidung-' + lstCate[i] + "-" + j).val().trim() + "~";
+                    }
+                }
+            }
+        }
+
+        if (check == true) {
+            var formData = new FormData();
+            //formData.append("fileMinhChung", $('#minhChungFile')[0].files[0]);
+            formData.append("data", datas.substring(0, datas.length - 1));
+            formData.append("reportperiodid", $('#report_period_id').val());
+
+            $.ajax({
+                url: $('#requestUrl').val() + 'Personal/Report/PersonalReportEdit',
+                type: 'POST',
+                dataType: 'html',
+                contentType: false,
+                processData: false,
+                data: formData
+            }).done(function (ketqua) {
+                if (ketqua == "Success") {
+                    swal('Thành công', 'Báo cáo tháng thành công', 'success');
+                } else {
+                    swal('Thất bại', 'Báo cáo không thành công', 'error');
+                }
+            });
+        }
+    });
+</script>
+
+
+

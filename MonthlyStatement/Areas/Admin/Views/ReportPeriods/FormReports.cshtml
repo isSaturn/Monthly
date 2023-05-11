@@ -39,9 +39,25 @@
                                 <div class="empty-state-icon bg-danger">
                                     <i class="fas fa-user"></i>
                                 </div>
-                                <h2>Cá nhân</h2>
+                                <h2>Giảng viên</h2>
                                 <a href="@Url.Action("FormPersonalDetail", "ReportPeriods", new { id = Model.FormPersonalReports.FirstOrDefault(f => f.report_period_id == Model.report_period_id).form_personal_report_id})" class="btn btn-light mt-4">Xem chi tiết</a>
                                 <a href="@Url.Action("FormPersonalEdit", "ReportPeriods", new { id = Model.FormPersonalReports.FirstOrDefault(f => f.report_period_id == Model.report_period_id).form_personal_report_id})" class="btn btn-warning mt-4">Chỉnh sửa</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                        </div>
+                        <div class="card-body">
+                            <div class="empty-state" data-height="400">
+                                <div class="empty-state-icon bg-brown">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h2>Nhân viên</h2>
+                                <a href="@Url.Action("FormStaffDetail", "ReportPeriods", new { id = Model.FormStaffReports.FirstOrDefault(f => f.report_period_id == Model.report_period_id).form_staff_report_id})" class="btn btn-light mt-4">Xem chi tiết</a>
+                                <a href="@Url.Action("FormStaffEdit", "ReportPeriods", new { id = Model.FormStaffReports.FirstOrDefault(f => f.report_period_id == Model.report_period_id).form_staff_report_id})" class="btn btn-warning mt-4">Chỉnh sửa</a>
                             </div>
                         </div>
                     </div>

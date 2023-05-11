@@ -5,77 +5,97 @@
     ViewBag.Title = "FormDepartmentDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 0;
+    int j = 64;
+    string lstId = "";
+
+
 }
 
-<section class="section">
-    <div class="section-body">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn</h4>
+@if (ViewBag.FormDep == true)
+{
+    <div class="alert alert-danger" role="alert">
+        Bạn chưa tạo mẫu báo cáo
+    </div>
+}
+else
+{
+    int idperiod = Model.First().FormDepartmentReport.report_period_id;
+    CP25Team04Entities models = new CP25Team04Entities();
+    var form = models.DepartmentReports.Where(p => p.report_period_id == idperiod);
+    string emails = User.Identity.Name;
+    string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+    var formPer = models.DepartmentReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                @foreach (var items in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_lv == 1).ToList())
+                {
+                    i = 0;
+                    j++;
+                    <br />
+                    <div class="section-title mt-1" style="font-weight:bold">
+                        @(((char) j).ToString()). @items.Category.category_content.ToUpper()
                     </div>
-                </div>
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <form>
-                                <div class="table-responsive">
-                                    <table class="table table-striped" style="border-collapse:unset" id="table-2">
-
-                                        @foreach (var item in Model.Where(c => c.Category.category_of_id == null).ToList())
-                                        {
-                                            i = i + 1;
-                                            int j = 0;
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        @i
-                                                    </td>
-                                                    <td style="font-weight:bold">
-                                                        @item.Category.category_content
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            if (Model.Where(c => c.Category.category_of_id == item.Category.category_id).Count() > 0)
-                                            {
-                                                foreach (var items in Model.Where(c => c.Category.category_of_id == item.category_id).ToList())
-                                                {
-                                                    j++;
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                @(i).@(j)
-                                                            </td>
-                                                            <td>
-                                                                @items.Category.category_content
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                }
-                                            }
-                                        }
-                                    </table>
-                                </div>
-                            </form>
-                            <form action="#" class="dropzone dz-clickable" id="mydropzone">
-                                <div class="dz-default dz-message">
-                                    <span>Vui lòng chọn minh chứng</span>
-                                </div>
-                            </form>
+                    foreach (var items_lv2 in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
+                    {
+                        lstId += items_lv2.category_id + "-";
+                        i++;
+                        <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered dataTable">
+                                    <tbody>
+                                        <tr class="" style="max-width: 50px">
+                                            <th>@(i). @items_lv2.Category.category_content</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                            </td>
+                                        </tr>
+                                        <tr hidden id="append-@items.category_id"></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                        if (models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
+                        {
+                            <div>
+                                <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+                                    @foreach (var items_lv3 in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id).ToList())
+                                    {
+                                        <div class="col">
+                                            <table class="table table-bordered dataTable">
+                                                <tbody>
+                                                    <tr class="" style="max-width: 50px">
+                                                        <th>@items_lv3.Category.category_content</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                                        </td>
+                                                    </tr>
+                                                    <tr hidden id="append-@items.category_id"></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
+                <div class="section-title mt-3" style="font-weight:bold">
+                    <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
                 </div>
+                <div class="card-body">
+                    <form action="#" class="dropzone dz-clickable" id="mydropzone">
+                        <div class="dz-default dz-message"><span>Tệp đính kèm</span></div>
+                    </form>
+                </div>
+                <hr />
             </div>
         </div>
     </div>
-</section>
+
+}
