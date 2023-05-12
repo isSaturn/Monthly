@@ -1,0 +1,91 @@
+﻿@model IEnumerable<MonthlyStatement.Models.FormStaffReportDetail>
+@using MonthlyStatement.Models
+
+@{ ViewBag.Title = "FormStaffDetail";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                int i = 0;
+                int j = 64;
+                string lstId = ""; }
+
+@if (ViewBag.FormSta == true)
+{
+<div class="alert alert-danger" role="alert">
+    Bạn chưa tạo mẫu báo cáo
+</div> }
+            else
+            {
+                int idperiod = Model.First().FormStaffReport.report_period_id;
+                CP25Team04Entities models = new CP25Team04Entities();
+                var form = models.StaffReports.Where(p => p.report_period_id == idperiod);
+                string emails = User.Identity.Name;
+                string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+                var formPer = models.StaffReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            @foreach (var items in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_lv == 1).ToList())
+            {
+                i = 0;
+                j++;
+<br />
+                    <div class="section-title mt-1" style="font-weight:bold">
+                        @(((char) j).ToString()). @items.Category.category_content.ToUpper()
+                    </div> foreach (var items_lv2 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
+                                        {
+                                            lstId += items_lv2.category_id + "-";
+                                            i++;
+                    <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+                        <div class="col-lg-12">
+                            <table class="table table-bordered dataTable">
+                                <tbody>
+                                    <tr class="" style="max-width: 50px">
+                                        <th>@(i). @items_lv2.Category.category_content</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                                        </td>
+                                    </tr>
+                                    <tr hidden id="append-@items.category_id"></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> if (models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
+                                            {
+                    <div>
+                        <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+                            @foreach (var items_lv3 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id).ToList())
+                            {
+<div class="col">
+    <table class="table table-bordered dataTable">
+        <tbody>
+            <tr class="" style="max-width: 50px">
+                <th>@items_lv3.Category.category_content</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Vui lòng nhập thông tin" disabled>
+                </td>
+            </tr>
+            <tr hidden id="append-@items.category_id"></tr>
+        </tbody>
+    </table>
+</div>}
+                        </div>
+                    </div>                        }
+                                        }
+                                    }
+            <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
+            <div class="section-title mt-3" style="font-weight:bold">
+                <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
+            </div>
+            <div class="card-body">
+                <form action="#" class="dropzone dz-clickable" id="mydropzone">
+                    <div class="dz-default dz-message"><span>Tệp đính kèm</span></div>
+                </form>
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>}
+
