@@ -2,29 +2,83 @@
 @{
     ViewBag.Title = "Index";
 }
-<section class="section">
-    <div class="section-body">
-        <div class="row">
-            <div class="col-12">
-                <div class="card-body">
-                    <div class="card">
-                        <div class="card-header bg-primary" style="height: 100px">
-                            <h4 class="text-white" style="font-size:1.7rem">Thống kê</h4>
-                        </div>
 
-                        <div class="chartCard">
-                            <div class="chartBox">
-                                <canvas id="myChart"></canvas>
-                                <canvas id="myChart2"></canvas>
+    <section class="section">
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-primary" style="height:100px">
+                            <h4 class="text-white" style="font-size:1.75rem">Quản lý thống kê báo cáo</h4>
+                        </div>
+                        <div class="card-body">
+                            
+                            <div class="row" style="margin-bottom: 20px">
+                                <div class="col-sm-12 col-md-3">
+                                    <select class="form-control form-control-sm">
+                                        <option>Chọn khoa</option>
+                                        <option>Option 2</option>
+                                        <option>Option 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-md-3">
+                                    <select class="form-control form-control-sm">
+                                        <option>Chọn giảng viên/nhân viên/bộ môn</option>
+                                        <option>Option 2</option>
+                                        <option>Option 3</option>
+                                    </select>
+                                </div><div class="col-sm-12 col-md-3">
+                                    <input type="month" class="form-control">
+                                </div>
+                                <div class="col-sm-12 col-md-1">
+                                    <button class="btn btn-icon btn-primary">Lọc</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                
+                                <table class="table table-striped" id="table-1">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="text-center">STT</th>
+                                            <th>
+                                                Khoa
+                                            </th>
+                                            <th>Nhân viên</th>
+                                            <th>Giảng viên</th>
+                                            <th>Bộ môn</th>
+                                            <th>Đã báo cáo</th>
+                                            <th>Chưa báo cáo</th>
+                                            <th>Báo cáo trễ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="Search">
+                                            <th class="text-center">1</th>
+                                            <th>
+                                                Công nghệ Thông Tin
+                                            </th>
+                                            <th>23</th>
+                                            <th>5</th>
+                                            <th>10</th>
+                                            <th>
+                                                <div class="badge badge-success">31</div>
+                                            </th>
+                                            <th>
+                                                <div class="badge badge-danger">2</div>
+                                            </th>
+                                            <th>
+                                                <div class="badge badge-warning">5</div>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+    </section>
     <script>
         // setup
         const data = {
