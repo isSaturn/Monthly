@@ -1,0 +1,56 @@
+﻿@model MonthlyStatement.Models.ReportPeriod
+
+@{ ViewBag.Title = "Edit";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card">
+                        <div class="card-header bg-primary" style="height:100px">
+                            <h4 class="text-white" style="font-size:1.75rem">Thông tin @Model.report_period_name</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            @using (Html.BeginForm("Edit", "ReportPeriods", FormMethod.Post, new { }))
+                            {
+
+                @Html.HiddenFor(model => model.report_period_id)
+                                @Html.HiddenFor(model => model.report_year_id) <!-- Form Group (Tên kỳ)-->
+                                                                <div class="mb-3">
+                                                                    <label class="small mb-1">Tên kỳ báo cáo</label>
+                                                                    @Html.TextBoxFor(model => model.report_period_name, new { @class = "form-control", @required = "", @readonly = true })
+                                                                </div> <!-- Form Group (Ngày bắt đầu)-->
+                                                                                                <div class="mb-3">
+                                                                                                    <label class="small mb-1">Ngày bắt đầu (MM/dd/yyy hh:mm:ss)</label>
+                                                                                                    @Html.TextBoxFor(model => model.start_date, new { @class = "form-control", @required = "" })
+                                                                                                </div> <!-- Form Group (Ngày báo cáo)-->
+                                                                                                                                <div class="mb-3">
+                                                                                                                                    <label class="small mb-1">Ngày báo cáo (MM/dd/yyy hh:mm:ss)</label>
+                                                                                                                                    @Html.TextBoxFor(model => model.deadline_date, new { @class = "form-control", @required = "" })
+                                                                                                                                </div> <!-- Form Group (Ngày kết thúc)-->
+                                                                                                                                                                <div class="mb-3">
+                                                                                                                                                                    <label class="small mb-1">Ngày kết thúc (MM/dd/yyy hh:mm:ss)</label>
+                                                                                                                                                                    @Html.TextBoxFor(model => model.end_date, new { @class = "form-control", @required = "" })
+                                                                                                                                                                </div>
+
+                                                                                                                                                                                <div style="text-align: center; margin-top:1.8rem" class="mb-3">
+                                                                                                                                                                                    <button style="width:180px; color:white" type="submit" class="btn btn-primary">
+                                                                                                                                                                                        Lưu
+                                                                                                                                                                                    </button>
+                                                                                                                                                                                    &emsp;
+                                                                                                                                                                                    <a style="width:180px; color:white;" role="button" class="btn btn-secondary" href="@Url.Action("Index", "ReportPeriods", new { id = Model.report_year_id})">
+                                                                                                                                                                                        Trở về
+                                                                                                                                                                                    </a>
+                                                                                                                                                                                </div>}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
