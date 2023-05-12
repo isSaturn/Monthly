@@ -1,0 +1,370 @@
+﻿
+@model MonthlyStatement.Models.Faculty
+@using MonthlyStatement.Models
+
+@{ int i = 0;
+                int j = 0; }
+@{ ViewBag.Title = "AttendenceList";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                var usernonfaculty = Session["add-user-faculty"] as IEnumerable<Profile>; }
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h3 class="text-white" style="font-size:1.75rem">Danh sách thành viên của khoa @Model.faculty_name</h3>
+                        <input hidden="hidden" value="@Model.faculty_id" id="faculty_id" />
+                    </div>
+                    <div class="card-body">
+                        <div class="col-sm-12 buttons">
+                            <button style="color:white" data-toggle="modal" class="btn btn-primary btn-round" data-target="#addUser">
+                                <i class="fa fa-plus"></i>
+                                Thêm thành viên
+                            </button>
+                            <a style="color:white" class="btn btn-warning btn-round" href="#" type="button" data-toggle="modal"
+                               data-target="#exampleModalCenter">
+                                <i class="fa fa-plus"></i>
+                                Import
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-1">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="text-center">
+                                            STT
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Tên
+                                        </th>
+                                        <th>
+                                            Khoa
+                                        </th>
+                                        <th>
+                                            Bộ môn
+                                        </th>
+                                        <th>
+                                            Vai trò
+                                        </th>
+                                        <th class="text-center">
+                                            Thao tác
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Profiles)
+
+                                    {
+                                        i = i + 1;
+
+                        <tr>
+                            <td class="text-center">
+                                @i
+                            </td>
+                            <td>
+                                @if (item.account_id == null)
+                                {
+                <span>Chưa có email</span> }
+                                else
+                                {
+                @item.AspNetUser.Email}
+
+                            </td>
+                            <td>
+                                @if (item.user_name == null)
+                                {
+                <span>Chưa có tên</span> }
+                                else
+                                {
+                @item.user_name}
+                            </td>
+                            <td>
+                                @if (item.Faculty.faculty_name == null)
+                                {
+                <span>Chưa có khoa</span> }
+                                else
+                                {
+                @item.Faculty.faculty_name}
+                            </td>
+                            <td>
+                                @if (item.department == null)
+                                {
+                <span>Chưa thêm bộ môn</span> }
+                                else
+                                {
+                @item.department}
+                            </td>
+                            <td>
+                                @if (item.AspNetUser == null)
+                                {
+                <span>Chưa thêm vai trò</span> }
+                                else
+                                {
+                                    if (item.AspNetUser.AspNetRoles.Count() < 1)
+                                    {
+                <span>Chưa thêm vai trò</span> }
+                                    else
+                                    {
+                @item.AspNetUser.AspNetRoles.FirstOrDefault().Name}
+                                }
+                            </td>
+                            <td class="text-center">
+                                <div class="buttons">
+                                    <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.account_id })">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <a class="btn btn-icon btn-danger" data-original-title="Xóa" href="@Url.Action("DeleteFaculty", "Faculty", new { id = item.account_id })">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="formModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formModal">Thêm thành viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="table-themthanhvien">
+                        <thead>
+                            <tr role="row">
+                                <th class="text-center">
+                                    STT
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Tên
+                                </th>
+                                <th>
+                                    Bộ môn
+                                </th>
+                                <th>
+                                    Vai trò
+                                </th>
+                                <th class="text-center">
+                                    Thao tác
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in usernonfaculty)
+
+                            {
+
+                                j = j + 1;
+
+                <tr>
+                    <td class="text-center">
+                        @j
+                    </td>
+                    <td>
+                        @if (item.account_id == null)
+                        {
+        <span>Chưa có email</span> }
+                        else
+                        {
+        @item.AspNetUser.Email}
+                    </td>
+                    <td>
+                        @if (item.user_name == null)
+                        {
+        <span>Chưa có tên</span> }
+                        else
+                        {
+        @item.user_name}
+                    </td>
+                    <td>
+                        @if (item.department == null)
+                        {
+        <span>Chưa thêm bộ môn</span> }
+                        else
+                        {
+        @item.department}
+                    </td>
+                    <td>
+                        @if (item.AspNetUser == null)
+                        {
+        <span>Chưa thêm vai trò</span> }
+                        else
+                        {
+                            if (item.AspNetUser.AspNetRoles.Count() < 1)
+                            {
+        <span>Chưa thêm vai trò</span> }
+                            else
+                            {
+        @item.AspNetUser.AspNetRoles.FirstOrDefault().Name}
+                        }
+                    </td>
+                    <td class="text-center">
+                        <div class="buttons">
+                            <a id="Themthanhvienvaokhoa-@item.profile_id" name="@item.profile_id" class="btn btn-icon btn-primary" data-original-title="Thêm">
+                                <i>+</i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>}
+                        </tbody>
+                    </table>
+                </div>
+                @*<form class="">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập email" name="email" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Họ và tên</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập họ và tên" name="name" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Bộ môn</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập bộ môn" name="bomon" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label class="small mb-1">Vai trò</label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Thêm thành viên</button>
+                            <button type="button" class="btn btn-secondary m-t-15" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Thêm danh sách người dùng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>File</label>
+                    <input type="file" id="fileimport" class="form-control">
+                </div>
+                <p id="importfilevalidation" hidden="hidden" class="text-danger"></p>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-primary" id="importUser">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>$('[id^="Themthanhvienvaokhoa-"]').on('click', function () {
+        var id = $(this).attr('name');
+        var khoa = $('#faculty_id').val();
+        var formData = new FormData();
+        formData.append('id', id);
+        formData.append('khoa', khoa);
+
+
+        $.ajax({
+            url: $('#requestUrl').val() + 'Admin/Faculty/AddUser',
+            type: 'POST',
+            dataType: 'html',
+            contentType: false,
+            processData: false,
+            data: formData
+        }).done(function (ketqua) {
+            swal('Thành công', 'Thêm thành viên thành công', 'success');
+            window.location.reload();
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#table-themthanhvien').DataTable();
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.profile-pic').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+
+        $(".upload-button").on('click', function () {
+            $(".file-upload").click();
+        });
+    });
+    $('#importUser').on('click', function () {
+
+        $('#importfilevalidation').hide();
+        let fileimport = $('#fileimport').val();
+        let fileType = fileimport.substr(fileimport.lastIndexOf('.') + 1).toLowerCase();
+        var check = true;
+
+        if (fileimport.trim().length < 1) {
+            check = false;
+            $('#importfilevalidation').text("Bạn chưa chọn file, Hãy chọn file danh sách cần nhập.").show().prop("hidden", false);
+        } else if (fileType != "xlsx" && fileType != "xls") {
+            check = false;
+            $('#importfilevalidation').text("File không đúng định dạng, Vui lòng chọn file có định dạng .xls/.xlsx.").show().prop("hidden", false);
+        }
+        if (check == true) {
+            var formData = new FormData();
+            formData.append('lstUser', $("#fileimport")[0].files[0]);
+
+            $.ajax({
+                url: $('#requestUrl').val() + 'Admin/Faculty/ImportUser',
+                type: 'POST',
+                dataType: 'html',
+                contentType: false,
+                processData: false,
+                data: formData
+            }).done(function (ketqua) {
+                swal('Thành công', 'Cập nhật thông tin thành công', 'success');
+                $('#fileimport').val(null);
+            });
+        }
+    });</script>
+
+
+
