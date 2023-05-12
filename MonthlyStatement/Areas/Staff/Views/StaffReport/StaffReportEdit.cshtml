@@ -238,6 +238,7 @@
         var datas = ""; //Chuỗi data phân tách nhau bởi các ký tự: idform1=noidung1-noidung2~idform2=noidung1-noidung2
         var check = true;
         for (var i = 0; i < lstCate.length; i++) {
+            console.log($('#frmPerDetail-' + lstCate[i]).val() + "=" + $('#noidung-' + lstCate[i] + "-1").val().trim() + "~");
             if (Number($('#dem-' + lstCate[i]).val()) < 2) {
                 $('#validation-noidung-' + lstCate[i] + "-1").hide();
                 if ($('#noidung-' + lstCate[i] + "-1").val().trim().length < 1) {
@@ -269,7 +270,7 @@
             //formData.append("fileMinhChung", $('#minhChungFile')[0].files[0]);
             formData.append("data", datas.substring(0, datas.length - 1));
             formData.append("reportperiodid", $('#report_period_id').val());
-
+            console.log(datas.substring(0, datas.length - 1));
             $.ajax({
                 url: $('#requestUrl').val() + 'Staff/StaffReport/StaffReportEdit',
                 type: 'POST',

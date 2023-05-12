@@ -1220,7 +1220,6 @@
     <Content Include="Areas\Admin\Views\ListReportStaff\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffDetail.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffEdit.cshtml" />
-    <Content Include="Areas\Admin\Views\Statical" />
     <Content Include="Areas\Staff\Views\StaffReport\StaffReportEdit.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
