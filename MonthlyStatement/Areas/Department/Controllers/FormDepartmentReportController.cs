@@ -29,9 +29,9 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 {
                     ViewBag.CheckFormDep = true;
                 }
-                else if (db.DepartmentReports.Any(p => p.ReportPeriod != null && p.account_id != accID))
+                else if (db.DepartmentReports.Any(p => p.ReportPeriod != null && p.account_id == accID))
                 {
-                    ViewBag.Check = true;
+                    ViewBag.CheckReportDep = true;
                 }
 
                 ViewBag.PeriodsId = check.report_period_id;
