@@ -29,7 +29,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 {
                     ViewBag.CheckFormDep = true;
                 }
-                else if (db.DepartmentReports.Any(p => p.ReportPeriod != null && p.account_id == accID))
+                else if (db.DepartmentReports.Any(p => p.ReportPeriod.start_date <= current_time && p.ReportPeriod.end_date >= current_time && p.account_id == accID))
                 {
                     ViewBag.CheckReportDep = true;
                 }
