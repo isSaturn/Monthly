@@ -15,6 +15,7 @@
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.StaffReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
+    int per = formPer.First().staff_report_id;
 }
 
 
@@ -71,7 +72,7 @@
                                                                     <tr class="" style="max-width: 50px">
                                                                         <th colspan="2">@(i). @itemss.Category.category_content</th>
                                                                     </tr>
-                                                                    @foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemss.form_staff_report_detail_id).ToList())
+                                                                    @foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemss.form_staff_report_detail_id && p.staff_report_id == per).ToList())
                                                                     {
                                                                         inputIndex++;
 
@@ -139,7 +140,7 @@
                                                                                 <tr class="" style="max-width: 50px">
                                                                                     <th colspan="2">@(i).@(k) @itemsss.Category.category_content</th>
                                                                                 </tr>
-                                                                                @foreach (var items_content_lv3 in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemsss.form_staff_report_detail_id).ToList())
+                                                                                @foreach (var items_content_lv3 in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemsss.form_staff_report_detail_id && p.staff_report_id == per).ToList())
                                                                                 {
                                                                                     inputIndex++;
 

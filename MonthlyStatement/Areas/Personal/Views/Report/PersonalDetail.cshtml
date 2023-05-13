@@ -59,7 +59,7 @@
                                                         int inputIndex = 0;
                                                         if (!models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
                                                         {
-                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id).ToList())
+                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id && p.personal_report_id == per).ToList())
                                                             {
                                                                 inputIndex++;
                                                                 <tr id="formInput-@items_lv2.category_id-@inputIndex">
@@ -71,7 +71,7 @@
                                                         }
                                                         else
                                                         {
-                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id).ToList())
+                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_lv2.form_personal_report_detail_id && p.personal_report_id == per).ToList())
                                                             {
                                                                 inputIndex++;
                                                                 <tr id="formInput-@items_lv2.category_id-@inputIndex" class="d-none">
@@ -111,7 +111,7 @@
                                                                         inputIndex++;
                                                                         if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_content_lv3.form_personal_report_detail_id).Count() > 0)
                                                                         {
-                                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_content_lv3.form_personal_report_detail_id).ToList())
+                                                                            foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_content_lv3.form_personal_report_detail_id && p.personal_report_id == per).ToList())
                                                                             {
                                                                                 <tr>
                                                                                     <td>
