@@ -61,7 +61,7 @@
                                                 i++;
                                                 <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
                                                     <div class="col-lg-12 ">
-                                                        <input hidden id="dem-@itemss.category_id" value="1" />
+                                                        <input hidden id="dem-@itemss.category_id" value="@models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == itemss.form_personal_report_detail_id && p.personal_report_id == per).Count()" />
                                                         <input hidden id="frmPerDetail-@itemss.category_id" value="@itemss.form_personal_report_detail_id" />
                                                         @if (Model.FormPersonalReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).Count() < 1)
                                                         {
@@ -134,12 +134,12 @@
 
                                                                 <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
                                                                     <div class="col-lg-12 ">
-                                                                        <input hidden id="dem-@itemsss.category_id" value="1" />
+                                                                        <input hidden id="dem-@itemsss.category_id" value="@models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == itemsss.form_personal_report_detail_id && p.personal_report_id == per).Count()" />
                                                                         <input hidden id="frmPerDetail-@itemsss.category_id" value="@itemsss.form_personal_report_detail_id" />
                                                                         <table class="table table-bordered dataTable">
                                                                             <tbody>
                                                                                 <tr class="" style="max-width: 50px">
-                                                                                    <th colspan="2">@(i).@(k) @itemsss.Category.category_content</th>
+                                                                                    <th colspan="2"> @itemsss.Category.category_content</th>
                                                                                 </tr>
                                                                                 @foreach (var items_content_lv3 in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == itemsss.form_personal_report_detail_id && p.personal_report_id == per).ToList())
                                                                                 {
