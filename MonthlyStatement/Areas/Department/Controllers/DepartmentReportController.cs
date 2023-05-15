@@ -43,9 +43,26 @@ namespace MonthlyStatement.Areas.Department.Controllers
             DepartmentReport pr = new DepartmentReport();
             pr.report_period_id = (int)reportperiodid;
             var pers = db.DepartmentReports.FirstOrDefault(r => r.account_id.Equals(accID));
-            db.DepartmentReportDetails.RemoveRange(pers.DepartmentReportDetails);
-            db.DepartmentReports.Remove(pers);
+            var periodId = db.DepartmentReports.Where(c => c.report_period_id == pr.report_period_id);
+
+            pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
+            pr.date_report = DateTime.Now;
+            pr.account_id = accID;
+            db.DepartmentReports.Add(pr);
             db.SaveChanges();
+
+            foreach (var item in periodId)
+            {
+                db.Comments.Where(c => c.department_report_id == item.department_report_id).ToList().ForEach(c => c.department_report_id = pr.department_report_id);
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return Content("Error");
+            }
 
             if (fileMinhChung != null)
             {
@@ -66,11 +83,8 @@ namespace MonthlyStatement.Areas.Department.Controllers
                     pr.file_path = path;
                 }
             }
-
-            pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
-            pr.date_report = DateTime.Now;
-            pr.account_id = accID;
-            db.DepartmentReports.Add(pr);
+            db.DepartmentReportDetails.RemoveRange(pers.DepartmentReportDetails);
+            db.DepartmentReports.Remove(pers);
             db.SaveChanges();
 
             if (data.IndexOf("~") != -1) //Có nhiều form detail

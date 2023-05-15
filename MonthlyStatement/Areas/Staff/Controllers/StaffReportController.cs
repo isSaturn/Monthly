@@ -43,9 +43,26 @@ namespace MonthlyStatement.Areas.Staff.Controllers
             StaffReport pr = new StaffReport();
             pr.report_period_id = (int)reportperiodid;
             var pers = db.StaffReports.FirstOrDefault(r => r.account_id.Equals(accID));
-            db.StaffReportDetails.RemoveRange(pers.StaffReportDetails);
-            db.StaffReports.Remove(pers);
+            var periodId = db.StaffReports.Where(c => c.report_period_id == pr.report_period_id);
+
+            pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
+            pr.date_report = DateTime.Now;
+            pr.account_id = accID;
+            db.StaffReports.Add(pr);
             db.SaveChanges();
+
+            foreach (var item in periodId)
+            {
+                db.Comments.Where(c => c.staff_report_id == item.staff_report_id).ToList().ForEach(c => c.staff_report_id = pr.staff_report_id);
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return Content("Error");
+            }
 
             if (fileMinhChung != null)
             {
@@ -66,11 +83,8 @@ namespace MonthlyStatement.Areas.Staff.Controllers
                     pr.file_path = path;
                 }
             }
-
-            pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
-            pr.date_report = DateTime.Now;
-            pr.account_id = accID;
-            db.StaffReports.Add(pr);
+            db.StaffReportDetails.RemoveRange(pers.StaffReportDetails);
+            db.StaffReports.Remove(pers);
             db.SaveChanges();
 
             if (data.IndexOf("~") != -1) //Có nhiều form detail

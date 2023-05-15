@@ -34,9 +34,9 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                 {
                     ViewBag.CheckFormPer = true;
                 }
-                else if (db.PersonalReports.Any(p => p.ReportPeriod != null && p.account_id != accID))
+                else if (db.PersonalReports.Any(p => p.ReportPeriod.start_date <= current_time && p.ReportPeriod.end_date >= current_time && p.account_id == accID))
                 {
-                    ViewBag.Check = true;
+                    ViewBag.CheckReportPer = true;
                 }
 
                 ViewBag.PeriodsId = check.report_period_id;

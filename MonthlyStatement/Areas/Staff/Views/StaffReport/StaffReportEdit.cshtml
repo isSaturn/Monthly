@@ -15,6 +15,7 @@
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.StaffReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
+    int per = formPer.First().staff_report_id;
 }
 
 
@@ -59,19 +60,18 @@
                                                 i++;
                                                 <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
                                                     <div class="col-lg-12 ">
-                                                        <input hidden id="dem-@itemss.category_id" value="1" />
+                                                        <input hidden id="dem-@itemss.category_id" value="@models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemss.form_staff_report_detail_id && p.staff_report_id == per).Count()" />
                                                         <input hidden id="frmPerDetail-@itemss.category_id" value="@itemss.form_staff_report_detail_id" />
                                                         @if (Model.FormStaffReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).Count() < 1)
                                                         {
                                                             int inputIndex = 0;
-
                                                             <table class="table table-bordered dataTable">
 
                                                                 <tbody>
                                                                     <tr class="" style="max-width: 50px">
                                                                         <th colspan="2">@(i). @itemss.Category.category_content</th>
                                                                     </tr>
-                                                                    @foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemss.form_staff_report_detail_id).ToList())
+                                                                    @foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemss.form_staff_report_detail_id && p.staff_report_id == per).ToList())
                                                                     {
                                                                         inputIndex++;
 
@@ -132,14 +132,14 @@
 
                                                                 <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
                                                                     <div class="col-lg-12 ">
-                                                                        <input hidden id="dem-@itemsss.category_id" value="1" />
+                                                                        <input hidden id="dem-@itemsss.category_id" value="@models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemsss.form_staff_report_detail_id && p.staff_report_id == per).Count()" />
                                                                         <input hidden id="frmPerDetail-@itemsss.category_id" value="@itemsss.form_staff_report_detail_id" />
                                                                         <table class="table table-bordered dataTable">
                                                                             <tbody>
                                                                                 <tr class="" style="max-width: 50px">
-                                                                                    <th colspan="2">@(i).@(k) @itemsss.Category.category_content</th>
+                                                                                    <th colspan="2"> @itemsss.Category.category_content</th>
                                                                                 </tr>
-                                                                                @foreach (var items_content_lv3 in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemsss.form_staff_report_detail_id).ToList())
+                                                                                @foreach (var items_content_lv3 in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemsss.form_staff_report_detail_id && p.staff_report_id == per).ToList())
                                                                                 {
                                                                                     inputIndex++;
 
@@ -238,6 +238,7 @@
         var datas = ""; //Chuỗi data phân tách nhau bởi các ký tự: idform1=noidung1-noidung2~idform2=noidung1-noidung2
         var check = true;
         for (var i = 0; i < lstCate.length; i++) {
+            console.log($('#frmPerDetail-' + lstCate[i]).val() + "=" + $('#noidung-' + lstCate[i] + "-1").val().trim() + "~");
             if (Number($('#dem-' + lstCate[i]).val()) < 2) {
                 $('#validation-noidung-' + lstCate[i] + "-1").hide();
                 if ($('#noidung-' + lstCate[i] + "-1").val().trim().length < 1) {
@@ -269,7 +270,7 @@
             //formData.append("fileMinhChung", $('#minhChungFile')[0].files[0]);
             formData.append("data", datas.substring(0, datas.length - 1));
             formData.append("reportperiodid", $('#report_period_id').val());
-
+            console.log(datas.substring(0, datas.length - 1));
             $.ajax({
                 url: $('#requestUrl').val() + 'Staff/StaffReport/StaffReportEdit',
                 type: 'POST',
