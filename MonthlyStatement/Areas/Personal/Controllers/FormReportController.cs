@@ -21,17 +21,22 @@ namespace MonthlyStatement.Areas.Personal.Controllers
         public ActionResult Index()
         {
             {
+                
                 var current_time = DateTime.Now;
                 var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= current_time && d.end_date >= current_time);
                 string emails = User.Identity.Name;
                 string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+
+                var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == accID);
+                Session["faculty"] = check_Faculty.faculty_id;
+
                 if (!db.FormPersonalReportDetails.Any(f => f.FormPersonalReport.report_period_id == check.report_period_id))
                 {
                     ViewBag.CheckFormPer = true;
                 }
-                else if (db.PersonalReports.Any(p => p.ReportPeriod != null && p.account_id != accID))
+                else if (db.PersonalReports.Any(p => p.ReportPeriod.start_date <= current_time && p.ReportPeriod.end_date >= current_time && p.account_id == accID))
                 {
-                    ViewBag.Check = true;
+                    ViewBag.CheckReportPer = true;
                 }
 
                 ViewBag.PeriodsId = check.report_period_id;

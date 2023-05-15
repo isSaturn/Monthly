@@ -43,9 +43,26 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             PersonalReport pr = new PersonalReport();
             pr.report_period_id = (int)reportperiodid;
             var pers = db.PersonalReports.FirstOrDefault(r => r.account_id.Equals(accID));
-            db.PersonalReportDetails.RemoveRange(pers.PersonalReportDetails);
-            db.PersonalReports.Remove(pers);
+            var periodId = db.PersonalReports.Where(c => c.report_period_id == pr.report_period_id);
+
+            pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
+            pr.date_report = DateTime.Now;
+            pr.account_id = accID;
+            db.PersonalReports.Add(pr);
             db.SaveChanges();
+
+            foreach (var item in periodId)
+            {
+                db.Comments.Where(c => c.personal_report_id == item.personal_report_id).ToList().ForEach(c => c.personal_report_id = pr.personal_report_id);
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return Content("Error");
+            }
 
             if (fileMinhChung != null)
             {
@@ -66,11 +83,8 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                     pr.file_path = path;
                 }
             }
-
-            pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
-            pr.date_report = DateTime.Now;
-            pr.account_id = accID;
-            db.PersonalReports.Add(pr);
+            db.PersonalReportDetails.RemoveRange(pers.PersonalReportDetails);
+            db.PersonalReports.Remove(pers);
             db.SaveChanges();
 
             if (data.IndexOf("~") != -1) //Có nhiều form detail

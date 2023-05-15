@@ -7,7 +7,16 @@
     int k = 0;
 }
 
-@if (ViewBag.CheckFormSta == true)
+
+
+@if (Session["faculty"] == null)
+{
+    <div class="alert alert-danger" role="alert">
+        Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
+    </div>
+}
+
+else if (ViewBag.CheckFormSta == true)
 {
     
 <div class="alert alert-danger"  role="alert"style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px" >
@@ -21,7 +30,7 @@
  
     
 }
-else if (ViewBag.Check == true)
+else if (ViewBag.CheckReportSta == true)
 {
 <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:25px;">
    BẠN ĐÃ BÁO CÁO THÁNG NÀY!    
