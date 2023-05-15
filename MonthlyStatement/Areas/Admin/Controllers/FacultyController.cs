@@ -51,10 +51,9 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // GET: Admin/Faculty
         public ActionResult Index()
         {
-            string manguoidung = db.AspNetUsers.Where(x => x.Email == User.Identity.Name).FirstOrDefault().Id;
+           /* string manguoidung = db.AspNetUsers.Where(x => x.Email == User.Identity.Name).FirstOrDefault().Id;
             int makhoa = (int)db.Profiles.Where(p => p.account_id == manguoidung).FirstOrDefault().faculty_id;
-            var data = db.Faculties.Where(y => y.faculty_id == makhoa).ToList();
-
+            var data = db.Faculties.Where(y => y.faculty_id == makhoa).ToList();*/
 
             return View(db.Faculties.ToList());
         }

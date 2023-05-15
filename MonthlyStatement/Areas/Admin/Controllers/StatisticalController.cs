@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonthlyStatement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,15 @@ namespace MonthlyStatement.Areas.Admin.Controllers
 {
     public class StatisticalController : Controller
     {
+        private CP25Team04Entities db = new CP25Team04Entities();
+
         // GET: Admin/Statistical
-        public ActionResult Index()
+        public ActionResult Index(DateTime? date)
         {
-            return View();
+            
+            ViewBag.Date = date == null ? DateTime.Now : date;
+            
+            return View(db.Faculties.ToList());
         }
     }
 }
