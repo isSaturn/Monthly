@@ -25,6 +25,10 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= current_time && d.end_date >= current_time);
                 string emails = User.Identity.Name;
                 string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+
+                var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == accID);
+                Session["faculty"] = check_Faculty.faculty_id;
+
                 if (!db.FormDepartmentReportDetails.Any(f => f.FormDepartmentReport.report_period_id == check.report_period_id))
                 {
                     ViewBag.CheckFormDep = true;

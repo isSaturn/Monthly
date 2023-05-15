@@ -8,7 +8,13 @@
 
 
 }
-@if (ViewBag.CheckFormDep == true)
+@if (Session["faculty"] == null)
+{
+    <div class="alert alert-danger" role="alert">
+        Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
+    </div>
+}
+else if (ViewBag.CheckFormDep == true)
 {
     <div class="alert alert-danger" role="alert">
         Chưa có biểu mẫu báo cáo của tháng này
