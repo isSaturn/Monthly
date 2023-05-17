@@ -24,7 +24,6 @@ namespace MonthlyStatement.Controllers
         private ApplicationAccountManager _userManager;
         private CP25Team04Entities db = new CP25Team04Entities();
 
-
         public AccountController()
         {
         }
