@@ -6,22 +6,6 @@
     int j = 64;
     int k = 0;
 
-
-}
-@if (ViewBag.CheckFormDep == true)
-{
-    <div class="alert alert-danger" role="alert">
-        Chưa có biểu mẫu báo cáo của tháng này
-    </div>
-}
-else if (ViewBag.CheckReportDep == true)
-{
-    <div class="alert alert-danger" role="alert">
-        Bạn đã báo cáo tháng này!
-    </div>
-}
-else
-{
     string lstId = "";
 
     CP25Team04Entities models = new CP25Team04Entities();
@@ -31,208 +15,413 @@ else
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.DepartmentReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
-    <section class="section">
-        <input hidden value="@Model.report_period_id" id="report_period_id" />
-        <div class="section-body">
-            <div class="row">
+    var lstCate = ((IEnumerable<Category>)ViewBag.CheckListCategory);
+    var perDetail = ((IEnumerable<PersonalReportDetail>)ViewBag.MappingContent);
+}
+@*@if (ViewBag.CheckFormDep == true)
+    {
+        <div class="alert alert-danger" role="alert">
+            Chưa có biểu mẫu báo cáo của tháng này
+        </div>
+    }
+    else if (ViewBag.CheckReportDep == true)
+    {
+        <div class="alert alert-danger" role="alert">
+            Bạn đã báo cáo tháng này!
+        </div>
+    }
+    else
+    {*@
+
+<section class="section">
+    <input hidden value="@Model.report_period_id" id="report_period_id" />
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">@Model.ReportPeriod.report_period_name</h4>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Thông báo</h4>
+                        <div class="card-header-action">
+                            <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <div class="collapse" id="mycard-collapse" style="">
+                        <div class="card-body">
+                            Thời gian báo cáo: @Model.ReportPeriod.start_date - @Model.ReportPeriod.end_date
+                        </div>
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header bg-primary" style="height:100px">
-                            <h4 class="text-white" style="font-size:1.75rem">@Model.ReportPeriod.report_period_name</h4>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Thông báo</h4>
-                            <div class="card-header-action">
-                                <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="collapse" id="mycard-collapse" style="">
-                            <div class="card-body">
-                                Thời gian báo cáo: @Model.ReportPeriod.start_date - @Model.ReportPeriod.end_date
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div id="accordion">
+                        <div class="card-body">
+                            <div id="accordion">
 
-                                    @if (Model.FormDepartmentReportDetails.Count() > 0)
+                                @if (Model.FormDepartmentReportDetails.Count() > 0)
+                                {
+                                    foreach (var items in Model.FormDepartmentReportDetails)
                                     {
-                                        foreach (var items in Model.FormDepartmentReportDetails)
+                                        if (items.Category.category_of_id == null)
                                         {
-                                            if (items.Category.category_of_id == null)
-                                            {
-                                                i = 0;
-                                                j++;
-                                                <br />
-
-                                                <div class="accordion">
-                                                    <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
-                                                        <h4>
-                                                            @(((char)j).ToString()). @items.Category.category_content.ToUpper()
-                                                        </h4>
-                                                        <div class="card-header-action">
-                                                            <a data-collapse="#panel-body-@(((char)j).ToString())" class="btn btn-icon" href="#@(((char)j).ToString())"></a>
-                                                        </div>
+                                            i = 0;
+                                            j++;
+                                            <br />
+                                            <div class="accordion">
+                                                <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
+                                                    <h4>
+                                                        @(((char)j).ToString()). @items.Category.category_content.ToUpper()
+                                                    </h4>
+                                                    <div class="card-header-action">
+                                                        <a data-collapse="#panel-body-@(((char)j).ToString())" class="btn btn-icon" href="#@(((char)j).ToString())"></a>
                                                     </div>
                                                 </div>
-                                                foreach (var itemss in Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == items.category_id && c.Category.category_lv == 2).ToList())
-                                                {
-                                                    lstId += itemss.category_id + "-";
-                                                    i++;
-                                                    <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
-                                                        <div class="col-lg-12 ">
-                                                            <input hidden id="dem-@itemss.category_id" value="1" />
-                                                            <input hidden id="frmPerDetail-@itemss.category_id" value="@itemss.form_department_report_detail_id" />
-                                                            @if (Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).Count() < 1)
-                                                            {
-                                                                <table class="table table-bordered dataTable">
-                                                                    <tbody>
-                                                                        <tr class="" style="max-width: 50px">
-                                                                            <th colspan="2">@(i). @itemss.Category.category_content</th>
-                                                                        </tr>
+                                            </div>
+                                            foreach (var itemss in Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == items.category_id && c.Category.category_lv == 2).ToList())
+                                            {
+                                                lstId += itemss.category_id + "-";
+                                                i++;
+                                                <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
+                                                    <div class="col-lg-12 ">
+                                                        <input hidden id="dem-@itemss.category_id" value="1" />
+                                                        <input hidden id="frmPerDetail-@itemss.category_id" value="@itemss.form_department_report_detail_id" />
+                                                        @if (Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).Count() < 1)
+                                                        {
+                                                            <table class="table table-bordered dataTable">
+                                                                <tbody>
 
+                                                                    <tr class="" style="max-width: 50px">
+                                                                        <th colspan="2">@(i). @itemss.Category.category_content</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <button style="color:white" data-toggle="modal" class="btn btn-info" data-target="#addMapping">
+                                                                                Tổng hợp nội dung
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="formInput-@itemss.category_id">
+                                                                        <td colspan="2">
+                                                                            <input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemss.category_id-1">
+                                                                            <p hidden id="validation-noidung-@itemss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr hidden id="append-@itemss.category_id"></tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <button role="button" name="@itemss.category_id" id="xoanoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button role="button" name="@itemss.category_id" id="themnoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                        </td>
+                                                                    </tr>
+
+
+
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        else
+                                                        {
+                                                            <table class="table table-bordered dataTable">
+
+                                                                <tbody>
+
+                                                                    <tr class="" style="max-width: 50px">
+                                                                        <th colspan="2">@(i). @itemss.Category.category_content</th>
+                                                                    </tr>
+                                                                    @if (!Model.FormDepartmentReportDetails.Any(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3))
+                                                                    {
                                                                         <tr id="formInput-@itemss.category_id">
                                                                             <td colspan="2">
-                                                                                <input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemss.category_id-1">
+                                                                                <input value="@itemss.Category.category_content" type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemss.category_id-1">
                                                                                 <p hidden id="validation-noidung-@itemss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr hidden id="append-@itemss.category_id"></tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <button role="button" name="@itemss.category_id" id="xoanoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
-                                                                            </td>
-                                                                            <td>
-                                                                                <button role="button" name="@itemss.category_id" id="themnoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <tr id="formInput-@itemss.category_id" class="d-none">
+                                                                            <td colspan="2">
+                                                                                <input value="@itemss.Category.category_content" type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemss.category_id-1">
+                                                                                <p hidden id="validation-noidung-@itemss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
                                                                             </td>
                                                                         </tr>
-
-
-
-                                                                    </tbody>
-                                                                </table>
-                                                            }
-                                                            else
+                                                                        <tr hidden id="append-@itemss.category_id"></tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                            foreach (var itemsss in Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).ToList())
                                                             {
-                                                                <table class="table table-bordered dataTable">
+                                                                lstId += itemsss.category_id + "-";
+                                                                k++;
 
-                                                                    <tbody>
-                                                                        <tr class="" style="max-width: 50px">
-                                                                            <th colspan="2">@(i). @itemss.Category.category_content</th>
-                                                                        </tr>
-                                                                        @if (!Model.FormDepartmentReportDetails.Any(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3))
-                                                                        {
-                                                                            <tr id="formInput-@itemss.category_id">
-                                                                                <td colspan="2">
-                                                                                    <input value="@itemss.Category.category_content" type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemss.category_id-1">
-                                                                                    <p hidden id="validation-noidung-@itemss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr hidden id="append-@itemss.category_id"></tr>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <tr id="formInput-@itemss.category_id" class="d-none">
-                                                                                <td colspan="2">
-                                                                                    <input value="@itemss.Category.category_content" type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemss.category_id-1">
-                                                                                    <p hidden id="validation-noidung-@itemss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr hidden id="append-@itemss.category_id"></tr>
-                                                                        }
-                                                                    </tbody>
-                                                                </table>
-                                                                foreach (var itemsss in Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).ToList())
-                                                                {
-                                                                    lstId += itemsss.category_id + "-";
-                                                                    k++;
-
-                                                                    <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
-                                                                        <div class="col-lg-12 ">
-                                                                            <input hidden id="dem-@itemsss.category_id" value="1" />
-                                                                            <input hidden id="frmPerDetail-@itemsss.category_id" value="@itemsss.form_department_report_detail_id" />
-                                                                            <table class="table table-bordered dataTable">
-                                                                                <tbody>
-                                                                                    <tr class="" style="max-width: 50px">
-                                                                                        <th colspan="2">@(i).@(k) @itemsss.Category.category_content</th>
-                                                                                    </tr>
-                                                                                    <tr id="formInput-@itemsss.category_id">
-                                                                                        <td colspan="2">
-                                                                                            <input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemsss.category_id-1">
-                                                                                            <p hidden id="validation-noidung-@itemsss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr hidden id="append-@itemsss.category_id"></tr>
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <button role="button" name="@itemsss.category_id" id="xoanoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <button role="button" name="@itemsss.category_id" id="themnoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
+                                                                <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
+                                                                    <div class="col-lg-12 ">
+                                                                        <input hidden id="dem-@itemsss.category_id" value="1" />
+                                                                        <input hidden id="frmPerDetail-@itemsss.category_id" value="@itemsss.form_department_report_detail_id" />
+                                                                        <table class="table table-bordered dataTable">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <button style="color:white" data-toggle="modal" class="btn btn-info" data-target="#addMapping">
+                                                                                            Tổng hợp nội dung
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="" style="max-width: 50px">
+                                                                                    <th colspan="2">@(i).@(k) @itemsss.Category.category_content</th>
+                                                                                </tr>
+                                                                                <tr id="formInput-@itemsss.category_id">
+                                                                                    <td colspan="2">
+                                                                                        <input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemsss.category_id-1">
+                                                                                        <p hidden id="validation-noidung-@itemsss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr hidden id="append-@itemsss.category_id"></tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <button role="button" name="@itemsss.category_id" id="xoanoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <button role="button" name="@itemsss.category_id" id="themnoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
+                                                                </div>
 
-                                                                }
                                                             }
+                                                        }
 
-                                                        </div>
                                                     </div>
+                                                </div>
 
-                                                }
                                             }
                                         }
                                     }
+                                }
 
-                                </div>
+                            </div>
 
-                                <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
-
-                                @*<div class="accordion">
-                                        <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
-                                            <h4>
-                                                @(((char) (++j)).ToString()). MINH CHỨNG
-                                            </h4>
-                                            <div class="card-header-action">
-                                                <a data-collapse="#panel-body-Z" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-body collapse" id="panel-body-Z" data-parent="#accordion" style="">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                                </div>
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01">
-                                                    <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
-                                                </div>
-                                                <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
-                                            </div>
-                                        </div>
-                                    </div>*@
-
-                                <div class="text-right mt-3">
-                                    <button id="btnSubmit" role="button" class="btn btn-primary">Lưu báo cáo</button>
-                                </div>
+                            <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
+                            <div class="section-title mt-3" style="font-weight:bold">
+                                <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control" id="minhChungFile">
+                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                            </div>
+                            <div class="text-right mt-3">
+                                <button id="btnSubmit" role="button" class="btn btn-primary">Lưu báo cáo</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-}
+    </div>
+</section>
+<div class="modal fade" id="addMapping" tabindex="-1" role="dialog" aria-labelledby="formModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formModal">Tổng hợp nội dung giảng viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="table-mapping">
+                        <thead>
+                            <tr role="row">
+                                <th class="text-center">
+                                    STT
+                                </th>
+                                <th>
+                                    Tên danh mục
+                                </th>
+                                <th>
+                                    Cấp danh mục
+                                </th>
+                                <th>
+                                    Chọn
+                                </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in lstCate.Where(c => c.category_of_id == null).ToList())
+                        {
+                            <tbody>
+                                <tr>
+                                    <td class="text-center pt-2">
+                                    </td>
+                                    <td>LV 1</td>
+                                    <td style="font-weight:bold">
+                                        @item.category_content
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            foreach (var items in lstCate.Where(c => c.category_of_id == item.category_id).ToList())
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center pt-2">
+                                        </td>
+                                        <td>LV 2</td>
+                                        <td>
+                                            <div class="media mt-3">
+                                                <div class="pr-3" href="#">
+                                                </div>@items.category_content
+                                            </div>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                foreach (var itemss in lstCate.Where(c => c.category_of_id == items.category_id).ToList())
+                                {
+                                    var perDetailMapping = perDetail.Where(per => per.FormPersonalReportDetail.category_id == itemss.category_id).Select(content => content.personal_report_content.ToLower()).Distinct().ToList();
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center pt-2">
+                                            </td>
+                                            <td>LV 3</td>
+
+                                            <td>
+                                                <div class="media mt-3">
+                                                    <div class="pr-5" href="#">
+                                                    </div>@itemss.category_content
+                                                    @for (int y = 0; y < perDetailMapping.Count; y++)
+                                                    {
+                                                        <input type="hidden" class="perDetailMapping-@itemss.category_id" value="@perDetailMapping[y]" />
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input value="@itemss.category_id" class="mapping-checkbox" type="checkbox" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            }
+                        }
 
 
+                        @*<tbody>
+                                <tr class="Search">
+                                    <td class="text-center">
+                                        A
+                                    </td>
+                                    <td style="font-weight:bold">
+                                        Công việc thực hiện theo KPI
+                                    </td>
+                                    <td>LV 1</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="Search">
+                                    <td class="text-center">
+                                        1
+                                    </td>
+                                    <td>
+                                        &emsp;
+                                        &emsp;
+                                        Công tác giảng dạy
+                                    </td>
+                                    <td>
+                                        LV 2
+                                    </td>
+                                    <td></td>
+
+                                </tr>
+                                <tr class="Search">
+                                    <td class="text-center">
+                                    </td>
+                                    <td>
+                                        &emsp;
+                                        &emsp;
+                                        &emsp;
+                                        &emsp;
+                                        Công tác giảng dạy
+                                    </td>
+                                    <td>
+                                        LV 3
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                </tr>
+                                <tr class="Search">
+                                    <td class="text-center">
+                                    </td>
+                                    <td>
+                                        &emsp;
+                                        &emsp;
+                                        &emsp;
+                                        &emsp;
+                                        Tông tiết giờ
+                                    </td>
+                                    <td>
+                                        LV 3
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                </tr>
+                                <tr class="Search">
+                                    <td class="text-center">
+                                    </td>
+                                    <td>
+                                        &emsp;
+                                        &emsp;
+                                        &emsp;
+                                        &emsp;
+                                        Thứ
+                                    </td>
+                                    <td>
+                                        LV 3
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                </tr>
+                            </tbody>*@
+                    </table>
+                    <div class="text-right mt-3">
+                        <button id="idMappingContentBtn" role="button" class="btn btn-primary">Lưu nội dung</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/Scripts/jquery-3.4.1.js"></script>
 <script>
+    //Mapping nội dung
+    $('#idMappingContentBtn').on('click', function () {
+        var boxes = $('.mapping-checkbox:checked');
+        boxes.each(function () {
+            var categoryid = $(this).val();
+            var mappingContent = $('.perDetailMapping-' + categoryid);
+            let inputCount = Number($('#dem-' + categoryid).val()) + 1;
+            mappingContent.each(function () {
+                $('#append-' + categoryid).replaceWith('<tr id="formInput-' + categoryid + '-' + inputCount + '"><td colspan="2"><input readonly type="text" value="' + $(this).val()+'" class="form-control" id="noidung-' + categoryid + '-' + inputCount + '">'
+                    + '<p hidden id="validation-noidung-' + categoryid + '-' + inputCount + '" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>'
+                    + '</td ></tr > <tr hidden id="append-' + categoryid + '"></tr>');
+            });
+        });
+    });
     //Thêm input
     $('[id^="themnoidung-"]').on('click', function (e) {
         let id = $(this).attr("name");
@@ -284,7 +473,7 @@ else
 
         if (check == true) {
             var formData = new FormData();
-            //formData.append("fileMinhChung", $('#minhChungFile')[0].files[0]);
+            formData.append("fileMinhChung", $('#minhChungFile')[0].files[0]);
             formData.append("data", datas.substring(0, datas.length - 1));
             formData.append("reportperiodid", $('#report_period_id').val());
 
@@ -305,5 +494,70 @@ else
                 }
             });
         }
+    });
+    $("#mapping").click(function () {
+        $(document).ready(function () {
+            $('#table-mapping').DataTable();
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.profile-pic').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+
+            $(".upload-button").on('click', function () {
+                $(".file-upload").click();
+            });
+        });
+    }); $(document).ready(function () {
+        //radio button lv3
+        $('[id*="categorylv3-"]').on('input', function () {
+            var idlv1 = $(this).attr('name').split('-')[0];
+            var idlv2 = $(this).attr('name').split('-')[1];
+
+            if ($(this).prop('checked')) {
+                if ($('#' + idlv1 + 'categorylv2-' + idlv2).prop('checked') == false) {
+                    $('#' + idlv1 + 'categorylv2-' + idlv2).prop('checked', true);
+                    $('#categorylv1-' + idlv1).prop('checked', true);
+                }
+            }
+        });
+        //radio button lv2
+        $('[id*="categorylv2-"]').on('input', function () {
+            var id = $(this).attr('name');
+            if ($(this).prop('checked')) {
+                if ($('#categorylv1-' + id).prop('checked') == false) {
+                    $('#categorylv1-' + id).prop('checked', true);
+                }
+            } else {
+                var check = false;
+                $('[id^="' + id + 'categorylv2-"]').each(function () {
+                    if ($(this).prop('checked')) {
+                        check = true;
+                    }
+                });
+                if (check == false) {
+                    $('#categorylv1-' + id).prop('checked', false);
+                }
+            }
+        });
+        //radio button lv1
+        $('[id*="categorylv1-"]').on('input', function () {
+            var id = $(this).attr('name');
+            if ($(this).prop('checked') == false) {
+                $('[name="' + id + '"]').each(function () {
+                    $(this).prop('checked', false);
+                });
+            }
+        });
     });
 </script>
