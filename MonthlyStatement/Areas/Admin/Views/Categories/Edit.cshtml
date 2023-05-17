@@ -15,6 +15,12 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @if (ViewBag.CheckEditCate != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                               Danh mục này đã được sử dụng trong biễu mẫu, vui lòng tạo danh mục khác!
+                            </div>
+                        }
                         <div class="table-responsive">
                             @using (Html.BeginForm("Edit", "Categories", FormMethod.Post, new { }))
 

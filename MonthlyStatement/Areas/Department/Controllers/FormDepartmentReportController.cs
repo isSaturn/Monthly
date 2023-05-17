@@ -25,9 +25,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= current_time && d.end_date >= current_time);
                 string emails = User.Identity.Name;
                 string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
-
-                var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == accID);
-                Session["faculty"] = check_Faculty.faculty_id;
+                var lstCatDate = db.FormPersonalReports.FirstOrDefault(c => c.ReportPeriod.start_date <= current_time && c.ReportPeriod.end_date >= current_time).form_personal_report_id;
 
                 if (!db.FormDepartmentReportDetails.Any(f => f.FormDepartmentReport.report_period_id == check.report_period_id))
                 {
@@ -36,6 +34,20 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 else if (db.DepartmentReports.Any(p => p.ReportPeriod.start_date <= current_time && p.ReportPeriod.end_date >= current_time && p.account_id == accID))
                 {
                     ViewBag.CheckReportDep = true;
+                }
+                //noi dung danh muc cua thang
+                if (db.FormPersonalReportDetails.Any(n => n.form_personal_report_id == lstCatDate))
+                {
+                    var formDetail = db.FormPersonalReportDetails.Where(form => form.form_personal_report_id == lstCatDate);
+                    List<PersonalReportDetail> contentPer = new List<PersonalReportDetail>();
+                    foreach (var item in formDetail)
+                    {
+                        var perDetail = db.PersonalReportDetails.Where(per => per.form_personal_report_detail_id == item.form_personal_report_detail_id);
+                        contentPer.AddRange(perDetail);                     
+                    }
+                    var lstCat = formDetail.Select(i => i.Category).ToList();
+                    ViewBag.CheckListCategory = lstCat;
+                    ViewBag.MappingContent = contentPer;
                 }
 
                 ViewBag.PeriodsId = check.report_period_id;

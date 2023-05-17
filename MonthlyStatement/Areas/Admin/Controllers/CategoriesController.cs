@@ -118,6 +118,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "category_id,category_of_id,category_content")] Category category)
         {
+            if (db.FormPersonalReportDetails.Any(per => per.category_id == category.category_id) || (db.FormStaffReportDetails.Any(per => per.category_id == category.category_id) || (db.FormDepartmentReportDetails.Any(per => per.category_id == category.category_id))))
+            {
+                ViewBag.CheckEditCate = true;
+                ModelState.AddModelError("formError","Danh mục này đã được lưu vào biễu mẫu, vui lòng không chỉnh sửa!");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(category).State = EntityState.Modified;

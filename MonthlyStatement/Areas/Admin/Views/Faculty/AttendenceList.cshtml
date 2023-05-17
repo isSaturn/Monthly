@@ -160,136 +160,104 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="table-themthanhvien">
+                        <thead>
+                            <tr role="row">
+                                <th class="text-center">
+                                    STT
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Tên
+                                </th>
+                                <th>
+                                    Bộ môn
+                                </th>
+                                <th>
+                                    Vai trò
+                                </th>
+                                <th class="text-center">
+                                    Thao tác
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in usernonfaculty)
 
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="table-themthanhvien">
-                            <thead>
-                                <tr role="row">
-                                    <th class="text-center">
-                                        STT
-                                    </th>
-                                    <th>
-                                        Email
-                                    </th>
-                                    <th>
-                                        Tên
-                                    </th>
-                                    <th>
-                                        Bộ môn
-                                    </th>
-                                    <th>
-                                        Vai trò
-                                    </th>
-                                    <th class="text-center">
-                                        Thao tác
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in usernonfaculty)
+                            {
 
-                                {
-                                    
-                                    j = j + 1;
-                                    
-                                    <tr>
-                                        <td class="text-center">
-                                            @j
-                                        </td>
-                                        <td>
-                                            @if (item.account_id == null)
-                                            {
-                                                <span>Chưa có email</span>
-                                            }
-                                            else
-                                            {
-                                                @item.AspNetUser.Email
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.user_name == null)
-                                            {
-                                                <span>Chưa có tên</span>
-                                            }
-                                            else
-                                            {
-                                                @item.user_name
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.department == null)
-                                            {
-                                                <span>Chưa thêm bộ môn</span>
-                                            }
-                                            else
-                                            {
-                                                @item.department
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.AspNetUser == null)
+                                j = j + 1;
+
+                                <tr>
+                                    <td class="text-center">
+                                        @j
+                                    </td>
+                                    <td>
+                                        @if (item.account_id == null)
+                                        {
+                                            <span>Chưa có email</span>
+                                        }
+                                        else
+                                        {
+                                            @item.AspNetUser.Email
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.user_name == null)
+                                        {
+                                            <span>Chưa có tên</span>
+                                        }
+                                        else
+                                        {
+                                            @item.user_name
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.department == null)
+                                        {
+                                            <span>Chưa thêm bộ môn</span>
+                                        }
+                                        else
+                                        {
+                                            @item.department
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.AspNetUser == null)
+                                        {
+                                            <span>Chưa thêm vai trò</span>
+                                        }
+                                        else
+                                        {
+                                            if (item.AspNetUser.AspNetRoles.Count() < 1)
                                             {
                                                 <span>Chưa thêm vai trò</span>
+
                                             }
                                             else
                                             {
-                                                if (item.AspNetUser.AspNetRoles.Count() < 1)
-                                                {
-                                                    <span>Chưa thêm vai trò</span>
+                                                @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
 
-                                                }
-                                                else
-                                                {
-                                                    @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
-
-                                                }
                                             }
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="buttons">
-                                                <a id="Themthanhvienvaokhoa-@item.profile_id" name="@item.profile_id" class="btn btn-icon btn-primary" data-original-title="Thêm">
-                                                    <i>+</i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    @*<form class="">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Nhập email" name="email" value="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Họ và tên</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Nhập họ và tên" name="name" value="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Bộ môn</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Nhập bộ môn" name="bomon" value="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Vai trò</label>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Thêm thành viên</button>
-                                <button type="button" class="btn btn-secondary m-t-15" data-dismiss="modal">Đóng</button>
-                            </div>
-                        </form>*@
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="buttons">
+                                            <a id="Themthanhvienvaokhoa-@item.profile_id" name="@item.profile_id" class="btn btn-icon btn-primary" data-original-title="Thêm">
+                                                <i>+</i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
-
+            </div>
         </div>
     </div>
 </div>
