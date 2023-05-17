@@ -7,17 +7,37 @@
     int k = 0;
 }
 
-@if (ViewBag.CheckFormSta == true)
+
+
+@if (Session["faculty"] == null)
 {
     <div class="alert alert-danger" role="alert">
-        Chưa có biểu mẫu báo cáo của tháng này
+        Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
     </div>
+}
+
+else if (ViewBag.CheckFormSta == true)
+{
+    
+<div class="alert alert-danger"  role="alert"style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px" >
+    CHƯA CÓ BIỂU MẪU CÓ THÁNG NÀY
+    <div>
+        <img src="~/assets/img/vlu/fomm.png" class="cangiua">
+    </div>  
+    
+</div>
+   
+ 
+    
 }
 else if (ViewBag.CheckReportSta == true)
 {
-    <div class="alert alert-danger" role="alert">
-        Bạn đã báo cáo tháng này!
-    </div>
+<div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:25px;">
+   BẠN ĐÃ BÁO CÁO THÁNG NÀY!    
+</div>
+<div>
+    <img src="~/assets/img/vlu/formm.png"class="cangiua">
+</div>
 }
 else
 {
@@ -306,3 +326,12 @@ else
         }
     });
 </script>
+<style>
+    img.cangiua {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom:auto;
+        
+    }
+</style>

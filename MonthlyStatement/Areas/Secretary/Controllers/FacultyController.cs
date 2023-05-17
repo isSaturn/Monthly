@@ -14,9 +14,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using MonthlyStatement.Models;
 
-namespace MonthlyStatement.Areas.Admin.Controllers
+namespace MonthlyStatement.Areas.Secretary.Controllers
 {
-    [Authorize(Roles = "Quản trị viên")]
+    [Authorize(Roles = "Thư ký")]
 
     public class FacultyController : Controller
     {
@@ -48,23 +48,24 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View();
         }
 
-        // GET: Admin/Faculty
+        // GET: Secretary/Faculty
         public ActionResult Index()
         {
-           /* string manguoidung = db.AspNetUsers.Where(x => x.Email == User.Identity.Name).FirstOrDefault().Id;
+            string manguoidung = db.AspNetUsers.Where(x => x.Email == User.Identity.Name).FirstOrDefault().Id;
             int makhoa = (int)db.Profiles.Where(p => p.account_id == manguoidung).FirstOrDefault().faculty_id;
-            var data = db.Faculties.Where(y => y.faculty_id == makhoa).ToList();*/
+            var data = db.Faculties.Where(y => y.faculty_id == makhoa).ToList();
+
 
             return View(db.Faculties.ToList());
         }
 
-        // GET: Admin/Faculty/Create
+        // GET: Secretary/Faculty/Create
         public ActionResult Create()
         {
             return View(new Faculty());
         }
 
-        // POST: Admin/Faculty/Create
+        // POST: Secretary/Faculty/Create
         [HttpPost]
         public ActionResult Create([Bind(Include = "faculty_id,faculty_name")] Faculty faculty)
         {
@@ -77,7 +78,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View(faculty);
         }
 
-        // GET: Admin/Faculty/Edit/5
+        // GET: Secretary/Faculty/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -92,7 +93,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View(faculty);
         }
 
-        // POST: Admin/Faculty/Edit/5
+        // POST: Secretary/Faculty/Edit/5
         [HttpPost]
         public ActionResult Edit([Bind(Include = "faculty_id,faculty_name")] Faculty faculty)
         {

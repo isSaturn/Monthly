@@ -1,0 +1,94 @@
+﻿
+@model IEnumerable<MonthlyStatement.Models.DepartmentReport>
+
+@{ int i = 0;
+
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Quản lý danh sách báo cáo bộ môn</h4>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="col-sm-12 buttons">
+                                <a style="color:white" type="button" class="btn btn-primary btn-round" href="">
+                                    <i class="#"></i>
+                                    Export
+                                </a>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-1">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="text-center">STT</th>
+                                        <th>Email</th>
+                                        <th>Kỳ báo cáo</th>
+                                        <th>Ngày báo cáo</th>
+                                        <th>Vai trò</th>
+                                        <th>Trạng thái</th>
+                                        <th class="text-center">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        i++;
+                                        <tr class="Search">
+                                            <td class="text-center">
+                                                @i
+                                            </td>
+                                            <td>
+                                                @item.AspNetUser.Email
+                                            </td>
+                                            <td>
+                                                @item.ReportPeriod.report_period_name
+                                            </td>
+                                            <td>
+                                                @String.Format("{0: dd/MM/yyy}", item.date_report)
+                                            </td>
+                                            <td>
+                                                @item.AspNetUser.AspNetRoles.First().Name
+                                            </td>
+
+                                            <td>
+                                                @if (item.status.Count() < 1)
+                                                {
+                                                    <div class="badge badge badge-shadow">Chưa báo cáo</div> }
+                                                else if (item.status.Equals("Đã báo cáo"))
+                                                {
+                                                    <div class="badge badge badge-success">Đã báo cáo</div> }
+                                                else if (item.status.Equals("Trễ báo cáo"))
+                                                {
+                                                    <div class="badge badge badge-warning">Trễ báo cáo</div> }
+                                                else if (item.status.Equals("Không báo cáo"))
+                                                {
+                                                    <div class="badge badge badge-danger">Không báo cáo</div>}
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="buttons">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("Detail","ListReportDepartment", new {id = item.department_report_id})">
+                                                        Xem
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

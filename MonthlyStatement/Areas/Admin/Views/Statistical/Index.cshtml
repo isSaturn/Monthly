@@ -1,22 +1,88 @@
-﻿@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+﻿@model IEnumerable<MonthlyStatement.Models.Faculty>
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 @{
     ViewBag.Title = "Index";
+    int i = 0;
+
+    DateTime Date = ViewBag.Date;
 }
+
 <section class="section">
     <div class="section-body">
         <div class="row">
             <div class="col-12">
-                <div class="card-body">
-                    <div class="card">
-                        <div class="card-header bg-primary" style="height: 100px">
-                            <h4 class="text-white" style="font-size:1.7rem">Thống kê</h4>
-                        </div>
-
-                        <div class="chartCard">
-                            <div class="chartBox">
-                                <canvas id="myChart"></canvas>
-                                <canvas id="myChart2"></canvas>
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Quản lý thống kê báo cáo</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="@Url.Action("Index","Statistical")">
+                            <div class="row" style="margin-bottom: 20px">
+                                <div class="col-sm-12 col-md-3">
+                                    <input name="date" type="month" class="form-control" value="@Date.ToString("yyyy-MM")">
+                                </div>
+                            
+                                <div class="col-sm-12 col-md-1">
+                                    <button type="submit" class="btn btn-icon btn-primary">
+                                        Lọc
+                                    </button>
+                                </div>
                             </div>
+
+                        </form>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-1">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="text-center">STT</th>
+                                        <th>
+                                            Khoa
+                                        </th>
+                                        <th>Nhân viên</th>
+                                        <th>Giảng viên</th>
+                                        <th>Bộ môn</th>
+                                        <th>Chưa cấp quyền</th>
+                                        <th>Đã báo cáo</th>
+                                        <th>Chưa báo cáo</th>
+                                        <th>Báo cáo trễ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        i++;
+                                    <tr class="Search">
+
+                                        <th class="text-center">@i</th>
+                                        <th>
+                                            @item.faculty_name
+                                        </th>
+                                        <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Nhân viên")</th>
+                                        <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Giảng viên")</th>
+                                        <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Bộ môn")</th>
+                                        <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault() == null)</th>
+                                        <th>
+                                            <div class="badge badge-success">
+                                                @item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date >= Date && y.ReportPeriod.end_date < Date.AddMonths(1)) > 0)
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="badge badge-danger">
+                                                @item.Profiles.Count(x => x.AspNetUser?.PersonalReports == null)
+
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="badge badge-warning">
+                                                @item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date >= DateTime.Now && y.ReportPeriod.end_date <= DateTime.Now) > 0)
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    }
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -24,106 +90,10 @@
         </div>
     </div>
 </section>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-    <script>
-        // setup
-        const data = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Giảng viên',
-                data: [15, 20, 25, 40, 45, 50, 55, 60, 65, 70, 80, 100],
-                backgroundColor: [
-                    'rgba(255, 26, 104, 0.2)',
-                ],
-                borderWidth: 1
-            }, {
-                label: 'Bộ môn',
-                data: [15, 20, 25, 40, 45, 50, 55, 60, 65, 70, 80, 100],
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                ],
-            }
-            ]
-        };
-
-        // config
-        const config = {
-            type: 'bar',
-            data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        };
-
-        // render init block
-        const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
-        //chart 2
-        // setup
-        const data2 = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Báo cáo',
-                data: [15, 20, 25, 40, 45, 50, 55, 60, 65, 70, 80, 100],
-                backgroundColor:
-
-                    'rgba(0, 0, 0, 0.2)'
-                ,
-                borderColor:
-                    'rgba(0, 0, 0, 1)'
-                ,
-                borderWidth: 1
-            }]
-        };
-
-       
-        // Instantly assign Chart.js version
-        const chartVersion = document.getElementById('chartVersion');
-        chartVersion.innerText = Chart.version;
-    </script>
 
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-    }
 
-    .chartMenu {
-        width: 100vw;
-        height: 40px;
-      
-    }
 
-        .chartMenu p {
-            padding: 10px;
-            font-size: 20px;
-        }
-
-    .chartCard {
-        width: 100vw;
-        height: calc(100vh - 40px);
-       
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .chartBox {
-       width: 77%;
-        padding: 20px;
-        border-radius: 20px;
-       transform:translateX(-12%);
-        background: white;
-    }
-</style>
 
 
 

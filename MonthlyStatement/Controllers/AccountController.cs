@@ -86,7 +86,7 @@ namespace MonthlyStatement.Controllers
 
             if (currentUser != null)
             {
-
+                
                 if (currentUser.Roles.Count != 0)
                 {
                     //Add profile
@@ -153,6 +153,7 @@ namespace MonthlyStatement.Controllers
                 }
                 db.SaveChanges();
             }
+
             return RedirectToAction("Index", "Home");
         }
 
