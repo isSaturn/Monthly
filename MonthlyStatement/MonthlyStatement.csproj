@@ -214,7 +214,6 @@
     <Compile Include="Areas\Admin\Controllers\ListReportPersonalController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReportStaffController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
-    <Compile Include="Areas\Admin\Controllers\StaticController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
     <Compile Include="Areas\Department\Controllers\CommentsDepartmentController.cs" />
     <Compile Include="Areas\Department\Controllers\FormDepartmentReportController.cs" />
@@ -227,6 +226,7 @@
     <Compile Include="Areas\FacultyAreas\FacultyAreasAreaRegistration.cs" />
     <Compile Include="Areas\Personal\Controllers\CommentsPersonalController.cs" />
     <Compile Include="Areas\Personal\Controllers\FormReportController.cs" />
+    <Compile Include="Areas\Personal\Controllers\NotificationPersonalController.cs" />
     <Compile Include="Areas\Personal\Controllers\ReportController.cs" />
     <Compile Include="Areas\Personal\Controllers\StaticController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
@@ -1284,6 +1284,7 @@
     <Folder Include="Areas\Department\Data\" />
     <Folder Include="Areas\FacultyAreas\Data\" />
     <Folder Include="Areas\Personal\Data\" />
+    <Folder Include="Areas\Personal\Views\NotificationPersonal\" />
     <Folder Include="Areas\Personal\Views\Shared\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Areas\Staff\Views\Shared\" />
