@@ -12,7 +12,7 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
     {
        
         private CP25Team04Entities db = new CP25Team04Entities();
-        // GET: Secretary/YearReport
+        // GET: Secretar/YearReport
         public ActionResult Index()
         {
             var current_year = DateTime.Now.Year;

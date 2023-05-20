@@ -23,7 +23,7 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
             var reportPeriods = db.ReportPeriods.Where(r => r.report_year_id == id).ToList();
             return View(reportPeriods);
         }
-        // GET: Secretary/ReportPeriods/Edit
+        // GET: Secretaryy/ReportPeriods/Edit
         [HttpGet]
 
         public ActionResult Edit(int? id)

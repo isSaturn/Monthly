@@ -59,13 +59,13 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
             return View(db.Faculties.ToList());
         }
 
-        // GET: Secretary/Faculty/Create
+        // GET: Faculty/Create
         public ActionResult Create()
         {
             return View(new Faculty());
         }
 
-        // POST: Secretary/Faculty/Create
+        // POST: Faculty/Create
         [HttpPost]
         public ActionResult Create([Bind(Include = "faculty_id,faculty_name")] Faculty faculty)
         {

@@ -13,6 +13,7 @@ using MonthlyStatement.Models;
 
 namespace MonthlyStatement.Areas.Secretary.Controllers
 {
+    [Authorize(Roles = "Thư ký")]
     public class CommentsController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();
@@ -59,7 +60,7 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
         }
 
         [HttpPost]
-        // GET: Secretary/Comments
+        // GET: Secretary/Commment
         public async Task<ActionResult> PostCommentPersonal(string CommentText, int id)
         {
             string emails = User.Identity.Name;

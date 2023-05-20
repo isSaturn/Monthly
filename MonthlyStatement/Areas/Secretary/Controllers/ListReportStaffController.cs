@@ -13,7 +13,7 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
     {
         CP25Team04Entities db = new CP25Team04Entities();
 
-        // GET: Secretary/ListReportPersonal
+        // GET: Secretaryy/ListReportPersonal
         public ActionResult Index()
         {
             return View(db.StaffReports.ToList());
