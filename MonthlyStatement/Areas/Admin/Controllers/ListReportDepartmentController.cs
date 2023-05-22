@@ -20,7 +20,9 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         }
         public ActionResult Detail(int id)
         {
-            var form = db.DepartmentReports.Find(id);
+            var per = db.DepartmentReports.Find(id);
+            var form = db.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == per.report_period_id);
+            ViewBag.accID = per.account_id;
             return View(form);
         }
     }

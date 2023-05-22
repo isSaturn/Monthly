@@ -36,10 +36,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             {
                 profile.user_name = name;
             }
-            if (!string.IsNullOrWhiteSpace(bomon))
-            {
-                profile.department = bomon;
-            }
 
             db.Entry(profile).State = EntityState.Modified;
             db.SaveChanges();

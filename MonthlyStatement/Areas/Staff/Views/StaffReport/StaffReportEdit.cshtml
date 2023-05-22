@@ -280,7 +280,9 @@
                 data: formData
             }).done(function (ketqua) {
                 if (ketqua == "Success") {
-                    swal('Thành công', 'Báo cáo tháng thành công', 'success');
+                    swal('Thành công', 'Chỉnh sửa báo cáo tháng thành công', 'success').then(function () {
+                        location.href = '@Url.Action("Staff", "StaffReport", new { Area = "Staff" })';
+                    });
                 } else {
                     swal('Thất bại', 'Báo cáo không thành công', 'error');
                 }
