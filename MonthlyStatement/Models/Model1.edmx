@@ -163,6 +163,14 @@
           <Property Name="form_staff_report_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="report_period_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Mapping">
+          <Key>
+            <PropertyRef Name="mapping_id" />
+          </Key>
+          <Property Name="mapping_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="department_report_detail_id" Type="int" />
+          <Property Name="personal_report_detail_id" Type="int" />
+        </EntityType>
         <EntityType Name="Notifications">
           <Key>
             <PropertyRef Name="notification_id" />
@@ -201,7 +209,6 @@
           <Property Name="user_name" Type="nvarchar" MaxLength="50" />
           <Property Name="faculty_id" Type="int" />
           <Property Name="account_id" Type="nvarchar" MaxLength="128" />
-          <Property Name="department" Type="nvarchar" MaxLength="128" />
           <Property Name="email" Type="nvarchar" MaxLength="128" />
           <Property Name="last_login" Type="datetime" />
           <Property Name="last_logout" Type="datetime" />
@@ -510,6 +517,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Mapping_DepartmentReportDetails">
+          <End Role="DepartmentReportDetails" Type="Self.DepartmentReportDetails" Multiplicity="0..1" />
+          <End Role="Mapping" Type="Self.Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentReportDetails">
+              <PropertyRef Name="department_report_detail_id" />
+            </Principal>
+            <Dependent Role="Mapping">
+              <PropertyRef Name="department_report_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mapping_PersonalReportDetails">
+          <End Role="PersonalReportDetails" Type="Self.PersonalReportDetails" Multiplicity="0..1" />
+          <End Role="Mapping" Type="Self.Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalReportDetails">
+              <PropertyRef Name="personal_report_detail_id" />
+            </Principal>
+            <Dependent Role="Mapping">
+              <PropertyRef Name="personal_report_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Notification_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
@@ -696,6 +727,7 @@
           <EntitySet Name="FormPersonalReports" EntityType="Self.FormPersonalReports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormStaffReportDetails" EntityType="Self.FormStaffReportDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormStaffReports" EntityType="Self.FormStaffReports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mapping" EntityType="Self.Mapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonalReportDetails" EntityType="Self.PersonalReportDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonalReports" EntityType="Self.PersonalReports" Schema="dbo" store:Type="Tables" />
@@ -788,6 +820,14 @@
           <AssociationSet Name="FK_FormStaffReports_ReportPeriods" Association="Self.FK_FormStaffReports_ReportPeriods">
             <End Role="ReportPeriods" EntitySet="ReportPeriods" />
             <End Role="FormStaffReports" EntitySet="FormStaffReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mapping_DepartmentReportDetails" Association="Self.FK_Mapping_DepartmentReportDetails">
+            <End Role="DepartmentReportDetails" EntitySet="DepartmentReportDetails" />
+            <End Role="Mapping" EntitySet="Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mapping_PersonalReportDetails" Association="Self.FK_Mapping_PersonalReportDetails">
+            <End Role="PersonalReportDetails" EntitySet="PersonalReportDetails" />
+            <End Role="Mapping" EntitySet="Mapping" />
           </AssociationSet>
           <AssociationSet Name="FK_Notification_AspNetUsers" Association="Self.FK_Notification_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -957,6 +997,7 @@
           <Property Name="department_report_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DepartmentReport" Relationship="Self.FK_DepartmentReportDetail_DepartmentReport" FromRole="DepartmentReportDetails" ToRole="DepartmentReports" />
           <NavigationProperty Name="FormDepartmentReportDetail" Relationship="Self.FK_DepartmentReportDetail_FormDepartmentReportDetail" FromRole="DepartmentReportDetails" ToRole="FormDepartmentReportDetails" />
+          <NavigationProperty Name="Mappings" Relationship="Self.FK_Mapping_DepartmentReportDetails" FromRole="DepartmentReportDetails" ToRole="Mapping" />
         </EntityType>
         <EntityType Name="DepartmentReport">
           <Key>
@@ -1046,6 +1087,16 @@
           <NavigationProperty Name="FormStaffReportDetails" Relationship="Self.FK_FormStaffReportDetails_FormStaffReports" FromRole="FormStaffReports" ToRole="FormStaffReportDetails" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_FormStaffReports_ReportPeriods" FromRole="FormStaffReports" ToRole="ReportPeriods" />
         </EntityType>
+        <EntityType Name="Mapping">
+          <Key>
+            <PropertyRef Name="mapping_id" />
+          </Key>
+          <Property Name="mapping_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="department_report_detail_id" Type="Int32" />
+          <Property Name="personal_report_detail_id" Type="Int32" />
+          <NavigationProperty Name="DepartmentReportDetail" Relationship="Self.FK_Mapping_DepartmentReportDetails" FromRole="Mapping" ToRole="DepartmentReportDetails" />
+          <NavigationProperty Name="PersonalReportDetail" Relationship="Self.FK_Mapping_PersonalReportDetails" FromRole="Mapping" ToRole="PersonalReportDetails" />
+        </EntityType>
         <EntityType Name="Notification">
           <Key>
             <PropertyRef Name="notification_id" />
@@ -1066,6 +1117,7 @@
           <Property Name="form_personal_report_detail_id" Type="Int32" Nullable="false" />
           <Property Name="personal_report_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FormPersonalReportDetail" Relationship="Self.FK_PersonalReportDetail_FormPersonalReportDetail" FromRole="PersonalReportDetails" ToRole="FormPersonalReportDetails" />
+          <NavigationProperty Name="Mappings" Relationship="Self.FK_Mapping_PersonalReportDetails" FromRole="PersonalReportDetails" ToRole="Mapping" />
           <NavigationProperty Name="PersonalReport" Relationship="Self.FK_PersonalReportDetail_PersonalReport" FromRole="PersonalReportDetails" ToRole="PersonalReports" />
         </EntityType>
         <EntityType Name="PersonalReport">
@@ -1091,7 +1143,6 @@
           <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="faculty_id" Type="Int32" />
           <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="department" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="last_login" Type="DateTime" Precision="3" />
           <Property Name="last_logout" Type="DateTime" Precision="3" />
@@ -1380,6 +1431,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Mapping_DepartmentReportDetails">
+          <End Role="DepartmentReportDetails" Type="Self.DepartmentReportDetail" Multiplicity="0..1" />
+          <End Role="Mapping" Type="Self.Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentReportDetails">
+              <PropertyRef Name="department_report_detail_id" />
+            </Principal>
+            <Dependent Role="Mapping">
+              <PropertyRef Name="department_report_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DepartmentReport_ReportPeriod">
           <End Role="ReportPeriods" Type="Self.ReportPeriod" Multiplicity="1" />
           <End Role="DepartmentReports" Type="Self.DepartmentReport" Multiplicity="*" />
@@ -1500,6 +1563,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Mapping_PersonalReportDetails">
+          <End Role="PersonalReportDetails" Type="Self.PersonalReportDetail" Multiplicity="0..1" />
+          <End Role="Mapping" Type="Self.Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalReportDetails">
+              <PropertyRef Name="personal_report_detail_id" />
+            </Principal>
+            <Dependent Role="Mapping">
+              <PropertyRef Name="personal_report_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PersonalReportDetail_PersonalReport">
           <End Role="PersonalReports" Type="Self.PersonalReport" Multiplicity="1" />
           <End Role="PersonalReportDetails" Type="Self.PersonalReportDetail" Multiplicity="*" />
@@ -1581,6 +1656,7 @@
           <EntitySet Name="FormPersonalReports" EntityType="Self.FormPersonalReport" />
           <EntitySet Name="FormStaffReportDetails" EntityType="Self.FormStaffReportDetail" />
           <EntitySet Name="FormStaffReports" EntityType="Self.FormStaffReport" />
+          <EntitySet Name="Mappings" EntityType="Self.Mapping" />
           <EntitySet Name="Notifications" EntityType="Self.Notification" />
           <EntitySet Name="PersonalReportDetails" EntityType="Self.PersonalReportDetail" />
           <EntitySet Name="PersonalReports" EntityType="Self.PersonalReport" />
@@ -1662,6 +1738,10 @@
             <End Role="FormDepartmentReportDetails" EntitySet="FormDepartmentReportDetails" />
             <End Role="DepartmentReportDetails" EntitySet="DepartmentReportDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_Mapping_DepartmentReportDetails" Association="Self.FK_Mapping_DepartmentReportDetails">
+            <End Role="DepartmentReportDetails" EntitySet="DepartmentReportDetails" />
+            <End Role="Mapping" EntitySet="Mappings" />
+          </AssociationSet>
           <AssociationSet Name="FK_DepartmentReport_ReportPeriod" Association="Self.FK_DepartmentReport_ReportPeriod">
             <End Role="ReportPeriods" EntitySet="ReportPeriods" />
             <End Role="DepartmentReports" EntitySet="DepartmentReports" />
@@ -1701,6 +1781,10 @@
           <AssociationSet Name="FK_FormStaffReports_ReportPeriods" Association="Self.FK_FormStaffReports_ReportPeriods">
             <End Role="ReportPeriods" EntitySet="ReportPeriods" />
             <End Role="FormStaffReports" EntitySet="FormStaffReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mapping_PersonalReportDetails" Association="Self.FK_Mapping_PersonalReportDetails">
+            <End Role="PersonalReportDetails" EntitySet="PersonalReportDetails" />
+            <End Role="Mapping" EntitySet="Mappings" />
           </AssociationSet>
           <AssociationSet Name="FK_PersonalReportDetail_PersonalReport" Association="Self.FK_PersonalReportDetail_PersonalReport">
             <End Role="PersonalReports" EntitySet="PersonalReports" />
@@ -1896,6 +1980,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Mappings">
+            <EntityTypeMapping TypeName="CP25Team04Model.Mapping">
+              <MappingFragment StoreEntitySet="Mapping">
+                <ScalarProperty Name="mapping_id" ColumnName="mapping_id" />
+                <ScalarProperty Name="department_report_detail_id" ColumnName="department_report_detail_id" />
+                <ScalarProperty Name="personal_report_detail_id" ColumnName="personal_report_detail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="CP25Team04Model.Notification">
               <MappingFragment StoreEntitySet="Notifications">
@@ -1936,7 +2029,6 @@
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
                 <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
-                <ScalarProperty Name="department" ColumnName="department" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="last_login" ColumnName="last_login" />
                 <ScalarProperty Name="last_logout" ColumnName="last_logout" />

@@ -1,4 +1,4 @@
-﻿@model MonthlyStatement.Models.DepartmentReport
+﻿@model  MonthlyStatement.Models.FormDepartmentReport
 @using MonthlyStatement.Models
 @{
     ViewBag.Title = "DepartmentDetail";
@@ -9,8 +9,10 @@
 
     CP25Team04Entities models = new CP25Team04Entities();
     int idperiod = Model.report_period_id;
-    int iddepartmentreport = Model.department_report_id;
-
+    var form = models.DepartmentReports.Where(p => p.report_period_id == idperiod);
+    string emails = ViewBag.accID;
+    var formPer = models.DepartmentReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(emails));
+    int per = formPer.First().department_report_id;
 }
 
 <section class="section">
@@ -19,10 +21,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo giảng viên: @Model.AspNetUser.Email</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo nhân viên</h4>
                     </div>
                 </div>
-
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -34,6 +35,7 @@
                                 <br />
                                 <div class="section-title mt-1" style="font-weight:bold">
                                     @(((char) j).ToString()). @items.Category.category_content.ToUpper()
+
                                 </div>
 
                                 foreach (var items_lv2 in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
@@ -49,12 +51,14 @@
                                                     <tr class="" style="max-width: 50px">
                                                         <th>@(i). @items_lv2.Category.category_content</th>
                                                     </tr>
+
                                                     @if (models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id).Count() > 0)
                                                     {
+
                                                         int inputIndex = 0;
                                                         if (!models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
                                                         {
-                                                            foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id).ToList())
+                                                            foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id && p.department_report_id == per).ToList())
                                                             {
                                                                 inputIndex++;
                                                                 <tr id="formInput-@items_lv2.category_id-@inputIndex">
@@ -66,7 +70,7 @@
                                                         }
                                                         else
                                                         {
-                                                            foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id).ToList())
+                                                            foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id && p.department_report_id == per).ToList())
                                                             {
                                                                 inputIndex++;
                                                                 <tr id="formInput-@items_lv2.category_id-@inputIndex" class="d-none">
@@ -78,9 +82,7 @@
                                                         }
                                                     }
                                                     <tr hidden id="append-@items.category_id"></tr>
-
                                                 </tbody>
-
                                             </table>
 
                                         </div>
@@ -108,7 +110,7 @@
                                                                         inputIndex++;
                                                                         if (models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_content_lv3.form_department_report_detail_id).Count() > 0)
                                                                         {
-                                                                            foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_content_lv3.form_department_report_detail_id).ToList())
+                                                                            foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_content_lv3.form_department_report_detail_id && p.department_report_id == per).ToList())
                                                                             {
                                                                                 <tr>
                                                                                     <td>
@@ -131,14 +133,15 @@
                             }
                             <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
                             <div class="section-title mt-3" style="font-weight:bold">
-                                <label>@(((char) (++j)).ToString()). BÌNH LUẬN</label>
+                                <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
                             </div>
                             <hr />
                             <div class="col-12">
                                 <div class="card" style="background-color: #e9ecef">
                                     <div class="card-body">
+
                                         <div class="chat">
-                                            @foreach (var comment in models.Comments.Where(x => x.department_report_id == iddepartmentreport).ToList())
+                                            @foreach (var comment in models.Comments.Where(x => x.department_report_id == per).ToList())
                                             {
                                                 <div class="chat-header clearfix">
                                                     <img alt="image" src="~/assets/img/user.png" class="rounded-circle img-fluid">
@@ -152,19 +155,18 @@
                                                     </div>
                                                 </div>
                                             }
+
                                         </div>
                                         <hr />
                                         <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
-                                        @using (Html.BeginForm("PostCommentDepartment", "Comments", FormMethod.Post))
+                                        @using (Html.BeginForm("PostComment", "CommentsDepartment", FormMethod.Post))
                                         {
-                                            <input type="hidden" name="id" value="@iddepartmentreport" />
+                                            <input type="hidden" name="id" value="@per" />
                                             <div class="form-group">
                                                 <textarea class="form-control" name="CommentText" style="height:200px !important"></textarea>
                                             </div>
                                             <div class="text-right mt-3">
-                                                <button class="btn btn-primary" type="submit">
-                                                    Gửi
-                                                </button>
+                                                <button class="btn btn-primary" type="submit">Gửi</button>
                                             </div>
                                         }
                                     </div>

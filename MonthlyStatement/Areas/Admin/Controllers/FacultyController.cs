@@ -248,7 +248,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                                 pro.user_name = data[1].ToString().Trim();
                                 pro.email = data[2].ToString().Trim();
                                 pro.faculty_id = khoa.faculty_id;
-                                pro.department = data[4].ToString().Trim();
                                 db.Profiles.Add(pro);
                                 db.SaveChanges();
 
@@ -258,7 +257,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                                 profiles.user_name = data[1].ToString().Trim();
                                 profiles.email = data[2].ToString().Trim();
                                 profiles.faculty_id = khoa.faculty_id;
-                                profiles.department = data[4].ToString().Trim();
                                 db.Entry(profiles).State = EntityState.Modified;
                                 db.SaveChanges();
                             }
@@ -281,7 +279,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
 
                                 //thay đổi bomon 
                                 string bomons = data[4].ToString().Trim();
-                                profile.department = bomons;
 
                                 //thay đổi tên
                                 string names = data[1].ToString().Trim();

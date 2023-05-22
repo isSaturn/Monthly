@@ -82,16 +82,6 @@
                                                     }
                                                 </td>
                                                 <td>
-                                                    @if (item.Profiles.First().department == null)
-                                                    {
-                                                        <span>Chưa có bộ môn</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        @item.Profiles.FirstOrDefault().department
-                                                    }
-                                                </td>
-                                                <td>
                                                     @if (item.Profiles.First().last_login == null)
                                                     {
                                                         <span></span>
