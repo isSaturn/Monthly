@@ -17,6 +17,8 @@
     var formPer = models.DepartmentReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
     var lstCate = ((IEnumerable<Category>)ViewBag.CheckListCategory);
     var perDetail = ((IEnumerable<PersonalReportDetail>)ViewBag.MappingContent);
+    int idperiod = Model.report_period_id;
+    int perMapping = formPer.First().department_report_id;
 }
 @*@if (ViewBag.CheckFormDep == true)
     {
@@ -111,11 +113,15 @@
                                                                     </tr>
                                                                     <tr hidden id="append-@itemss.category_id"></tr>
                                                                     <tr>
-                                                                        <td>
-                                                                            <button role="button" name="@itemss.category_id" id="xoanoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
-                                                                        </td>
-                                                                        <td>
-                                                                            <button role="button" name="@itemss.category_id" id="themnoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                        <td colspan="2">
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <button role="button" name="@itemss.category_id" id="xoanoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <button role="button" name="@itemss.category_id" id="themnoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                                </div>
+                                                                            </div>
                                                                         </td>
                                                                     </tr>
 
@@ -127,9 +133,7 @@
                                                         else
                                                         {
                                                             <table class="table table-bordered dataTable">
-
                                                                 <tbody>
-
                                                                     <tr class="" style="max-width: 50px">
                                                                         <th colspan="2">@(i). @itemss.Category.category_content</th>
                                                                     </tr>
@@ -159,7 +163,6 @@
                                                             {
                                                                 lstId += itemsss.category_id + "-";
                                                                 k++;
-
                                                                 <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
                                                                     <div class="col-lg-12 ">
                                                                         <input hidden id="dem-@itemsss.category_id" value="1" />
@@ -174,9 +177,51 @@
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr class="" style="max-width: 50px">
-                                                                                    <th colspan="2">@(i).@(k) @itemsss.Category.category_content</th>
+                                                                                    <th colspan="2">@itemsss.Category.category_content</th>
                                                                                 </tr>
-                                                                                <tr id="formInput-@itemsss.category_id">
+                                                                                @{
+                                                                                    var lv3List = models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == itemss.category_id).ToList();
+                                                                                    <tr>
+                                                                                        <td colspan="@lv3List.Count">
+                                                                                            <div>
+                                                                                                <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+                                                                                                    @foreach (var items_lv3 in lv3List)
+                                                                                                    {
+                                                                                                        <div class="col">
+                                                                                                            <table class="table dataTable">
+                                                                                                                <tbody>
+                                                                                                                    @{ var items_groupby = models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == itemss.category_id && items_lv3.form_personal_report_detail_id == x.form_personal_report_detail_id).GroupBy(x => x.form_personal_report_detail_id).ToList();}
+
+                                                                                                                    @foreach (var item in items_groupby)
+                                                                                                                    {
+                                                                                                                        foreach (var items_content_lv3 in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == itemss.category_id && x.form_personal_report_detail_id == item.Key).ToList())
+                                                                                                                        {
+                                                                                                                            int inputIndex = 0;
+                                                                                                                            inputIndex++;
+                                                                                                                            if (models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_content_lv3.form_personal_report_detail_id).Count() > 0)
+                                                                                                                            {
+                                                                                                                                foreach (var items_content in models.PersonalReportDetails.Where(p => p.form_personal_report_detail_id == items_content_lv3.form_personal_report_detail_id && p.personal_report_id == perMapping).ToList())
+                                                                                                                                {
+                                                                                                                                    <tr>
+                                                                                                                                        <td>
+                                                                                                                                            <input readonly type="text" value="@items_content.personal_report_content" class="form-control" id="noidung-@items_content_lv3.category_id">
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    <tr hidden id="append-@items.category_id"></tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    }
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                }
+                                                                                <tr id="formInput-@itemsss.category_id-">
                                                                                     <td colspan="2">
                                                                                         <input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-@itemsss.category_id-1">
                                                                                         <p hidden id="validation-noidung-@itemsss.category_id-1" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
@@ -184,11 +229,15 @@
                                                                                 </tr>
                                                                                 <tr hidden id="append-@itemsss.category_id"></tr>
                                                                                 <tr>
-                                                                                    <td>
-                                                                                        <button role="button" name="@itemsss.category_id" id="xoanoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <button role="button" name="@itemsss.category_id" id="themnoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                                    <td colspan="2">
+                                                                                        <div class="row">
+                                                                                            <div class="col">
+                                                                                                <button role="button" name="@itemsss.category_id" id="xoanoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                                            </div>
+                                                                                            <div class="col">
+                                                                                                <button role="button" name="@itemsss.category_id" id="themnoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -416,7 +465,7 @@
             var mappingContent = $('.perDetailMapping-' + categoryid);
             let inputCount = Number($('#dem-' + categoryid).val()) + 1;
             mappingContent.each(function () {
-                $('#append-' + categoryid).replaceWith('<tr id="formInput-' + categoryid + '-' + inputCount + '"><td colspan="2"><input readonly type="text" value="' + $(this).val()+'" class="form-control" id="noidung-' + categoryid + '-' + inputCount + '">'
+                $('#append-' + categoryid).replaceWith('<tr id="formInput-' + categoryid + '-' + inputCount + '"><td colspan="2"><input readonly type="text" value="' + $(this).val() + '" class="form-control" id="noidung-' + categoryid + '-' + inputCount + '">'
                     + '<p hidden id="validation-noidung-' + categoryid + '-' + inputCount + '" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>'
                     + '</td ></tr > <tr hidden id="append-' + categoryid + '"></tr>');
             });

@@ -50,7 +50,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             {
                 db.Entry(reportPeriod).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["ThongBao"] = "Sửa kỳ báo cáo thành công";
+                ViewBag.Message = "Sửa kỳ báo cáo thành công";
             }
             return View(reportPeriod);
         }

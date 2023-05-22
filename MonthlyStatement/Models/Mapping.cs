@@ -12,17 +12,13 @@ namespace MonthlyStatement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Profile
+    public partial class Mapping
     {
-        public int profile_id { get; set; }
-        public string user_name { get; set; }
-        public Nullable<int> faculty_id { get; set; }
-        public string account_id { get; set; }
-        public string email { get; set; }
-        public Nullable<System.DateTime> last_login { get; set; }
-        public Nullable<System.DateTime> last_logout { get; set; }
+        public int mapping_id { get; set; }
+        public Nullable<int> department_report_detail_id { get; set; }
+        public Nullable<int> personal_report_detail_id { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Faculty Faculty { get; set; }
+        public virtual DepartmentReportDetail DepartmentReportDetail { get; set; }
+        public virtual PersonalReportDetail PersonalReportDetail { get; set; }
     }
 }
