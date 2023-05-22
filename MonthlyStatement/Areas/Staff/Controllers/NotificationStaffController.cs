@@ -12,20 +12,19 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using MonthlyStatement.Models;
 
-namespace MonthlyStatement.Areas.Personal.Controllers
+namespace MonthlyStatement.Areas.Staff.Controllers
 {
-        // GET: Personal/NotificationPersonal
-    public class NotificationPersonalController : Controller
+    public class NotificationStaffController : Controller
     {
         private ApplicationAccountManager _userManager;
         private ApplicationSignInManager _signInManager;
         private CP25Team04Entities db = new CP25Team04Entities();
 
 
-        public NotificationPersonalController()
+        public NotificationStaffController()
         {
         }
-        public NotificationPersonalController(ApplicationAccountManager userManager, ApplicationSignInManager signInManager)
+        public NotificationStaffController(ApplicationAccountManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -42,7 +41,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                 _signInManager = value;
             }
         }
-        public NotificationPersonalController(ApplicationAccountManager userManager)
+        public NotificationStaffController(ApplicationAccountManager userManager)
         {
             UserManager = userManager;
         }
@@ -58,16 +57,16 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                 _userManager = value;
             }
         }
-        // GET: Personal/NotificationPersonal
+        // GET: Staff/NotificationStaff
         public ActionResult Index()
         {
             var list_notification = db.Notifications.ToList();
             return View(list_notification);
         }
 
-        public async Task<ActionResult> SendMailPersonalAsync()
+        public async Task<ActionResult> SendMailStaffAsync()
         {
-            string email_gv = User.Identity.Name;
+            string email_nv = User.Identity.Name;
 
             var current_time = DateTime.Now;
             var check_year = db.ReportYears.FirstOrDefault(y => y.year == current_time.Year);
@@ -75,7 +74,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
 
             var list_send = db.AspNetUsers.Where(s => s.Id != null).ToList();
 
-            var Role = list_send.Where(y => y.AspNetRoles.FirstOrDefault(r => r.Name == "Bộ môn") != null ).ToArray();
+            var Role = list_send.Where(y => y.AspNetRoles.FirstOrDefault(r => r.Name == "Bộ môn") != null).ToArray();
 
             if (check_year != null)
             {
@@ -84,18 +83,18 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                     Notification notification = new Notification();
                     notification.notification_date = DateTime.Now;
                     notification.notification_content =
-                        "Thông báo đã hoàn thành " + check_month.report_period_name + " (Giảng viên): " +
-                       email_gv + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_gv;
+                        "Thông báo đã hoàn thành " + check_month.report_period_name + " (Nhân viên): " +
+                       email_nv + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_nv;
                     notification.status = "Đã thông báo";
                     db.Notifications.Add(notification);
                     db.SaveChanges();
 
 
-                    for (int i = 0; i < Role.Length ; i++)
+                    for (int i = 0; i < Role.Length; i++)
                     {
                         await UserManager.SendEmailAsync(Role[i].Id,
-                       "Thông báo đã hoàn thành " + check_month.report_period_name + " (Giảng viên)",
-                       email_gv + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_gv);
+                       "Thông báo đã hoàn thành " + check_month.report_period_name + " (Nhân viên)",
+                       email_nv + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_nv);
                     }
 
 

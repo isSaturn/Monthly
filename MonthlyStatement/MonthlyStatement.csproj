@@ -218,6 +218,7 @@
     <Compile Include="Areas\Department\Controllers\CommentsDepartmentController.cs" />
     <Compile Include="Areas\Department\Controllers\FormDepartmentReportController.cs" />
     <Compile Include="Areas\Department\Controllers\DepartmentReportController.cs" />
+    <Compile Include="Areas\Department\Controllers\NotificationDepartmentController.cs" />
     <Compile Include="Areas\Department\Controllers\StatisticalController.cs" />
     <Compile Include="Areas\Department\DepartmentAreaRegistration.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacManagerController.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Areas\Staff\Controllers\CommentsStaffController.cs" />
     <Compile Include="Areas\Staff\Controllers\FormStaffReportController.cs" />
+    <Compile Include="Areas\Staff\Controllers\NotificationStaffController.cs" />
     <Compile Include="Areas\Staff\Controllers\StaffReportController.cs" />
     <Compile Include="Areas\Staff\StaffAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -1282,11 +1284,13 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Department\Data\" />
+    <Folder Include="Areas\Department\Views\NotificationDepartment\" />
     <Folder Include="Areas\FacultyAreas\Data\" />
     <Folder Include="Areas\Personal\Data\" />
     <Folder Include="Areas\Personal\Views\NotificationPersonal\" />
     <Folder Include="Areas\Personal\Views\Shared\" />
     <Folder Include="Areas\Staff\Data\" />
+    <Folder Include="Areas\Staff\Views\NotificationStaff\" />
     <Folder Include="Areas\Staff\Views\Shared\" />
     <Folder Include="assets\FileImport\" />
     <Folder Include="assets\FileMinhChung\" />
