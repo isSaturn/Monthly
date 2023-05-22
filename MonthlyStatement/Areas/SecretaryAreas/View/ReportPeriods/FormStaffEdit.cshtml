@@ -1,0 +1,249 @@
+﻿@model  MonthlyStatement.Models.FormStaffReport
+@using MonthlyStatement.Models
+
+@{ ViewBag.Title = "FormStaffEdit";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                var lstCategory = Session["FormStaffEdit-lstCategory"] as IEnumerable<Category>; }
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary" style="height:100px">
+                        <h4 class="text-white" style="font-size:1.75rem">Chỉnh sửa báo cáo nhân viên: @Model.ReportPeriod.report_period_name</h4>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <input value="@Model.form_staff_report_id" id="idReportPeriod" hidden="hidden">
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="table-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center pt-3">
+                                                </th>
+                                                <th>Cấp danh mục</th>
+                                                <th>Tên danh mục</th>
+                                                <th>Chức năng</th>
+                                            </tr>
+                                        </thead>
+                                        @foreach (var item in lstCategory.Where(c => c.category_of_id == null).ToList())
+                                        {
+                            <tbody>
+                                <tr>
+                                    <td class="text-center pt-2">
+                                        <div class="pretty p-switch p-fill">
+                                            <input name="@item.category_id" type="checkbox" id="categorylv1-@item.category_id" value="@item.category_id" />
+                                            <div class="state">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>LV 1</td>
+                                    <td style="font-weight:bold">
+                                        @item.category_content
+                                    </td>
+                                    <td><a href="@Url.Action("Edit", "Categories", new { id = item.category_id })" class="btn btn-primary">Edit</a></td>
+                                </tr>
+                            </tbody> foreach (var items in lstCategory.Where(c => c.category_of_id == item.category_id).ToList())
+                                            {
+                            <tbody>
+                                <tr>
+                                    <td class="text-center pt-2">
+                                        <div class="pretty p-switch p-fill">
+                                            <input name="@items.category_of_id"
+                                                   type="checkbox"
+                                                   id="@(items.category_of_id)categorylv2-@(items.category_id)"
+                                                   value="@items.category_id" />
+                                            <div class="state">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>LV 2</td>
+                                    <td>
+                                        <div class="media mt-3">
+                                            <div class="pr-3" href="#">
+                                            </div>@items.category_content
+                                        </div>
+                                    </td>
+                                    <td><a href="@Url.Action("Edit", "Categories", new { id = item.category_id })" class="btn btn-primary">Edit</a></td>
+                                </tr>
+                            </tbody> foreach (var itemss in lstCategory.Where(c => c.category_of_id == items.category_id).ToList())
+                                                {
+                            <tbody>
+                                <tr>
+                                    <td class="text-center pt-2">
+                                        <div class="pretty p-switch p-fill">
+                                            <input name="@items.category_of_id-@items.category_id"
+                                                   type="checkbox"
+                                                   id="@(itemss.category_of_id)categorylv3-@(itemss.category_id)" value="@itemss.category_id" />
+                                            <div class="state">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>LV 3</td>
+
+                                    <td>
+                                        <div class="media mt-3">
+                                            <div class="pr-5" href="#">
+                                            </div>@itemss.category_content
+                                        </div>
+                                    </td>
+                                    <td><a href="@Url.Action("Edit", "Categories", new { id = item.category_id })" class="btn btn-primary">Edit</a></td>
+                                </tr>
+                            </tbody>}
+                                            }
+                                        }
+
+
+                                    </table>
+                                </div>
+                                <div class="text-right">
+                                    <a href="#" role="button" class="btn btn-primary" id="saveForm">Lưu báo cáo</a>
+                                    <button class="btn btn-danger " type="reset">Reset</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>$(document).ready(function () {
+        //radio button lv3
+        $('[id*="categorylv3-"]').on('input', function () {
+            var idlv1 = $(this).attr('name').split('-')[0];
+            var idlv2 = $(this).attr('name').split('-')[1];
+
+            if ($(this).prop('checked')) {
+                if ($('#' + idlv1 + 'categorylv2-' + idlv2).prop('checked') == false) {
+                    $('#' + idlv1 + 'categorylv2-' + idlv2).prop('checked', true);
+                    $('#categorylv1-' + idlv1).prop('checked', true);
+                }
+            }
+        });
+        //radio button lv2
+        $('[id*="categorylv2-"]').on('input', function () {
+            var id = $(this).attr('name');
+            if ($(this).prop('checked')) {
+                if ($('#categorylv1-' + id).prop('checked') == false) {
+                    $('#categorylv1-' + id).prop('checked', true);
+                }
+            } else {
+                var check = false;
+                $('[id^="' + id + 'categorylv2-"]').each(function () {
+                    if ($(this).prop('checked')) {
+                        check = true;
+                    }
+                });
+                if (check == false) {
+                    $('#categorylv1-' + id).prop('checked', false);
+                }
+            }
+        });
+        //radio button lv1
+        $('[id*="categorylv1-"]').on('input', function () {
+            var id = $(this).attr('name');
+            if ($(this).prop('checked') == false) {
+                $('[name="' + id + '"]').each(function () {
+                    $(this).prop('checked', false);
+                });
+            }
+        });
+        //button edit
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.profile-pic').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+
+        $(".upload-button").on('click', function () {
+            $(".file-upload").click();
+        });
+
+        //button save form
+        $('#saveForm').on('click', function () {
+            var idReport = $('#idReportPeriod').val();
+            var data = "";
+            $(':checkbox').each(function () {
+                if ($(this).prop('checked')) {
+                    data += $(this).val() + "-";
+                }
+            });
+            var formData = new FormData();
+            formData.append('idReport', idReport);
+            formData.append('data', data.substring(0, data.length - 1));
+            swal({
+                title: 'Lưu biểu mẫu?',
+                text: 'Bạn có muốn lưu biểu mẫu?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willAdd) => {
+                    if (willAdd) {
+                        $.ajax({
+                            type: "POST",
+                            contentType: false,
+                            dataType: "html",
+                            processData: false,
+                            url: $('#requestUrl').val() + 'ReportPeriods/FormStaffEdit',
+                            data: formData,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    swal('Thêm thành công', {
+                                        icon: 'success',
+                                    });
+                                }
+                                else if (result == "Exist") {
+                                    swal('Form đã được sử dụng, không thể lưu', {
+                                        icon: 'info',
+                                    });
+                                }
+
+                                else {
+                                    swal(result, {
+                                        icon: 'error',
+                                    });
+                                }
+
+                            },
+                            error: function (xhr) {
+                                swal(xhr.responseText, {
+                                    icon: 'error',
+                                });
+                                //debugger;
+                                console.log(xhr.responseText);
+                                alert("Error has occurred..");
+                            }
+                        });
+
+                    }
+                });
+        });
+    });</script>
+
+
+
+
+
