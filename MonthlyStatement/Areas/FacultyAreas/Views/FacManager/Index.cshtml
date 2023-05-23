@@ -8,69 +8,80 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (Session["faculty"] == null)
+{
+    <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
+        Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
+        <div>
+            <img src="~/assets/img/vlu/khoa.png" class="cangiua">
+        </div>
+    </div>
+}
+else
+{
+    <section class="section">
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-primary" style="height:100px">
+                            <h3 class="text-white" style="font-size:1.75rem">Quản lý khoa: @Model.FirstOrDefault().faculty_name</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="table-1">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="text-center">
+                                                STT
+                                            </th>
 
-<section class="section">
-    <div class="section-body">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-primary" style="height:100px">
-                        <h3 class="text-white" style="font-size:1.75rem">Quản lý khoa: @Model.FirstOrDefault().faculty_name</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="table-1">
-                                <thead>
-                                    <tr role="row">
-                                        <th class="text-center">
-                                            STT
-                                        </th>
-
-                                        <th>
-                                            Tên khoa
-                                        </th>
-                                        <th>
-                                            Số lượng
-                                        </th>
-                                        <th class="text-center">
-                                            Thao tác
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-
-                                    {
-                                        i = i + 1;
-
-                                        <tr>
-                                            <td class="text-center">
-                                                @i
-                                            </td>
-                                            <td>
-                                                <a href="@Url.Action("FacMember","FacManager", new { id = item.faculty_id })">@item.faculty_name</a>
-                                            </td>
-                                            <td>
-                                                @item.Profiles.Count()
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "Faculty", new { id = item.faculty_id })">
-                                                        <i class="far fa-edit"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
+                                            <th>
+                                                Tên khoa
+                                            </th>
+                                            <th>
+                                                Số lượng
+                                            </th>
+                                            <th class="text-center">
+                                                Thao tác
+                                            </th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+
+                                        {
+                                            i = i + 1;
+
+                                            <tr>
+                                                <td class="text-center">
+                                                    @i
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("FacMember","FacManager", new { id = item.faculty_id })">@item.faculty_name</a>
+                                                </td>
+                                                <td>
+                                                    @item.Profiles.Count()
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="buttons">
+                                                        <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "Faculty", new { id = item.faculty_id })">
+                                                            <i class="far fa-edit"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+}
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -138,7 +149,7 @@
             formData.append('lstUser', $("#fileimport")[0].files[0]);
 
             $.ajax({
-                url: $('#requestUrl').val() + 'Admin/Faculty/ImportUser',
+                url: $('#requestUrl').val() + 'FacultyAreas/FacManager/ImportUser',
                 type: 'POST',
                 dataType: 'html',
                 contentType: false,

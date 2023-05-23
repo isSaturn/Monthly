@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace MonthlyStatement.Areas.FacultyAreas.Controllers
 {
-    [Authorize(Roles = "Ban phòng khoa")]
+    [Authorize(Roles = "Ban phòng khoa,Thư ký")]
 
     public class FacReportController : Controller
     {

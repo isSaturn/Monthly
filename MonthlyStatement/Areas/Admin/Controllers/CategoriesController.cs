@@ -10,7 +10,7 @@ using MonthlyStatement.Models;
 
 namespace MonthlyStatement.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Quản trị viên")]
+    [Authorize(Roles = "Quản trị viên,Thư ký")]
 
     public class CategoriesController : Controller
     {

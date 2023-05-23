@@ -7,8 +7,6 @@ using System.Web.Mvc;
 
 namespace MonthlyStatement.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Quản trị viên")]
-
     public class YearReportController : Controller
     {
 
