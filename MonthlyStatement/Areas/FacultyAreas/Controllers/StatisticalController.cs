@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace MonthlyStatement.Areas.FacultyAreas.Controllers
 {
+    [Authorize(Roles = "Ban phòng khoa,Thư ký")]
     public class StatisticalController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();

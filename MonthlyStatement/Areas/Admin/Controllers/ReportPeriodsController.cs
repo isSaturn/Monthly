@@ -12,7 +12,8 @@ using MonthlyStatement.Models;
 
 namespace MonthlyStatement.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Quản trị viên")]
+    [Authorize(Roles = "Quản trị viên,Thư ký")]
+
     public class ReportPeriodsController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();

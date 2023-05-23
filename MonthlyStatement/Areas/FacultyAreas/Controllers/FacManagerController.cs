@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MonthlyStatement.Areas.FacultyAreas.Controllers
 {
-    [Authorize(Roles = "Ban phòng khoa")]
+    [Authorize(Roles = "Ban phòng khoa,Thư ký")]
 
     public class FacManagerController : Controller
     {
@@ -16,9 +16,11 @@ namespace MonthlyStatement.Areas.FacultyAreas.Controllers
         // GET: FacultyAreas/FacManager
         public ActionResult Index()
         {
-            string manguoidung = db.AspNetUsers.Where(x => x.Email == User.Identity.Name).FirstOrDefault().Id;
-            int makhoa = (int)db.Profiles.Where(p => p.account_id == manguoidung).FirstOrDefault().faculty_id;
-            var data = db.Faculties.Where(y => y.faculty_id == makhoa).ToList();
+            string emails = User.Identity.Name;
+            string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+            var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == accID);
+            Session["faculty"] = check_Faculty.faculty_id;
+            var data = db.Faculties.Where(y => y.faculty_id == check_Faculty.faculty_id).ToList();
             return View(data);
         }
         public ActionResult FacMember(int id)
