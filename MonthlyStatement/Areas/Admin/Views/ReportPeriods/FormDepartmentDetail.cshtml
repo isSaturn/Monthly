@@ -25,10 +25,11 @@ else
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.DepartmentReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
+    var model_lv1 = models.FormDepartmentReports.Find(idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_lv == 1).ToList();
     <div class="col-12">
         <div class="card">
-            <div class="card-body">
-                @foreach (var items in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_lv == 1).ToList())
+            <div class="card-body">              
+                @foreach (var items in model_lv1)
                 {
                     i = 0;
                     j++;

@@ -26,6 +26,8 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 string emails = User.Identity.Name;
                 string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
                 var lstCatDate = db.FormPersonalReports.FirstOrDefault(c => c.ReportPeriod.start_date <= current_time && c.ReportPeriod.end_date >= current_time).form_personal_report_id;
+                var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == accID);
+                Session["faculty"] = check_Faculty.faculty_id;
 
                 if (!db.FormDepartmentReportDetails.Any(f => f.FormDepartmentReport.report_period_id == check.report_period_id))
                 {

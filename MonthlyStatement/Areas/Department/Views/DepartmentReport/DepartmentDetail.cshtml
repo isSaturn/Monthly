@@ -13,7 +13,7 @@
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.DepartmentReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
-    int per = formPer.First().department_report_id;
+    int per = ViewBag.DepDetail;
 }
 
 <section class="section">
