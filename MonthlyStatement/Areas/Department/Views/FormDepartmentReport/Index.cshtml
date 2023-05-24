@@ -308,96 +308,19 @@
                                                     </div>@itemss.category_content
                                                     @for (int y = 0; y < perDetailMapping.Count; y++)
                                                     {
-                                                        <input type="hidden" class="perDetailMapping-@itemss.category_id" value="@perDetailMapping[y].Key" />
+                                                        <input data-id="@perDetailMapping[y].FirstOrDefault().personal_report_detail_id" type="hidden" class="perDetailMapping-@itemss.category_id" value="@perDetailMapping[y].Key" />
+                                                        
                                                     }
                                                 </div>
                                             </td>
                                             <td>
-                                                <input value="@itemss.category_id" class="mapping-checkbox" type="checkbox" />
+                                                <input id="checkboxMapping-@itemss.category_id" value="@itemss.category_id" class="mapping-checkbox" type="checkbox" />
                                             </td>
                                         </tr>
                                     </tbody>
                                 }
                             }
                         }
-                        @*<tbody>
-                                <tr class="Search">
-                                    <td class="text-center">
-                                        A
-                                    </td>
-                                    <td style="font-weight:bold">
-                                        Công việc thực hiện theo KPI
-                                    </td>
-                                    <td>LV 1</td>
-                                    <td></td>
-                                </tr>
-                                <tr class="Search">
-                                    <td class="text-center">
-                                        1
-                                    </td>
-                                    <td>
-                                        &emsp;
-                                        &emsp;
-                                        Công tác giảng dạy
-                                    </td>
-                                    <td>
-                                        LV 2
-                                    </td>
-                                    <td></td>
-
-                                </tr>
-                                <tr class="Search">
-                                    <td class="text-center">
-                                    </td>
-                                    <td>
-                                        &emsp;
-                                        &emsp;
-                                        &emsp;
-                                        &emsp;
-                                        Công tác giảng dạy
-                                    </td>
-                                    <td>
-                                        LV 3
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                </tr>
-                                <tr class="Search">
-                                    <td class="text-center">
-                                    </td>
-                                    <td>
-                                        &emsp;
-                                        &emsp;
-                                        &emsp;
-                                        &emsp;
-                                        Tông tiết giờ
-                                    </td>
-                                    <td>
-                                        LV 3
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                </tr>
-                                <tr class="Search">
-                                    <td class="text-center">
-                                    </td>
-                                    <td>
-                                        &emsp;
-                                        &emsp;
-                                        &emsp;
-                                        &emsp;
-                                        Thứ
-                                    </td>
-                                    <td>
-                                        LV 3
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                </tr>
-                            </tbody>*@
                     </table>
                     <div class="text-right mt-3">
                         <button id="idMappingContentBtn" role="button" class="btn btn-primary">Lưu nội dung</button>
@@ -408,23 +331,30 @@
     </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/Scripts/jquery-3.4.1.js"></script>
 <script>
     //Mapping nội dung
     $('#idMappingContentBtn').on('click', function () {
-        var boxes = $('.mapping-checkbox:checked');
+        var boxes = $('.mapping-checkbox');
         boxes.each(function () {
             var categoryid = $(this).val();
             var mappingContent = $('.perDetailMapping-' + categoryid);
-            let inputCount = Number($('#dem-' + categoryid).val()) + 1;
             mappingContent.each(function () {
-                console.log($(this).val());
-                $('#append-' + categoryid).replaceWith('<tr id="formInput-' + categoryid + '-' + inputCount + '"><td colspan="2"><input readonly type="text" value="'
-                    + $(this).val() + '" class="form-control" id="noidung-' + categoryid + '-' + inputCount + '">'
-                    + '<p hidden id="validation-noidung-' + categoryid + '-' + inputCount + '" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>'
-                    + '</td ></tr > <tr hidden id="append-' + categoryid + '"></tr>');
+                let inputCount = Number($('#dem-' + categoryid).val()) + 1;
+                var mappingId = $(this).data('id');
+                if ($('#mappingPer-' + mappingId).length == 0 && $('#checkboxMapping-' + categoryid).is(':checked')) {
+                    $('#append-' + categoryid).replaceWith('<tr id="formInput-' + categoryid + '-' + inputCount + '"><td colspan="2"><input readonly type="text" value="'
+                        + $(this).val() + '" class="form-control" id="noidung-' + categoryid + '-' + inputCount + '">'
+                        + '<p hidden id="validation-noidung-' + categoryid + '-' + inputCount + '" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>'
+                        + '<input type="hidden" id="mappingPer-' + mappingId + '"/>'
+                        + '</td ></tr > <tr hidden id="append-' + categoryid + '"></tr>');
+                    $('#dem-' + categoryid).val(inputCount);
+                }
+                else if (!$('#checkboxMapping-' + categoryid).is(':checked')) {
+                    $('#formInput-' + categoryid + '-' + inputCount).remove();
+                    $('#dem-' + categoryid).val((inputCount - 1));
+                }
             });
         });
     });
@@ -440,6 +370,7 @@
             $('#dem-' + id).val(inputCount);
         });
     });
+    //xóa input
     $('[id^="xoanoidung-"]').on('click', function () {
         var upperCateDelete = $(this).data('uppercatedelete');
         $('[data-uppercatedelete="' + upperCateDelete + '"]').each(function () {
@@ -452,7 +383,7 @@
         });
 
     });
-    //xóa input
+    //nút lưu báo cáo
     $('#btnSubmit').on('click', function () {
         var lstCate = $('#lstCategory').val().split('-');
         var datas = ""; //Chuỗi data phân tách nhau bởi các ký tự: idform1=noidung1-noidung2~idform2=noidung1-noidung2

@@ -1,0 +1,55 @@
+﻿@model MonthlyStatement.Models.Faculty
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card">
+                        <div class="card-header bg-primary" style="height:100px">
+                            <h4 class="text-white" style="font-size:1.75rem">Chỉnh sửa thông tin @Model.faculty_name</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            @using (Html.BeginForm("Edit", "FacManager", FormMethod.Post, new { }))
+                            {
+                                <!-- Account details card-->
+                                <div class="card-header"><b>Thông tin chi tiết</b></div>
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.faculty_id)
+
+                                <div class="card-body" style="margin-top: 0.2rem">
+                                    <!-- Form Group (Tên báo cáo)-->
+                                    <div class="mb-3">
+                                        <label class="small mb-1">Tên khoa</label>
+                                        @Html.EditorFor(model => model.faculty_name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.faculty_name, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div style="text-align: center; margin-top:1.8rem" class="mb-3">
+                                        <button style="width:180px; color:white" type="submit" class="btn btn-primary">
+                                            Lưu
+                                        </button>
+                                        &emsp;
+                                        <a style="width:180px; color:white;" role="button" class="btn btn-danger" href="@Url.Action("Index", "FacManager", new { id = Model.faculty_id})">
+                                            Hủy
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

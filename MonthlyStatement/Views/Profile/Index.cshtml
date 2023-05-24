@@ -65,13 +65,27 @@
                                     <div class="col-6 mb-3">
                                         <h6>Đăng nhập lần cuối</h6>
                                         <div class="text-muted">
-                                            <p class="text-muted mb-0">@Model.last_login.Value.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                                            @if (@Model.last_login == null)
+                                            {
+                                                <p class="text-muted mb-0"></p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-muted mb-0">@Model.last_login.Value.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                                            }
                                         </div>
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6>Đăng xuất lần cuối</h6>
                                         <div class="text-muted">
-                                            <p class="text-muted mb-0">@Model.last_logout.Value.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                                            @if (@Model.last_logout == null)
+                                            {
+                                                <p class="text-muted mb-0"></p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-muted mb-0">@Model.last_logout.Value.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -105,19 +119,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Khoa</label>
-                            <div class="input-group">
-                                @if (@Model.faculty_id == null)
-                                {
-                                    <input type="text" class="form-control" placeholder="Khoa" name="faculty" value="Chưa có khoa" readonly>
-                                }
-                                else
-                                {
-                                    <input type="text" class="form-control" placeholder="Khoa" name="faculty" value="@Model.Faculty.faculty_name" readonly>
-                                }
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label>Họ và tên</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Nhập họ và tên" name="name" value="@Model.user_name">
@@ -133,28 +134,4 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var readURL = function (input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('.profile-pic').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $(".file-upload").on('change', function () {
-            readURL(this);
-        });
-
-        $(".upload-button").on('click', function () {
-            $(".file-upload").click();
-        });
-    });
-</script>
 

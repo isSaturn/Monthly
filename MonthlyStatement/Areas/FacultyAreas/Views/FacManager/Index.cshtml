@@ -11,7 +11,7 @@
 @if (Session["faculty"] == null)
 {
     <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
-        Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
+        Chưa có khoa. Vui lòng thêm khoa
         <div>
             <img src="~/assets/img/vlu/khoa.png" class="cangiua">
         </div>
@@ -65,7 +65,7 @@ else
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="buttons">
-                                                        <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "Faculty", new { id = item.faculty_id })">
+                                                        <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "FacManager", new { id = item.faculty_id })">
                                                             <i class="far fa-edit"></i>
                                                         </a>
                                                     </div>

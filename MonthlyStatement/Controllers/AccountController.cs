@@ -148,6 +148,7 @@ namespace MonthlyStatement.Controllers
                     Profile profile = new Profile();
                     profile.account_id = aspNetUser.Id;
                     profile.email = aspNetUser.UserName;
+                    profile.last_login = DateTime.Now;
                     db.Profiles.Add(profile);
                 }
                 db.SaveChanges();

@@ -7,7 +7,7 @@
 @{
     ViewBag.Title = "AttendenceList";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    string returnUrl = Request.Url.AbsoluteUri;
 }
 
 <section class="section">
@@ -98,7 +98,6 @@
                                                     if (item.AspNetUser.AspNetRoles.Count() < 1)
                                                     {
                                                         <span>Chưa thêm vai trò</span>
-
                                                     }
                                                     else
                                                     {
@@ -109,7 +108,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.account_id })">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("EditRole", "FacManager", new {id = item.account_id,returnUrl=returnUrl})">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                 </div>

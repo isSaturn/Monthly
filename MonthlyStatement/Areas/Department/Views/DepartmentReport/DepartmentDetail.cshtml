@@ -55,13 +55,12 @@
 
                                                     @if (models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id).Count() > 0)
                                                     {
-
                                                         int inputIndex = 0;
+                                                        inputIndex++;
                                                         if (!models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
                                                         {
                                                             foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id && p.department_report_id == per).ToList())
                                                             {
-                                                                inputIndex++;
                                                                 <tr id="formInput-@items_lv2.category_id-@inputIndex">
                                                                     <td>
                                                                         <input readonly type="text" value="@items_content.department_report_content" class="form-control" id="noidung-@items_lv2.category_id-@inputIndex">
@@ -135,6 +134,9 @@
                             <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
+                            </div>
+                            <div class="section-title mt-3" style="font-weight:bold">
+                                <label>@(((char) (++j)).ToString()). BÌNH LUẬN</label>
                             </div>
                             <hr />
                             <div class="col-12">
