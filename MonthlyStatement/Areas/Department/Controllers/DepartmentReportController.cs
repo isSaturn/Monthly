@@ -25,6 +25,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
         {
             int per = db.DepartmentReports.Find(id).report_period_id;
             var form = db.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == per);
+            ViewBag.DepDetail = id;
             return View(form);
         }
         public ActionResult DepartmentReportEdit(int id)

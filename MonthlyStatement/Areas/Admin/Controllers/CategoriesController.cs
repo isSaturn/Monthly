@@ -116,7 +116,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "category_id,category_of_id,category_content")] Category category)
+        public ActionResult Edit([Bind(Include = "category_id,category_of_id,category_content,category_lv")] Category category)
         {
             if (db.FormPersonalReportDetails.Any(per => per.category_id == category.category_id) || (db.FormStaffReportDetails.Any(per => per.category_id == category.category_id) || (db.FormDepartmentReportDetails.Any(per => per.category_id == category.category_id))))
             {
