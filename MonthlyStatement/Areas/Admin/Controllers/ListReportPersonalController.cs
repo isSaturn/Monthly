@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MonthlyStatement.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Quản trị viên,Thư ký")]
+    [Authorize(Roles = "Quản trị viên,Ban phòng khoa,Bộ môn,Thư ký")]
 
     public class ListReportPersonalController : Controller
     {

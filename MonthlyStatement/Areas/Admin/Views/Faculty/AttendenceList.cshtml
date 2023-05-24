@@ -49,9 +49,6 @@
                                             Khoa
                                         </th>
                                         <th>
-                                            Bộ môn
-                                        </th>
-                                        <th>
                                             Vai trò
                                         </th>
                                         <th class="text-center">
@@ -70,13 +67,13 @@
                                                 @i
                                             </td>
                                             <td>
-                                                @if (item.account_id == null)
+                                                @if (item.email == null)
                                                 {
                                                     <span>Chưa có email</span>
                                                 }
                                                 else
                                                 {
-                                                    @item.AspNetUser.Email
+                                                    @item.email
                                                 }
 
                                             </td>
@@ -165,9 +162,6 @@
                                     Tên
                                 </th>
                                 <th>
-                                    Bộ môn
-                                </th>
-                                <th>
                                     Vai trò
                                 </th>
                                 <th class="text-center">
@@ -216,7 +210,6 @@
                                             if (item.AspNetUser.AspNetRoles.Count() < 1)
                                             {
                                                 <span>Chưa thêm vai trò</span>
-
                                             }
                                             else
                                             {
@@ -228,7 +221,7 @@
                                     <td class="text-center">
                                         <div class="buttons">
                                             <a id="Themthanhvienvaokhoa-@item.profile_id" name="@item.profile_id" class="btn btn-icon btn-primary" data-original-title="Thêm">
-                                                <i>+</i>
+                                                <i style="color:white">+</i>
                                             </a>
                                         </div>
                                     </td>
