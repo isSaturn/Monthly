@@ -68,6 +68,10 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             string account_id = db.PersonalReports.FirstOrDefault(t => t.personal_report_id == id).account_id;
             string mail = db.AspNetUsers.FirstOrDefault(m => m.Id == account_id).Email;
 
+           
+
+
+
             Comment c = new Comment();
             c.comment_content = CommentText;
             c.comment_date = DateTime.Now;
