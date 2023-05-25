@@ -1,4 +1,4 @@
-﻿@model  MonthlyStatement.Models.FormPersonalReport
+﻿﻿@model  MonthlyStatement.Models.FormPersonalReport
 @using MonthlyStatement.Models
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,31 +11,28 @@
 
 @if (Session["faculty"] == null)
 {
-<div class="#" role="alert">
-    Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
-    <div>
-        <img src="~/assets/img/vlu/khoa.png" class="cangiua">
+    <div class="#" role="alert">
+        Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
     </div>
-</div>
+    
 }
 else if (ViewBag.CheckFormPer == true)
 {
-<div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
-    CHƯA CÓ BIỂU MẪU CÓ THÁNG NÀY
+    <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
+        CHƯA CÓ BIỂU MẪU CÓ THÁNG NÀY
+    </div>
     <div>
         <img src="~/assets/img/vlu/fomm.png" class="cangiua">
     </div>
-
-</div>
 }
 else if (ViewBag.CheckReportPer == true)
 {
- <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:25px;">
-   BẠN ĐÃ BÁO CÁO THÁNG NÀY!    
-</div>
-<div>
-    <img src="~/assets/img/vlu/formm.png"class="cangiua">
-</div>
+    <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:25px;">
+        BẠN ĐÃ BÁO CÁO THÁNG NÀY!
+    </div>
+    <div>
+        <img src="~/assets/img/vlu/formm.png" class="cangiua">
+    </div>
 }
 else
 {
@@ -120,11 +117,15 @@ else
                                                                         </tr>
                                                                         <tr hidden id="append-@itemss.category_id"></tr>
                                                                         <tr>
-                                                                            <td>
-                                                                                <button role="button" name="@itemss.category_id" id="xoanoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
-                                                                            </td>
-                                                                            <td>
-                                                                                <button role="button" name="@itemss.category_id" id="themnoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                            <td colspan="2">
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        <button role="button" name="@itemss.category_id" id="xoanoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-danger container" data-uppercatedelete='@itemss.category_id'><i class="fas fa-times"></i></button>
+                                                                                    </div>
+                                                                                    <div class="col">
+                                                                                        <button role="button" name="@itemss.category_id" id="themnoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-success container" data-uppercateadd='@itemss.category_id'><i class="fas fa-plus-circle"></i></button>
+                                                                                    </div>
+                                                                                </div>
                                                                             </td>
                                                                         </tr>
 
@@ -185,11 +186,15 @@ else
                                                                                     </tr>
                                                                                     <tr hidden id="append-@itemsss.category_id"></tr>
                                                                                     <tr>
-                                                                                        <td>
-                                                                                            <button role="button" name="@itemsss.category_id" id="xoanoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <button role="button" name="@itemsss.category_id" id="themnoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
+                                                                                        <td colspan="2">
+                                                                                            <div class="row">
+                                                                                                <div class="col">
+                                                                                                    <button role="button" name="@itemsss.category_id" id="xoanoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-danger container" data-uppercatedelete='@itemss.category_id'><i class="fas fa-times"></i></button>
+                                                                                                </div>
+                                                                                                <div class="col">
+                                                                                                    <button role="button" name="@itemsss.category_id" id="themnoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-success container" data-uppercateadd='@itemss.category_id'><i class="fas fa-plus-circle"></i></button>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -211,32 +216,16 @@ else
                                 </div>
 
                                 <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
-
-                                @*<div class="accordion">
-                                        <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
-                                            <h4>
-                                                @(((char) (++j)).ToString()). MINH CHỨNG
-                                            </h4>
-                                            <div class="card-header-action">
-                                                <a data-collapse="#panel-body-Z" class="btn btn-icon" href="#"><i class="fas fa-plus"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-body collapse" id="panel-body-Z" data-parent="#accordion" style="">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                                </div>
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="minhChungFile" aria-describedby="inputGroupFileAddon01">
-                                                    <label class="custom-file-label" for="inputGroupFile01">Chọn file minh chứng</label>
-                                                </div>
-                                                <p hidden id="validation-file" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>
-                                            </div>
-                                        </div>
-                                    </div>*@
-
+                                <div class="section-title mt-3" style="font-weight:bold">
+                                    <label>@(((char)(++j)).ToString()). MINH CHỨNG</label>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="file" class="form-control" id="minhChungFile">
+                                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                </div>
                                 <div class="text-right mt-3">
-                                    <a id="btnSubmit" role="button" class="btn btn-primary" href="@Url.Action("SendMailPersonalAsync","NotificationPersonal")">Lưu báo cáo</a>
+                                    <button id="btnSubmit" type="button" class="btn btn-primary">Lưu báo cáo</button>
+                                    @*<a id="btnSubmit" role="button" class="btn btn-primary" href="@Url.Action("SendMailPersonalAsync","NotificationPersonal")">Lưu báo cáo</a>*@
                                 </div>
                             </div>
                         </div>
@@ -255,22 +244,30 @@ else
 <script>
     //Thêm input
     $('[id^="themnoidung-"]').on('click', function (e) {
-        let id = $(this).attr("name");
-        let inputCount = Number($('#dem-' + id).val()) + 1;
-        $('#append-' + id).replaceWith('<tr id="formInput-' + id + '-' + inputCount + '"><td colspan="2"><input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-' + id + '-' + inputCount + '">'
-            + '<p hidden id="validation-noidung-' + id + '-' + inputCount + '" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>'
-            + '</td ></tr > <tr hidden id="append-' + id + '"></tr>');
-        $('#dem-' + id).val(inputCount);
-    });
-    $('[id^="xoanoidung-"]').on('click', function () {
-        let id = $(this).attr("name");
-        let inputCount = Number($('#dem-' + id).val());
-        if (inputCount > 1) {
-            $('#formInput-' + id + '-' + inputCount).remove();
-            $('#dem-' + id).val((inputCount - 1));
-        }
+        var upperCateAdd = $(this).data('uppercateadd');
+        $('[data-uppercateadd="' + upperCateAdd + '"]').each(function () {
+            var id = $(this).attr("name");
+            var inputCount = Number($('#dem-' + id).val()) + 1;
+            $('#append-' + id).replaceWith('<tr id="formInput-' + id + '-' + inputCount + '"><td colspan="2"><input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-' + id + '-' + inputCount + '">'
+                + '<p hidden id="validation-noidung-' + id + '-' + inputCount + '" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>'
+                + '</td ></tr > <tr hidden id="append-' + id + '"></tr>');
+            $('#dem-' + id).val(inputCount);
+        });
     });
     //xóa input
+    $('[id^="xoanoidung-"]').on('click', function () {
+        var upperCateDelete = $(this).data('uppercatedelete');
+        $('[data-uppercatedelete="' + upperCateDelete + '"]').each(function () {
+            let id = $(this).attr("name");
+            let inputCount = Number($('#dem-' + id).val());
+            if (inputCount > 1) {
+                $('#formInput-' + id + '-' + inputCount).remove();
+                $('#dem-' + id).val((inputCount - 1));
+            }
+        });
+
+    });
+    //nút lưu báo cáo
     $('#btnSubmit').on('click', function () {
         var lstCate = $('#lstCategory').val().split('-');
         var datas = ""; //Chuỗi data phân tách nhau bởi các ký tự: idform1=noidung1-noidung2~idform2=noidung1-noidung2
@@ -304,7 +301,7 @@ else
 
         if (check == true) {
             var formData = new FormData();
-            //formData.append("fileMinhChung", $('#minhChungFile')[0].files[0]);
+            formData.append("fileMinhChung", $('#minhChungFile')[0].files[0]);
             formData.append("data", datas.substring(0, datas.length - 1));
             formData.append("reportperiodid", $('#report_period_id').val());
 
