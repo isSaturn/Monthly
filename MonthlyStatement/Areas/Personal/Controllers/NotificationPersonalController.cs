@@ -68,14 +68,15 @@ namespace MonthlyStatement.Areas.Personal.Controllers
         public async Task<ActionResult> SendMailPersonalAsync()
         {
             string email_gv = User.Identity.Name;
+            string userId = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(email_gv.ToLower().Trim())).Id;
 
             var current_time = DateTime.Now;
             var check_year = db.ReportYears.FirstOrDefault(y => y.year == current_time.Year);
             var check_month = db.ReportPeriods.FirstOrDefault(m => m.start_date.Value.Month == current_time.Month);
 
             var list_send = db.AspNetUsers.Where(s => s.Id != null).ToList();
-
-            var Role = list_send.Where(y => y.AspNetRoles.FirstOrDefault(r => r.Name == "Bộ môn") != null ).ToArray();
+            var id_faculty = db.Profiles.FirstOrDefault(m => m.account_id == userId).faculty_id;
+            var Role = list_send.Where(y => y.AspNetRoles.FirstOrDefault(r => r.Name == "Bộ môn") != null && y.Profiles.FirstOrDefault(r => r.faculty_id == id_faculty) != null).ToArray();
 
             if (check_year != null)
             {
@@ -85,8 +86,9 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                     notification.notification_date = DateTime.Now;
                     notification.notification_content =
                         "Thông báo đã hoàn thành " + check_month.report_period_name + " (Giảng viên): " +
-                       email_gv + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_gv;
+                        "Giảng viên đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_gv;
                     notification.status = "Đã thông báo";
+                    notification.account_id = userId;
                     db.Notifications.Add(notification);
                     db.SaveChanges();
 
@@ -95,7 +97,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                     {
                         await UserManager.SendEmailAsync(Role[i].Id,
                        "Thông báo đã hoàn thành " + check_month.report_period_name + " (Giảng viên)",
-                       email_gv + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_gv);
+                       "Giảng viên đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_gv);
                     }
 
 

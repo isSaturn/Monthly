@@ -12,7 +12,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Quản lý danh sách báo cáo cá nhân</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Quản lý danh sách báo cáo bộ môn</h4>
 
                     </div>
                     <div class="card-body">
@@ -27,6 +27,8 @@
                                         <th>Ngày báo cáo</th>
                                         <th>Vai trò</th>
                                         <th>Trạng thái</th>
+                                        <th>Duyệt bên thư ký</th>
+                                        <th>Duyệt bên khoa</th>
                                         <th class="text-center">Thao tác</th>
                                     </tr>
                                 </thead>
@@ -34,49 +36,69 @@
                                     @foreach (var item in Model)
                                     {
                                         i++;
-                                        <tr class="Search">
-                                            <td class="text-center">
-                                                @i
-                                            </td>
-                                            <td>
-                                                @item.AspNetUser.Email
-                                            </td>
-                                            <td>
-                                                @item.ReportPeriod.report_period_name
-                                            </td>
-                                            <td>
-                                                @String.Format("{0: dd/MM/yyy}", item.date_report)
-                                            </td>
-                                            <td>
-                                                @item.AspNetUser.AspNetRoles.First().Name
-                                            </td>
+                                    <tr class="Search">
+                                        <td class="text-center">
+                                            @i
+                                        </td>
+                                        <td>
+                                            @item.AspNetUser.Email
+                                        </td>
+                                        <td>
+                                            @item.ReportPeriod.report_period_name
+                                        </td>
+                                        <td>
+                                            @String.Format("{0: dd/MM/yyy}", item.date_report)
+                                        </td>
+                                        <td>
+                                            @item.AspNetUser.AspNetRoles.First().Name
+                                        </td>
 
-                                            <td>
-                                                @if (item.status.Count() < 1)
-                                                {
-                                                    <div class="badge badge badge-shadow">Chưa báo cáo</div>
-                                                }
-                                                else if (item.status.Equals("Đã báo cáo"))
-                                                {
-                                                    <div class="badge badge badge-success">Đã báo cáo</div>
-                                                }
-                                                else if (item.status.Equals("Trễ báo cáo"))
-                                                {
-                                                    <div class="badge badge badge-warning">Trễ báo cáo</div>
-                                                }
-                                                else if (item.status.Equals("Không báo cáo"))
-                                                {
-                                                    <div class="badge badge badge-danger">Không báo cáo</div>
-                                                }
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("Detail","CheckReportDepartment", new {id = item.department_report_id})">
-                                                        Xem
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <td>
+                                            @if (item.status.Count() < 1)
+                                            {
+                                                <div class="badge badge badge-shadow">Chưa báo cáo</div>
+                                            }
+                                            else if (item.status.Equals("Đã báo cáo"))
+                                            {
+                                                <div class="badge badge badge-success">Đã báo cáo</div>
+                                            }
+                                            else if (item.status.Equals("Trễ báo cáo"))
+                                            {
+                                                <div class="badge badge badge-warning">Trễ báo cáo</div>
+                                            }
+                                            else if (item.status.Equals("Không báo cáo"))
+                                            {
+                                                <div class="badge badge badge-danger">Không báo cáo</div>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.status_secretary == "Đã duyệt")
+                                            {
+                                                <div class="badge badge-success">@item.status_secretary</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="badge badge-danger">@item.status_secretary</div>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.status_faculty == "Đã duyệt")
+                                            {
+                                                <div class="badge badge-success">@item.status_faculty</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="badge badge-danger">@item.status_faculty</div>
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="buttons">
+                                                <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("Detail","CheckReportDepartment", new {id = item.department_report_id})">
+                                                    Xem
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

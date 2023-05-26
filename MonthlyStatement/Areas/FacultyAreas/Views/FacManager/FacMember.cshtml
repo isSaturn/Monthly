@@ -1,13 +1,15 @@
 ﻿@model MonthlyStatement.Models.Faculty
-
+@using MonthlyStatement.Models
 
 @{
     int i = 0;
+    int j = 0;
 }
 @{
     ViewBag.Title = "AttendenceList";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string returnUrl = Request.Url.AbsoluteUri;
+    var usernonfaculty = Session["add-user-faculty"] as IEnumerable<Profile>;
 }
 
 <section class="section">
@@ -17,6 +19,7 @@
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
                         <h3 class="text-white" style="font-size:1.75rem">Danh sách thành viên của khoa @Model.faculty_name</h3>
+                        <input hidden="hidden" value="@Model.faculty_id" id="faculty_id" />
                     </div>
                     <div class="card-body">
                         <div class="col-sm-12 buttons">
@@ -65,8 +68,14 @@
                                                 @i
                                             </td>
                                             <td>
-                                                @item.email
-
+                                                @if (item.email == null)
+                                                {
+                                                    <span>Chưa có email</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.email
+                                                }
                                             </td>
                                             <td>
                                                 @if (item.user_name == null)
@@ -111,6 +120,9 @@
                                                     <a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("EditRole", "FacManager", new {id = item.account_id,returnUrl=returnUrl})">
                                                         <i class="far fa-edit"></i>
                                                     </a>
+                                                    <a class="btn btn-icon btn-danger" data-original-title="Xóa" href="@Url.Action("DeleteFaculty", "FacManager", new { id = item.account_id })">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -124,9 +136,58 @@
         </div>
     </div>
 </section>
+@*<div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="formModal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModal">Thêm thành viên</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("AddMember", "Faculty", FormMethod.Post, new { }))
+                {
+                    <div class="modal-body">
+                        <form class="">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Nhập email" name="email" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Họ và tên</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Nhập họ và tên" name="name" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Bộ môn</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Nhập bộ môn" name="bomon" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Vai trò</label>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Thêm thành viên</button>
+                                <button type="button" class="btn btn-secondary m-t-15" data-dismiss="modal">Đóng</button>
+                            </div>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>*@
+
 <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="formModal"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="formModal">Thêm thành viên</h5>
@@ -134,41 +195,90 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @using (Html.BeginForm("AddMember", "Faculty", FormMethod.Post, new { }))
-            {
-                <div class="modal-body">
-                    <form class="">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Nhập email" name="email" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Họ và tên</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Nhập họ và tên" name="name" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Bộ môn</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Nhập bộ môn" name="bomon" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <label class="small mb-1">Vai trò</label>
-                            </div>
-                        </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="table-themthanhvien">
+                        <thead>
+                            <tr role="row">
+                                <th class="text-center">
+                                    STT
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Tên
+                                </th>
+                                <th>
+                                    Vai trò
+                                </th>
+                                <th class="text-center">
+                                    Thao tác
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in usernonfaculty)
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Thêm thành viên</button>
-                            <button type="button" class="btn btn-secondary m-t-15" data-dismiss="modal">Đóng</button>
-                        </div>
-                    </form>
+                            {
+
+                                j = j + 1;
+
+                                <tr>
+                                    <td class="text-center">
+                                        @j
+                                    </td>
+                                    <td>
+                                        @if (item.account_id == null)
+                                        {
+                                            <span>Chưa có email</span>
+                                        }
+                                        else
+                                        {
+                                            @item.AspNetUser.Email
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.user_name == null)
+                                        {
+                                            <span>Chưa có tên</span>
+                                        }
+                                        else
+                                        {
+                                            @item.user_name
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.AspNetUser == null)
+                                        {
+                                            <span>Chưa thêm vai trò</span>
+                                        }
+                                        else
+                                        {
+                                            if (item.AspNetUser.AspNetRoles.Count() < 1)
+                                            {
+                                                <span>Chưa thêm vai trò</span>
+                                            }
+                                            else
+                                            {
+                                                @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
+
+                                            }
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="buttons">
+                                            <a id="Themthanhvienvaokhoa-@item.profile_id" name="@item.profile_id" class="btn btn-icon btn-primary" data-original-title="Thêm">
+                                                <i style="color:white">+</i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
-            }
+            </div>
         </div>
     </div>
 </div>
@@ -191,15 +301,38 @@
                 <p id="importfilevalidation" hidden="hidden" class="text-danger"></p>
             </div>
             <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-primary" id="importUser">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="importUser">Lưu</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
 </div>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
+    $('[id^="Themthanhvienvaokhoa-"]').on('click', function () {
+        var id = $(this).attr('name');
+        var khoa = $('#faculty_id').val();
+        var formData = new FormData();
+        formData.append('id', id);
+        formData.append('khoa', khoa);
+
+
+        $.ajax({
+            url: $('#requestUrl').val() + 'FacultyAreas/FacManager/AddUser',
+            type: 'POST',
+            dataType: 'html',
+            contentType: false,
+            processData: false,
+            data: formData
+        }).done(function (ketqua) {
+            swal('Thành công', 'Thêm thành viên thành công', 'success');
+            window.location.reload();
+        });
+    });
+
+
     $(document).ready(function () {
+        $('#table-themthanhvien').DataTable();
         var readURL = function (input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -220,6 +353,7 @@
             $(".file-upload").click();
         });
     });
+
     $('#importUser').on('click', function () {
 
         $('#importfilevalidation').hide();

@@ -221,6 +221,7 @@
     <Compile Include="Areas\Department\Controllers\NotificationDepartmentController.cs" />
     <Compile Include="Areas\Department\Controllers\StatisticalController.cs" />
     <Compile Include="Areas\Department\DepartmentAreaRegistration.cs" />
+    <Compile Include="Areas\FacultyAreas\Controllers\CheckReportDepartment_FacultyController.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\FacManagerController.cs" />
     <Compile Include="Areas\FacultyAreas\Controllers\StatisticalController.cs" />
     <Compile Include="Areas\FacultyAreas\FacultyAreasAreaRegistration.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Areas\Staff\Controllers\FormStaffReportController.cs" />
     <Compile Include="Areas\Staff\Controllers\NotificationStaffController.cs" />
     <Compile Include="Areas\Staff\Controllers\StaffReportController.cs" />
+    <Compile Include="Areas\Staff\Controllers\StaticStaffController.cs" />
     <Compile Include="Areas\Staff\StaffAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1260,6 +1262,11 @@
     <Content Include="Areas\Secretary\Views\CheckReportDepartment\Index.cshtml" />
     <Content Include="Areas\Secretary\Views\CheckReportDepartment\Detail.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\FacManager\EditRole.cshtml" />
+    <Content Include="Areas\Staff\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Staff\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Staff\Views\StaticStaff\Index.cshtml" />
+    <Content Include="Areas\FacultyAreas\Views\CheckReportDepartment_Faculty\Index.cshtml" />
+    <Content Include="Areas\FacultyAreas\Views\CheckReportDepartment_Faculty\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1299,7 +1306,6 @@
     <Folder Include="Areas\Secretary\Data\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Areas\Staff\Views\NotificationStaff\" />
-    <Folder Include="Areas\Staff\Views\Shared\" />
     <Folder Include="assets\FileImport\" />
     <Folder Include="assets\FileMinhChung\" />
     <Folder Include="assets\user\avatar\" />

@@ -87,6 +87,8 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 }
 
                 pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
+                pr.status_secretary = "Chưa duyệt";
+                pr.status_faculty = "Chưa duyệt";
                 pr.date_report = DateTime.Now;
                 pr.account_id = accID;
                 db.DepartmentReports.Add(pr);

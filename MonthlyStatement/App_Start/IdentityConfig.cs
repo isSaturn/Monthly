@@ -23,7 +23,7 @@ namespace MonthlyStatement
         private async Task ConfigSendGridasync(IdentityMessage message)
         {
             var senderEmail = new MailAddress("reportmonthlyk25pm04@gmail.com", "Report Monthly");
-            var receiverEmail = new MailAddress(message.Destination, "Admin");
+            var receiverEmail = new MailAddress(message.Destination, "Email");
             var password = "qumpsuequgwjjeuc";
             var sub = message.Subject;
             var body = message.Body;

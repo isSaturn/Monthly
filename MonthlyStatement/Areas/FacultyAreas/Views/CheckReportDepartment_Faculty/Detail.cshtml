@@ -137,8 +137,8 @@
                             </div>
                             <hr />
                             <div class="col-12 text-right mt-3">
-                                <a href="@Url.Action("SendMailSecretaryErrorAsync","CheckReportDepartment", new {id = per})" class="btn btn-icon icon-left btn-warning"><i class="fas fa-times"></i> Báo cáo lại</a>
-                                <a href="@Url.Action("SendMailSecretarySuccessAsync","CheckReportDepartment", new {id = per})" class="btn btn-icon icon-left btn-success"><i class="fas fa-check"></i> Duyệt báo cáo</a>
+                                <a href="@Url.Action("SendMailFacultyErrorAsync","CheckReportDepartment_Faculty", new {id = per})" class="btn btn-icon icon-left btn-warning"><i class="fas fa-times"></i> Báo cáo lại</a>
+                                <a href="@Url.Action("SendMailFacultySuccessAsync","CheckReportDepartment_Faculty", new {id = per})" class="btn btn-icon icon-left btn-success"><i class="fas fa-check"></i> Duyệt báo cáo</a>
                             </div>
 
                             <div class="section-title mt-3" style="font-weight:bold">
@@ -168,7 +168,7 @@
                                         </div>
                                         <hr />
                                         <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
-                                        @using (Html.BeginForm("PostCommentSec", "CheckReportDepartment", FormMethod.Post))
+                                        @using (Html.BeginForm("PostCommentFaculty", "CheckReportDepartment_Faculty", FormMethod.Post))
                                         {
                                             <input type="hidden" name="id" value="@per" />
                                             <div class="form-group">

@@ -87,8 +87,9 @@ namespace MonthlyStatement.Areas.Department.Controllers
                     notification.notification_date = DateTime.Now;
                     notification.notification_content =
                         "Thông báo đã hoàn thành " + check_month.report_period_name + " (Bộ môn): " + " khoa " + name_faculty +
-                       email_bm + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_bm;
+                       "Bộ môn thuộc khoa " + name_faculty + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_bm;
                     notification.status = "Đã thông báo";
+                    notification.account_id = userId;
                     db.Notifications.Add(notification);
                     db.SaveChanges();
 
@@ -97,15 +98,12 @@ namespace MonthlyStatement.Areas.Department.Controllers
                     {
                         await UserManager.SendEmailAsync(Role[i].Id,
                        "Thông báo đã hoàn thành " + check_month.report_period_name + " (Bộ môn) " + " khoa " + name_faculty,
-                       email_bm + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_bm);
+                       "Bộ môn thuộc khoa " + name_faculty + " đã hoàn thành " + check_month.report_period_name + "." + " Có vấn đề thì vui lòng bình luận dưới phần báo cáo " + email_bm);
                     }
-
-
 
                     return Json(new { status = true, message = "Gửi thành công!" }, JsonRequestBehavior.AllowGet);
 
                 }
-
 
             }
             return Content("Success");

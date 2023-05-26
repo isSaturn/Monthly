@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MonthlyStatement.Models.PersonalReport>
+﻿@model IEnumerable<MonthlyStatement.Models.DepartmentReport>
 
 @{
     int i = 0;
@@ -12,7 +12,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Quản lý danh sách báo cáo giảng viên</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Quản lý danh sách báo cáo bộ môn</h4>
 
                     </div>
                     <div class="card-body">
@@ -27,6 +27,8 @@
                                         <th>Ngày báo cáo</th>
                                         <th>Vai trò</th>
                                         <th>Trạng thái</th>
+                                        <th>Duyệt bên thư ký</th>
+                                        <th>Duyệt bên khoa</th>
                                         <th class="text-center">Thao tác</th>
                                     </tr>
                                 </thead>
@@ -69,9 +71,29 @@
                                                     <div class="badge badge badge-danger">Không báo cáo</div>
                                                 }
                                             </td>
+                                            <td>
+                                                @if (item.status_secretary == "Đã duyệt")
+                                                {
+                                                    <div class="badge badge-success">@item.status_secretary</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="badge badge-danger">@item.status_secretary</div>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.status_faculty == "Đã duyệt")
+                                                {
+                                                    <div class="badge badge-success">@item.status_faculty</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="badge badge-danger">@item.status_faculty</div>
+                                                }
+                                            </td>
                                             <td class="text-center">
                                                 <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("Detail","ListReportPersonal", new {id = item.personal_report_id})">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thông tin" href="@Url.Action("Detail","CheckReportDepartment_Faculty", new {id = item.department_report_id})">
                                                         Xem
                                                     </a>
                                                 </div>

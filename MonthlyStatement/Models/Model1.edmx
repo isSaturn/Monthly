@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -107,6 +107,8 @@
           <Property Name="account_id" Type="nvarchar" MaxLength="128" />
           <Property Name="comment_id" Type="int" />
           <Property Name="date_report" Type="date" />
+          <Property Name="status_secretary" Type="nvarchar" MaxLength="50" />
+          <Property Name="status_faculty" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Faculties">
           <Key>
@@ -886,8 +888,7 @@
             <End Role="FormPersonalReportDetails" EntitySet="FormPersonalReportDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CP25Team04Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1015,6 +1016,8 @@
           <NavigationProperty Name="Comment" Relationship="Self.FK_DepartmentReport_Comment" FromRole="DepartmentReports" ToRole="Comments" />
           <NavigationProperty Name="DepartmentReportDetails" Relationship="Self.FK_DepartmentReportDetail_DepartmentReport" FromRole="DepartmentReports" ToRole="DepartmentReportDetails" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_DepartmentReport_ReportPeriod" FromRole="DepartmentReports" ToRole="ReportPeriods" />
+          <Property Name="status_secretary" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status_faculty" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -1908,6 +1911,8 @@
           <EntitySetMapping Name="DepartmentReports">
             <EntityTypeMapping TypeName="CP25Team04Model.DepartmentReport">
               <MappingFragment StoreEntitySet="DepartmentReports">
+                <ScalarProperty Name="status_faculty" ColumnName="status_faculty" />
+                <ScalarProperty Name="status_secretary" ColumnName="status_secretary" />
                 <ScalarProperty Name="department_report_id" ColumnName="department_report_id" />
                 <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
                 <ScalarProperty Name="file_path" ColumnName="file_path" />

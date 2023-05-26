@@ -91,7 +91,7 @@
                             </li>
                             <li class="dropdown">
                             <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "Static", new { Area = "Staff" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
+                                <a href="@Url.Action("Index", "StaticStaff", new { Area = "Staff" })" class="nav-link"><i data-feather="briefcase"></i><span>Thống kê</span></a>
                             </li>
                         </ul> }
                     else if (User.IsInRole("Bộ môn"))
@@ -127,6 +127,9 @@
                                     <li><a class="nav-link" href="@Url.Action("Index", "ListReportPersonal", new { Area = "Admin" })">Giảng viên</a></li>
                                     <li><a class="nav-link" href="@Url.Action("Index", "ListReportStaff", new { Area = "Admin" })">Nhân viên</a></li>
                                 </ul>
+                            </li>
+                            <li class=@(ViewBag.Title == "Duyệt báo cáo bộ môn" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index", "CheckReportDepartment_Faculty", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="check"></i><span>Duyệt báo cáo bộ môn</span></a>
                             </li>
                             <li class="dropdown">
                             <li class=@(ViewBag.Title == "Thống kê" ? "active" : "nav-item")>
