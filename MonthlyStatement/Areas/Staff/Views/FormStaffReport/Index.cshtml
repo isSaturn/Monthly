@@ -1,4 +1,4 @@
-﻿@model  MonthlyStatement.Models.FormStaffReport
+﻿﻿@model  MonthlyStatement.Models.FormStaffReport
 @using MonthlyStatement.Models
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,36 +11,36 @@
 
 @if (Session["faculty"] == null)
 {
-<div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
-    Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
-    <div>
-        <img src="~/assets/img/vlu/khoa.png" class="cangiua">
+    <div class="#" role="alert" >
+        Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
+
     </div>
-</div>
+    
 }
 
 else if (ViewBag.CheckFormSta == true)
 {
-    
-<div class="#"  role="alert"style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px" >
-    CHƯA CÓ BIỂU MẪU CÓ THÁNG NÀY
+
+    <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
+        CHƯA CÓ BIỂU MẪU CÓ THÁNG NÀY
+
+
+    </div>
     <div>
         <img src="~/assets/img/vlu/fomm.png" class="cangiua">
-    </div>  
-    
-</div>
-   
- 
-    
+    </div>
+
+
 }
 else if (ViewBag.CheckReportSta == true)
 {
-<div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:25px;">
-   BẠN ĐÃ BÁO CÁO THÁNG NÀY!    
-</div>
-<div>
-    <img src="~/assets/img/vlu/formm.png"class="cangiua">
-</div>
+    <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:25px;">
+        BẠN ĐÃ BÁO CÁO THÁNG NÀY!
+
+    </div>
+    <div>
+        <img src="~/assets/img/vlu/formm.png" class="cangiua">
+    </div>
 }
 else
 {
@@ -125,17 +125,16 @@ else
                                                                         </tr>
                                                                         <tr hidden id="append-@itemss.category_id"></tr>
                                                                         <tr>
-                                                                            <td colspan="2">
-                                                                                <div class="row">
-                                                                                    <div class="col">
-                                                                                        <button role="button" name="@itemss.category_id" id="xoanoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-danger container" data-uppercatedelete='@itemss.category_id'><i class="fas fa-times"></i></button>
-                                                                                    </div>
-                                                                                    <div class="col">
-                                                                                        <button role="button" name="@itemss.category_id" id="themnoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-success container" data-uppercateadd='@itemss.category_id'><i class="fas fa-plus-circle"></i></button>
-                                                                                    </div>
-                                                                                </div>
+                                                                            <td>
+                                                                                <button role="button" name="@itemss.category_id" id="xoanoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                            </td>
+                                                                            <td>
+                                                                                <button role="button" name="@itemss.category_id" id="themnoidung-@itemss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
                                                                             </td>
                                                                         </tr>
+
+
+
                                                                     </tbody>
                                                                 </table>
                                                             }
@@ -191,15 +190,11 @@ else
                                                                                     </tr>
                                                                                     <tr hidden id="append-@itemsss.category_id"></tr>
                                                                                     <tr>
-                                                                                        <td colspan="2">
-                                                                                            <div class="row">
-                                                                                                <div class="col">
-                                                                                                    <button role="button" name="@itemsss.category_id" id="xoanoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-danger container" data-uppercatedelete='@itemss.category_id'><i class="fas fa-times"></i></button>
-                                                                                                </div>
-                                                                                                <div class="col">
-                                                                                                    <button role="button" name="@itemsss.category_id" id="themnoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-success container" data-uppercateadd='@itemss.category_id'><i class="fas fa-plus-circle"></i></button>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                        <td>
+                                                                                            <button role="button" name="@itemsss.category_id" id="xoanoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-danger container"><i class="fas fa-times"></i></button>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <button role="button" name="@itemsss.category_id" id="themnoidung-@itemsss.category_id" class="btn btn-icon btn-sm btn-success container"><i class="fas fa-plus-circle"></i></button>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -247,30 +242,22 @@ else
 <script>
     //Thêm input
     $('[id^="themnoidung-"]').on('click', function (e) {
-        var upperCateAdd = $(this).data('uppercateadd');
-        $('[data-uppercateadd="' + upperCateAdd + '"]').each(function () {
-            var id = $(this).attr("name");
-            var inputCount = Number($('#dem-' + id).val()) + 1;
-            $('#append-' + id).replaceWith('<tr id="formInput-' + id + '-' + inputCount + '"><td colspan="2"><input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-' + id + '-' + inputCount + '">'
-                + '<p hidden id="validation-noidung-' + id + '-' + inputCount + '" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>'
-                + '</td ></tr > <tr hidden id="append-' + id + '"></tr>');
-            $('#dem-' + id).val(inputCount);
-        });
+        let id = $(this).attr("name");
+        let inputCount = Number($('#dem-' + id).val()) + 1;
+        $('#append-' + id).replaceWith('<tr id="formInput-' + id + '-' + inputCount + '"><td colspan="2"><input type="text" class="form-control" placeholder="Nhập nội dung mục báo cáo" id="noidung-' + id + '-' + inputCount + '">'
+            + '<p hidden id="validation-noidung-' + id + '-' + inputCount + '" class="text-danger" style="font-size: 12px; margin-left: 2px; margin-bottom: -15px"></p>'
+            + '</td ></tr > <tr hidden id="append-' + id + '"></tr>');
+        $('#dem-' + id).val(inputCount);
+    });
+    $('[id^="xoanoidung-"]').on('click', function () {
+        let id = $(this).attr("name");
+        let inputCount = Number($('#dem-' + id).val());
+        if (inputCount > 1) {
+            $('#formInput-' + id + '-' + inputCount).remove();
+            $('#dem-' + id).val((inputCount - 1));
+        }
     });
     //xóa input
-    $('[id^="xoanoidung-"]').on('click', function () {
-        var upperCateDelete = $(this).data('uppercatedelete');
-        $('[data-uppercatedelete="' + upperCateDelete + '"]').each(function () {
-            let id = $(this).attr("name");
-            let inputCount = Number($('#dem-' + id).val());
-            if (inputCount > 1) {
-                $('#formInput-' + id + '-' + inputCount).remove();
-                $('#dem-' + id).val((inputCount - 1));
-            }
-        });
-
-    });
-    //nút lưu báo cáo
     $('#btnSubmit').on('click', function () {
         var lstCate = $('#lstCategory').val().split('-');
         var datas = ""; //Chuỗi data phân tách nhau bởi các ký tự: idform1=noidung1-noidung2~idform2=noidung1-noidung2
@@ -332,7 +319,6 @@ else
         display: block;
         margin-left: auto;
         margin-right: auto;
-        margin-bottom:auto;
-        
+        margin-bottom: auto;
     }
 </style>
