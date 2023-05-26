@@ -1,4 +1,4 @@
-﻿@model  MonthlyStatement.Models.FormDepartmentReport
+﻿﻿@model  MonthlyStatement.Models.FormDepartmentReport
 @using MonthlyStatement.Models
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,21 +23,26 @@
 {
     <div class="#" role="alert">
         Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
-        <div>
-            <img src="~/assets/img/vlu/khoa.png" class="cangiua">
-        </div>
+
     </div>
 }
 else if (ViewBag.CheckFormDep == true)
 {
-    <div class="alert alert-danger" role="alert">
+    <div class="#" role="alert"style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
         Chưa có biểu mẫu báo cáo của tháng này
     </div>
+    <div>
+        <img src="~/assets/img/vlu/fomm.png" class="cangiua">
+    </div>
+
 }
 else if (ViewBag.CheckReportDep == true)
 {
-    <div class="alert alert-danger" role="alert">
+    <div class="#" role="alert"style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
         Bạn đã báo cáo tháng này!
+    </div>
+    <div>
+        <img src="~/assets/img/vlu/formm.png" class="cangiua">
     </div>
 }
 else
@@ -504,3 +509,11 @@ else
         });
     });
 </script>
+<style>
+    img.cangiua {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: auto;
+    }
+</style>
