@@ -14,7 +14,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Quản lý thống kê báo cáo</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Quản lý thống kê báo cáo của bộ môn</h4>
                     </div>
                     <div class="card-body">
                         <form action="@Url.Action("Index","Statistical")">
@@ -41,9 +41,7 @@
                                 <thead>
                                     <tr role="row">
                                         <th class="text-center">STT</th>
-                                        <th>
-                                            Bộ môn
-                                        </th>
+                                        <th>Tên</th>
                                         <th>Nhân viên</th>
                                         <th>Giảng viên</th>
                                         <th>Chưa cấp quyền</th>
@@ -59,15 +57,14 @@
                                         <tr class="Search">
 
                                             <th class="text-center">@i</th>
-                                            <th>
-                                                Hong lấy được tên các bộ môn
-                                            </th>
+                                            <th>Bộ môn khoa @item.faculty_name</th>
                                             <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Nhân viên")</th>
                                             <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Giảng viên")</th>
                                             <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault() == null)</th>
                                             <th>
                                                 <div class="badge badge-success">
-                                                    @item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date >= Date && y.ReportPeriod.end_date < Date.AddMonths(1)) > 0)
+                                                    @( item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date.AddMonths(1)) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date.AddMonths(1)) > 0))
                                                 </div>
                                             </th>
                                             <th>
@@ -78,7 +75,8 @@
                                             </th>
                                             <th>
                                                 <div class="badge badge-warning">
-                                                    @item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date >= DateTime.Now && y.ReportPeriod.end_date <= DateTime.Now) > 0)
+                                                    @(item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= DateTime.Now && y.ReportPeriod.end_date >= DateTime.Now) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= DateTime.Now && y.ReportPeriod.end_date >= DateTime.Now) > 0))
                                                 </div>
                                             </th>
                                         </tr>

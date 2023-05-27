@@ -1235,8 +1235,6 @@
     <Content Include="Areas\Department\Views\FormDepartmentReport\ListReportYear.cshtml" />
     <Content Include="Areas\Personal\Views\Report\PersonalReportEdit.cshtml" />
     <Content Include="Areas\Personal\Views\Static\Index.cshtml" />
-    <Content Include="Areas\Personal\Views\Index.cshtml" />
-    <Content Include="Areas\Personal\Views\static.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportStaff\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportStaff\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffDetail.cshtml" />

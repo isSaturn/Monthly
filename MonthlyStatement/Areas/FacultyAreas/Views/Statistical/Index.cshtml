@@ -67,22 +67,28 @@
                                             <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault() == null)</th>
                                             <th>
                                                 <div class="badge badge-success">
-                                                    @item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date >= Date && y.ReportPeriod.end_date < Date.AddMonths(1)) > 0)
+                                                    @( item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date.AddMonths(1)) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date.AddMonths(1)) > 0) 
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date.AddMonths(1)) > 0))
+                                                    
                                                 </div>
                                             </th>
                                             <th>
                                                 <div class="badge badge-danger">
-                                                    @item.Profiles.Count(x => x.AspNetUser?.DepartmentReports == null)
+                                                    @item.Profiles.Count(x => x.AspNetUser?.PersonalReports == null)
+                                            
 
                                                 </div>
                                             </th>
                                             <th>
                                                 <div class="badge badge-warning">
-                                                    @item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date >= DateTime.Now && y.ReportPeriod.end_date <= DateTime.Now) > 0)
+                                                    @(item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= DateTime.Now && y.ReportPeriod.end_date >= DateTime.Now) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= DateTime.Now && y.ReportPeriod.end_date >= DateTime.Now) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= DateTime.Now && y.ReportPeriod.end_date >= DateTime.Now) > 0))
                                                 </div>
                                             </th>
                                         </tr>
-                                    }
+                                      }
 
                                 </tbody>
                             </table>

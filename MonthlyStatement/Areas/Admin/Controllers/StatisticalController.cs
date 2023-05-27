@@ -16,9 +16,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         // GET: Admin/Statistical
         public ActionResult Index(DateTime? date)
         {
-            
             ViewBag.Date = date == null ? DateTime.Now : date;
-            
             return View(db.Faculties.ToList());
         }
 
