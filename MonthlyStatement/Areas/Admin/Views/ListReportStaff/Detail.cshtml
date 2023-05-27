@@ -10,7 +10,7 @@
     CP25Team04Entities models = new CP25Team04Entities();
     int idperiod = Model.report_period_id;
     var form = models.StaffReports.Where(p => p.report_period_id == idperiod);
-    string emails = ViewBag.accID;
+    string emails = ViewBag.accStaID;
     var formPer = models.StaffReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(emails));
     int per = formPer.First().staff_report_id;
 }

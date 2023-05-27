@@ -22,7 +22,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         {
             var per = db.StaffReports.Find(id);
             var form = db.FormStaffReports.FirstOrDefault(f => f.report_period_id == per.report_period_id);
-            ViewBag.accID = per.account_id;
+            ViewBag.accStaID = per.account_id;
             return View(form);
         }
     }
