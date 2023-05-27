@@ -11,10 +11,12 @@
 
 @if (Session["faculty"] == null)
 {
-    <div class="" role="alert">
+    <div class="" role="alert"style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
         Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
     </div>
-    
+    <div>
+        <img src="~/assets/img/vlu/khoa.png" class="cangiua">
+    </div>
 }
 else if (ViewBag.CheckFormPer == true)
 {
