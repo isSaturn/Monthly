@@ -16,7 +16,7 @@
                         <h4 class="text-white" style="font-size:1.75rem">Quản lý thống kê báo cáo</h4>
                     </div>
                     <div class="card-body">
-                        <form action="@Url.Action("Index","Statistical")">
+                        <form action="@Url.Action("Index","Statistical")" >
                             <div class="row" style="margin-bottom: 20px">
                                 <div class="col-sm-12 col-md-3">
                                     <input name="date" type="month" class="form-control" value="@Date.ToString("yyyy-MM")">
@@ -67,7 +67,9 @@
                                         <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault() == null)</th>
                                         <th>
                                             <div class="badge badge-success">
-                                                @item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date >= Date && y.ReportPeriod.end_date < Date.AddMonths(1)) > 0)
+                                                @( item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0))
                                             </div>
                                         </th>
                                         <th>
@@ -78,7 +80,9 @@
                                         </th>
                                         <th>
                                             <div class="badge badge-warning">
-                                                @item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date >= DateTime.Now && y.ReportPeriod.end_date <= DateTime.Now) > 0)
+                                                @(item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0))
                                             </div>
                                         </th>
                                     </tr>

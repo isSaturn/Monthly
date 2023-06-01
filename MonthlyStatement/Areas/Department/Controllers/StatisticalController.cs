@@ -45,7 +45,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
 
 
 
-            ws.Name = "Thống kê báo cáo";
+            ws.Name = "Thống kê báo cáo bộ môn";
             ws.Cells.Style.Font.Size = 11;
             ws.Cells.Style.Font.Name = "Calibri";
 
@@ -76,11 +76,11 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 ws.Cells[string.Format("C{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Nhân viên");
                 ws.Cells[string.Format("D{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Giảng viên");
 
-                ws.Cells[string.Format("E{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date.AddMonths(1)) > 0)
-                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date.AddMonths(1)) > 0);
+                ws.Cells[string.Format("E{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0);
                 ws.Cells[string.Format("F{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports == null);
-                ws.Cells[string.Format("G{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= DateTime.Now && y.ReportPeriod.end_date >= DateTime.Now) > 0)
-                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= DateTime.Now && y.ReportPeriod.end_date >= DateTime.Now) > 0);
+                ws.Cells[string.Format("G{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0);
                 rowStart++;
             }
 
