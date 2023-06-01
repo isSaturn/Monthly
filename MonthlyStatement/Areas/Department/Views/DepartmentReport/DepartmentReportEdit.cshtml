@@ -15,7 +15,8 @@
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.DepartmentReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
-    int per = formPer.First().department_report_id;
+    var lstCate = ((IEnumerable<Category>)ViewBag.CheckListCategory);
+    var perDetail = ((IEnumerable<PersonalReportDetail>)ViewBag.MappingContent);
 
 }
 
@@ -61,7 +62,7 @@
                                                 i++;
                                                 <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
                                                     <div class="col-lg-12 ">
-                                                        <input hidden id="dem-@itemss.category_id" value="@models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == itemss.form_department_report_detail_id && p.department_report_id == per).Count()" />
+                                                        <input hidden id="dem-@itemss.category_id" value="@models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == itemss.form_department_report_detail_id).Count()" />
                                                         <input hidden id="frmPerDetail-@itemss.category_id" value="@itemss.form_department_report_detail_id" />
                                                         @if (Model.FormDepartmentReportDetails.Where(c => c.Category.category_of_id == itemss.category_id && c.Category.category_lv == 3).Count() < 1)
                                                         {
@@ -73,7 +74,14 @@
                                                                     <tr class="" style="max-width: 50px">
                                                                         <th colspan="2">@(i). @itemss.Category.category_content</th>
                                                                     </tr>
-                                                                    @foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == itemss.form_department_report_detail_id && p.department_report_id == per).ToList())
+                                                                    <tr>
+                                                                        <td>
+                                                                            <button style="color:white" data-toggle="modal" class="btn btn-info" data-target="#addMapping">
+                                                                                Tổng hợp nội dung
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == itemss.form_department_report_detail_id).ToList())
                                                                     {
                                                                         inputIndex++;
 
@@ -82,6 +90,7 @@
                                                                                 <input type="text" value="@items_content.department_report_content" class="form-control" id="noidung-@itemss.category_id-@inputIndex">
                                                                             </td>
                                                                         </tr>
+
                                                                     }
                                                                     <tr hidden id="append-@itemss.category_id"></tr>
                                                                     <tr>
@@ -138,14 +147,21 @@
 
                                                                 <div class="accordion-body collapse show" id="panel-body-@(((char)j).ToString())" data-parent="#accordion" style="">
                                                                     <div class="col-lg-12 ">
-                                                                        <input hidden id="dem-@itemsss.category_id" value="@models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == itemsss.form_department_report_detail_id && p.department_report_id == per).Count()" />
+                                                                        <input hidden id="dem-@itemsss.category_id" value="@models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == itemsss.form_department_report_detail_id).Count()" />
                                                                         <input hidden id="frmPerDetail-@itemsss.category_id" value="@itemsss.form_department_report_detail_id" />
                                                                         <table class="table table-bordered dataTable">
                                                                             <tbody>
                                                                                 <tr class="" style="max-width: 50px">
                                                                                     <th colspan="2"> @itemsss.Category.category_content</th>
                                                                                 </tr>
-                                                                                @foreach (var items_content_lv3 in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == itemsss.form_department_report_detail_id && p.department_report_id == per).ToList())
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <button style="color:white" data-toggle="modal" class="btn btn-info" data-target="#addMapping">
+                                                                                            Tổng hợp nội dung
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @foreach (var items_content_lv3 in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == itemsss.form_department_report_detail_id).ToList())
                                                                                 {
                                                                                     inputIndex++;
 
@@ -168,6 +184,7 @@
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
+
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -205,7 +222,104 @@
     </div>
 </section>
 
+<div class="modal fade" id="addMapping" tabindex="-1" role="dialog" aria-labelledby="formModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formModal">Tổng hợp nội dung giảng viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @if (ViewBag.CheckMapping == true)
+            {
+                <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
+                    Chưa có thông tin tổng hợp
+                </div>
+            }
+            else
+            {
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table-mapping">
+                            <thead>
+                                <tr role="row">
+                                    <th>
+                                        Cấp danh mục
+                                    </th>
+                                    <th>
+                                        Tên danh mục
+                                    </th>
+                                    <th>
+                                        Chọn
+                                    </th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in lstCate.Where(c => c.category_of_id == null).ToList())
+                            {
+                                <tbody>
+                                    <tr>
 
+                                        <td>LV 1</td>
+                                        <td style="font-weight:bold">
+                                            @item.category_content
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                                foreach (var items in lstCate.Where(c => c.category_of_id == item.category_id).ToList())
+                                {
+                                    <tbody>
+                                        <tr>
+
+                                            <td>LV 2</td>
+                                            <td>
+                                                <div class="media mt-3">
+                                                    <div class="pr-3" href="#">
+                                                    </div>@items.category_content
+                                                </div>
+                                            </td>
+                                            <td></td>
+
+                                        </tr>
+                                    </tbody>
+                                    foreach (var itemss in lstCate.Where(c => c.category_of_id == items.category_id).ToList())
+                                    {
+                                        var perDetailMapping = perDetail.Where(per => per.FormPersonalReportDetail.category_id == itemss.category_id).GroupBy(f => f.personal_report_content.ToLower()).ToList();
+                                        <tbody>
+                                            <tr>
+
+                                                <td>LV 3</td>
+                                                <td>
+                                                    <div class="media mt-3">
+                                                        <div class="pr-5" href="#">
+                                                        </div>@itemss.category_content
+                                                        @for (int y = 0; y < perDetailMapping.Count; y++)
+                                                        {
+                                                            <input data-id="@perDetailMapping[y].FirstOrDefault().personal_report_detail_id" type="hidden" class="perDetailMapping-@itemss.category_id" value="@perDetailMapping[y].Key" />
+
+                                                        }
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input id="checkboxMapping-@itemss.category_id" value="@itemss.category_id" class="mapping-checkbox" type="checkbox" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                            }
+                        </table>
+                        <div class="text-right mt-3">
+                            <button id="idMappingContentBtn" role="button" class="btn btn-primary">Lưu nội dung</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 <script src="~/Scripts/jquery-3.4.1.js"></script>
 <script>
     //Mapping nội dung
