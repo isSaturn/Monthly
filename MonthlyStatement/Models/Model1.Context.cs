@@ -41,7 +41,6 @@ namespace MonthlyStatement.Models
         public virtual DbSet<FormPersonalReport> FormPersonalReports { get; set; }
         public virtual DbSet<FormStaffReportDetail> FormStaffReportDetails { get; set; }
         public virtual DbSet<FormStaffReport> FormStaffReports { get; set; }
-        public virtual DbSet<Mapping> Mappings { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<PersonalReportDetail> PersonalReportDetails { get; set; }
         public virtual DbSet<PersonalReport> PersonalReports { get; set; }

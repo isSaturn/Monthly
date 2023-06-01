@@ -31,7 +31,7 @@
 }
 else if (ViewBag.CheckFormDep == true)
 {
-    <div class="#" role="alert"style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
+    <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
         Chưa có biểu mẫu báo cáo của tháng này
     </div>
     <div>
@@ -41,7 +41,7 @@ else if (ViewBag.CheckFormDep == true)
 }
 else if (ViewBag.CheckReportDep == true)
 {
-    <div class="#" role="alert"style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
+    <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
         Bạn đã báo cáo tháng này!
     </div>
     <div>
@@ -236,6 +236,7 @@ else
         </div>
     </section>
 }
+
 <div class="modal fade" id="addMapping" tabindex="-1" role="dialog" aria-labelledby="formModal"
      aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -246,85 +247,96 @@ else
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-striped" id="table-mapping">
-                        <thead>
-                            <tr role="row">
-                                <th>
-                                    Cấp danh mục
-                                </th>
-                                <th>
-                                    Tên danh mục
-                                </th>
-                                <th>
-                                    Chọn
-                                </th>
-                            </tr>
-                        </thead>
-                        @foreach (var item in lstCate.Where(c => c.category_of_id == null).ToList())
-                        {
-                            <tbody>
-                                <tr>
-
-                                    <td>LV 1</td>
-                                    <td style="font-weight:bold">
-                                        @item.category_content
-                                    </td>
-                                    <td></td>
+            @if (ViewBag.CheckMapping == true)
+            {
+                <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
+                    Chưa có thông tin tổng hợp
+                </div>
+            }
+            else
+            {
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table-mapping">
+                            <thead>
+                                <tr role="row">
+                                    <th>
+                                        Cấp danh mục
+                                    </th>
+                                    <th>
+                                        Tên danh mục
+                                    </th>
+                                    <th>
+                                        Chọn
+                                    </th>
                                 </tr>
-                            </tbody>
-                            foreach (var items in lstCate.Where(c => c.category_of_id == item.category_id).ToList())
+                            </thead>
+                            @foreach (var item in lstCate.Where(c => c.category_of_id == null).ToList())
                             {
                                 <tbody>
                                     <tr>
 
-                                        <td>LV 2</td>
-                                        <td>
-                                            <div class="media mt-3">
-                                                <div class="pr-3" href="#">
-                                                </div>@items.category_content
-                                            </div>
+                                        <td>LV 1</td>
+                                        <td style="font-weight:bold">
+                                            @item.category_content
                                         </td>
                                         <td></td>
-
                                     </tr>
                                 </tbody>
-                                foreach (var itemss in lstCate.Where(c => c.category_of_id == items.category_id).ToList())
+                                foreach (var items in lstCate.Where(c => c.category_of_id == item.category_id).ToList())
                                 {
-                                    var perDetailMapping = perDetail.Where(per => per.FormPersonalReportDetail.category_id == itemss.category_id).GroupBy(f => f.personal_report_content.ToLower()).ToList();
                                     <tbody>
                                         <tr>
 
-                                            <td>LV 3</td>
+                                            <td>LV 2</td>
                                             <td>
                                                 <div class="media mt-3">
-                                                    <div class="pr-5" href="#">
-                                                    </div>@itemss.category_content
-                                                    @for (int y = 0; y < perDetailMapping.Count; y++)
-                                                    {
-                                                        <input data-id="@perDetailMapping[y].FirstOrDefault().personal_report_detail_id" type="hidden" class="perDetailMapping-@itemss.category_id" value="@perDetailMapping[y].Key" />
-
-                                                    }
+                                                    <div class="pr-3" href="#">
+                                                    </div>@items.category_content
                                                 </div>
                                             </td>
-                                            <td>
-                                                <input id="checkboxMapping-@itemss.category_id" value="@itemss.category_id" class="mapping-checkbox" type="checkbox" />
-                                            </td>
+                                            <td></td>
+
                                         </tr>
                                     </tbody>
+                                    foreach (var itemss in lstCate.Where(c => c.category_of_id == items.category_id).ToList())
+                                    {
+                                        var perDetailMapping = perDetail.Where(per => per.FormPersonalReportDetail.category_id == itemss.category_id).GroupBy(f => f.personal_report_content.ToLower()).ToList();
+                                        <tbody>
+                                            <tr>
+
+                                                <td>LV 3</td>
+                                                <td>
+                                                    <div class="media mt-3">
+                                                        <div class="pr-5" href="#">
+                                                        </div>@itemss.category_content
+                                                        @for (int y = 0; y < perDetailMapping.Count; y++)
+                                                        {
+                                                            <input data-id="@perDetailMapping[y].FirstOrDefault().personal_report_detail_id" type="hidden" class="perDetailMapping-@itemss.category_id" value="@perDetailMapping[y].Key" />
+
+                                                        }
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input id="checkboxMapping-@itemss.category_id" value="@itemss.category_id" class="mapping-checkbox" type="checkbox" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    }
                                 }
                             }
-                        }
-                    </table>
-                    <div class="text-right mt-3">
-                        <button id="idMappingContentBtn" role="button" class="btn btn-primary">Lưu nội dung</button>
+                        </table>
+                        <div class="text-right mt-3">
+                            <button id="idMappingContentBtn" role="button" class="btn btn-primary">Lưu nội dung</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/Scripts/jquery-3.4.1.js"></script>

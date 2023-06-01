@@ -66,7 +66,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return RedirectToAction("Index", "ReportPeriods");
         }
-        //department view edit
+        //Deparment view edit
 
         public ActionResult FormDepartmentEdit(int id)
         {
@@ -75,18 +75,23 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             {
                 Session["FormDepartmentEdit-lstCategory"] = db.Categories.ToList();
                 return View(form);
+
             }
             return RedirectToAction("Index", "ReportPeriods");
         }
-        //department edit
+        //Deparment edit
+
         [HttpPost]
         public ActionResult FormDepartmentEdit(int? idReport, string data)
         {
             var form = db.FormDepartmentReports.Find(idReport);
             if (form != null)
             {
+                if (form.FormDepartmentReportDetails.Where(f => f.DepartmentReportDetails.Count() > 0).Count() > 0)
+                    return Content("Exist");
+
                 if (string.IsNullOrEmpty(data))
-                    return Json("Vui lòng chọn danh mục", JsonRequestBehavior.AllowGet);
+                    return Content("Vui lòng chọn danh mục");
                 db.FormDepartmentReportDetails.RemoveRange(form.FormDepartmentReportDetails);
                 db.Entry(form).State = EntityState.Modified;
                 db.SaveChanges();
@@ -103,7 +108,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                 }
                 return Content("Success");
             }
-            return Json("Không tồn tại", JsonRequestBehavior.AllowGet);
+            return Content("Không tồn tại");
         }
         //personal view edit
 

@@ -1265,6 +1265,8 @@
     <Content Include="Areas\Staff\Views\StaticStaff\Index.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\CheckReportDepartment_Faculty\Index.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\CheckReportDepartment_Faculty\Detail.cshtml" />
+    <Content Include="assets\FileImport\DanhSachNguoiDung-Import.xlsx" />
+    <Content Include="assets\FileImport\Import.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1304,7 +1306,6 @@
     <Folder Include="Areas\Secretary\Data\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Areas\Staff\Views\NotificationStaff\" />
-    <Folder Include="assets\FileImport\" />
     <Folder Include="assets\FileMinhChung\" />
     <Folder Include="assets\user\avatar\" />
     <Folder Include="Data\" />

@@ -51,7 +51,11 @@ namespace MonthlyStatement.Areas.Department.Controllers
                     ViewBag.CheckListCategory = lstCat;
                     ViewBag.MappingContent = contentPer;
                 }
-
+                else
+                {
+                    ViewBag.CheckMapping = true;
+                }
+                
                 ViewBag.PeriodsId = check.report_period_id;
                 return View(check.FormDepartmentReports.First());
             }
