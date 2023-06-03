@@ -23,6 +23,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             var per = db.PersonalReports.Find(id);
             var form = db.FormPersonalReports.FirstOrDefault(f => f.report_period_id == per.report_period_id);
             ViewBag.accID = per.account_id;
+            ViewBag.PerID = id;
             return View(form);
         }
     }

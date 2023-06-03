@@ -34,6 +34,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
             var form = db.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == per.report_period_id);
             var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= form.ReportPeriod.start_date && d.end_date >= form.ReportPeriod.end_date);
             ViewBag.PeriodsId = check.report_period_id;
+            ViewBag.DepDetail = id;
             return View(form);
         }
         [HttpPost]

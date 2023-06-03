@@ -15,7 +15,7 @@
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.StaffReports.Where(p => p.report_period_id == idKy && p.account_id.Equals(accID)).ToList();
-    int per = formPer.First().staff_report_id;
+    int per = ViewBag.StaDetail;
 }
 
 
@@ -136,7 +136,7 @@
                                                                         <input hidden id="frmPerDetail-@itemsss.category_id" value="@itemsss.form_staff_report_detail_id" />
                                                                         <table class="table table-bordered dataTable">
                                                                             <tbody>
-                                                                                <tr class="" style="max-width: 50px">
+                                                                                <tr class="boxdanhmuc">
                                                                                     <th colspan="2"> @itemsss.Category.category_content</th>
                                                                                 </tr>
                                                                                 @foreach (var items_content_lv3 in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == itemsss.form_staff_report_detail_id && p.staff_report_id == per).ToList())

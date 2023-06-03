@@ -23,6 +23,8 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             var per = db.DepartmentReports.Find(id);
             var form = db.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == per.report_period_id);
             ViewBag.accID = per.account_id;
+            ViewBag.DepID = id;
+
             return View(form);
         }
     }

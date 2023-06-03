@@ -12,7 +12,7 @@
     var form = models.PersonalReports.Where(p => p.report_period_id == idperiod);
     string emails = ViewBag.accID;
     var formPer = models.PersonalReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(emails));
-    int per = formPer.First().personal_report_id;
+    int per = ViewBag.PerID;
 }
 
 <section class="section">
@@ -97,7 +97,7 @@
                                                     <div class="col">
                                                         <table class="table table-bordered dataTable">
                                                             <tbody>
-                                                                <tr class="" style="max-width: 50px">
+                                                                <tr class="boxdanhmuc">
                                                                     <th>@items_lv3.Category.category_content</th>
                                                                 </tr>
                                                                 @{ var items_groupby = models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && items_lv3.form_personal_report_detail_id == x.form_personal_report_detail_id).GroupBy(x => x.form_personal_report_detail_id).ToList();}
