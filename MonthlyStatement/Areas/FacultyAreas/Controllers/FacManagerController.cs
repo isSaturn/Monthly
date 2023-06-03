@@ -48,11 +48,28 @@ namespace MonthlyStatement.Areas.FacultyAreas.Controllers
             var data = db.Faculties.Where(y => y.faculty_id == check_Faculty.faculty_id).ToList();
             return View(data);
         }
+
+        [HttpGet]
         public ActionResult FacMember(int id)
         {
+            Session["add-user-faculty"] = db.Profiles.Where(p => p.faculty_id == null).ToList();
             var listFacMember = db.Faculties.Find(id);
             return View(listFacMember);
         }
+
+        [HttpPost]
+        public ActionResult AddUser(int id, int khoa, string email)
+        {
+            var user = db.Profiles.Find(id);
+            user.faculty_id = khoa;
+            user.email = email;
+
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Content("Success");
+        }
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -126,6 +143,19 @@ namespace MonthlyStatement.Areas.FacultyAreas.Controllers
             }
 
             return Redirect(returnUrl);
+        }
+
+        public ActionResult DeleteFaculty(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                var prof = db.Profiles.FirstOrDefault(t => t.account_id.Equals(id));
+                prof.faculty_id = null;
+                db.Entry(prof).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+
         }
     }
 }

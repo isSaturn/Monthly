@@ -1,4 +1,4 @@
-﻿@model  MonthlyStatement.Models.FormPersonalReport
+﻿﻿@model  MonthlyStatement.Models.FormPersonalReport
 @using MonthlyStatement.Models
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,21 +11,20 @@
 
 @if (Session["faculty"] == null)
 {
-    <div class="#" role="alert">
+    <div class="" role="alert"style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
         Chưa có khoa. Vui lòng liên hệ thư ký để thêm khoa
-        <div>
-            <img src="~/assets/img/vlu/khoa.png" class="cangiua">
-        </div>
+    </div>
+    <div>
+        <img src="~/assets/img/vlu/khoa.png" class="cangiua">
     </div>
 }
 else if (ViewBag.CheckFormPer == true)
 {
     <div class="#" role="alert" style="font-size: 30px; color: black; text-align: center; font-weight: bold;padding:30px">
         CHƯA CÓ BIỂU MẪU CÓ THÁNG NÀY
-        <div>
-            <img src="~/assets/img/vlu/fomm.png" class="cangiua">
-        </div>
-
+    </div>
+    <div>
+        <img src="~/assets/img/vlu/fomm.png" class="cangiua">
     </div>
 }
 else if (ViewBag.CheckReportPer == true)
@@ -57,19 +56,6 @@ else
                     <div class="card">
                         <div class="card-header bg-primary" style="height:100px">
                             <h4 class="text-white" style="font-size:1.75rem">@Model.ReportPeriod.report_period_name</h4>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Thông báo</h4>
-                            <div class="card-header-action">
-                                <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="collapse" id="mycard-collapse" style="">
-                            <div class="card-body">
-                                Thời gian báo cáo: @Model.ReportPeriod.start_date - @Model.ReportPeriod.end_date
-                            </div>
                         </div>
                     </div>
                     <div class="col-12">
@@ -237,6 +223,11 @@ else
         </div>
     </section>
 }
+
+
+
+
+
 <script src="~/Scripts/jquery-3.4.1.js"></script>
 <script>
     //Thêm input
@@ -321,6 +312,7 @@ else
         }
     });
 </script>
+
 <style>
     img.cangiua {
         display: block;

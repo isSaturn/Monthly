@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MonthlyStatement.Areas.Secretary.Controllers
+namespace MonthlyStatement.Areas.FacultyAreas.Controllers
 {
-    public class CheckReportDepartmentController : Controller
+    public class CheckReportDepartment_FacultyController : Controller
     {
         CP25Team04Entities db = new CP25Team04Entities();
 
@@ -19,10 +19,10 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
         private ApplicationSignInManager _signInManager;
 
 
-        public CheckReportDepartmentController()
+        public CheckReportDepartment_FacultyController()
         {
         }
-        public CheckReportDepartmentController(ApplicationAccountManager userManager, ApplicationSignInManager signInManager)
+        public CheckReportDepartment_FacultyController(ApplicationAccountManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -39,7 +39,7 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
                 _signInManager = value;
             }
         }
-        public CheckReportDepartmentController(ApplicationAccountManager userManager)
+        public CheckReportDepartment_FacultyController(ApplicationAccountManager userManager)
         {
             UserManager = userManager;
         }
@@ -55,7 +55,8 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
                 _userManager = value;
             }
         }
-        // GET: Secretary/CheckReportDepartment
+
+        // GET: FacultyAreas/CheckReportDepartment_Faculty
         public ActionResult Index()
         {
             return View(db.DepartmentReports.ToList());
@@ -67,9 +68,8 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
             ViewBag.accID = per.account_id;
             return View(form);
         }
-        [HttpPost]
-        // GET: Secretary/Comments
-        public async Task<ActionResult> PostCommentSec(string CommentText, int id)
+
+        public async Task<ActionResult> PostCommentFaculty(string CommentText, int id)
         {
             string emails = User.Identity.Name;
             string userId = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
@@ -90,10 +90,10 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
                            "Thông báo bình luận từ " + emails,
                            "Nội dung: " + c.comment_content);
 
-            return RedirectToAction("Detail", "CheckReportDepartment", new { id = c.department_report_id });
+            return RedirectToAction("Detail", "CheckReportDepartment_Faculty", new { id = c.department_report_id });
         }
 
-        public async Task<ActionResult> SendMailSecretarySuccessAsync(int id)
+        public async Task<ActionResult> SendMailFacultySuccessAsync(int id)
         {
             string email_tk = User.Identity.Name;
             string userId = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(email_tk.ToLower().Trim())).Id;
@@ -107,7 +107,7 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
 
             var list_send = db.AspNetUsers.Where(s => s.Id != null).ToList();
             var id_faculty = db.Profiles.FirstOrDefault(m => m.account_id == userId).faculty_id;
-            var Role = list_send.Where(y => y.AspNetRoles.FirstOrDefault(r => r.Name == "Ban phòng khoa") != null && y.Profiles.FirstOrDefault(r => r.faculty_id == id_faculty) != null).ToArray();
+            var Role = list_send.Where(y => y.AspNetRoles.FirstOrDefault(r => r.Name == "Bộ môn") != null && y.Profiles.FirstOrDefault(r => r.faculty_id == id_faculty) != null).ToArray();
 
             var name_faculty = db.Faculties.FirstOrDefault(i => i.faculty_id == id_faculty).faculty_name;
 
@@ -119,14 +119,14 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
                     notification.notification_date = DateTime.Now;
                     notification.notification_content =
                        "Thông báo duyệt thành công " + check_month.report_period_name + " của Bộ môn. " + " khoa " + name_faculty +
-                        "Thư ký thông báo " + check_month.report_period_name + " của bộ môn " + " thuộc khoa " + name_faculty + " được chấp nhận ";
+                        "Khoa " + name_faculty  + " thông báo " + check_month.report_period_name + " của bộ môn " + " thuộc khoa " + name_faculty + " được chấp nhận ";
                     notification.status = "Duyệt thành công";
                     notification.account_id = userId;
                     db.Notifications.Add(notification);
                     db.SaveChanges();
 
                     var per = db.DepartmentReports.Find(id);
-                    per.status_secretary = "Đã duyệt";
+                    per.status_faculty = "Đã duyệt";
                     db.Entry(per).State = EntityState.Modified;
                     db.SaveChanges();
 
@@ -134,15 +134,15 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
                     {
                         await UserManager.SendEmailAsync(Role[i].Id,
                        "Thông báo duyệt thành công " + check_month.report_period_name + " của Bộ môn " + " khoa " + name_faculty,
-                       "Thư ký thông báo " + check_month.report_period_name + " của bộ môn " + " thuộc khoa " + name_faculty + " được chấp nhận ");
+                        "Khoa " + name_faculty + " thông báo " + check_month.report_period_name + " của bộ môn " + " thuộc khoa " + name_faculty + " được chấp nhận ");
                     }
                 }
             }
-            return RedirectToAction("Index","CheckReportDepartment");
+            return RedirectToAction("Index", "CheckReportDepartment_Faculty");
         }
 
 
-        public async Task<ActionResult> SendMailSecretaryErrorAsync(int id)
+        public async Task<ActionResult> SendMailFacultyErrorAsync(int id)
         {
             string email_tk = User.Identity.Name;
             string userId = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(email_tk.ToLower().Trim())).Id;
@@ -156,7 +156,7 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
 
             var list_send = db.AspNetUsers.Where(s => s.Id != null).ToList();
             var id_faculty = db.Profiles.FirstOrDefault(m => m.account_id == userId).faculty_id;
-            var Role = list_send.Where(y => y.AspNetRoles.FirstOrDefault(r => r.Name == "Ban phòng khoa") != null && y.Profiles.FirstOrDefault(r => r.faculty_id == id_faculty) != null).ToArray();
+            var Role = list_send.Where(y => y.AspNetRoles.FirstOrDefault(r => r.Name == "Bộ môn") != null && y.Profiles.FirstOrDefault(r => r.faculty_id == id_faculty) != null).ToArray();
 
             var name_faculty = db.Faculties.FirstOrDefault(i => i.faculty_id == id_faculty).faculty_name;
 
@@ -168,14 +168,14 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
                     notification.notification_date = DateTime.Now;
                     notification.notification_content =
                        "Thông báo duyệt không thành công " + check_month.report_period_name + " của Bộ môn. " + " khoa " + name_faculty +
-                       "Thư ký thông báo " + check_month.report_period_name + " của bộ môn " + " thuộc khoa " + name_faculty + " không được chấp nhận" + ". Vui lòng bổ sung.";
+                        "Khoa " + name_faculty + " Thông báo " + check_month.report_period_name + " của bộ môn " + " thuộc khoa " + name_faculty + " không được chấp nhận" + ". Vui lòng bổ sung.";
                     notification.status = "Duyệt không thành công";
                     notification.account_id = userId;
                     db.Notifications.Add(notification);
                     db.SaveChanges();
 
                     var per = db.DepartmentReports.Find(id);
-                    per.status_secretary = "Chưa duyệt";
+                    per.status_faculty = "Chưa duyệt";
                     db.Entry(per).State = EntityState.Modified;
                     db.SaveChanges();
 
@@ -183,12 +183,11 @@ namespace MonthlyStatement.Areas.Secretary.Controllers
                     {
                         await UserManager.SendEmailAsync(Role[i].Id,
                        "Thông báo duyệt không thành công " + check_month.report_period_name + " của Bộ môn " + " khoa " + name_faculty,
-                       "Thư ký thông báo " + check_month.report_period_name + " của bộ môn " + " thuộc khoa " + name_faculty + " không được chấp nhận" + ". Vui lòng bổ sung.");
+                        "Khoa " + name_faculty + " thông báo " + check_month.report_period_name + " của bộ môn " + " thuộc khoa " + name_faculty + " không được chấp nhận" + ". Vui lòng bổ sung.");
                     }
                 }
             }
-            return RedirectToAction("Index", "CheckReportDepartment");
+            return RedirectToAction("Index", "CheckReportDepartment_Faculty");
         }
-
     }
 }

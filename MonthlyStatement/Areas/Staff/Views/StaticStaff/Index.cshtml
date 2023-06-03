@@ -5,8 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <section class="section">
     <div class="section-body">
         <div class="row">
@@ -16,11 +14,12 @@
                         <h4 class="text-white" style="font-size:1.75rem">Thống kê các kỳ báo cáo</h4>
 
                     </div>
+
                     <div class="card-body">
-                        <form action="@Url.Action("Index","Static")">
+                        <form action="@Url.Action("Index","StaticStaff")">
                             <div class="row" style="margin-bottom: 20px">
                                 <div class="col-sm-12 col-md-2">
-                                    <a class="btn btn-icon btn-primary" href="@Url.Action("ExportToExcelPersonal","Static")">Xuất file excel</a>
+                                    <a class="btn btn-icon btn-primary" href="@Url.Action("ExportToExcelStaff","StaticStaff")">Xuất file excel</a>
                                 </div>
                             </div>
 
@@ -43,7 +42,7 @@
                                     {
                                         <tr class="tableBodyRow">
                                             <th scope="row" class="rowHeader">@item.report_period_name</th>
-                                            @if (item.PersonalReports.Any(p => p.AspNetUser.Email == User.Identity.Name ))
+                                            @if (item.StaffReports.Any(p => p.AspNetUser.Email == User.Identity.Name))
                                             {
                                                 <td>
                                                     <span title="Feature is included" class="featureCheck">✔</span>
@@ -66,9 +65,10 @@
                             </table>
 
                         </div>
+
                     </div>
 
-                   
+                    
                 </div>
             </div>
         </div>

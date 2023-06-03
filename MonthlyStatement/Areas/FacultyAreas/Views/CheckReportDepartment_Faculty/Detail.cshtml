@@ -1,7 +1,7 @@
-﻿@model  MonthlyStatement.Models.FormStaffReport
+﻿@model  MonthlyStatement.Models.FormDepartmentReport
 @using MonthlyStatement.Models
 @{
-    ViewBag.Title = "StaffDetail";
+    ViewBag.Title = "DepartmentDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 0;
     int j = 64;
@@ -9,11 +9,10 @@
 
     CP25Team04Entities models = new CP25Team04Entities();
     int idperiod = Model.report_period_id;
-    var form = models.StaffReports.Where(p => p.report_period_id == idperiod);
-    string emails = User.Identity.Name;
-    string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
-    var formPer = models.StaffReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
-    int per = ViewBag.StaDetail;
+    var form = models.DepartmentReports.Where(p => p.report_period_id == idperiod);
+    string emails = ViewBag.accID;
+    var formPer = models.DepartmentReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(emails));
+    int per = formPer.First().department_report_id;
 }
 
 <section class="section">
@@ -22,13 +21,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo nhân viên</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn</h4>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            @foreach (var items in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_lv == 1).ToList())
+                            @foreach (var items in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_lv == 1).ToList())
                             {
 
                                 i = 0;
@@ -39,7 +38,7 @@
 
                                 </div>
 
-                                foreach (var items_lv2 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
+                                foreach (var items_lv2 in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
                                 {
                                     lstId += items_lv2.category_id + "-";
                                     i++;
@@ -53,30 +52,30 @@
                                                         <th>@(i). @items_lv2.Category.category_content</th>
                                                     </tr>
 
-                                                    @if (models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_lv2.form_staff_report_detail_id).Count() > 0)
+                                                    @if (models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id).Count() > 0)
                                                     {
 
                                                         int inputIndex = 0;
-                                                        if (!models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
+                                                        if (!models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
                                                         {
-                                                            foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_lv2.form_staff_report_detail_id && p.staff_report_id == per).ToList())
+                                                            foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id && p.department_report_id == per).ToList())
                                                             {
                                                                 inputIndex++;
                                                                 <tr id="formInput-@items_lv2.category_id-@inputIndex">
                                                                     <td>
-                                                                        <input readonly type="text" value="@items_content.staff_report_content" class="form-control" id="noidung-@items_lv2.category_id-@inputIndex">
+                                                                        <input readonly type="text" value="@items_content.department_report_content" class="form-control" id="noidung-@items_lv2.category_id-@inputIndex">
                                                                     </td>
                                                                 </tr>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_lv2.form_staff_report_detail_id && p.staff_report_id == per).ToList())
+                                                            foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_lv2.form_department_report_detail_id && p.department_report_id == per).ToList())
                                                             {
                                                                 inputIndex++;
                                                                 <tr id="formInput-@items_lv2.category_id-@inputIndex" class="d-none">
                                                                     <td>
-                                                                        <input readonly type="text" value="@items_content.staff_report_content" class="form-control" id="noidung-@items_lv2.category_id-@inputIndex">
+                                                                        <input readonly type="text" value="@items_content.department_report_content" class="form-control" id="noidung-@items_lv2.category_id-@inputIndex">
                                                                     </td>
                                                                 </tr>
                                                             }
@@ -89,33 +88,33 @@
                                         </div>
 
                                     </div>
-                                    if (models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
+                                    if (models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Any(x => x.Category.category_of_id == items_lv2.category_id))
                                     {
                                         <div>
                                             <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
-                                                @foreach (var items_lv3 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id).ToList())
+                                                @foreach (var items_lv3 in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id).ToList())
                                                 {
                                                     <div class="col">
                                                         <table class="table table-bordered dataTable">
                                                             <tbody>
-                                                                <tr class="boxdanhmuc">
+                                                                <tr class="" style="max-width: 50px">
                                                                     <th>@items_lv3.Category.category_content</th>
                                                                 </tr>
-                                                                @{ var items_groupby = models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && items_lv3.form_staff_report_detail_id == x.form_staff_report_detail_id).GroupBy(x => x.form_staff_report_detail_id).ToList();}
+                                                                @{ var items_groupby = models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && items_lv3.form_department_report_detail_id == x.form_department_report_detail_id).GroupBy(x => x.form_department_report_detail_id).ToList();}
 
                                                                 @foreach (var item in items_groupby)
                                                                 {
-                                                                    foreach (var items_content_lv3 in models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && x.form_staff_report_detail_id == item.Key).ToList())
+                                                                    foreach (var items_content_lv3 in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && x.form_department_report_detail_id == item.Key).ToList())
                                                                     {
                                                                         int inputIndex = 0;
                                                                         inputIndex++;
-                                                                        if (models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_content_lv3.form_staff_report_detail_id).Count() > 0)
+                                                                        if (models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_content_lv3.form_department_report_detail_id).Count() > 0)
                                                                         {
-                                                                            foreach (var items_content in models.StaffReportDetails.Where(p => p.form_staff_report_detail_id == items_content_lv3.form_staff_report_detail_id && p.staff_report_id == per).ToList())
+                                                                            foreach (var items_content in models.DepartmentReportDetails.Where(p => p.form_department_report_detail_id == items_content_lv3.form_department_report_detail_id && p.department_report_id == per).ToList())
                                                                             {
                                                                                 <tr>
                                                                                     <td>
-                                                                                        <input readonly type="text" value="@items_content.staff_report_content" class="form-control" id="noidung-@items_content_lv3.category_id-@inputIndex">
+                                                                                        <input readonly type="text" value="@items_content.department_report_content" class="form-control" id="noidung-@items_content_lv3.category_id-@inputIndex">
                                                                                     </td>
                                                                                 </tr>
                                                                             }
@@ -136,9 +135,12 @@
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
                             </div>
-                            <div class="input-group mb-3">
-                                <input class="form-control" src="~/assets/FileMinhChung/" disabled>
+                            <hr />
+                            <div class="col-12 text-right mt-3">
+                                <a href="@Url.Action("SendMailFacultyErrorAsync","CheckReportDepartment_Faculty", new {id = per})" class="btn btn-icon icon-left btn-warning"><i class="fas fa-times"></i> Báo cáo lại</a>
+                                <a href="@Url.Action("SendMailFacultySuccessAsync","CheckReportDepartment_Faculty", new {id = per})" class="btn btn-icon icon-left btn-success"><i class="fas fa-check"></i> Duyệt báo cáo</a>
                             </div>
+
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). BÌNH LUẬN</label>
                             </div>
@@ -148,7 +150,7 @@
                                     <div class="card-body">
 
                                         <div class="chat">
-                                            @foreach (var comment in models.Comments.Where(x => x.staff_report_id == per).ToList())
+                                            @foreach (var comment in models.Comments.Where(x => x.department_report_id == per).ToList())
                                             {
                                                 <div class="chat-header clearfix">
                                                     <img alt="image" src="~/assets/img/user.png" class="rounded-circle img-fluid">
@@ -166,7 +168,7 @@
                                         </div>
                                         <hr />
                                         <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
-                                        @using (Html.BeginForm("PostComment", "CommentsStaff", FormMethod.Post))
+                                        @using (Html.BeginForm("PostCommentFaculty", "CheckReportDepartment_Faculty", FormMethod.Post))
                                         {
                                             <input type="hidden" name="id" value="@per" />
                                             <div class="form-group">
@@ -179,6 +181,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

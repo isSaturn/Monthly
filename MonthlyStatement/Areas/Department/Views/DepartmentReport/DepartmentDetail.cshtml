@@ -1,4 +1,4 @@
-﻿@model  MonthlyStatement.Models.FormDepartmentReport
+﻿﻿@model  MonthlyStatement.Models.FormDepartmentReport
 @using MonthlyStatement.Models
 @{
     ViewBag.Title = "DepartmentDetail";
@@ -22,7 +22,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo nhân viên</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn</h4>
                     </div>
                 </div>
                 <div class="col-12">
@@ -134,6 +134,9 @@
                             <input hidden id="lstCategory" value="@lstId.Substring(0, lstId.Length - 1)" />
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input class="form-control" src="~/assets/FileMinhChung/" disabled>
                             </div>
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). BÌNH LUẬN</label>

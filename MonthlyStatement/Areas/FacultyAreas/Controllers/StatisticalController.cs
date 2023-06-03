@@ -19,13 +19,21 @@ namespace MonthlyStatement.Areas.FacultyAreas.Controllers
         {
 
             ViewBag.Date = date == null ? DateTime.Now : date;
-
-            return View(db.Faculties.ToList());
+            string emails = User.Identity.Name;
+            string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+            var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == accID);
+            Session["faculty"] = check_Faculty.faculty_id;
+            var data = db.Faculties.Where(y => y.faculty_id == check_Faculty.faculty_id).ToList();
+            return View(data);
         }
 
         public void ExportToExcelFaculty(DateTime date)
         {
-            var faculty = db.Faculties.ToList();
+            string emails = User.Identity.Name;
+            string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+            var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == accID);
+            Session["faculty"] = check_Faculty.faculty_id;
+            var data = db.Faculties.Where(y => y.faculty_id == check_Faculty.faculty_id).ToList();
 
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Thống kê");
@@ -55,48 +63,9 @@ namespace MonthlyStatement.Areas.FacultyAreas.Controllers
             ws.Cells["G3"].Value = "Chưa báo cáo";
             ws.Cells["H3"].Value = "Báo cáo trễ";
 
-            int colIndex_success = 6;
-            int colIndex_error = 7;
-            int colIndex_warning = 8;
-            int rowIndex_success = 4;
-            int rowIndex_error = 4;
-            int rowIndex_warning = 4;
-
-            foreach (var item in arrColumnHeader)
-            {
-                var cell = ws.Cells[rowIndex_success, colIndex_success];
-
-                var fill = cell.Style.Fill;
-                fill.PatternType = ExcelFillStyle.Solid;
-                fill.BackgroundColor.SetColor(System.Drawing.Color.Green);
-
-                rowIndex_success++;
-            }
-
-            foreach (var item in arrColumnHeader)
-            {
-                var cell = ws.Cells[rowIndex_error, colIndex_error];
-                var fill = cell.Style.Fill;
-                fill.PatternType = ExcelFillStyle.Solid;
-                fill.BackgroundColor.SetColor(System.Drawing.Color.Red);
-
-                rowIndex_error++;
-            }
-
-            foreach (var item in arrColumnHeader)
-            {
-                var cell = ws.Cells[rowIndex_warning, colIndex_warning];
-
-                //set màu thành gray
-                var fill = cell.Style.Fill;
-                fill.PatternType = ExcelFillStyle.Solid;
-                fill.BackgroundColor.SetColor(System.Drawing.Color.Yellow);
-
-                rowIndex_warning++;
-            }
 
             int rowStart = 4;
-            foreach (var item in faculty)
+            foreach (var item in data)
             {
                 ws.Cells[string.Format("A{0}", rowStart)].Value = item.faculty_id;
                 ws.Cells[string.Format("B{0}", rowStart)].Value = item.faculty_name;
@@ -104,9 +73,14 @@ namespace MonthlyStatement.Areas.FacultyAreas.Controllers
                 ws.Cells[string.Format("D{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Giảng viên");
                 ws.Cells[string.Format("E{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Bộ môn");
 
-                ws.Cells[string.Format("F{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date >= date && y.ReportPeriod.end_date < date.AddMonths(1)) > 0);
+                ws.Cells[string.Format("F{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0);
+
                 ws.Cells[string.Format("G{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports == null);
-                ws.Cells[string.Format("H{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date >= DateTime.Now && y.ReportPeriod.end_date <= DateTime.Now) > 0);
+                ws.Cells[string.Format("H{0}", rowStart)].Value = item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0)
+                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= date && y.ReportPeriod.end_date > date) > 0);
                 rowStart++;
             }
 

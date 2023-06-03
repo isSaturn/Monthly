@@ -28,6 +28,8 @@ namespace MonthlyStatement.Models
         public string account_id { get; set; }
         public Nullable<int> comment_id { get; set; }
         public Nullable<System.DateTime> date_report { get; set; }
+        public string status_secretary { get; set; }
+        public string status_faculty { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

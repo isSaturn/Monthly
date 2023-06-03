@@ -21,7 +21,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo nhân viên</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Báo cáo bộ môn</h4>
                     </div>
                 </div>
                 <div class="col-12">
@@ -135,6 +135,12 @@
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
                             </div>
+                            <hr />
+                            <div class="col-12 text-right mt-3">
+                                <a href="@Url.Action("SendMailSecretaryErrorAsync","CheckReportDepartment", new {id = per})" class="btn btn-icon icon-left btn-warning"><i class="fas fa-times"></i> Báo cáo lại</a>
+                                <a href="@Url.Action("SendMailSecretarySuccessAsync","CheckReportDepartment", new {id = per})" class="btn btn-icon icon-left btn-success"><i class="fas fa-check"></i> Duyệt báo cáo</a>
+                            </div>
+
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). BÌNH LUẬN</label>
                             </div>
@@ -162,7 +168,7 @@
                                         </div>
                                         <hr />
                                         <h4>Viết bình luận .... <span class="fas fa-pen" style="font-size:1.2rem"></span></h4>
-                                        @using (Html.BeginForm("PostComment", "CommentsDepartment", FormMethod.Post))
+                                        @using (Html.BeginForm("PostCommentSec", "CheckReportDepartment", FormMethod.Post))
                                         {
                                             <input type="hidden" name="id" value="@per" />
                                             <div class="form-group">
@@ -175,14 +181,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <a href="#" class="btn btn-icon icon-left btn-danger"><i class="fas fa-times"></i> Báo cáo lại</a>
-                                        <a href="#" class="btn btn-icon icon-left btn-success"><i class="fas fa-check"></i> Duyệt báo cáo</a>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

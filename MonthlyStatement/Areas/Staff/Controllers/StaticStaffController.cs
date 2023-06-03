@@ -7,23 +7,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MonthlyStatement.Areas.Personal.Controllers
+namespace MonthlyStatement.Areas.Staff.Controllers
 {
-    [Authorize(Roles = "Giảng viên")]
-
-    public class StaticController : Controller
+    [Authorize(Roles = "Nhân viên")]
+    public class StaticStaffController : Controller
     {
-
         private CP25Team04Entities db = new CP25Team04Entities();
-
-        // GET: Personal/Static
+        // GET: Staff/StaticStaff
         public ActionResult Index()
         {
             var report_period = db.ReportPeriods.Where(r => r.ReportYear.year == DateTime.Now.Year).ToList();
+
             return View(report_period);
         }
 
-        public void ExportToExcelPersonal()
+        public void ExportToExcelStaff()
         {
             string emails = User.Identity.Name;
             var report_period = db.ReportPeriods.Where(r => r.ReportYear.year == DateTime.Now.Year).ToList();
@@ -31,11 +29,11 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Thống kê");
 
 
-            ws.Name = "Thống kê báo cáo giảng viên";
+            ws.Name = "Thống kê báo cáo nhân viên";
             ws.Cells.Style.Font.Size = 11;
             ws.Cells.Style.Font.Name = "Calibri";
 
-            string[] arrColumnHeader = { "", "Hoàn thành", "Chưa hoàn thành"};
+            string[] arrColumnHeader = { "", "Hoàn thành", "Chưa hoàn thành" };
 
             var countColHeader = arrColumnHeader.Count();
 
@@ -48,7 +46,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             ws.Cells[2, 1].Value = "Tài khoản: " + emails;
             ws.Cells[2, 1, 2, countColHeader].Merge = true;
             ws.Cells[2, 1, 2, countColHeader].Style.Font.Italic = true;
-            ws.Cells[3, 1].Value = "Vai trò: Giảng viên";
+            ws.Cells[3, 1].Value = "Vai trò: Nhân viên";
             ws.Cells[3, 1, 3, countColHeader].Merge = true;
             ws.Cells[3, 1, 3, countColHeader].Style.Font.Italic = true;
 
@@ -60,12 +58,12 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             foreach (var item in report_period)
             {
                 ws.Cells[string.Format("A{0}", rowStart)].Value = item.report_period_name;
-                if(item.PersonalReports.Any(p => p.AspNetUser.Email == emails))
+                if (item.StaffReports.Any(p => p.AspNetUser.Email == emails))
                 {
                     ws.Cells[string.Format("B{0}", rowStart)].Value = "✔";
                     ws.Cells[string.Format("B{0}", rowStart)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 }
-                else 
+                else
                 {
                     ws.Cells[string.Format("C{0}", rowStart)].Value = "✘";
                     ws.Cells[string.Format("C{0}", rowStart)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
