@@ -50,3 +50,9 @@
     width: auto
 }
 
+.boxdanhmuc {
+    box-sizing: border-box;
+    width: 250px;
+    height: 150px;
+}
+

@@ -54,6 +54,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 ViewBag.CheckMapping = true;
             }
             ViewBag.PeriodsId = check.report_period_id;
+            ViewBag.DepDetail = id;
             return View(form);
 
         }

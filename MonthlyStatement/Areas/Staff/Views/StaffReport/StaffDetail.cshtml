@@ -13,7 +13,7 @@
     string emails = User.Identity.Name;
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.StaffReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
-    int per = formPer.First().staff_report_id;
+    int per = ViewBag.StaDetail;
 }
 
 <section class="section">
@@ -98,7 +98,7 @@
                                                     <div class="col">
                                                         <table class="table table-bordered dataTable">
                                                             <tbody>
-                                                                <tr class="" style="max-width: 50px">
+                                                                <tr class="boxdanhmuc">
                                                                     <th>@items_lv3.Category.category_content</th>
                                                                 </tr>
                                                                 @{ var items_groupby = models.FormStaffReports.FirstOrDefault(f => f.report_period_id == idperiod).FormStaffReportDetails.Where(x => x.Category.category_of_id == items_lv2.category_id && items_lv3.form_staff_report_detail_id == x.form_staff_report_detail_id).GroupBy(x => x.form_staff_report_detail_id).ToList();}

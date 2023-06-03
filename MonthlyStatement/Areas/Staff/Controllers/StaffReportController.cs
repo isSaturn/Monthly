@@ -25,6 +25,7 @@ namespace MonthlyStatement.Areas.Staff.Controllers
         {
             int per = db.StaffReports.Find(id).report_period_id;
             var form = db.FormStaffReports.FirstOrDefault(f => f.report_period_id == per);
+            ViewBag.StaDetail = id;
             return View(form);
         }
         public ActionResult StaffReportEdit(int id)
@@ -33,6 +34,8 @@ namespace MonthlyStatement.Areas.Staff.Controllers
             var form = db.FormStaffReports.FirstOrDefault(f => f.report_period_id == per.report_period_id);
             var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= form.ReportPeriod.start_date && d.end_date >= form.ReportPeriod.end_date);
             ViewBag.PeriodsId = check.report_period_id;
+            ViewBag.StaDetail = id;
+
             return View(form);
         }
         [HttpPost]
