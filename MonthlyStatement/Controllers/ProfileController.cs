@@ -19,7 +19,11 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         {
             string ID_User = User.Identity.Name;
             var profiles = db.AspNetUsers.FirstOrDefault(u => u.Email.Equals(ID_User)).Profiles.First();
-            ViewBag.department_id = new SelectList(db.Departments.ToList(), "department_id", "department_name", profiles.department_id);
+            var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == profiles.account_id);
+            var data = db.Faculties.FirstOrDefault(y => y.faculty_id == check_Faculty.faculty_id);
+            var check_Dep = db.Departments.Where(dep => dep.faculty_id == data.faculty_id);
+            ViewBag.department_id = new SelectList(check_Dep, "department_id", "department_name", profiles.department_id);
+
             if (profiles != null)
             {
                 return View(profiles);

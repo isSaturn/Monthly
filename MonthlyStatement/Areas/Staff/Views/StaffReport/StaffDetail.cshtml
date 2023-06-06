@@ -192,7 +192,7 @@
                                             <td>
                                                 @if (staffReport.file_path != null)
                                                 {
-                                                    <a class="form-control" href="@Url.Action("DownLoad","Report", new {file_path = staffReport.file_path})" download="File import">Tải file</a>
+                                                    <a class="form-control" href="@Url.Action("DownLoad","StaffReport", new {file_path = staffReport.file_path})" download="File import">Tải file</a>
                                                 }
                                                 else
                                                 {
@@ -258,6 +258,7 @@
         var mywindow = window.open();
         mywindow.document.write('<html><head><title>Invoice</title>');
         mywindow.document.write("<link rel=\"stylesheet\" href=\"/assets/css/bootstrap.min.css\" type=\"text/css\"/>");
+        mywindow.document.write("<link rel=\"stylesheet\" href=\"/assets/css/custom.css\" type=\"text/css\"/>");
         mywindow.document.write('</head><body>');
         mywindow.document.write(data);
         mywindow.document.write('</body></html>');

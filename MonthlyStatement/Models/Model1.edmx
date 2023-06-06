@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -93,6 +93,7 @@
           </Key>
           <Property Name="department_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="department_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="faculty_id" Type="int" />
         </EntityType>
         <EntityType Name="DepartmentReportDetails">
           <Key>
@@ -385,6 +386,18 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_Faculties">
+          <End Role="Faculties" Type="Self.Faculties" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculties">
+              <PropertyRef Name="faculty_id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="faculty_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -776,6 +789,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <AssociationSet Name="FK_Department_Faculties" Association="Self.FK_Department_Faculties">
+            <End Role="Faculties" EntitySet="Faculties" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
           <AssociationSet Name="FK_DepartmentReport_AspNetUsers" Association="Self.FK_DepartmentReport_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="DepartmentReports" EntitySet="DepartmentReports" />
@@ -885,8 +902,7 @@
             <End Role="FormPersonalReportDetails" EntitySet="FormPersonalReportDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CP25Team04Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -993,6 +1009,8 @@
           <Property Name="department_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="department_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profiles_Department" FromRole="Department" ToRole="Profiles" />
+          <Property Name="faculty_id" Type="Int32" />
+          <NavigationProperty Name="Faculty" Relationship="CP25Team04Model.FK_Department_Faculties" FromRole="Department" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="DepartmentReportDetail">
           <Key>
@@ -1036,6 +1054,7 @@
           <Property Name="faculty_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="faculty_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Faculty" FromRole="Faculties" ToRole="Profiles" />
+          <NavigationProperty Name="Departments" Relationship="CP25Team04Model.FK_Department_Faculties" FromRole="Faculty" ToRole="Department" />
         </EntityType>
         <EntityType Name="FormDepartmentReportDetail">
           <Key>
@@ -1806,7 +1825,23 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Department_Faculties" Association="CP25Team04Model.FK_Department_Faculties">
+            <End Role="Faculty" EntitySet="Faculties" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Department_Faculties">
+          <End Type="CP25Team04Model.Faculty" Role="Faculty" Multiplicity="0..1" />
+          <End Type="CP25Team04Model.Department" Role="Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="faculty_id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="faculty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1894,6 +1929,7 @@
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="CP25Team04Model.Department">
               <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
                 <ScalarProperty Name="department_id" ColumnName="department_id" />
                 <ScalarProperty Name="department_name" ColumnName="department_name" />
               </MappingFragment>

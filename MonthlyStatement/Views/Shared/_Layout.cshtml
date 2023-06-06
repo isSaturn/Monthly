@@ -97,7 +97,7 @@
                     else if (User.IsInRole("Bộ môn"))
                     {
                         <ul class="sidebar-menu">
-                            <li class=@(ViewBag.Title == "Quản lý báo báo" ? "active" : "nav-item")>
+                            <li class=@(ViewBag.Title == "Quản lý bộ môn" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Department", "DepartmentReport", new { Area = "Department" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
                             </li>
                             <li class=@(ViewBag.Title == "Viết báo cáo" ? "active" : "nav-item")>

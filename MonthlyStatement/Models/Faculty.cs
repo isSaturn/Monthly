@@ -18,6 +18,7 @@ namespace MonthlyStatement.Models
         public Faculty()
         {
             this.Profiles = new HashSet<Profile>();
+            this.Departments = new HashSet<Department>();
         }
     
         public int faculty_id { get; set; }
@@ -25,5 +26,7 @@ namespace MonthlyStatement.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }

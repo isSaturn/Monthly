@@ -196,10 +196,10 @@ else
                                 <div class="accordion">
                                     <div class="card-header collapsed" role="button" data-toggle="collapse" data-target="" aria-expanded="false">
                                         <h4>
-                                            <label>@(((char)(++j)).ToString()). MINH CHỨNG</label>
+                                            @(((char)(++j)).ToString()). MINH CHỨNG
                                         </h4>
                                         <div class="card-header-action">
-                                            <a data-collapse="#panel-body-B" class="btn btn-icon" href="#B"></a>
+                                            <a data-collapse="#panel-body-A" class="btn btn-icon" href="#A"></a>
                                         </div>
                                     </div>
                                 </div>
@@ -298,7 +298,7 @@ else
                         location.reload();
                     });
                 } else {
-                    swal('Thất bại', ketqua, 'error');
+                    swal('Thất bại', 'Báo cáo không thành công, hãy chắc chắn bạn đã điền đầy đủ thông tin trong hồ sơ', 'error');
                 }
             });
         }

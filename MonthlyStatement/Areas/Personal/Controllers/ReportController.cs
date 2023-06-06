@@ -105,6 +105,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                     pr.file_path = path;
                 }
             }
+
             db.PersonalReportDetails.RemoveRange(pers.PersonalReportDetails);
             db.PersonalReports.Remove(pers);
             db.SaveChanges();

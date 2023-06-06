@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -45,7 +46,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
                     foreach (var item in formDetail)
                     {
                         var perDetail = db.PersonalReportDetails.Where(per => per.form_personal_report_detail_id == item.form_personal_report_detail_id);
-                        contentPer.AddRange(perDetail);                     
+                        contentPer.AddRange(perDetail);
                     }
                     var lstCat = formDetail.Select(i => i.Category).ToList();
                     ViewBag.CheckListCategory = lstCat;
@@ -55,7 +56,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 {
                     ViewBag.CheckMapping = true;
                 }
-                
+
                 ViewBag.PeriodsId = check.report_period_id;
                 return View(check.FormDepartmentReports.First());
             }
@@ -67,9 +68,24 @@ namespace MonthlyStatement.Areas.Department.Controllers
             {
                 string emails = User.Identity.Name;
                 string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+                Claim claim = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.Role);
+                string roleName = (claim != null) ? claim.Value : string.Empty;
+                var pers = db.PersonalReports.FirstOrDefault(r => r.account_id.Equals(accID));
                 DepartmentReport pr = new DepartmentReport();
-                pr.report_period_id = (int)reportperiodid;
+                var periodId = db.PersonalReports.Where(c => c.report_period_id == pr.report_period_id);
+                var crProfile = db.Profiles.FirstOrDefault(n => n.account_id == accID);
 
+                pr.report_period_id = (int)reportperiodid;
+                pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
+                pr.date_report = DateTime.Now;
+                pr.status_secretary = "Chưa duyệt";
+                pr.status_faculty = "Chưa duyệt";
+                pr.account_id = accID;
+                pr.reporter = crProfile.user_name;
+                pr.role_user = roleName;
+                pr.user_code = crProfile.user_code;
+                pr.user_department = crProfile.Department.department_name;
+                pr.user_faculty = crProfile.Faculty.faculty_name;
                 if (fileMinhChung != null)
                 {
                     if (fileMinhChung.ContentLength > 0)
@@ -89,12 +105,6 @@ namespace MonthlyStatement.Areas.Department.Controllers
                         pr.file_path = path;
                     }
                 }
-
-                pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
-                pr.status_secretary = "Chưa duyệt";
-                pr.status_faculty = "Chưa duyệt";
-                pr.date_report = DateTime.Now;
-                pr.account_id = accID;
                 db.DepartmentReports.Add(pr);
                 db.SaveChanges();
 
@@ -168,29 +178,6 @@ namespace MonthlyStatement.Areas.Department.Controllers
                 return Content("Error");
             }
 
-        }
-
-        public ActionResult ListReportYear()
-        {
-            var current_year = DateTime.Now.Year;
-            int check = db.ReportYears.Where(y => y.year == current_year).Count();
-
-            if (check < 1)
-            {
-                //cho phep thêm mới năm báo cáo
-                Session["ReportYear-Check"] = true;
-            }
-
-            else
-                //khong cho phep them moi
-                Session["ReportYear-Check"] = false;
-            return View(db.ReportYears.OrderByDescending(y => y.year).ToList());
-        }
-
-        public ActionResult ListReportPeriod(int id)
-        {
-            var reportPeriods = db.ReportPeriods.Where(r => r.report_year_id == id).ToList();
-            return View(reportPeriods);
         }
     }
 }

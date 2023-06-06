@@ -22,8 +22,10 @@ namespace MonthlyStatement.Models
     
         public int department_id { get; set; }
         public string department_name { get; set; }
+        public Nullable<int> faculty_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual Faculty Faculty { get; set; }
     }
 }

@@ -66,6 +66,7 @@
         <AssociationConnector Association="CP25Team04Model.FK_StaffReports_ReportPeriods" ManuallyRouted="false" />
         <AssociationConnector Association="CP25Team04Model.FK_StaffReportDetails_StaffReports" ManuallyRouted="false" />
         <AssociationConnector Association="CP25Team04Model.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="CP25Team04Model.FK_Department_Faculties" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
