@@ -1227,8 +1227,6 @@
     <Content Include="Areas\Department\Views\DepartmentReport\DepartmentDetail.cshtml" />
     <Content Include="Areas\Department\Views\DepartmentReport\DepartmentReportEdit.cshtml" />
     <Content Include="Areas\Department\Views\FormDepartmentReport\Index.cshtml" />
-    <Content Include="Areas\Department\Views\FormDepartmentReport\ListReportPeriod.cshtml" />
-    <Content Include="Areas\Department\Views\FormDepartmentReport\ListReportYear.cshtml" />
     <Content Include="Areas\Personal\Views\Report\PersonalReportEdit.cshtml" />
     <Content Include="Areas\Personal\Views\Static\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportStaff\Detail.cshtml" />
@@ -1269,6 +1267,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Department\Views\DepartmentReport\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1301,7 +1300,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Department\Data\" />
-    <Folder Include="Areas\Department\Views\NotificationDepartment\" />
     <Folder Include="Areas\FacultyAreas\Data\" />
     <Folder Include="Areas\Personal\Data\" />
     <Folder Include="Areas\Personal\Views\Shared\" />
