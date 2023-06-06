@@ -1261,7 +1261,6 @@
     <Content Include="assets\FileMinhChung\ruzckxkkq782gdjm2sxlm6xvej7a01DanhSachNguoiDung-Import.xlsx" />
     <Content Include="assets\FileMinhChung\swocjt297owtotjy8orluwoiteo1efImport.xlsx" />
     <Content Include="assets\FileMinhChung\yyj95fmtkmz0uv03ktztx6er66r4owExport.xlsx" />
-    <Content Include="Areas\Department\Views\DepartmentReport\Index.cshtml" />
     <Content Include="Areas\Department\Views\ListDepartmentMember\Create.cshtml" />
     <Content Include="Areas\Department\Views\ListDepartmentMember\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
