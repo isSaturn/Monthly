@@ -30,6 +30,11 @@ namespace MonthlyStatement.Models
         public Nullable<System.DateTime> date_report { get; set; }
         public string status_secretary { get; set; }
         public string status_faculty { get; set; }
+        public string reporter { get; set; }
+        public string user_code { get; set; }
+        public string role_user { get; set; }
+        public string user_department { get; set; }
+        public string user_faculty { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

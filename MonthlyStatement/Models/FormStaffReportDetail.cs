@@ -23,7 +23,6 @@ namespace MonthlyStatement.Models
         public int form_staff_report_detail_id { get; set; }
         public int category_id { get; set; }
         public int form_staff_report_id { get; set; }
-        public string status { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual FormStaffReport FormStaffReport { get; set; }

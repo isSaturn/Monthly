@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CP25Team04Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -116,6 +116,11 @@
           <Property Name="date_report" Type="date" />
           <Property Name="status_secretary" Type="nvarchar" MaxLength="50" />
           <Property Name="status_faculty" Type="nvarchar" MaxLength="50" />
+          <Property Name="reporter" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_code" Type="nvarchar" MaxLength="128" />
+          <Property Name="role_user" Type="nvarchar" MaxLength="256" />
+          <Property Name="user_department" Type="nvarchar" MaxLength="128" />
+          <Property Name="user_faculty" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="Faculties">
           <Key>
@@ -131,7 +136,6 @@
           <Property Name="form_department_report_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="category_id" Type="int" Nullable="false" />
           <Property Name="form_department_report_id" Type="int" Nullable="false" />
-          <Property Name="status" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="FormDepartmentReports">
           <Key>
@@ -147,7 +151,6 @@
           <Property Name="form_personal_report_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="category_id" Type="int" Nullable="false" />
           <Property Name="form_personal_report_id" Type="int" Nullable="false" />
-          <Property Name="status" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="FormPersonalReports">
           <Key>
@@ -163,7 +166,6 @@
           <Property Name="form_staff_report_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="category_id" Type="int" Nullable="false" />
           <Property Name="form_staff_report_id" Type="int" Nullable="false" />
-          <Property Name="status" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="FormStaffReports">
           <Key>
@@ -258,6 +260,11 @@
           <Property Name="status" Type="nvarchar" MaxLength="100" />
           <Property Name="account_id" Type="nvarchar" MaxLength="128" />
           <Property Name="date_report" Type="date" />
+          <Property Name="reporter" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_code" Type="nvarchar" MaxLength="128" />
+          <Property Name="role_user" Type="nvarchar" MaxLength="256" />
+          <Property Name="user_department" Type="nvarchar" MaxLength="128" />
+          <Property Name="user_faculty" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -878,7 +885,8 @@
             <End Role="FormPersonalReportDetails" EntitySet="FormPersonalReportDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CP25Team04Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1010,6 +1018,11 @@
           <Property Name="date_report" Type="DateTime" Precision="0" />
           <Property Name="status_secretary" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="status_faculty" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="reporter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_code" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="role_user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="user_department" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="user_faculty" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_DepartmentReport_AspNetUsers" FromRole="DepartmentReports" ToRole="AspNetUsers" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_DepartmentReports" FromRole="DepartmentReports" ToRole="Comments" />
           <NavigationProperty Name="Comment" Relationship="Self.FK_DepartmentReport_Comment" FromRole="DepartmentReports" ToRole="Comments" />
@@ -1031,7 +1044,6 @@
           <Property Name="form_department_report_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="category_id" Type="Int32" Nullable="false" />
           <Property Name="form_department_report_id" Type="Int32" Nullable="false" />
-          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Category" Relationship="Self.FK_FormDepartmentReportDetail_Category" FromRole="FormDepartmentReportDetails" ToRole="Categories" />
           <NavigationProperty Name="DepartmentReportDetails" Relationship="Self.FK_DepartmentReportDetail_FormDepartmentReportDetail" FromRole="FormDepartmentReportDetails" ToRole="DepartmentReportDetails" />
           <NavigationProperty Name="FormDepartmentReport" Relationship="Self.FK_FormDepartmentReportDetail_FormDepartmentReport" FromRole="FormDepartmentReportDetails" ToRole="FormDepartmentReports" />
@@ -1052,7 +1064,6 @@
           <Property Name="form_personal_report_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="category_id" Type="Int32" Nullable="false" />
           <Property Name="form_personal_report_id" Type="Int32" Nullable="false" />
-          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Table1_Table11" FromRole="FormPersonalReportDetails" ToRole="Categories" />
           <NavigationProperty Name="PersonalReportDetails" Relationship="Self.FK_PersonalReportDetail_FormPersonalReportDetail" FromRole="FormPersonalReportDetails" ToRole="PersonalReportDetails" />
           <NavigationProperty Name="FormPersonalReport" Relationship="Self.FK_Table1_FormPersonalReport" FromRole="FormPersonalReportDetails" ToRole="FormPersonalReports" />
@@ -1073,7 +1084,6 @@
           <Property Name="form_staff_report_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="category_id" Type="Int32" Nullable="false" />
           <Property Name="form_staff_report_id" Type="Int32" Nullable="false" />
-          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Category" Relationship="Self.FK_FormStaffReportDetails_Categories" FromRole="FormStaffReportDetails" ToRole="Categories" />
           <NavigationProperty Name="FormStaffReport" Relationship="Self.FK_FormStaffReportDetails_FormStaffReports" FromRole="FormStaffReportDetails" ToRole="FormStaffReports" />
           <NavigationProperty Name="StaffReportDetails" Relationship="Self.FK_StaffReportDetails_FormStaffReportDetails" FromRole="FormStaffReportDetails" ToRole="StaffReportDetails" />
@@ -1123,11 +1133,11 @@
           <Property Name="user_code" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="role_user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="user_department" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="user_faculty" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_PersonalReport_AspNetUsers" FromRole="PersonalReports" ToRole="AspNetUsers" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_PersonalReports" FromRole="PersonalReports" ToRole="Comments" />
           <NavigationProperty Name="PersonalReportDetails" Relationship="Self.FK_PersonalReportDetail_PersonalReport" FromRole="PersonalReports" ToRole="PersonalReportDetails" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_PersonalReport_ReportPeriod" FromRole="PersonalReports" ToRole="ReportPeriods" />
-          <Property Name="user_faculty" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -1193,6 +1203,11 @@
           <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="date_report" Type="DateTime" Precision="0" />
+          <Property Name="reporter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_code" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="role_user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="user_department" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="user_faculty" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_StaffReports_AspNetUsers" FromRole="StaffReports" ToRole="AspNetUsers" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_StaffReports" FromRole="StaffReports" ToRole="Comments" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_StaffReports_ReportPeriods" FromRole="StaffReports" ToRole="ReportPeriods" />
@@ -1906,6 +1921,11 @@
                 <ScalarProperty Name="date_report" ColumnName="date_report" />
                 <ScalarProperty Name="status_secretary" ColumnName="status_secretary" />
                 <ScalarProperty Name="status_faculty" ColumnName="status_faculty" />
+                <ScalarProperty Name="reporter" ColumnName="reporter" />
+                <ScalarProperty Name="user_code" ColumnName="user_code" />
+                <ScalarProperty Name="role_user" ColumnName="role_user" />
+                <ScalarProperty Name="user_department" ColumnName="user_department" />
+                <ScalarProperty Name="user_faculty" ColumnName="user_faculty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1923,7 +1943,6 @@
                 <ScalarProperty Name="form_department_report_detail_id" ColumnName="form_department_report_detail_id" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
                 <ScalarProperty Name="form_department_report_id" ColumnName="form_department_report_id" />
-                <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1941,7 +1960,6 @@
                 <ScalarProperty Name="form_personal_report_detail_id" ColumnName="form_personal_report_detail_id" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
                 <ScalarProperty Name="form_personal_report_id" ColumnName="form_personal_report_id" />
-                <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1959,7 +1977,6 @@
                 <ScalarProperty Name="form_staff_report_detail_id" ColumnName="form_staff_report_detail_id" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
                 <ScalarProperty Name="form_staff_report_id" ColumnName="form_staff_report_id" />
-                <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1995,7 +2012,6 @@
           <EntitySetMapping Name="PersonalReports">
             <EntityTypeMapping TypeName="CP25Team04Model.PersonalReport">
               <MappingFragment StoreEntitySet="PersonalReports">
-                <ScalarProperty Name="user_faculty" ColumnName="user_faculty" />
                 <ScalarProperty Name="personal_report_id" ColumnName="personal_report_id" />
                 <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
                 <ScalarProperty Name="file_path" ColumnName="file_path" />
@@ -2006,6 +2022,7 @@
                 <ScalarProperty Name="user_code" ColumnName="user_code" />
                 <ScalarProperty Name="role_user" ColumnName="role_user" />
                 <ScalarProperty Name="user_department" ColumnName="user_department" />
+                <ScalarProperty Name="user_faculty" ColumnName="user_faculty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2063,6 +2080,11 @@
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="date_report" ColumnName="date_report" />
+                <ScalarProperty Name="reporter" ColumnName="reporter" />
+                <ScalarProperty Name="user_code" ColumnName="user_code" />
+                <ScalarProperty Name="role_user" ColumnName="role_user" />
+                <ScalarProperty Name="user_department" ColumnName="user_department" />
+                <ScalarProperty Name="user_faculty" ColumnName="user_faculty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
