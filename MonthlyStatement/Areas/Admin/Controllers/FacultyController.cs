@@ -222,9 +222,18 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                         // 2 Validation Khoa
                         string khoas = data[3].ToString().Trim();
                         var khoa = db.Faculties.FirstOrDefault(f => f.faculty_name.ToLower().Equals(khoas.ToLower()));
+
                         if (khoa == null)
                         {
                             error += i + ". Không tìm thấy khoa.#";
+                            i++;
+                        }
+                        //4 Validation bomon
+                        string bomoms = data[4].ToString().Trim();
+                        var bomon = db.DepartmentLists.FirstOrDefault(d => d.department_name.ToLower().Equals(khoas.ToLower()));
+                        if (bomon == null)
+                        {
+                            error += i + ". Không tìm thấy bộ môn.#";
                             i++;
                         }
 
@@ -247,6 +256,8 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                                 pro.user_name = data[1].ToString().Trim();
                                 pro.email = data[2].ToString().Trim();
                                 pro.faculty_id = khoa.faculty_id;
+                                pro.department_id = bomon.department_id;
+
                                 db.Profiles.Add(pro);
                                 db.SaveChanges();
 
@@ -256,6 +267,8 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                                 profiles.user_name = data[1].ToString().Trim();
                                 profiles.email = data[2].ToString().Trim();
                                 profiles.faculty_id = khoa.faculty_id;
+                                profiles.department_id = bomon.department_id;
+
                                 db.Entry(profiles).State = EntityState.Modified;
                                 db.SaveChanges();
                             }
@@ -277,7 +290,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                                 profile.faculty_id = khoa.faculty_id;
 
                                 //thay đổi bomon 
-                                string bomons = data[4].ToString().Trim();
+                                profile.department_id = bomon.department_id;
 
                                 //thay đổi tên
                                 string names = data[1].ToString().Trim();
@@ -304,7 +317,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
-
         }
     }
 }

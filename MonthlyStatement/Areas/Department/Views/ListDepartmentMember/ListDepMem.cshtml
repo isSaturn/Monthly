@@ -1,4 +1,4 @@
-﻿@model MonthlyStatement.Models.Faculty
+﻿@model MonthlyStatement.Models.DepartmentList
 @using MonthlyStatement.Models
 
 @{
@@ -8,7 +8,7 @@
 @{
     ViewBag.Title = "AttendenceList";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var usernonfaculty = Session["add-user-faculty"] as IEnumerable<Profile>;
+    var usernonfaculty = Session["add-user-dep"] as IEnumerable<Profile>;
 }
 
 <section class="section">
@@ -17,8 +17,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h3 class="text-white" style="font-size:1.75rem">Danh sách thành viên của khoa @Model.faculty_name</h3>
-                        <input hidden="hidden" value="@Model.faculty_id" id="faculty_id" />
+                        <h3 class="text-white" style="font-size:1.75rem">Danh sách thành viên của bộ môn @Model.department_name</h3>
+                        <input hidden="hidden" value="@Model.department_id" id="faculty_id" />
                     </div>
                     <div class="card-body">
                         <div class="col-sm-12 buttons">
@@ -66,81 +66,81 @@
                                     {
                                         i = i + 1;
 
-                                        <tr>
-                                            <td class="text-center">
-                                                @i
-                                            </td>
-                                            <td>
-                                                @if (item.email == null)
-                                                {
-                                                    <span>Chưa có email</span>
-                                                }
-                                                else
-                                                {
-                                                    @item.email
-                                                }
+                                    <tr>
+                                        <td class="text-center">
+                                            @i
+                                        </td>
+                                        <td>
+                                            @if (item.email == null)
+                                            {
+                                                <span>Chưa có email</span>
+                                            }
+                                            else
+                                            {
+                                                @item.email
+                                            }
 
-                                            </td>
-                                            <td>
-                                                @if (item.user_name == null)
-                                                {
-                                                    <span>Chưa có tên</span>
-                                                }
-                                                else
-                                                {
-                                                    @item.user_name
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.Faculty.faculty_name == null)
-                                                {
-                                                    <span>Chưa có khoa</span>
-                                                }
-                                                else
-                                                {
-                                                    @item.Faculty.faculty_name
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.DepartmentList.department_name == null)
-                                                {
-                                                    <span>Chưa có bộ môn</span>
-                                                }
-                                                else
-                                                {
-                                                    @item.DepartmentList.department_name
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.AspNetUser == null)
+                                        </td>
+                                        <td>
+                                            @if (item.user_name == null)
+                                            {
+                                                <span>Chưa có tên</span>
+                                            }
+                                            else
+                                            {
+                                                @item.user_name
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.Faculty.faculty_name == null)
+                                            {
+                                                <span>Chưa có khoa</span>
+                                            }
+                                            else
+                                            {
+                                                @item.Faculty.faculty_name
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.DepartmentList.department_name == null)
+                                            {
+                                                <span>Chưa có khoa</span>
+                                            }
+                                            else
+                                            {
+                                                @item.DepartmentList.department_name
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.AspNetUser == null)
+                                            {
+                                                <span>Chưa thêm vai trò</span>
+                                            }
+                                            else
+                                            {
+                                                if (item.AspNetUser.AspNetRoles.Count() < 1)
                                                 {
                                                     <span>Chưa thêm vai trò</span>
+
                                                 }
                                                 else
                                                 {
-                                                    if (item.AspNetUser.AspNetRoles.Count() < 1)
-                                                    {
-                                                        <span>Chưa thêm vai trò</span>
+                                                    @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
 
-                                                    }
-                                                    else
-                                                    {
-                                                        @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
-
-                                                    }
                                                 }
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="buttons">
-                                                    @*<a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.account_id })">
-                                                            <i class="far fa-edit"></i>
-                                                        </a>*@
-                                                    <a class="btn btn-icon btn-danger" data-original-title="Xóa" href="@Url.Action("DeleteFaculty", "Faculty", new { id = item.account_id })">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="buttons">
+                                                @*<a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.account_id })">
+                    <i class="far fa-edit"></i>
+                </a>*@
+                                                <a class="btn btn-icon btn-danger" data-original-title="Xóa" href="@Url.Action("DeleteDep", "ListDepartmentMember", new { id = item.account_id })">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -284,7 +284,7 @@
 
 
         $.ajax({
-            url: $('#requestUrl').val() + 'Admin/Faculty/AddUser',
+            url: $('#requestUrl').val() + 'Department/ListDepartmentMember/AddUser',
             type: 'POST',
             dataType: 'html',
             contentType: false,

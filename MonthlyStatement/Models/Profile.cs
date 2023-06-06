@@ -25,7 +25,7 @@ namespace MonthlyStatement.Models
         public string user_code { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Department Department { get; set; }
+        public virtual DepartmentList DepartmentList { get; set; }
         public virtual Faculty Faculty { get; set; }
     }
 }

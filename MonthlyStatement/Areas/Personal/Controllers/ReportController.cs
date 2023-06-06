@@ -68,7 +68,7 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             pr.reporter = crProfile.user_name;
             pr.role_user = roleName;
             pr.user_code = crProfile.user_code;
-            pr.user_department = crProfile.Department.department_name;
+            pr.user_department = crProfile.DepartmentList.department_name;
             pr.user_faculty = crProfile.Faculty.faculty_name;
             db.PersonalReports.Add(pr);
             db.SaveChanges();

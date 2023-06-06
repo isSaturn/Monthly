@@ -50,6 +50,9 @@
                                             Khoa
                                         </th>
                                         <th>
+                                            Bộ môn
+                                        </th>
+                                        <th>
                                             Vai trò
                                         </th>
                                         <th class="text-center">
@@ -95,6 +98,16 @@
                                                 else
                                                 {
                                                     @item.Faculty.faculty_name
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.DepartmentList.department_name == null)
+                                                {
+                                                    <span>Chưa có bộ môn</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.DepartmentList.department_name
                                                 }
                                             </td>
                                             <td>

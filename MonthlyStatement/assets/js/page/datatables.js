@@ -29,9 +29,6 @@ $("[data-checkboxes]").each(function () {
 });
 
 $("#table-1").dataTable({
-    language: {
-        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/vi.json',
-    },
     "columnDefs": [
         { "sortable": false, "targets": [2, 3] }
     ]

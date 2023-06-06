@@ -21,7 +21,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             var profiles = db.AspNetUsers.FirstOrDefault(u => u.Email.Equals(ID_User)).Profiles.First();
             var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == profiles.account_id);
             var data = db.Faculties.FirstOrDefault(y => y.faculty_id == check_Faculty.faculty_id);
-            var check_Dep = db.Departments.Where(dep => dep.faculty_id == data.faculty_id);
+            var check_Dep = db.DepartmentLists.Where(dep => dep.faculty_id == data.faculty_id);
             ViewBag.department_id = new SelectList(check_Dep, "department_id", "department_name", profiles.department_id);
 
             if (profiles != null)
