@@ -29,13 +29,9 @@ else
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped" id="table-1">
+                                <table class="table table-striped">
                                     <thead>
                                         <tr role="row">
-                                            <th class="text-center">
-                                                STT
-                                            </th>
-
                                             <th>
                                                 Tên khoa
                                             </th>
@@ -54,11 +50,8 @@ else
                                             i = i + 1;
 
                                             <tr>
-                                                <td class="text-center">
-                                                    @i
-                                                </td>
                                                 <td>
-                                                    <a href="@Url.Action("FacMember","FacManager", new { id = item.faculty_id })">@item.faculty_name</a>
+                                                    <a href="@Url.Action("FacMember","FacManager", new { id = item.faculty_id })">Danh sách thành viên khoa: @item.faculty_name.ToUpper()</a>
                                                 </td>
                                                 <td>
                                                     @item.Profiles.Count()

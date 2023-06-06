@@ -14,20 +14,12 @@ namespace MonthlyStatement.Models
     
     public partial class PersonalReportDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PersonalReportDetail()
-        {
-            this.Mappings = new HashSet<Mapping>();
-        }
-    
         public int personal_report_detail_id { get; set; }
         public int personal_report_id { get; set; }
         public int form_personal_report_detail_id { get; set; }
         public string personal_report_content { get; set; }
     
         public virtual FormPersonalReportDetail FormPersonalReportDetail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Mapping> Mappings { get; set; }
         public virtual PersonalReport PersonalReport { get; set; }
     }
 }

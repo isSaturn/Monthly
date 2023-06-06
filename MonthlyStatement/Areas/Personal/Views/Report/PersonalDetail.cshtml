@@ -14,6 +14,7 @@
     string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
     var formPer = models.PersonalReports.Where(p => p.report_period_id == idperiod && p.account_id.Equals(accID));
     int per = ViewBag.PerDetail;
+    var personalReport = (PersonalReport)ViewBag.PersonalReport;
 }
 
 <section class="section">
@@ -25,18 +26,68 @@
                         <h4 class="text-white" style="font-size:1.75rem">Báo cáo cá nhân</h4>
                     </div>
                 </div>
-                <div class="col-12">
+                <button type="button" class="btn btn-primary mb-2" onclick="PrintElem('#formPrint')">In</button>
+                <div class="col-12" id="formPrint">
                     <div class="card">
                         <div class="card-body">
+                            <div class="section-title mt-1" style="font-weight:bold">
+                                <label>@(((char)(++j)).ToString()). Thông tin nhân sự</label>
+                            </div>
+                            <div class="section-title mt-0 row" style="margin-bottom:1px; padding-left:0.25rem">
+                                <div class="col-lg-12">
+                                    <table class="table table-bordered dataTable">
+                                        <tbody>
+                                            <tr class="" style="max-width: 50px">
+                                                <th>1. Họ và tên</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input readonly type="text" class="form-control" value="@personalReport.reporter">
+                                                </td>
+                                            </tr>
+                                            <tr class="" style="max-width: 50px">
+                                                <th>2. MGV</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input readonly type="text" class="form-control" value="@personalReport.user_code">
+                                                </td>
+                                            </tr>
+                                            <tr class="" style="max-width: 50px">
+                                                <th>3. Bộ môn</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input readonly type="text" class="form-control" value="@personalReport.user_department">
+                                                </td>
+                                            </tr>
+                                            <tr class="" style="max-width: 50px">
+                                                <th>4. Đơn vị khoa</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input readonly type="text" class="form-control" value="@personalReport.user_faculty">
+                                                </td>
+                                            </tr>
+                                            <tr class="" style="max-width: 50px">
+                                                <th>5. Thời gian báo cáo</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input readonly type="date" class="form-control" value="@(personalReport.date_report?.ToString("yyyy-MM-dd"))">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             @foreach (var items in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_lv == 1).ToList())
                             {
-
                                 i = 0;
                                 j++;
                                 <br />
                                 <div class="section-title mt-1" style="font-weight:bold">
                                     @(((char) j).ToString()). @items.Category.category_content.ToUpper()
-
                                 </div>
 
                                 foreach (var items_lv2 in models.FormPersonalReports.FirstOrDefault(f => f.report_period_id == idperiod).FormPersonalReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
@@ -135,7 +186,7 @@
                                 <label>@(((char) (++j)).ToString()). MINH CHỨNG</label>
                             </div>
                             <div class="input-group mb-3">
-                                <input class="form-control" src="~/assets/FileMinhChung/" disabled>
+                                <a class="form-control" href="@Url.Action("DownLoad","Report", new {file_path = personalReport.file_path})" download="File import">Tải file</a>
                             </div>
                             <div class="section-title mt-3" style="font-weight:bold">
                                 <label>@(((char) (++j)).ToString()). BÌNH LUẬN</label>
@@ -184,3 +235,26 @@
         </div>
     </div>
 </section>
+<script>
+    function PrintElem(elem) {
+        Popup($('<div/>').append($(elem).clone()).html());
+    }
+
+    function Popup(data) {
+        var mywindow = window.open();
+        mywindow.document.write('<html><head><title>Invoice</title>');
+        mywindow.document.write("<link rel=\"stylesheet\" href=\"/assets/css/bootstrap.min.css\" type=\"text/css\"/>");
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 1000);
+        return true;
+    }
+</script>

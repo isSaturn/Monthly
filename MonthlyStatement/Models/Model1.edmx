@@ -87,6 +87,13 @@
           <Property Name="department_report_id" Type="int" />
           <Property Name="staff_report_id" Type="int" />
         </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="department_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="DepartmentReportDetails">
           <Key>
             <PropertyRef Name="department_report_detail_id" />
@@ -194,6 +201,11 @@
           <Property Name="status" Type="nvarchar" MaxLength="100" />
           <Property Name="account_id" Type="nvarchar" MaxLength="128" />
           <Property Name="date_report" Type="date" />
+          <Property Name="reporter" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_code" Type="nvarchar" MaxLength="128" />
+          <Property Name="role_user" Type="nvarchar" MaxLength="256" />
+          <Property Name="user_department" Type="nvarchar" MaxLength="128" />
+          <Property Name="user_faculty" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="Profiles">
           <Key>
@@ -206,6 +218,8 @@
           <Property Name="email" Type="nvarchar" MaxLength="128" />
           <Property Name="last_login" Type="datetime" />
           <Property Name="last_logout" Type="datetime" />
+          <Property Name="department_id" Type="int" />
+          <Property Name="user_code" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="ReportPeriods">
           <Key>
@@ -595,6 +609,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Profiles_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="Profiles">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ReportPeriod_ReportYear">
           <End Role="ReportYears" Type="Self.ReportYears" Multiplicity="0..1" />
           <End Role="ReportPeriods" Type="Self.ReportPeriods" Multiplicity="*" />
@@ -688,6 +714,7 @@
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentReportDetails" EntityType="Self.DepartmentReportDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentReports" EntityType="Self.DepartmentReports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Faculties" EntityType="Self.Faculties" Schema="dbo" store:Type="Tables" />
@@ -816,6 +843,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Profile_Faculty" Association="Self.FK_Profile_Faculty">
             <End Role="Faculties" EntitySet="Faculties" />
+            <End Role="Profiles" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profiles_Department" Association="Self.FK_Profiles_Department">
+            <End Role="Department" EntitySet="Department" />
             <End Role="Profiles" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK_ReportPeriod_ReportYear" Association="Self.FK_ReportPeriod_ReportYear">
@@ -947,6 +978,14 @@
           <NavigationProperty Name="StaffReport" Relationship="Self.FK_Comments_StaffReports" FromRole="Comments" ToRole="StaffReports" />
           <NavigationProperty Name="DepartmentReports" Relationship="Self.FK_DepartmentReport_Comment" FromRole="Comments" ToRole="DepartmentReports" />
         </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="department_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Profiles" Relationship="Self.FK_Profiles_Department" FromRole="Department" ToRole="Profiles" />
+        </EntityType>
         <EntityType Name="DepartmentReportDetail">
           <Key>
             <PropertyRef Name="department_report_detail_id" />
@@ -969,13 +1008,13 @@
           <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="comment_id" Type="Int32" />
           <Property Name="date_report" Type="DateTime" Precision="0" />
+          <Property Name="status_secretary" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status_faculty" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_DepartmentReport_AspNetUsers" FromRole="DepartmentReports" ToRole="AspNetUsers" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_DepartmentReports" FromRole="DepartmentReports" ToRole="Comments" />
           <NavigationProperty Name="Comment" Relationship="Self.FK_DepartmentReport_Comment" FromRole="DepartmentReports" ToRole="Comments" />
           <NavigationProperty Name="DepartmentReportDetails" Relationship="Self.FK_DepartmentReportDetail_DepartmentReport" FromRole="DepartmentReports" ToRole="DepartmentReportDetails" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_DepartmentReport_ReportPeriod" FromRole="DepartmentReports" ToRole="ReportPeriods" />
-          <Property Name="status_secretary" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="status_faculty" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -1080,10 +1119,15 @@
           <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="account_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="date_report" Type="DateTime" Precision="0" />
+          <Property Name="reporter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_code" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="role_user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="user_department" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_PersonalReport_AspNetUsers" FromRole="PersonalReports" ToRole="AspNetUsers" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_PersonalReports" FromRole="PersonalReports" ToRole="Comments" />
           <NavigationProperty Name="PersonalReportDetails" Relationship="Self.FK_PersonalReportDetail_PersonalReport" FromRole="PersonalReports" ToRole="PersonalReportDetails" />
           <NavigationProperty Name="ReportPeriod" Relationship="Self.FK_PersonalReport_ReportPeriod" FromRole="PersonalReports" ToRole="ReportPeriods" />
+          <Property Name="user_faculty" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -1096,7 +1140,10 @@
           <Property Name="email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="last_login" Type="DateTime" Precision="3" />
           <Property Name="last_logout" Type="DateTime" Precision="3" />
+          <Property Name="department_id" Type="Int32" />
+          <Property Name="user_code" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_AspNetUsers" FromRole="Profiles" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_Profiles_Department" FromRole="Profiles" ToRole="Department" />
           <NavigationProperty Name="Faculty" Relationship="Self.FK_Profile_Faculty" FromRole="Profiles" ToRole="Faculties" />
         </EntityType>
         <EntityType Name="ReportPeriod">
@@ -1357,6 +1404,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Profiles_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Profiles" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="Profiles">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DepartmentReportDetail_DepartmentReport">
           <End Role="DepartmentReports" Type="Self.DepartmentReport" Multiplicity="1" />
           <End Role="DepartmentReportDetails" Type="Self.DepartmentReportDetail" Multiplicity="*" />
@@ -1573,6 +1632,7 @@
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
           <EntitySet Name="DepartmentReportDetails" EntityType="Self.DepartmentReportDetail" />
           <EntitySet Name="DepartmentReports" EntityType="Self.DepartmentReport" />
           <EntitySet Name="Faculties" EntityType="Self.Faculty" />
@@ -1654,6 +1714,10 @@
           <AssociationSet Name="FK_DepartmentReport_Comment" Association="Self.FK_DepartmentReport_Comment">
             <End Role="Comments" EntitySet="Comments" />
             <End Role="DepartmentReports" EntitySet="DepartmentReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profiles_Department" Association="Self.FK_Profiles_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Profiles" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK_DepartmentReportDetail_DepartmentReport" Association="Self.FK_DepartmentReportDetail_DepartmentReport">
             <End Role="DepartmentReports" EntitySet="DepartmentReports" />
@@ -1812,6 +1876,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="CP25Team04Model.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DepartmentReportDetails">
             <EntityTypeMapping TypeName="CP25Team04Model.DepartmentReportDetail">
               <MappingFragment StoreEntitySet="DepartmentReportDetails">
@@ -1825,8 +1897,6 @@
           <EntitySetMapping Name="DepartmentReports">
             <EntityTypeMapping TypeName="CP25Team04Model.DepartmentReport">
               <MappingFragment StoreEntitySet="DepartmentReports">
-                <ScalarProperty Name="status_faculty" ColumnName="status_faculty" />
-                <ScalarProperty Name="status_secretary" ColumnName="status_secretary" />
                 <ScalarProperty Name="department_report_id" ColumnName="department_report_id" />
                 <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
                 <ScalarProperty Name="file_path" ColumnName="file_path" />
@@ -1834,6 +1904,8 @@
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="comment_id" ColumnName="comment_id" />
                 <ScalarProperty Name="date_report" ColumnName="date_report" />
+                <ScalarProperty Name="status_secretary" ColumnName="status_secretary" />
+                <ScalarProperty Name="status_faculty" ColumnName="status_faculty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1923,12 +1995,17 @@
           <EntitySetMapping Name="PersonalReports">
             <EntityTypeMapping TypeName="CP25Team04Model.PersonalReport">
               <MappingFragment StoreEntitySet="PersonalReports">
+                <ScalarProperty Name="user_faculty" ColumnName="user_faculty" />
                 <ScalarProperty Name="personal_report_id" ColumnName="personal_report_id" />
                 <ScalarProperty Name="report_period_id" ColumnName="report_period_id" />
                 <ScalarProperty Name="file_path" ColumnName="file_path" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="date_report" ColumnName="date_report" />
+                <ScalarProperty Name="reporter" ColumnName="reporter" />
+                <ScalarProperty Name="user_code" ColumnName="user_code" />
+                <ScalarProperty Name="role_user" ColumnName="role_user" />
+                <ScalarProperty Name="user_department" ColumnName="user_department" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1942,6 +2019,8 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="last_login" ColumnName="last_login" />
                 <ScalarProperty Name="last_logout" ColumnName="last_logout" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="user_code" ColumnName="user_code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

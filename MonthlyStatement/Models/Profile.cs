@@ -21,8 +21,11 @@ namespace MonthlyStatement.Models
         public string email { get; set; }
         public Nullable<System.DateTime> last_login { get; set; }
         public Nullable<System.DateTime> last_logout { get; set; }
+        public Nullable<int> department_id { get; set; }
+        public string user_code { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Department Department { get; set; }
         public virtual Faculty Faculty { get; set; }
     }
 }
