@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -48,8 +49,12 @@ namespace MonthlyStatement.Areas.Personal.Controllers
         {
             try
             {
+                Claim claim = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.Role);
+                string roleName = (claim != null) ? claim.Value : string.Empty;
                 string emails = User.Identity.Name;
                 string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+                var crProfile = db.Profiles.FirstOrDefault(n => n.account_id == accID);
+
                 PersonalReport pr = new PersonalReport();
                 pr.report_period_id = (int)reportperiodid;
 
@@ -76,6 +81,12 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                 pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
                 pr.date_report = DateTime.Now;
                 pr.account_id = accID;
+                pr.reporter = crProfile.user_name;
+                pr.role_user = roleName;
+                pr.user_code = crProfile.user_code;
+                pr.user_department = crProfile.Department.department_name;
+                pr.user_faculty = crProfile.Faculty.faculty_name;
+
                 db.PersonalReports.Add(pr);
                 db.SaveChanges();
 
@@ -144,9 +155,9 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                 return Content("Success");
 
             }
-            catch
+            catch(Exception e)
             {
-                return Content("Error");
+                return Content(e.Message);
             }
 
         }

@@ -32,6 +32,7 @@ namespace MonthlyStatement.Models
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DepartmentReportDetail> DepartmentReportDetails { get; set; }
         public virtual DbSet<DepartmentReport> DepartmentReports { get; set; }
         public virtual DbSet<Faculty> Faculties { get; set; }

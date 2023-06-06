@@ -14,12 +14,6 @@ namespace MonthlyStatement.Models
     
     public partial class DepartmentReportDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DepartmentReportDetail()
-        {
-            this.Mappings = new HashSet<Mapping>();
-        }
-    
         public int department_report_detail_id { get; set; }
         public int department_report_id { get; set; }
         public int form_department_report_detail_id { get; set; }
@@ -27,7 +21,5 @@ namespace MonthlyStatement.Models
     
         public virtual DepartmentReport DepartmentReport { get; set; }
         public virtual FormDepartmentReportDetail FormDepartmentReportDetail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Mapping> Mappings { get; set; }
     }
 }

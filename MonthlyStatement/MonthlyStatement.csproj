@@ -269,6 +269,9 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DepartmentReport.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -298,9 +301,6 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Mapping.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1240,13 +1240,6 @@
     <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffDetail.cshtml" />
     <Content Include="Areas\Admin\Views\ReportPeriods\FormStaffEdit.cshtml" />
     <Content Include="Areas\Staff\Views\StaffReport\StaffReportEdit.cshtml" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\FacultyAreas\Views\_ViewStart.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\Statistical\Index.cshtml" />
@@ -1267,6 +1260,20 @@
     <Content Include="Areas\FacultyAreas\Views\CheckReportDepartment_Faculty\Detail.cshtml" />
     <Content Include="assets\FileImport\DanhSachNguoiDung-Import.xlsx" />
     <Content Include="assets\FileImport\Import.xlsx" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="assets\FileMinhChung\0mhxzi8dsgjk6vf37w4h4jeabvtprgImport.xlsx" />
+    <Content Include="assets\FileMinhChung\fk9ksebhcno2fa730xvwboumw413tpDanhSachNguoiDung-Import.xlsx" />
+    <Content Include="assets\FileMinhChung\liy05ssmji3pwvev597vczulprhwmkfile báo cáo.xlsx" />
+    <Content Include="assets\FileMinhChung\ruzckxkkq782gdjm2sxlm6xvej7a01DanhSachNguoiDung-Import.xlsx" />
+    <Content Include="assets\FileMinhChung\swocjt297owtotjy8orluwoiteo1efImport.xlsx" />
+    <Content Include="assets\FileMinhChung\yyj95fmtkmz0uv03ktztx6er66r4owExport.xlsx" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1306,10 +1313,8 @@
     <Folder Include="Areas\Secretary\Data\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Areas\Staff\Views\NotificationStaff\" />
-    <Folder Include="assets\FileMinhChung\" />
     <Folder Include="assets\user\avatar\" />
     <Folder Include="Data\" />
-    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
