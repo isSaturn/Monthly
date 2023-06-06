@@ -17,12 +17,10 @@ namespace MonthlyStatement.Areas.Personal.Controllers
     public class FormReportController : Controller
     {
         private CP25Team04Entities db = new CP25Team04Entities();
-
         // GET: Personal/Report
         public ActionResult Index()
         {
-            {
-                
+            {      
                 var current_time = DateTime.Now;
                 var check = db.ReportPeriods.FirstOrDefault(d => d.start_date <= current_time && d.end_date >= current_time);
                 string emails = User.Identity.Name;
@@ -57,7 +55,14 @@ namespace MonthlyStatement.Areas.Personal.Controllers
 
                 PersonalReport pr = new PersonalReport();
                 pr.report_period_id = (int)reportperiodid;
-
+                pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
+                pr.date_report = DateTime.Now;
+                pr.account_id = accID;
+                pr.reporter = crProfile.user_name;
+                pr.role_user = roleName;
+                pr.user_code = crProfile.user_code;
+                pr.user_department = crProfile.Department.department_name;
+                pr.user_faculty = crProfile.Faculty.faculty_name;
                 if (fileMinhChung != null)
                 {
                     if (fileMinhChung.ContentLength > 0)
@@ -77,16 +82,6 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                         pr.file_path = path;
                     }
                 }
-
-                pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
-                pr.date_report = DateTime.Now;
-                pr.account_id = accID;
-                pr.reporter = crProfile.user_name;
-                pr.role_user = roleName;
-                pr.user_code = crProfile.user_code;
-                pr.user_department = crProfile.Department.department_name;
-                pr.user_faculty = crProfile.Faculty.faculty_name;
-
                 db.PersonalReports.Add(pr);
                 db.SaveChanges();
 
@@ -149,40 +144,14 @@ namespace MonthlyStatement.Areas.Personal.Controllers
                         perDetail.personal_report_content = noiDung;
                         db.PersonalReportDetails.Add(perDetail);
                     }
-
                 }
                 db.SaveChanges();
                 return Content("Success");
-
             }
             catch(Exception e)
             {
                 return Content(e.Message);
             }
-
-        }
-
-        public ActionResult ListReportYear()
-        {
-            var current_year = DateTime.Now.Year;
-            int check = db.ReportYears.Where(y => y.year == current_year).Count();
-
-            if (check < 1)
-            {
-                //cho phep thêm mới năm báo cáo
-                Session["ReportYear-Check"] = true;
-            }
-
-            else
-                //khong cho phep them moi
-                Session["ReportYear-Check"] = false;
-            return View(db.ReportYears.OrderByDescending(y => y.year).ToList());
-        }
-
-        public ActionResult ListReportPeriod(int id)
-        {
-            var reportPeriods = db.ReportPeriods.Where(r => r.report_year_id == id).ToList();
-            return View(reportPeriods);
         }
     }
 }

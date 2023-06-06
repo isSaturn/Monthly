@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -47,11 +48,22 @@ namespace MonthlyStatement.Areas.Staff.Controllers
         {
             try
             {
+                Claim claim = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.Role);
+                string roleName = (claim != null) ? claim.Value : string.Empty;
                 string emails = User.Identity.Name;
                 string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
+                var crProfile = db.Profiles.FirstOrDefault(n => n.account_id == accID);
+
                 StaffReport pr = new StaffReport();
                 pr.report_period_id = (int)reportperiodid;
-
+                pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
+                pr.date_report = DateTime.Now;
+                pr.account_id = accID;
+                pr.reporter = crProfile.user_name;
+                pr.role_user = roleName;
+                pr.user_code = crProfile.user_code;
+                pr.user_department = crProfile.Department.department_name;
+                pr.user_faculty = crProfile.Faculty.faculty_name;
                 if (fileMinhChung != null)
                 {
                     if (fileMinhChung.ContentLength > 0)
@@ -71,10 +83,6 @@ namespace MonthlyStatement.Areas.Staff.Controllers
                         pr.file_path = path;
                     }
                 }
-
-                pr.status = DateTime.Now.Day <= 21 ? "Đã báo cáo" : "Trễ báo cáo";
-                pr.date_report = DateTime.Now;
-                pr.account_id = accID;
                 db.StaffReports.Add(pr);
                 db.SaveChanges();
 
@@ -137,40 +145,14 @@ namespace MonthlyStatement.Areas.Staff.Controllers
                         perDetail.staff_report_content = noiDung;
                         db.StaffReportDetails.Add(perDetail);
                     }
-
                 }
                 db.SaveChanges();
                 return Content("Success");
-
             }
-            catch
+            catch (Exception e)
             {
-                return Content("Error");
+                return Content(e.Message);
             }
-
-        }
-
-        public ActionResult ListReportYear()
-        {
-            var current_year = DateTime.Now.Year;
-            int check = db.ReportYears.Where(y => y.year == current_year).Count();
-
-            if (check < 1)
-            {
-                //cho phep thêm mới năm báo cáo
-                Session["ReportYear-Check"] = true;
-            }
-
-            else
-                //khong cho phep them moi
-                Session["ReportYear-Check"] = false;
-            return View(db.ReportYears.OrderByDescending(y => y.year).ToList());
-        }
-
-        public ActionResult ListReportPeriod(int id)
-        {
-            var reportPeriods = db.ReportPeriods.Where(r => r.report_year_id == id).ToList();
-            return View(reportPeriods);
         }
     }
 }

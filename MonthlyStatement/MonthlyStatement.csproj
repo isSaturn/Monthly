@@ -1213,8 +1213,6 @@
     <Content Include="Areas\Admin\Views\ListReportPersonal\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportDepartment\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\ListReportDepartment\Index.cshtml" />
-    <Content Include="Areas\Personal\Views\FormReport\ListReportYear.cshtml" />
-    <Content Include="Areas\Personal\Views\FormReport\ListReportPeriod.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\web.config" />
     <Content Include="Areas\FacultyAreas\Views\FacManager\Index.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\FacManager\FacMember.cshtml" />
@@ -1223,8 +1221,6 @@
     <Content Include="Areas\Department\Views\web.config" />
     <Content Include="Areas\Staff\Views\web.config" />
     <Content Include="Areas\Staff\Views\FormStaffReport\Index.cshtml" />
-    <Content Include="Areas\Staff\Views\FormStaffReport\ListReportPeriod.cshtml" />
-    <Content Include="Areas\Staff\Views\FormStaffReport\ListReportYear.cshtml" />
     <Content Include="Areas\Staff\Views\StaffReport\Staff.cshtml" />
     <Content Include="Areas\Staff\Views\StaffReport\StaffDetail.cshtml" />
     <Content Include="Areas\Department\Views\DepartmentReport\Department.cshtml" />
@@ -1260,6 +1256,12 @@
     <Content Include="Areas\FacultyAreas\Views\CheckReportDepartment_Faculty\Detail.cshtml" />
     <Content Include="assets\FileImport\DanhSachNguoiDung-Import.xlsx" />
     <Content Include="assets\FileImport\Import.xlsx" />
+    <Content Include="assets\FileMinhChung\0mhxzi8dsgjk6vf37w4h4jeabvtprgImport.xlsx" />
+    <Content Include="assets\FileMinhChung\fk9ksebhcno2fa730xvwboumw413tpDanhSachNguoiDung-Import.xlsx" />
+    <Content Include="assets\FileMinhChung\liy05ssmji3pwvev597vczulprhwmkfile báo cáo.xlsx" />
+    <Content Include="assets\FileMinhChung\ruzckxkkq782gdjm2sxlm6xvej7a01DanhSachNguoiDung-Import.xlsx" />
+    <Content Include="assets\FileMinhChung\swocjt297owtotjy8orluwoiteo1efImport.xlsx" />
+    <Content Include="assets\FileMinhChung\yyj95fmtkmz0uv03ktztx6er66r4owExport.xlsx" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -1267,12 +1269,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="assets\FileMinhChung\0mhxzi8dsgjk6vf37w4h4jeabvtprgImport.xlsx" />
-    <Content Include="assets\FileMinhChung\fk9ksebhcno2fa730xvwboumw413tpDanhSachNguoiDung-Import.xlsx" />
-    <Content Include="assets\FileMinhChung\liy05ssmji3pwvev597vczulprhwmkfile báo cáo.xlsx" />
-    <Content Include="assets\FileMinhChung\ruzckxkkq782gdjm2sxlm6xvej7a01DanhSachNguoiDung-Import.xlsx" />
-    <Content Include="assets\FileMinhChung\swocjt297owtotjy8orluwoiteo1efImport.xlsx" />
-    <Content Include="assets\FileMinhChung\yyj95fmtkmz0uv03ktztx6er66r4owExport.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1308,11 +1304,9 @@
     <Folder Include="Areas\Department\Views\NotificationDepartment\" />
     <Folder Include="Areas\FacultyAreas\Data\" />
     <Folder Include="Areas\Personal\Data\" />
-    <Folder Include="Areas\Personal\Views\NotificationPersonal\" />
     <Folder Include="Areas\Personal\Views\Shared\" />
     <Folder Include="Areas\Secretary\Data\" />
     <Folder Include="Areas\Staff\Data\" />
-    <Folder Include="Areas\Staff\Views\NotificationStaff\" />
     <Folder Include="assets\user\avatar\" />
     <Folder Include="Data\" />
   </ItemGroup>

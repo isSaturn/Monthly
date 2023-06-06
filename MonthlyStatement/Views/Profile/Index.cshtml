@@ -10,7 +10,22 @@
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                             <img src="~/assets/img/user.png"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-                            <h5 style="color: black">@Model.user_name</h5>
+                            @if (Model.user_name == null)
+                            {
+                                <h5 style="color: black">Chưa có tên</h5>
+                            }
+                            else
+                            {
+                                if (Model.user_name.Count() < 1)
+                                {
+                                    <h5 style="color: black">Chưa có tên</h5>
+                                }
+                                else
+                                {
+                                    <h5 style="color: black">@Model.user_name</h5>
+
+                                }
+                            }
                             <div>
                                 @if (@Model.AspNetUser == null)
                                 {
@@ -47,7 +62,7 @@
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
-                                        <h6>Bộ môn</h6>
+                                        <h6>MGV</h6>
                                         <div class="text-muted">
                                             @if (@Model.user_code == null)
                                             {
