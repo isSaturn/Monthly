@@ -26,7 +26,6 @@
                             <!-- Account details card-->
                             <h7 class="text-danger">
                                 *Lưu ý: -Khi tạo DANH MỤC BẬC 2 sẽ tự động tạo ra 1 DANH MỤC BẬC 3 giống như vậy
-                                <br>&emsp;&emsp;&emsp; -Phải F5 lại trang khi đổi cấp bậc danh mục
                                 <br>&emsp;&emsp;&emsp; -Danh mục không chứa ký tự "-"
                             </h7>
 
@@ -161,7 +160,9 @@
                     data: formData
                 }).done(function (ketqua) {
                     if (ketqua == "success") {
-                        swal('Thành công', 'Đã thêm 1 danh mục mới', 'success');
+                        swal('Thành công', 'Đã thêm 1 danh mục mới', 'success').then(function () {
+                            location.reload();
+                        });
                     }
                     else {
                         swal('Thất bại', 'Không thể thêm danh mục', 'error');

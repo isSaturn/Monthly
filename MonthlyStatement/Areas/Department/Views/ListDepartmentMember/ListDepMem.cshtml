@@ -26,12 +26,12 @@
                                 <i class="fa fa-plus"></i>
                                 Thêm thành viên
                             </button>
-                            <a style="color:white" class="btn btn-warning btn-round" href="#" type="button" data-toggle="modal"
-                               data-target="#exampleModalCenter">
-                                <i class="fa fa-plus"></i>
-                                Import
-                            </a>
-                            <a href="\assets\FileImport\Import.xlsx" download="File import">Tải file mẫu</a>
+                            @*<a style="color:white" class="btn btn-warning btn-round" href="#" type="button" data-toggle="modal"
+                                   data-target="#exampleModalCenter">
+                                    <i class="fa fa-plus"></i>
+                                    Import
+                                </a>
+                                <a href="\assets\FileImport\Import.xlsx" download="File import">Tải file mẫu</a>*@
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped" id="table-1">
@@ -66,81 +66,81 @@
                                     {
                                         i = i + 1;
 
-                                    <tr>
-                                        <td class="text-center">
-                                            @i
-                                        </td>
-                                        <td>
-                                            @if (item.email == null)
-                                            {
-                                                <span>Chưa có email</span>
-                                            }
-                                            else
-                                            {
-                                                @item.email
-                                            }
-
-                                        </td>
-                                        <td>
-                                            @if (item.user_name == null)
-                                            {
-                                                <span>Chưa có tên</span>
-                                            }
-                                            else
-                                            {
-                                                @item.user_name
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.Faculty.faculty_name == null)
-                                            {
-                                                <span>Chưa có khoa</span>
-                                            }
-                                            else
-                                            {
-                                                @item.Faculty.faculty_name
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.DepartmentList.department_name == null)
-                                            {
-                                                <span>Chưa có khoa</span>
-                                            }
-                                            else
-                                            {
-                                                @item.DepartmentList.department_name
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.AspNetUser == null)
-                                            {
-                                                <span>Chưa thêm vai trò</span>
-                                            }
-                                            else
-                                            {
-                                                if (item.AspNetUser.AspNetRoles.Count() < 1)
+                                        <tr>
+                                            <td class="text-center">
+                                                @i
+                                            </td>
+                                            <td>
+                                                @if (item.email == null)
                                                 {
-                                                    <span>Chưa thêm vai trò</span>
-
+                                                    <span>Chưa có email</span>
                                                 }
                                                 else
                                                 {
-                                                    @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
-
+                                                    @item.email
                                                 }
-                                            }
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="buttons">
-                                                @*<a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.account_id })">
-                    <i class="far fa-edit"></i>
-                </a>*@
-                                                <a class="btn btn-icon btn-danger" data-original-title="Xóa" href="@Url.Action("DeleteDep", "ListDepartmentMember", new { id = item.account_id })">
-                                                    <i class="far fa-trash-alt"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+
+                                            </td>
+                                            <td>
+                                                @if (item.user_name == null)
+                                                {
+                                                    <span>Chưa có tên</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.user_name
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.Faculty.faculty_name == null)
+                                                {
+                                                    <span>Chưa có khoa</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.Faculty.faculty_name
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.DepartmentList.department_name == null)
+                                                {
+                                                    <span>Chưa có khoa</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.DepartmentList.department_name
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.AspNetUser == null)
+                                                {
+                                                    <span>Chưa thêm vai trò</span>
+                                                }
+                                                else
+                                                {
+                                                    if (item.AspNetUser.AspNetRoles.Count() < 1)
+                                                    {
+                                                        <span>Chưa thêm vai trò</span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.AspNetUser.AspNetRoles.FirstOrDefault().Name
+
+                                                    }
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="buttons">
+                                                    @*<a class="btn btn-icon btn-primary" data-original-title="Cấp quyền" href="@Url.Action("Edit", "Accounts", new { id = item.account_id })">
+                                                            <i class="far fa-edit"></i>
+                                                        </a>*@
+                                                    <a class="btn btn-icon btn-danger" data-original-title="Xóa" href="@Url.Action("DeleteDep", "ListDepartmentMember", new { id = item.account_id })">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -291,8 +291,9 @@
             processData: false,
             data: formData
         }).done(function (ketqua) {
-            swal('Thành công', 'Thêm thành viên thành công', 'success');
-            window.location.reload();
+            swal('Thành công', 'Thêm thành viên thành công', 'success').then(function () {
+                location.reload();
+            });
         });
     });
 

@@ -50,9 +50,6 @@
                                             Khoa
                                         </th>
                                         <th>
-                                            Bộ môn
-                                        </th>
-                                        <th>
                                             Vai trò
                                         </th>
                                         <th class="text-center">
@@ -98,16 +95,6 @@
                                                 else
                                                 {
                                                     @item.Faculty.faculty_name
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.DepartmentList.department_name == null)
-                                                {
-                                                    <span>Chưa có bộ môn</span>
-                                                }
-                                                else
-                                                {
-                                                    @item.DepartmentList.department_name
                                                 }
                                             </td>
                                             <td>
@@ -338,8 +325,9 @@
             processData: false,
             data: formData
         }).done(function (ketqua) {
-            swal('Thành công', 'Thêm thành viên thành công', 'success');
-            window.location.reload();
+            swal('Thành công', 'Thêm thành viên thành công', 'success').then(function () {
+                location.reload();
+            });
         });
     });
 

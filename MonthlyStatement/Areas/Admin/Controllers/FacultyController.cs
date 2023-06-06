@@ -316,7 +316,7 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                 db.Entry(prof).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return RedirectToAction("Index");
+            return Redirect(Request.UrlReferrer.ToString());
         }
     }
 }
