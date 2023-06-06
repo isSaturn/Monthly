@@ -12,10 +12,10 @@ namespace MonthlyStatement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Department
+    public partial class DepartmentList
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Department()
+        public DepartmentList()
         {
             this.Profiles = new HashSet<Profile>();
         }
@@ -24,8 +24,8 @@ namespace MonthlyStatement.Models
         public string department_name { get; set; }
         public Nullable<int> faculty_id { get; set; }
     
+        public virtual Faculty Faculty { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
-        public virtual Faculty Faculty { get; set; }
     }
 }

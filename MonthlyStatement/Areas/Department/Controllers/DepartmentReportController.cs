@@ -14,20 +14,8 @@ namespace MonthlyStatement.Areas.Department.Controllers
     public class DepartmentReportController : Controller
     {
         CP25Team04Entities db = new CP25Team04Entities();
-        public ActionResult Index()
-        {
-            string emails = User.Identity.Name;
-            string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
-            var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == accID);
-            var data = db.Faculties.FirstOrDefault(y => y.faculty_id == check_Faculty.faculty_id);
-            var check_Dep = db.Departments.Where(dep => dep.faculty_id == data.faculty_id);
-            return View(check_Dep);
-        }
         public ActionResult Department()
         {
-            //Session["add-user-dep"] = db.Profiles.Where(p => p.department_id == null).ToList();
-            //var dep = db.Departments.Find(id);
-            //return View(dep);
             string emails = User.Identity.Name;
             string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
             var per = db.DepartmentReports.Where(p => p.account_id == accID).ToList();
@@ -101,7 +89,7 @@ namespace MonthlyStatement.Areas.Department.Controllers
             pr.reporter = crProfile.user_name;
             pr.role_user = roleName;
             pr.user_code = crProfile.user_code;
-            pr.user_department = crProfile.Department.department_name;
+            pr.user_department = crProfile.DepartmentList.department_name;
             pr.user_faculty = crProfile.Faculty.faculty_name;
             db.DepartmentReports.Add(pr);
             db.SaveChanges();

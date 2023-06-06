@@ -97,8 +97,11 @@
                     else if (User.IsInRole("Bộ môn"))
                     {
                         <ul class="sidebar-menu">
+                            <li class=@(ViewBag.Title == "Quản lý báo cáo bộ môn" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Department", "DepartmentReport", new { Area = "Department" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo bộ môn</span></a>
+                            </li>
                             <li class=@(ViewBag.Title == "Quản lý bộ môn" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Department", "DepartmentReport", new { Area = "Department" })" class="nav-link"><i data-feather="file"></i><span>Quản lý báo cáo</span></a>
+                                <a href="@Url.Action("Index", "ListDepartmentMember", new { Area = "Department" })" class="nav-link"><i data-feather="server"></i><span>Quản lý bộ môn</span></a>
                             </li>
                             <li class=@(ViewBag.Title == "Viết báo cáo" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "FormDepartmentReport", new { Area = "Department" })" class="nav-link"><i data-feather="edit"></i><span>Viết báo cáo</span></a>
@@ -139,8 +142,8 @@
                     else if (User.IsInRole("Thư ký"))
                     {
                         <ul class="sidebar-menu">
-                            <li class=@(ViewBag.Title == "Quản lý người báo cáo" ? "active" : "nav-item")>
-                                <a href="@Url.Action("Index", "FacManager", new { Area = "FacultyAreas" })" class="nav-link"><i data-feather="users"></i><span>Quản lý tham dự</span></a>
+                            <li class=@(ViewBag.Title == "Quản lý khoa" ? "active" : "nav-item")>
+                                <a href="@Url.Action("Index","FacManager", new { Area = "FacultyAreas"})" class="nav-link"><i data-feather="users"></i><span>Quản lý khoa</span></a>
                             </li>
                             <li class=@(ViewBag.Title == "Quản lý danh mục" ? "active" : "nav-item")>
                                 <a href="@Url.Action("Index", "Categories", new { Area = "Admin" })" class="nav-link"><i data-feather="grid"></i><span>Quản lý danh mục</span></a>

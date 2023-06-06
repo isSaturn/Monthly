@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MonthlyStatement.Models.Department>
+﻿@model IEnumerable<MonthlyStatement.Models.DepartmentList>
 
 @{
     int i = 0;
@@ -19,9 +19,9 @@
                     <div class="card-body">
                         <div class="form-group">
                             <div class="col-sm-12 buttons">
-                                <a style="color:white" type="button" class="btn btn-primary btn-round" href="@Url.Action("Create", "DepartmentReport")">
+                                <a style="color:white" type="button" class="btn btn-primary btn-round" href="@Url.Action("Create", "ListDepartmentMember")">
                                     <i class="fa fa-plus"></i>
-                                    Tạo khoa mới
+                                    Tạo bộ môn mới
                                 </a>
                             </div>
                         </div>
@@ -55,14 +55,14 @@
                                                 @i
                                             </td>
                                             <td>
-                                                <a href="@Url.Action("Department","DepartmentReport", new { id = item.department_id })">@item.department_name</a>
+                                                <a href="@Url.Action("ListDepMem","ListDepartmentMember", new { id = item.department_id })">@item.department_name</a>
                                             </td>
                                             <td>
                                                 @item.Profiles.Count()
                                             </td>
                                             <td class="text-center">
                                                 <div class="buttons">
-                                                    <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "Department", new { id = item.department_id })">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Sửa" href="@Url.Action("Edit", "ListDepartmentMember", new { id = item.department_id })">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                 </div>
