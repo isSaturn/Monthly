@@ -31,7 +31,7 @@
                                     <div class="mb-3">
                                         <!-- Form Group (Tên khoa)-->
                                         <label class="small mb-1">Tên bộ môn</label>
-                                        @Html.EditorFor(model => model.department_name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.department_name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                         @Html.ValidationMessageFor(model => model.department_name, "", new { @class = "text-danger" })
                                     </div>
                                     <div style="text-align: center; margin-top:1.8rem" class="mb-3">
@@ -39,7 +39,7 @@
                                             Tạo mới
                                         </button>
                                         &emsp;
-                                        <a style="width:180px; color:white;" role="button" class="btn btn-danger" href="@Url.Action("Index", "Faculty")">
+                                        <a style="width:180px; color:white;" role="button" class="btn btn-danger" href="@Url.Action("Index", "ListDepartmentMember")">
                                             Hủy
                                         </a>
                                     </div>
