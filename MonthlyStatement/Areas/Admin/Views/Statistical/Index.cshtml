@@ -1,10 +1,12 @@
 ﻿@model IEnumerable<MonthlyStatement.Models.Faculty>
-@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
-@{
-    ViewBag.Title = "Index";
-    int i = 0;
+@using MonthlyStatement.Models
 
-    DateTime Date = ViewBag.Date;
+@{
+    int i = 0;
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="section">
@@ -13,81 +15,46 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Quản lý thống kê báo cáo</h4>
+                        <h3 class="text-white" style="font-size:1.75rem">Quản lý thống kê báo cáo khoa</h3>
                     </div>
                     <div class="card-body">
-                        <form action="@Url.Action("Index","Statistical")" >
-                            <div class="row" style="margin-bottom: 20px">
-                                <div class="col-sm-12 col-md-3">
-                                    <input name="date" type="month" class="form-control" value="@Date.ToString("yyyy-MM")">
-                                </div>
-
-                                <div class="col-sm-12 col-md-1">
-                                    <button type="submit" class="btn btn-icon btn-primary">
-                                        Lọc
-                                    </button>
-                                </div>
-                                <div class="col-sm-12 col-md-2">
-                                    <a class="btn btn-icon btn-primary" href="@Url.Action("ExportToExcelFaculty","Statistical", new { date = Date})">Xuất file excel</a>
-                                </div>
-                            </div>
-
-                        </form>
-
                         <div class="table-responsive">
-                            <table class="table table-striped" id="table-1">
+                            <table class="table table-striped">
                                 <thead>
                                     <tr role="row">
-                                        <th class="text-center">STT</th>
                                         <th>
-                                            Khoa
+                                            Tên khoa
                                         </th>
-                                        <th>Nhân viên</th>
-                                        <th>Giảng viên</th>
-                                        <th>Bộ môn</th>
-                                        <th>Chưa cấp quyền</th>
-                                        <th>Đã báo cáo</th>
-                                        <th>Chưa báo cáo</th>
-                                        <th>Báo cáo trễ</th>
+                                        <th>
+                                            Số lượng
+                                        </th>
+                                        <th class="text-center">
+                                            Thao tác
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
+
                                     {
-                                        i++;
-                                    <tr class="Search">
+                                        i = i + 1;
 
-                                        <th class="text-center">@i</th>
-                                        <th>
-                                            @item.faculty_name
-                                        </th>
-                                        <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Nhân viên")</th>
-                                        <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Giảng viên")</th>
-                                        <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Bộ môn")</th>
-                                        <th>@item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault() == null)</th>
-                                        <th>
-                                            <div class="badge badge-success">
-                                                @( item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0)
-                                                      + item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0)
-                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0))
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="badge badge-danger">
-                                                @item.Profiles.Count(x => x.AspNetUser?.PersonalReports == null)
-
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="badge badge-warning">
-                                                @(item.Profiles.Count(x => x.AspNetUser?.PersonalReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0)
-                                                      + item.Profiles.Count(x => x.AspNetUser?.DepartmentReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0)
-                                                      + item.Profiles.Count(x => x.AspNetUser?.StaffReports?.Count(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) > 0))
-                                            </div>
-                                        </th>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                Khoa: @item.faculty_name.ToUpper()
+                                            </td>
+                                            <td>
+                                                @item.Profiles.Count()
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="buttons">
+                                                    <a class="btn btn-icon btn-primary" data-original-title="Thống kê" href="@Url.Action("Index_Statistical","Statistical", new { id = item.faculty_id })">
+                                                        Xem thống kê
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
-
                                 </tbody>
                             </table>
                         </div>
@@ -97,11 +64,4 @@
         </div>
     </div>
 </section>
-
-
-
-
-
-
-
 

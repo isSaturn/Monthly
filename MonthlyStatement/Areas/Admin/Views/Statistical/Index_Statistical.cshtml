@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MonthlyStatement.Models.DepartmentList>
+﻿@model IEnumerable<MonthlyStatement.Models.Faculty>
 @using MonthlyStatement.Models
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 @{
@@ -8,12 +8,10 @@
     DateTime Date = ViewBag.Date;
 
     CP25Team04Entities models = new CP25Team04Entities();
-    string emails = User.Identity.Name;
-    string accID = models.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
-    var check_Department = models.Profiles.FirstOrDefault(x => x.account_id == accID);
-    Session["department"] = check_Department.department_id;
-    var nhanvien = models.Profiles.Where(n => n.AspNetUser.AspNetRoles.FirstOrDefault().Name == "Nhân viên" && n.department_id == check_Department.department_id).ToArray();
-    var giangvien = models.Profiles.Where(g => g.AspNetUser.AspNetRoles.FirstOrDefault().Name == "Giảng viên" && g.department_id == check_Department.department_id).ToArray();
+    int id_faculty = Model.FirstOrDefault().faculty_id;
+    var nhanvien = models.Profiles.Where(n => n.AspNetUser.AspNetRoles.FirstOrDefault().Name == "Nhân viên" && n.faculty_id == id_faculty).ToArray();
+    var giangvien = models.Profiles.Where(g => g.AspNetUser.AspNetRoles.FirstOrDefault().Name == "Giảng viên" && g.faculty_id == id_faculty).ToArray();
+    var bomon = models.Profiles.Where(b => b.AspNetUser.AspNetRoles.FirstOrDefault().Name == "Bộ môn" && b.faculty_id == id_faculty).ToArray();
 }
 
 <section class="section">
@@ -22,7 +20,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary" style="height:100px">
-                        <h4 class="text-white" style="font-size:1.75rem">Thống kê báo cáo @Model.FirstOrDefault().department_name</h4>
+                        <h4 class="text-white" style="font-size:1.75rem">Quản lý thống kê báo cáo Khoa @Model.FirstOrDefault().faculty_name </h4>
                     </div>
                     <div class="card-body">
                         <form action="@Url.Action("Index","Statistical")">
@@ -37,8 +35,8 @@
                                     </button>
                                 </div>
                                 @*<div class="col-sm-12 col-md-2">
-                                    <a class="btn btn-icon btn-primary" href="@Url.Action("ExportToExcelDepartment","Statistical", new { date = Date})">Xuất file excel</a>
-                                </div>*@
+                                        <a class="btn btn-icon btn-primary" href="@Url.Action("ExportToExcelFaculty","Statistical", new { date = Date})">Xuất file excel</a>
+                                    </div>*@
                             </div>
 
                         </form>
@@ -51,13 +49,15 @@
                                             <h5>
                                                 Tổng thành viên trong khoa:
                                                 @(item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Nhân viên")
-                                                                + item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Giảng viên"))
+                                                                + item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Giảng viên")
+                                                                + item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Bộ môn")
+                                                                + item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Chưa cấp quyền"))
                                                 Thành viên
                                             </h5>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-12">
                                                 <h5>
                                                     Nhân viên
                                                 </h5>
@@ -66,12 +66,30 @@
                                                     Thành viên
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-12">
                                                 <h5>
                                                     Giảng viên
                                                 </h5>
                                                 <div class="text-muted" style="font-size:16px">
                                                     @item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Giảng viên")
+                                                    Thành viên
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                                <h5>
+                                                    Bộ môn
+                                                </h5>
+                                                <div class="text-muted" style="font-size:16px">
+                                                    @item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Bộ môn")
+                                                    Thành viên
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                                <h5>
+                                                    Chưa cấp quyền
+                                                </h5>
+                                                <div class="text-muted" style="font-size:16px">
+                                                    @item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Chưa cấp quyền")
                                                     Thành viên
                                                 </div>
                                             </div>
@@ -87,13 +105,10 @@
                                                 <thead>
                                                     <tr role="row">
                                                         <th class="text-center" style="width:160px">STT</th>
-                                                        <th style="width:480px">
+                                                        <th style="width:560px">
                                                             Thành viên
                                                         </th>
-                                                        <th style="width:300px">
-                                                            Bộ môn
-                                                        </th>
-                                                        <th style="width:315px">Trạng thái báo cáo</th>
+                                                        <th style="width:468px">Trạng thái báo cáo</th>
                                                         <th>Đánh giá</th>
                                                     </tr>
                                                 </thead>
@@ -105,9 +120,6 @@
                                                             <td class="text-center">@i</td>
                                                             <td>
                                                                 @nhanvien[v].email
-                                                            </td>
-                                                            <td>
-                                                                @nhanvien[v].DepartmentList.department_name
                                                             </td>
                                                             <td>
                                                                 @if (nhanvien[v].AspNetUser?.StaffReports?.FirstOrDefault(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) != null)
@@ -152,13 +164,10 @@
                                                 <thead>
                                                     <tr role="row">
                                                         <th class="text-center" style="width:160px">STT</th>
-                                                        <th style="width: 480px">
+                                                        <th style="width:560px">
                                                             Thành viên
                                                         </th>
-                                                        <th style="width: 300px">
-                                                            Bộ môn
-                                                        </th>
-                                                        <th style="width: 315px">Trạng thái báo cáo</th>
+                                                        <th style="width:468px">Trạng thái báo cáo</th>
                                                         <th>Đánh giá</th>
                                                     </tr>
                                                 </thead>
@@ -169,7 +178,6 @@
                                                         <tr>
                                                             <td class="text-center">@i</td>
                                                             <td>@giangvien[v].email</td>
-                                                            <td>@giangvien[v].DepartmentList.department_name</td>
                                                             <td>
                                                                 @if (giangvien[v].AspNetUser?.PersonalReports?.FirstOrDefault(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) != null)
                                                                 {
@@ -204,6 +212,64 @@
                                             </table>
                                         </div>
                                     </div>
+                                    <div class="summary-item">
+                                        <h5 class="mt-3">
+                                            Bộ môn
+                                        </h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover dataTable no-footer">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th class="text-center" style="width:160px">STT</th>
+                                                        <th style="width:560px">
+                                                            Thành viên
+                                                        </th>
+                                                        <th style="width:468px">Trạng thái báo cáo</th>
+                                                        <th>Đánh giá</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int v = 0; v < bomon.Length; v++)
+                                                    {
+                                                        i = i + 1;
+                                                        <tr>
+                                                            <td class="text-center">@i</td>
+                                                            <td>@bomon[v].email</td>
+                                                            <td>
+                                                                @if (bomon[v].AspNetUser?.DepartmentReports?.FirstOrDefault(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) != null)
+                                                                {
+                                                                    <div class="badge badge-success">Đã báo cáo</div>
+                                                                }
+                                                                else if (bomon[v].AspNetUser?.DepartmentReports?.FirstOrDefault(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) != null)
+                                                                {
+                                                                    <div class="badge badge-warning">Trễ báo cáo</div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="badge badge-danger">Chưa báo cáo</div>
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                @if (bomon[v].AspNetUser?.DepartmentReports?.FirstOrDefault(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) != null)
+                                                                {
+                                                                    <div class="badge badge-success">Tốt</div>
+                                                                }
+                                                                else if (bomon[v].AspNetUser?.DepartmentReports?.FirstOrDefault(y => y.status == "Trễ báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) != null)
+                                                                {
+                                                                    <div class="badge badge-warning">Khá</div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="badge badge-danger">Trung bình</div>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
                                 </div>
                             }
                         </div>

@@ -20,6 +20,14 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             return View(db.Faculties.ToList());
         }
 
+        public ActionResult Index_Statistical(DateTime? date, int id)
+        {
+
+            ViewBag.Date = date == null ? DateTime.Now : date;
+            var data = db.Faculties.Where(y => y.faculty_id == id).ToList();
+            return View(data);
+        }
+
         public void ExportToExcelFaculty(DateTime date)
         {
             var faculty = db.Faculties.ToList();

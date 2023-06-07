@@ -26,9 +26,9 @@ namespace MonthlyStatement.Areas.Department.Controllers
             ViewBag.Date = date == null ? DateTime.Now : date;
             string emails = User.Identity.Name;
             string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
-            var check_Faculty = db.Profiles.FirstOrDefault(x => x.account_id == accID);
-            Session["faculty"] = check_Faculty.faculty_id;
-            var data = db.Faculties.Where(y => y.faculty_id == check_Faculty.faculty_id).ToList();
+            var check_Department = db.Profiles.FirstOrDefault(x => x.account_id == accID);
+            Session["department"] = check_Department.department_id;
+            var data = db.DepartmentLists.Where(y => y.department_id == check_Department.department_id).ToList();
             return View(data);
         }
 
