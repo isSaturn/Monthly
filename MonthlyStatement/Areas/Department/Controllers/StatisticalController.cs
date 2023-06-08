@@ -22,13 +22,15 @@ namespace MonthlyStatement.Areas.Department.Controllers
         // GET: Department/Statistical
         public ActionResult Index(DateTime? date)
         {
+            ViewBag.Date = date == null ? DateTime.Now : date;
+            return View(db.DepartmentLists.ToList());
+        }
+
+        public ActionResult Index_Statistical_Department(DateTime? date, int id)
+        {
 
             ViewBag.Date = date == null ? DateTime.Now : date;
-            string emails = User.Identity.Name;
-            string accID = db.AspNetUsers.FirstOrDefault(a => a.Email.ToLower().Equals(emails.ToLower().Trim())).Id;
-            var check_Department = db.Profiles.FirstOrDefault(x => x.account_id == accID);
-            Session["department"] = check_Department.department_id;
-            var data = db.DepartmentLists.Where(y => y.department_id == check_Department.department_id).ToList();
+            var data = db.DepartmentLists.Where(y => y.department_id == id).ToList();
             return View(data);
         }
 
