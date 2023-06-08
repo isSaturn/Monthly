@@ -36,7 +36,19 @@ namespace MonthlyStatement.Areas.Personal.Controllers
             //string path = Server.MapPath(file_path);
             //string filename = Path.GetFileName("swocjt297owtotjy8orluwoiteo1efImport.xlsx");
             //string fullPath = Path.Combine(path, filename);
-            return File(file_path, "application/vnd.ms-excel", "File.xlsx");
+            string ext = Path.GetExtension(file_path);
+            string filename = "MyFile" + ext; // Make this dynamic from the actual file
+            byte[] filedata = System.IO.File.ReadAllBytes(file_path);
+            string contentType = MimeMapping.GetMimeMapping(file_path);
+
+            var contentDisposition = new System.Net.Mime.ContentDisposition
+            {
+                FileName = filename,
+                Inline = true
+            };
+            Response.AppendHeader("Content-Disposition", contentDisposition.ToString());
+
+            return File(filedata, contentType);
         }
 
         public ActionResult PersonalReportEdit(int id)

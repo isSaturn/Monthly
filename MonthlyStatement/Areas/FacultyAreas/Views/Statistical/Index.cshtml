@@ -38,12 +38,12 @@
                                     </button>
                                 </div>
                                 @*<div class="col-sm-12 col-md-2">
-                                    <a class="btn btn-icon btn-primary" href="@Url.Action("ExportToExcelFaculty","Statistical", new { date = Date})">Xuất file excel</a>
-                                </div>*@
+                                        <a class="btn btn-icon btn-primary" href="@Url.Action("ExportToExcelFaculty","Statistical", new { date = Date})">Xuất file excel</a>
+                                    </div>*@
                             </div>
 
                         </form>
-                        <div class="col-12 col-sm-12 col-lg-12" >
+                        <div class="col-12 col-sm-12 col-lg-12">
                             @foreach (var item in Model)
                             {
                                 <div class="summary">
@@ -112,7 +112,7 @@
                                                             Thành viên
                                                         </th>
                                                         <th style="width:300px">
-
+                                                            Bộ môn
                                                         </th>
                                                         <th style="width:315px">Trạng thái báo cáo</th>
                                                         <th>Đánh giá</th>
@@ -128,6 +128,14 @@
                                                                 @nhanvien[v].email
                                                             </td>
                                                             <td>
+                                                                @if (bomon[v].department_id == null)
+                                                                {
+                                                                    <div>Chưa có bộ môn</div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    bomon[v].DepartmentList.department_name.Trim();
+                                                                }
                                                             </td>
                                                             <td>
                                                                 @if (nhanvien[v].AspNetUser?.StaffReports?.FirstOrDefault(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) != null)
@@ -176,6 +184,7 @@
                                                             Thành viên
                                                         </th>
                                                         <th style="width: 300px">
+                                                            Bộ môn
                                                         </th>
                                                         <th style="width: 315px">Trạng thái báo cáo</th>
                                                         <th>Đánh giá</th>
@@ -188,7 +197,16 @@
                                                         <tr>
                                                             <td class="text-center">@i</td>
                                                             <td>@giangvien[v].email</td>
-                                                            <td></td>
+                                                            <td>
+                                                                @if (bomon[v].department_id == null)
+                                                                {
+                                                                    <div>Chưa có bộ môn</div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    bomon[v].DepartmentList.department_name.Trim();
+                                                                }
+                                                            </td>
                                                             <td>
                                                                 @if (giangvien[v].AspNetUser?.PersonalReports?.FirstOrDefault(y => y.status == "Đã báo cáo" && y.ReportPeriod.start_date <= Date && y.ReportPeriod.end_date > Date) != null)
                                                                 {
@@ -250,9 +268,9 @@
                                                             <td>
                                                                 @if (bomon[v].department_id == null)
                                                                 {
-
+                                                                    <div>Chưa có bộ môn</div>
                                                                 }
-                                                                else 
+                                                                else
                                                                 {
                                                                     bomon[v].DepartmentList.department_name.Trim();
                                                                 }
