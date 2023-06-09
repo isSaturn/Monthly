@@ -47,7 +47,7 @@
                                     <div class="summary-info active" data-tab-group="summary-tab" id="summary-text">
                                         <div style="margin-bottom:20px">
                                             <h5>
-                                                Tổng thành viên trong khoa:
+                                                Tổng thành viên trong bộ môn:
                                                 @(item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Nhân viên" && x.department_id == id_department)
                                                                 + item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Giảng viên" && x.department_id == id_department)
                                                                 + item.Profiles.Count(x => x.AspNetUser?.AspNetRoles?.FirstOrDefault().Name == "Bộ môn" && x.department_id == id_department))

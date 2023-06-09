@@ -1262,8 +1262,6 @@
     <Content Include="Areas\Staff\Views\StaticStaff\Index.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\CheckReportDepartment_Faculty\Index.cshtml" />
     <Content Include="Areas\FacultyAreas\Views\CheckReportDepartment_Faculty\Detail.cshtml" />
-    <Content Include="assets\FileImport\DanhSachNguoiDung-Import.xlsx" />
-    <Content Include="assets\FileImport\Import.xlsx" />
     <Content Include="assets\FileMinhChung\0mhxzi8dsgjk6vf37w4h4jeabvtprgImport.xlsx" />
     <Content Include="assets\FileMinhChung\fk9ksebhcno2fa730xvwboumw413tpDanhSachNguoiDung-Import.xlsx" />
     <Content Include="assets\FileMinhChung\liy05ssmji3pwvev597vczulprhwmkfile báo cáo.xlsx" />
@@ -1322,6 +1320,7 @@
     <Folder Include="Areas\Personal\Views\Shared\" />
     <Folder Include="Areas\Secretary\Data\" />
     <Folder Include="Areas\Staff\Data\" />
+    <Folder Include="assets\FileImport\" />
     <Folder Include="assets\user\avatar\" />
     <Folder Include="Data\" />
   </ItemGroup>

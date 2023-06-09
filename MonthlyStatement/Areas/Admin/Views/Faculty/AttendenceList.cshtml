@@ -333,7 +333,9 @@
                 processData: false,
                 data: formData
             }).done(function (ketqua) {
-                swal('Thành công', 'Cập nhật thông tin thành công', 'success');
+                swal('Thành công', 'Cập nhật thông tin thành công', 'success').then(function () {
+                    location.reload();
+                });
                 $('#fileimport').val(null);
             });
         }

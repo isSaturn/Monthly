@@ -212,7 +212,6 @@ namespace MonthlyStatement.Areas.Admin.Controllers
         public ActionResult FormPersonalDetail(int id)
         {
             var formPersonalDetail = db.FormPersonalReportDetails.Where(f => f.form_personal_report_id == id).ToList();
-
             if (!formPersonalDetail.Any())
             {
                 ViewBag.FormPer = true;
@@ -229,6 +228,27 @@ namespace MonthlyStatement.Areas.Admin.Controllers
             }
             return View(formStaffDetail);
         }
+        //public ActionResult SaveFormDep(string idPeriod)
+        //{
+        //    var idPe = int.Parse(idPeriod);
+        //    var periodStart = db.ReportPeriods.Find(idPe).start_date?.AddMonths(-1);
+        //    var periodEnd = db.ReportPeriods.Find(idPe).end_date?.AddMonths(-1);
+        //    var formDepDateOldID = db.FormDepartmentReports.FirstOrDefault(d => d.ReportPeriod.start_date >= periodStart && d.ReportPeriod.end_date <= periodEnd).form_department_report_id;
+        //    var formDepDateNewID = db.FormDepartmentReports.FirstOrDefault(d => d.ReportPeriod.start_date >= DateTime.Now && d.ReportPeriod.end_date <= DateTime.Now).form_department_report_id;
+        //    var detailOld = db.FormDepartmentReportDetails.Where(f => f.form_department_report_id == formDepDateOldID);
+        //    foreach (var item in detailOld)
+        //    {
+        //        var formDepartmentReportDetail = new FormDepartmentReportDetail()
+        //        {
+        //            category_id = item.category_id,
+        //            form_department_report_id = formDepDateNewID
+
+        //        };
+        //        db.FormDepartmentReportDetails.Add(formDepartmentReportDetail);
+        //    }
+        //    db.SaveChanges();
+        //    return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+        //}
 
         protected override void Dispose(bool disposing)
         {

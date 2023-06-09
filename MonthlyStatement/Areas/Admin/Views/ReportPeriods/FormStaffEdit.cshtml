@@ -28,6 +28,12 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center pt-3">
+                                                    <div class="pretty p-switch p-fill">
+                                                        <input name="" type="checkbox" id="selecctall" value="" />
+                                                        <div class="state">
+                                                            <label></label>
+                                                        </div>
+                                                    </div>
                                                 </th>
                                                 <th>Cấp danh mục</th>
                                                 <th>Tên danh mục</th>
@@ -40,7 +46,7 @@
                                                 <tr>
                                                     <td class="text-center pt-2">
                                                         <div class="pretty p-switch p-fill">
-                                                            <input name="@item.category_id" type="checkbox" id="categorylv1-@item.category_id" value="@item.category_id" />
+                                                            <input class="checkbox1" name="@item.category_id" type="checkbox" id="categorylv1-@item.category_id" value="@item.category_id" />
                                                             <div class="state">
                                                                 <label></label>
                                                             </div>
@@ -59,7 +65,7 @@
                                                     <tr>
                                                         <td class="text-center pt-2">
                                                             <div class="pretty p-switch p-fill">
-                                                                <input name="@items.category_of_id"
+                                                                <input class="checkbox1" name="@items.category_of_id"
                                                                        type="checkbox"
                                                                        id="@(items.category_of_id)categorylv2-@(items.category_id)"
                                                                        value="@items.category_id" />
@@ -84,7 +90,7 @@
                                                         <tr>
                                                             <td class="text-center pt-2">
                                                                 <div class="pretty p-switch p-fill">
-                                                                    <input name="@items.category_of_id-@items.category_id"
+                                                                    <input class="checkbox1" name="@items.category_of_id-@items.category_id"
                                                                            type="checkbox"
                                                                            id="@(itemss.category_of_id)categorylv3-@(itemss.category_id)" value="@itemss.category_id" />
                                                                     <div class="state">
@@ -126,6 +132,18 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
     $(document).ready(function () {
+        $('#selecctall').click(function (event) {  //on click
+            if (this.checked) { // check select status
+                $('.checkbox1').each(function () { //loop through each checkbox
+                    this.checked = true;  //select all checkboxes with class "checkbox1"            
+                });
+
+            } else {
+                $('.checkbox1').each(function () { //loop through each checkbox
+                    this.checked = false; //deselect all checkboxes with class "checkbox1"                    
+                });
+            }
+        });
         //radio button lv3
         $('[id*="categorylv3-"]').on('input', function () {
             var idlv1 = $(this).attr('name').split('-')[0];
