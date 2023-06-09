@@ -222,15 +222,14 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                         // 2 Validation Khoa
                         string khoas = data[3].ToString().Trim();
                         var khoa = db.Faculties.FirstOrDefault(f => f.faculty_name.ToLower().Equals(khoas.ToLower()));
-
                         if (khoa == null)
                         {
                             error += i + ". Không tìm thấy khoa.#";
                             i++;
                         }
-                        //4 Validation bomon
-                        string bomoms = data[4].ToString().Trim();
-                        var bomon = db.DepartmentLists.FirstOrDefault(d => d.department_name.ToLower().Equals(khoas.ToLower()));
+
+                        string bomons = data[4].ToString().Trim();
+                        var bomon = db.DepartmentLists.FirstOrDefault(f => f.department_name.ToLower().Equals(bomons.ToLower()));
                         if (bomon == null)
                         {
                             error += i + ". Không tìm thấy bộ môn.#";
@@ -257,18 +256,16 @@ namespace MonthlyStatement.Areas.Admin.Controllers
                                 pro.email = data[2].ToString().Trim();
                                 pro.faculty_id = khoa.faculty_id;
                                 pro.department_id = bomon.department_id;
-
                                 db.Profiles.Add(pro);
                                 db.SaveChanges();
 
                             }
-                            else 
+                            else
                             {
                                 profiles.user_name = data[1].ToString().Trim();
                                 profiles.email = data[2].ToString().Trim();
                                 profiles.faculty_id = khoa.faculty_id;
                                 profiles.department_id = bomon.department_id;
-
                                 db.Entry(profiles).State = EntityState.Modified;
                                 db.SaveChanges();
                             }

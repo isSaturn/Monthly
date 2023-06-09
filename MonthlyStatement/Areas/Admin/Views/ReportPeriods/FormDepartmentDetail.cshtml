@@ -7,8 +7,6 @@
     int i = 0;
     int j = 64;
     string lstId = "";
-
-
 }
 
 @if (ViewBag.FormDep == true)
@@ -28,7 +26,7 @@ else
     var model_lv1 = models.FormDepartmentReports.Find(idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_lv == 1).ToList();
     <div class="col-12">
         <div class="card">
-            <div class="card-body">              
+            <div class="card-body">
                 @foreach (var items in model_lv1)
                 {
                     i = 0;
@@ -96,5 +94,4 @@ else
             </div>
         </div>
     </div>
-
 }
