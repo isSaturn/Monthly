@@ -29,13 +29,11 @@
                         <div class="card-body">
                             @foreach (var items in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_lv == 1).ToList())
                             {
-
                                 i = 0;
                                 j++;
                                 <br />
                                 <div class="section-title mt-1" style="font-weight:bold">
                                     @(((char) j).ToString()). @items.Category.category_content.ToUpper()
-
                                 </div>
 
                                 foreach (var items_lv2 in models.FormDepartmentReports.FirstOrDefault(f => f.report_period_id == idperiod).FormDepartmentReportDetails.Where(x => x.Category.category_of_id == items.category_id).ToList())
